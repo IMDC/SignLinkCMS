@@ -2,11 +2,6 @@
 
 if (!defined('INCLUDE_PATH')) { exit; }
 
-define('DB_USER', 'root');
-define('DB_PASSWORD', 'tydiutor');
-define('DB_PORT', '3306');
-define('DB_HOST', 'localhost');
-define('DB_NAME', 'signlink');
 
 define('UPLOAD_DIR', 'uploads/');
 
