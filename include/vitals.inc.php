@@ -2,6 +2,7 @@
 
 if (!defined('INCLUDE_PATH')) { exit; }
 
+require('config.inc.php');
 
 define('UPLOAD_DIR', 'uploads/');
 
