@@ -7,8 +7,17 @@
 	<script language="javascript" type="text/javascript" src="jscripts/tiny_mce/tiny_mce.js"></script>
 	<script language="javascript" type="text/javascript">
 		tinyMCE.init({
-			mode : "textareas",
-			theme : "simple"
+				theme : "advanced",
+				mode : "textareas",
+				plugins : "media",
+				theme_advanced_buttons1_add : "media",
+				theme_advanced_disable : "bold, italic, underline, strikethrough, justifyleft, justifycenter, justifyright, justifyfull, separator, formatselect, styleselect",
+				theme_advanced_buttons2 : "",
+				theme_advanced_buttons3 : "",
+				height : "20em",
+				theme_advanced_toolbar_location : "top",
+				theme_advanced_toolbar_align : "right",
+				file_browser_callback : 'myFileBrowser'
 		});
 	</script>
 </head>
