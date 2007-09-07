@@ -3,6 +3,14 @@
 <head>
 	<title>Forum</title>
 	<link rel="stylesheet" href="asl.css" type="text/css" media="screen" />
+
+	<script language="javascript" type="text/javascript" src="jscripts/tiny_mce/tiny_mce.js"></script>
+	<script language="javascript" type="text/javascript">
+		tinyMCE.init({
+			mode : "textareas",
+			theme : "simple"
+		});
+	</script>
 </head>
 
 <div id="container">

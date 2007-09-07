@@ -31,7 +31,7 @@ if (mysql_num_rows($result)) {
 					<img src="images/user_female.png" style="margin-bottom:-5px;" /><?php echo $row['login']; ?>
 			</div>
 			<div style="float:right;padding-right:2px;font-size:smaller;">
-				<?php echo date('h:ia | M j, y', strtotime($row['last_comment'])); ?>
+				<?php echo date('h:ia | M j, y', strtotime($row['date'])); ?>
 			</div>
 
 			<div style="clear:both; padding:10px; margin-bottom:7px;"><?php echo $row['msg']; ?></div>
@@ -55,10 +55,14 @@ if (mysql_num_rows($result)) {
 $sql = "SELECT * FROM forums_posts WHERE forum_id=".intval($_REQUEST['f'])." AND parent_id=".intval($_REQUEST['parent'])." ORDER BY last_comment DESC";
 $result = mysql_query($sql, $db);
 if (mysql_num_rows($result)) { 
-	echo '<div>';
-	while ($row = mysql_fetch_assoc($result)) {
-		echo date('h:ia | M j, y', strtotime($row['last_comment'])),'<br />'; 
+	while ($row = mysql_fetch_assoc($result)) { ?>
+		<div style="background-color:#efefef; margin-bottom:10px; padding:3px;">
 
+		<div style="float:right;padding-right:2px;font-size:smaller;">
+			<?php echo date('h:ia | M j, y', strtotime($row['last_comment'])); ?>
+		</div>
+
+		<?php
 		if(!empty($row['msg_file'])) {
 			$ext = explode('.',$row['msg_file']);
 			$ext = $ext[1];
@@ -67,11 +71,14 @@ if (mysql_num_rows($result)) {
 				case ('gif'||'png'||'jpeg'||'jpg' ):
 					echo '<a href="forum_post_view.php?f=3&parent=13">image</a>';
 					break;
-
+				case ('mov' || $file_type=='mp4' || $file_type=='avi'):
+					break;
 			}
+		} else {
+			echo $row['msg'];
 		}
+		echo '</div>';
 	}
-	echo '</div>';
 } else {
 	echo "<p>None found.</p>";
 }
