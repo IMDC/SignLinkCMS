@@ -10,7 +10,7 @@ define('UPLOAD_DIR', 'uploads/');
 
 session_start();
 
-//if (INCLUDE_PATH !== 'NULL') {
+if (INCLUDE_PATH !== 'NULL') {
 	$db = @mysql_connect(DB_HOST . ':' . DB_PORT, DB_USER, DB_PASSWORD);
 	if (!$db) {
 		trigger_error('VITAL#Unable to connect to db.', E_USER_ERROR);
@@ -20,7 +20,7 @@ session_start();
 		trigger_error('VITAL#DB connection established, but database "'.DB_HOST.'" cannot be selected.', E_USER_ERROR);
 		exit;
 	}
-//}
+}
 
 function my_add_null_slashes( $string ) {
     return mysql_real_escape_string(stripslashes($string));
