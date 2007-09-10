@@ -27,7 +27,7 @@ if (isset($_POST['cancel'])) {
 		$fid = mysql_insert_id();
 
 		if (is_uploaded_file($_FILES['title_file']['tmp_name'])) {
-			save_title('forum', $_FILES['title_file']['tmp_name'], $fid);
+			save_title('forum', $fid);
 		}
 
 		/*$imgfile = $_FILES['title_file']['tmp_name'];

@@ -21,7 +21,7 @@ if (mysql_num_rows($result)) {
 		$views = mysql_fetch_assoc($result2);
 		$views = $views['views'];
 ?>
-		<div class="cat" style="float:left; margin-bottom:50px; border:1px solid black;">
+		<div class="cat">
 			
 			<div style="float:left;font-size:smaller;">
 				<img src="images/bullet_star.png" />
@@ -30,7 +30,7 @@ if (mysql_num_rows($result)) {
 				Last post: <?php echo date('g:ia, M j, y', strtotime($row['last_comment'])); ?>
 			</div>
 
-			<a href="forum_post_view.php?f=<?php echo $row['forum_id']; ?>&parent=<?php echo $row['post_id']; ?>"><div style="background-color:white; height:150px; clear:both; padding:10px; margin-bottom:7px; border:1px solid #9A9A9A;"><?php echo $title; ?></div></a>
+			<a href="forum_post_view.php?f=<?php echo $row['forum_id']; ?>&parent=<?php echo $row['post_id']; ?>"><div class="title"><?php echo $title; ?></div></a>
 
 			<div>
 				<div style="float:left;">
