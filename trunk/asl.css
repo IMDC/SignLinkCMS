@@ -147,11 +147,13 @@ table#cats td {
 div.cat {
 	float:left;
 	text-align:center;
+	vertical-align:middle;
 	background-color: #efefef;
-	width: 250px;
-	height: 17em;
+	width: 180px;
 	padding:5px;
-	margin-right:10px;
+	margin:10px;
+
+	border:1px solid black;
 }
 
 div.cat img {
@@ -160,6 +162,15 @@ div.cat img {
 }
 div.cat object {
 	padding:7px;
+}
+
+div.cat .title {
+	background-color:white; 
+	height:150px; 
+	clear:both; 
+	padding:10px; 
+	border:1px solid #9A9A9A;
+	margin-bottom:5px;
 }
 
 /* post page */

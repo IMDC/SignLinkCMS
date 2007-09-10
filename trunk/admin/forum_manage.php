@@ -27,7 +27,7 @@ if (mysql_num_rows($result)) { ?>
 	<?php
 	while ($row = mysql_fetch_assoc($result)) {
 	
-		$title = get_title($row['title'], $row['title_file']);
+		$title = get_title('forum', $row['forum_id']);
 
 		//print forum row info
 		echo '<tr class="row'.$r.'">';
