@@ -4,32 +4,22 @@
 	<div class="row">
 		<span class="bold">Subject</span><br />
 			<div class="row">
-				<?php 
-				if (isset($_POST['subject_file']) && !empty($_POST['subject_file'])) {
-					echo '<img src="../uploads/'.$_POST['subject_file'].'" /><br />';
-					//if video...
-				}
-				?>
-				Video <span class="italic">or</span> Image File<br />
-				<input type="file" name="subject_file" value="<?php echo $_POST['subject_file']; ?>" /> 
-			</div>
-			<div class="row">
-				Text<br />
-				<input type="text" name="subject" size="100" value="<?php echo $_POST['subject']; ?>" /><br />
+				<textarea name="title" style="height:10em; width:10em;"></textarea>
 			</div>
 	</div>
 <?php } ?>
 
 	<div class="row">
 		<span class="bold">Message</span>
-
 		<div class="row">
-			SignLink File<br />
-			<input type="file" name="msg_file" />
+			<textarea name="msg" rows="25" cols="90" style="height:20em;"><?php echo $_POST['msg']; ?></textarea>
 		</div>
+
+		
 		<div class="row">
-			Text<br />
-			<textarea name="msg" rows="5" cols="90"><?php echo $_POST['msg']; ?></textarea>
+		<p>If you've inserted a Signlink Flash object, you must also upload the Signlink FLV file that goes with it.<p>
+			SignLink FLV File<br />
+			<input type="file" name="msg_file" />
 		</div>
 	</div>
 
