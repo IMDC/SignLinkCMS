@@ -16,27 +16,35 @@
 				theme_advanced_buttons3 : "",
 				theme_advanced_toolbar_location : "top",
 				theme_advanced_toolbar_align : "right",
-				file_browser_callback : 'myFileBrowser'
+				file_browser_callback : 'fileBrowserCallBack'
 		});
 
-  function myFileBrowser (field_name, url, type, win) {
-
-    var fileBrowserWindow = new Array();
-    fileBrowserWindow["file"] = "../../../../moduly/files/files_editor.php";
-    fileBrowserWindow["title"] = "Browser";
-    fileBrowserWindow["width"] = "830";
-    fileBrowserWindow["height"] = "400";
-    fileBrowserWindow["close_previous"] = "no";
-    tinyMCE.openWindow(fileBrowserWindow, {
-      window : win,
-      input : field_name,
-      resizable : "yes",
-      inline : "yes",
-      editor_id : tinyMCE.getWindowArg("editor_id")
-    });
-    
-    return false;
-  }
+		function fileBrowserCallBack(field_name, url, type, win) {
+			var connector = "../../filemanager/browser.html?Connector=connectors/php/connector.php";
+			var enableAutoTypeSelection = true;
+			
+			var cType;
+			tinyfck_field = field_name;
+			tinyfck = win;
+			
+			switch (type) {
+				case "image":
+					cType = "Image";
+					break;
+				case "flash":
+					cType = "Flash";
+					break;
+				case "file":
+					cType = "File";
+					break;
+			}
+			
+			if (enableAutoTypeSelection && cType) {
+				connector += "&Type=" + cType;
+			}
+			
+			window.open(connector, "tinyfck", "modal,width=600,height=400");
+		}
 	</script>
 </head>
 
