@@ -23,7 +23,7 @@ $kfm_db_port=''; # leave blank if using default port
 # In the default example, the user-files are at http://kfm.verens.com/sandbox/UserFiles/
 # Note that this is the actual file-system location of the files.
 # This value must begin and end in '/'.
-$kfm_userfiles='../../../uploads/';
+$kfm_userfiles='/../../../uploads/';
 
 # what should be added to the server's root URL to find the URL of the user files?
 # Note that this is usually the same as $kfm_userfiles, but could be different in the case
@@ -35,7 +35,7 @@ $kfm_userfiles='../../../uploads/';
 #   $kfm_userfiles_output='/files/';
 #   $kfm_userfiles_output='http://thisdomain.com/kfm/get.php';
 #   $kfm_userfiles_output='/kfm/get.php';
-$kfm_userfiles_output='../../../uploads/';
+$kfm_userfiles_output='/../../../uploads/';
 
 # if you want to hide any panels, add them here as a comma-delimited string
 # for example, $kfm_hidden_panels='logs,file_details,file_upload,search,directory_properties';
@@ -110,7 +110,7 @@ $kfm_preferred_languages=array('en','de','da','es','fr','nl','ga');
 
 # themes are located in ./themes/
 # to use a different theme, replace 'default' with the name of the theme's directory.
-$kfm_theme='default';
+$kfm_theme='jara';
 
 # use ImageMagick's 'convert' program?
 $kfm_use_imagemagick=1;
