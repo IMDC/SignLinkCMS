@@ -17,6 +17,18 @@ function insertImage() {
 	var height = document.forms[0].height.value;
 	var align = document.forms[0].align.options[document.forms[0].align.selectedIndex].value;
 
+	if (width>150 || height>150) {
+		if (width>=height && width>150) {
+			var percent = 150/width;
+		} else if (height>width && height>150) {
+			var percent = 150/height;
+		} 
+
+		width = width * percent;
+		height = height * percent;
+	}
+
+
 	tinyMCEPopup.restoreSelection();
 	tinyMCE.themes['advanced']._insertImage(src, alt, border, hspace, vspace, width, height, align);
 	tinyMCEPopup.close();

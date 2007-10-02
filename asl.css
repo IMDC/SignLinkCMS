@@ -173,16 +173,38 @@ div.cat .title {
 	margin-bottom:5px;
 }
 
-/* post page */
+/* posts */
 
-div#post {
-	width:98%; 
-	border:1px solid black;
-	background-color: #efefef;
+div.post {
+	float:left;
+	text-align:center;
+	vertical-align:middle;
+	background-color: #D9EFDC;
+	width: 180px;
 	padding:5px;
-	margin-right:10px;
-	padding-bottom:2em;
+	margin:10px;
+
+	border:1px solid black;
 }
+
+div.post img {
+	padding:2px;
+	border:0px;
+}
+div.post object {
+	padding:7px;
+}
+
+div.post .title {
+	background-color:white; 
+	height:150px; 
+	clear:both; 
+	padding:10px; 
+	border:1px solid #9A9A9A;
+	margin-bottom:5px;
+}
+
+/* post page */
 
 div.post-user {
 	float:left;

@@ -4,7 +4,7 @@
 	<div class="row">
 		<span class="bold">Subject</span><br />
 			<div class="row">
-				<textarea name="title" style="height:10em; width:10em;"></textarea>
+				<textarea name="title" style="height:14em; width:14em;"></textarea>
 			</div>
 	</div>
 <?php } ?>
