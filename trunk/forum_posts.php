@@ -21,7 +21,7 @@ if (mysql_num_rows($result)) {
 		$views = mysql_fetch_assoc($result2);
 		$views = $views['views'];
 ?>
-		<div class="cat">
+		<div class="post">
 			
 			<div style="float:left;font-size:smaller;">
 				<img src="images/bullet_star.png" />
