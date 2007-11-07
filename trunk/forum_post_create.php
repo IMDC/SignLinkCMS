@@ -16,26 +16,93 @@ if (isset($_POST['cancel'])) {
 	}
 	exit;
 
-} else if (isset($_POST['submit'])) {
+} else if ($_POST['f']) {
 
-	//error check
-	if (empty($_POST['subject']) && empty($_FILES['subject_file']['name'])) {
-		$_SESSION['errors'][] = 'Please enter a subject.';
-	} 
-	if (empty($_POST['msg']) && empty($_POST['msg_file'])) {
-		$_SESSION['errors'][] = 'Please enter a message.';
-	}
+	//error check subject
+	if (empty($_POST['subject']) || (empty($_FILES['isub-file']['tmp_name']) && empty($_FILES['vsub-file']['tmp_name']) && empty($_POST['sub-text'])) ) {
+		$_SESSION['errors'][] = 'Subject empty.';
+		
+	} else if ($_POST['subject'] == "image") {
+		$ext = explode('.', $_FILES['isub-file']['name']);
+		$ext = $ext[1];
+		if (!in_array($ext, $filetypes_image)) {
+			$_SESSION['errors'][] = 'You have chosen to use an image file for your subject - invalid file format.'. $ext;
+		}
+		
+	} else if ($_POST['message'] == "video") {
+		$ext = explode('.', $_FILES['vsub-file']['name']);
+		$ext = $ext[1];
+		if (!in_array($ext, $filetypes_video)) {
+			$_SESSION['errors'][] = 'You have chosen a video file for your subject - invalid file format.';
+		}
+		
+	} else if ( ($_POST['message'] == "text") && empty($_POST['sub-text']) ) {
+		$_SESSION['errors'][] = 'You have chosen text for your subject - message cannot be empty.';
+	}	
+	
+	//error check message 
+	if (empty($_POST['message']) || ( (empty($_FILES['sl1msg-file']['tmp_name']) && empty($_FILES['sl2msg-file']['tmp_name'])) && empty($_FILES['vmsg-file']['tmp_name']) && empty($_POST['msg-text'])) ) {
+		$_SESSION['errors'][] = 'Message empty.';
+	} else if ($_POST['message'] == "signlink" && ( empty($_FILES['sl1msg-file']['tmp_name']) || empty($_FILES['sl2msg-file']['tmp_name']) ) )  {
+		$_SESSION['errors'][] = 'You have chosen to post a Signlink message - this requires that you submit two files: a flash file and a .flv file.';
+		
+	} else if ($_POST['message'] == "video") {
+		$ext = explode('.', $_FILES['vmsg-file']['tmp_name']);
+		$ext = $ext[1];
+		if (!in_array($ext, $filetypes_video)) {
+			$_SESSION['errors'][] = 'You have chosen to post a video message - invalid file format.';
+		}
+		
+	} else if ( $_POST['message'] == "text" && empty($_POST['msg-text']) ) {
+		$_SESSION['errors'][] = 'You have chosen to post a text message - message cannot be empty.';
+	}		
+	
 	
 	if (!isset($_SESSION['errors'])) {
-		$subject = $addslashes($_POST['subject']);
 
-		$msg = $addslashes($_POST['msg']);
-		$msg_file = $addslashes($_POST['msg_file']);
+		switch ($_POST['subject']) {
+			case 'image':
+				$subject = '';
+				$subject_file = $addslashes($_FILES['isub-file']['name']);
+				$subject_alt = $addslashes(htmlspecialchars($_POST['isub-alt']));
+				break;
+			case 'video':
+				$subject = '';
+				$subject_file = $addslashes($_FILES['vsub-file']['name']);
+				$subject_alt = $addslashes(htmlspecialchars($_POST['vsub-alt']));
+				break;
+			case 'text':
+				$subject = $addslashes(htmlspecialchars($_POST['sub-text']));
+				$subject_file = '';
+				$subject_alt = '';
+				break;
+		}
+
+		switch ($_POST['message']) {
+			case 'signlink':
+				$message = $addslashes($_FILES['sl1msg-file']['name']);
+				$mesage_file = $addslashes($_FILES['sl2msg-file']['name']);
+				$message_alt = '';
+				break;
+			case 'video':
+				$message = '';
+				$mesage_file = $addslashes($_FILES['vmsg-file']['name']);
+				$message_alt = $addslashes(htmlspecialchars($_POST['vmsg-alt']));
+				break;
+			case 'text':
+				$message = $addslashes(htmlspecialchars($_POST['msg-text']));
+				$mesage_file = '';
+				$message_alt = '';
+				break;
+		}
 
 		$forum_id = intval($_POST['f']);
-	
 		$now = date('Y-m-d G:i:s');
-		$sql = "INSERT INTO forums_posts VALUES (NULL, '$parent_id', '$_SESSION[member_id]', '$forum_id', '$_SESSION[login]', '$now', 0, '$subject', '', '$msg', '$msg_file',NOW(),0, 0)";
+
+		$sql = "INSERT INTO forums_posts VALUES (NULL, '$parent_id', '$_SESSION[member_id]', '$forum_id', '$_SESSION[login]', '$now', 0, '$subject', '$subject_file', '$subject_alt', '$message', '$message_file', '$message_alt', NOW(),0, 0)";
+
+debug($sql);
+exit;
 
 		if (!$result = mysql_query($sql, $db)) {
 			$_SESSION['errors'][] = 'Database error.';
@@ -85,12 +152,12 @@ if(isset($_REQUEST['parent'])) {
 }
 ?>
 
-<form action ="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form" enctype="multipart/form-data">
+<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form" enctype="multipart/form-data">
 	<input type="hidden" name="f" value="<?php echo intval($_REQUEST['f']); ?>" />
 
 	<?php if (isset($_REQUEST['parent'])) { ?>
 		<input type="hidden" name="parent" value="<?php echo intval($_REQUEST['parent']); ?>" />
-		<input type="hidden" name="subject" value="reply" />
+		<input type="hidden" name="subject" value="Re:" />
 	<?php //subject isn't anything when it's a reply (displays parent subject) but in the future, can add this option
 	} ?>
 

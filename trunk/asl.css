@@ -103,7 +103,6 @@ table {
 }
 
 #footer {
-	background-color: #efefef;
 	color:black;
 	text-align: center;
 
@@ -293,13 +292,25 @@ div.url-info {
 }
 
 div.important-info {
-	background-color: #FEE6E9;
+	background-color: #E2F0F4;
 	border:1px solid black;
+	padding:10px;
+	margin-top:10px;
 }
 div.file-info {
-	background-color: #FFFDB3; 
+	background-color: #FEFDDC; 
 	margin-top:10px; 
 	border:1px solid black;
+	padding:10px;
+}
+
+div.choices {
+	margin-left:10px;
+}
+
+div.choice-info {
+	padding:5px;
+	margin-left:20px;
 }
 
 /* manage pages */
@@ -359,21 +370,21 @@ div.feedback {
 
 /* pairs of info */
 dl.col-list {  
-	width: 100%;  
+	margin:0px;
 } 
 dl.col-list dt {  
 	float: left;  
 	font-weight: bold;  
-	width: 45%; 
 	text-align: right;  
 	clear: left;  
-	padding: 5px 10px 5px 0px;  
+	padding: 5px;  
 	vertical-align: middle; 
+	width:5em;
 } 
 dl.col-list dd {  
+	margin-left:5em;
 	margin-bottom: 5px;  
 	clear: right;  
 	padding: 5px 0px 5px 10px;  
-	margin-left: 46%;  
 	text-align:left;
 }
