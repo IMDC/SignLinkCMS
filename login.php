@@ -105,7 +105,7 @@ require(INCLUDE_PATH.'header.inc.php'); ?>
 		<input type="hidden" name="login_action" value="true" />
 		<input type="hidden" name="password_hidden" value="" />
 
-	<dl class="col-list">
+	<dl class="col-list" style="width:25%; margin-left:auto; margin-right:auto;">
 		<dt><label for="login">Login:</label></dt> 
 			<dd><input name="login" type="text" id="login" value="<?php echo $_SERVER['login']; ?>" /></dd>
 		<dt><label for="pswd">Password:</label></dt> 

@@ -6,7 +6,7 @@
 	</div>
 </div>
 
-<?php debug($_SESSION); ?>
+<?php //debug($_SESSION); ?>
 
 </body>
 </html>
