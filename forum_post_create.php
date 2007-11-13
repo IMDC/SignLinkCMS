@@ -65,11 +65,15 @@ if (isset($_POST['cancel'])) {
 				$subject = '';
 				$subject_file = $addslashes($_FILES['isub-file']['name']);
 				$subject_alt = $addslashes(htmlspecialchars($_POST['isub-alt']));
+
+				$subject_source = 'isub-file';
 				break;
 			case 'video':
 				$subject = '';
 				$subject_file = $addslashes($_FILES['vsub-file']['name']);
 				$subject_alt = $addslashes(htmlspecialchars($_POST['vsub-alt']));
+
+				$subject_source = 'vsub-file';
 				break;
 			case 'text':
 				$subject = $addslashes(htmlspecialchars($_POST['sub-text']));
@@ -101,12 +105,10 @@ if (isset($_POST['cancel'])) {
 
 		$sql = "INSERT INTO forums_posts VALUES (NULL, '$parent_id', '$_SESSION[member_id]', '$forum_id', '$_SESSION[login]', '$now', 0, '$subject', '$subject_file', '$subject_alt', '$message', '$message_file', '$message_alt', NOW(),0, 0)";
 
-debug($sql);
-exit;
-
 		if (!$result = mysql_query($sql, $db)) {
 			$_SESSION['errors'][] = 'Database error.';
 		} else {
+
 			//edit 'last comment' for parent
 			if ($parent_id) {
 				$sql = "UPDATE forums_posts SET last_comment='$now' WHERE post_id=$parent_id";
@@ -116,8 +118,9 @@ exit;
 			//save files
 			$post_id = mysql_insert_id();
 
-			if (is_uploaded_file($_FILES['subject_file']['tmp_name'])) {
-				save_title('post', $post_id);
+			if (is_uploaded_file($_FILES[$subject_source]['tmp_name'])) {
+				$ext = end(explode('.',$_FILES[$subject_source]['name']));
+				save_title_image('post', $_FILES[$subject_source]['tmp_name'], $ext, $post_id);
 			}
 
 			//save_SLfile();

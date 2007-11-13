@@ -4,8 +4,6 @@ if (!defined('INCLUDE_PATH')) { exit; }
 
 require('config.inc.php');
 
-define('UPLOAD_DIR', 'uploads/');
-
 //define('AT_BASE_HREF', 'http://142.150.154.124/asl/');
 
 session_start();

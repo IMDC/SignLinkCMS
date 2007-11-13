@@ -84,7 +84,7 @@ function get_msg($file) {
 
 
 /* saves uploaded title file */
-function save_title($type, $id) {
+function save_title_image($type, $tmp_name, $ext, $id) {
 	global $db, $_FILES;
 	
 	$level = '';
@@ -95,14 +95,12 @@ function save_title($type, $id) {
 
 	switch ($type) {
 		case 'forum':
-			$title_file = $_FILES['title_file']['tmp_name'];
-			$ext = end(explode('.',$_FILES['title_file']['name']));
-			$newfile = $level.'uploads/titles/forum/'. $id.'.'.$ext;
+			$title_file = $tmp_name;
+			$newfile = $level.UPLOAD_DIR.'titles/forum/'. $id.'.'.$ext;
 			break;
 		case 'post':
-			$title_file = $_FILES['subject_file']['tmp_name'];
-			$ext = end(explode('.',$_FILES['subject_file']['name']));
-			$newfile = $level.'uploads/titles/post/'. $id.'.'.$ext;
+			$title_file = $tmp_name;
+			$newfile = $level.UPLOAD_DIR.'titles/post/'. $id.'.'.$ext;
 			break;
 		case 'page':
 			break;

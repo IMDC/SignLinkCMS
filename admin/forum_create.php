@@ -26,20 +26,10 @@ if (isset($_POST['cancel'])) {
 
 		$fid = mysql_insert_id();
 
-		if (is_uploaded_file($_FILES['title_file']['tmp_name'])) {
-			save_title('forum', $fid);
+		$ext = end(explode('.',$_FILES[$subject_source]['name']));
+		if (is_uploaded_file($_FILES['title_file']['tmp_name'])) {	
+			save_title_image('forum', $_FILES['title_file']['tmp_name'], $ext, $fid);
 		}
-
-		/*$imgfile = $_FILES['title_file']['tmp_name'];
-		$final_filename = $fid.'_title';
-
-		if (is_uploaded_file($imgfile)) {
-		   $newfile = UPLOAD_DIR . $final_filename;
-		   if (!copy($imgfile, $newfile)) {
-			  print "Error Uploading File.";
-			  exit();
-		   }
-		}*/
 	
 		//redirect
 		$_SESSION['feedback'][] = 'Forum created successfully.';
