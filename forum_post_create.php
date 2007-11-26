@@ -65,15 +65,13 @@ if (isset($_POST['cancel'])) {
 				$subject = '';
 				$subject_file = $addslashes($_FILES['isub-file']['name']);
 				$subject_alt = $addslashes(htmlspecialchars($_POST['isub-alt']));
-
-				$subject_source = 'isub-file';
 				break;
 			case 'video':
 				$subject = '';
 				$subject_file = $addslashes($_FILES['vsub-file']['name']);
 				$subject_alt = $addslashes(htmlspecialchars($_POST['vsub-alt']));
 
-				$subject_source = 'vsub-file';
+				$save_func = 'save_video';
 				break;
 			case 'text':
 				$subject = $addslashes(htmlspecialchars($_POST['sub-text']));
@@ -118,10 +116,30 @@ if (isset($_POST['cancel'])) {
 			//save files
 			$post_id = mysql_insert_id();
 
-			if (is_uploaded_file($_FILES[$subject_source]['tmp_name'])) {
-				$ext = end(explode('.',$_FILES[$subject_source]['name']));
-				save_title_image('post', $_FILES[$subject_source]['tmp_name'], $ext, $post_id);
+			switch ($_POST['subject']) {
+				case 'image':
+					$subject_alt = $addslashes(htmlspecialchars($_POST['isub-alt']));
+
+					if (is_uploaded_file($_FILES['isub-file']['tmp_name'])) {
+						$ext = end(explode('.',$_FILES['isub-file']['name']));
+						save_title_image('post', $_FILES['isub-file']['tmp_name'], $ext, $post_id);
+					}
+
+					break;
+				case 'video':
+					$subject = '';
+					$subject_file = $addslashes($_FILES['vsub-file']['name']);
+					$subject_alt = $addslashes(htmlspecialchars($_POST['vsub-alt']));
+
+					$save_func = 'save_video';
+					break;
+				case 'text':
+					$subject = $addslashes(htmlspecialchars($_POST['sub-text']));
+					$subject_file = '';
+					$subject_alt = '';
+					break;
 			}
+
 
 			//save_SLfile();
 
@@ -161,7 +179,7 @@ if(isset($_REQUEST['parent'])) {
 	<?php if (isset($_REQUEST['parent'])) { ?>
 		<input type="hidden" name="parent" value="<?php echo intval($_REQUEST['parent']); ?>" />
 		<input type="hidden" name="subject" value="Re:" />
-	<?php //subject isn't anything when it's a reply (displays parent subject) but in the future, can add this option
+	<?php 
 	} ?>
 
 	<?php require(INCLUDE_PATH.'forum_post.inc.php'); ?>

@@ -98,7 +98,7 @@
 		for (var i=0; i < er_text.length; i++) {
 			er_string = er_string + '\n' + er_text[i];
 		}
-		alert('There are fields which need correction before sending' + er_string);
+		alert('Corrections required: ' + er_string);
 	} else {
 		document.form.submit();
 	}
@@ -153,7 +153,7 @@
 		<div class="choice-info">
 			<dl class="col-list">
 				<dt>File</dt> <dd><input type="file" id="vmsg-file" name="vmsg-file" /></dd>
-				<dt>Alt Text<dt> <dd><input type="text" id="vmsg-file" name="vmsg-file" value="<?php echo $_POST['vmsg-alt']; ?>" /></dd>
+				<dt>Alt Text<dt> <dd><input type="text" id="vmsg-alt" name="vmsg-alt" value="<?php echo $_POST['vmsg-alt']; ?>" /></dd>
 			</dl>
 		</div>
 
