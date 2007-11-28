@@ -7,6 +7,7 @@ require('include/header.inc.php');
 $parent = intval($_REQUEST['parent']);
 
 //if ($_SESSION['valid_user']) {
+	//update the # thread views and the last accessed date
 	$sql = "INSERT INTO forums_views VALUES ($parent, $_SESSION[member_id], NOW(), 0)";
 	$result = mysql_query($sql, $db);
 	if (!$result) {
@@ -15,35 +16,35 @@ $parent = intval($_REQUEST['parent']);
 	}
 //}
 
-$sql = "SELECT * FROM forums_posts WHERE post_id=".$parent;  //add forum id
-$result = mysql_query($sql, $db);
-$row = mysql_fetch_assoc($result);
-if (mysql_num_rows($result)) { 
-	$title = get_title('post', $row['post_id']);
+$msg = get_message('message', $parent);
+//returns array of poster, date, message
+
 ?>
 
-<h2 style="display:inline;"><a href="forum_posts.php?f=<?php echo intval($_GET['f']); ?>"><?php echo get_title('forum', intval($_GET['f'])); ?></a> > <?php echo $title; ?></h2>
+<h2 style="display:inline;"><a href="forum_posts.php?f=<?php echo intval($_GET['f']); ?>"><?php echo get_title('forum', intval($_GET['f'])); ?></a> > <?php echo get_title('post', $parent); ?></h2>
 
 <div>		
 		<div id="post">
 			
 			<div style="float:left;font-size:smaller;">
-					<img src="images/user_female.png" style="margin-bottom:-5px;" /><?php echo $row['login']; ?>
+					<img src="images/user_female.png" style="margin-bottom:-5px;" /><?php echo $login; ?>
 			</div>
 			<div style="float:right;padding-right:2px;font-size:smaller;">
-				<?php echo date('h:ia | M j, y', strtotime($row['date'])); ?>
+				<?php echo $date; ?>
 			</div>
 
-			<div style="clear:both; padding:10px; margin-bottom:7px;"><?php echo $row['msg']; ?></div>
+			<div style="clear:both; padding:10px; margin-bottom:7px;">
+				<?php 
+					echo $message;
+				?>
+			</div>
 
 
 			<div style="float:right;padding-right:2px;">
 				<a href="forum_post_create.php?f=<?php echo intval($_GET['f']); ?>&parent=<?php echo intval($_REQUEST['parent']); ?>">Reply</a> | <a href="">Edit</a>
 			</div>
 		</div>
-<?php
-}
-?>
+
 	<br style="clear:both" />
 </div>
 
