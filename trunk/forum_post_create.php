@@ -29,14 +29,14 @@ if (isset($_POST['cancel'])) {
 			$_SESSION['errors'][] = 'You have chosen to use an image file for your subject - invalid file format.'. $ext;
 		}
 		
-	} else if ($_POST['message'] == "video") {
+	} else if ($_POST['subject'] == "video") {
 		$ext = explode('.', $_FILES['vsub-file']['name']);
 		$ext = $ext[1];
 		if (!in_array($ext, $filetypes_video)) {
 			$_SESSION['errors'][] = 'You have chosen a video file for your subject - invalid file format.';
 		}
 		
-	} else if ( ($_POST['message'] == "text") && empty($_POST['sub-text']) ) {
+	} else if ( ($_POST['subject'] == "text") && empty($_POST['sub-text']) ) {
 		$_SESSION['errors'][] = 'You have chosen text for your subject - message cannot be empty.';
 	}	
 	
@@ -47,8 +47,7 @@ if (isset($_POST['cancel'])) {
 		$_SESSION['errors'][] = 'You have chosen to post a Signlink message - this requires that you submit two files: a flash file and a .flv file.';
 		
 	} else if ($_POST['message'] == "video") {
-		$ext = explode('.', $_FILES['vmsg-file']['tmp_name']);
-		$ext = $ext[1];
+		$ext = end(explode('.', $_FILES['vmsg-file']['name']));
 		if (!in_array($ext, $filetypes_video)) {
 			$_SESSION['errors'][] = 'You have chosen to post a video message - invalid file format.';
 		}
@@ -60,22 +59,18 @@ if (isset($_POST['cancel'])) {
 	
 	if (!isset($_SESSION['errors'])) {
 
+		//prepare to insert into db
 		switch ($_POST['subject']) {
 			case 'image':
 				$subject = '';
-				$subject_file = $addslashes($_FILES['isub-file']['name']);
 				$subject_alt = $addslashes(htmlspecialchars($_POST['isub-alt']));
 				break;
 			case 'video':
 				$subject = '';
-				$subject_file = $addslashes($_FILES['vsub-file']['name']);
 				$subject_alt = $addslashes(htmlspecialchars($_POST['vsub-alt']));
-
-				$save_func = 'save_video';
 				break;
 			case 'text':
 				$subject = $addslashes(htmlspecialchars($_POST['sub-text']));
-				$subject_file = '';
 				$subject_alt = '';
 				break;
 		}
@@ -83,17 +78,14 @@ if (isset($_POST['cancel'])) {
 		switch ($_POST['message']) {
 			case 'signlink':
 				$message = $addslashes($_FILES['sl1msg-file']['name']);
-				$mesage_file = $addslashes($_FILES['sl2msg-file']['name']);
 				$message_alt = '';
 				break;
 			case 'video':
 				$message = '';
-				$mesage_file = $addslashes($_FILES['vmsg-file']['name']);
 				$message_alt = $addslashes(htmlspecialchars($_POST['vmsg-alt']));
 				break;
 			case 'text':
 				$message = $addslashes(htmlspecialchars($_POST['msg-text']));
-				$mesage_file = '';
 				$message_alt = '';
 				break;
 		}
@@ -101,13 +93,13 @@ if (isset($_POST['cancel'])) {
 		$forum_id = intval($_POST['f']);
 		$now = date('Y-m-d G:i:s');
 
-		$sql = "INSERT INTO forums_posts VALUES (NULL, '$parent_id', '$_SESSION[member_id]', '$forum_id', '$_SESSION[login]', '$now', 0, '$subject', '$subject_file', '$subject_alt', '$message', '$message_file', '$message_alt', NOW(),0, 0)";
+		//insert into db
+		$sql = "INSERT INTO forums_posts VALUES (NULL, '$parent_id', '$_SESSION[member_id]', '$forum_id', '$_SESSION[login]', '$now', 0, '$subject', '$subject_alt', '$message', '$message_alt', NOW(),0, 0)";
 
 		if (!$result = mysql_query($sql, $db)) {
 			$_SESSION['errors'][] = 'Database error.';
 		} else {
-
-			//edit 'last comment' for parent
+			//edit 'last comment' field for parent to be now
 			if ($parent_id) {
 				$sql = "UPDATE forums_posts SET last_comment='$now' WHERE post_id=$parent_id";
 				$result = mysql_query($sql, $db);
@@ -118,30 +110,30 @@ if (isset($_POST['cancel'])) {
 
 			switch ($_POST['subject']) {
 				case 'image':
-					$subject_alt = $addslashes(htmlspecialchars($_POST['isub-alt']));
-
 					if (is_uploaded_file($_FILES['isub-file']['tmp_name'])) {
-						$ext = end(explode('.',$_FILES['isub-file']['name']));
-						save_title_image('post', $_FILES['isub-file']['tmp_name'], $ext, $post_id);
+						save_image('post', 'title', 'isub-file', $post_id);
 					}
-
 					break;
 				case 'video':
-					$subject = '';
-					$subject_file = $addslashes($_FILES['vsub-file']['name']);
-					$subject_alt = $addslashes(htmlspecialchars($_POST['vsub-alt']));
-
-					$save_func = 'save_video';
-					break;
-				case 'text':
-					$subject = $addslashes(htmlspecialchars($_POST['sub-text']));
-					$subject_file = '';
-					$subject_alt = '';
+					if (is_uploaded_file($_FILES['vsub-file']['tmp_name'])) {
+						save_video('post', 'title', 'vsub-file', $post_id);
+					}
 					break;
 			}
 
-
-			//save_SLfile();
+			switch ($_POST['message']) {
+				case 'signlink':
+					if (is_uploaded_file($_FILES['sl1msg-file']['tmp_name']) && is_uploaded_file($_FILES['sl2msg-file']['tmp_name'])) {
+						save_signlink('post', 'message', 'sl1msg-file', $post_id);
+						save_signlink('post', 'message2', 'sl2msg-file', $post_id);
+					}
+					break;
+				case 'video':
+					if (is_uploaded_file($_FILES['vmsg-file']['tmp_name'])) {
+						save_video('post', 'message', 'vmsg-file', $post_id);
+					}
+					break;
+			}
 
 			//redirect
 			if ($parent_id) {
@@ -157,12 +149,12 @@ if (isset($_POST['cancel'])) {
 	}
 } 
 
-if (!$_SESSION['valid_user']) {
+/*if (!$_SESSION['valid_user']) {
 	$_SESSION['errors'][] = 'You must be logged in to post a message. Please <a href="login.php">login</a>.';
 	require(INCLUDE_PATH.'header.inc.php');
 	require(INCLUDE_PATH.'footer.inc.php');
 	exit;
-}
+}*/
 
 require(INCLUDE_PATH.'header.inc.php');
 
