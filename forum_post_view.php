@@ -16,8 +16,7 @@ $parent = intval($_REQUEST['parent']);
 	}
 //}
 
-$msg = get_message('message', $parent);
-//returns array of poster, date, message
+$msg = get_message($parent);  //returns array of poster, date, html-encoded message
 
 ?>
 
@@ -27,15 +26,15 @@ $msg = get_message('message', $parent);
 		<div id="post">
 			
 			<div style="float:left;font-size:smaller;">
-					<img src="images/user_female.png" style="margin-bottom:-5px;" /><?php echo $login; ?>
+					<img src="images/user_female.png" style="margin-bottom:-5px;" /><?php echo $msg[0]; ?>
 			</div>
 			<div style="float:right;padding-right:2px;font-size:smaller;">
-				<?php echo $date; ?>
+				<?php echo $msg[1]; ?>
 			</div>
 
 			<div style="clear:both; padding:10px; margin-bottom:7px;">
 				<?php 
-					echo $message;
+					echo $msg[2];
 				?>
 			</div>
 
