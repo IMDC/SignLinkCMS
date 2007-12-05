@@ -36,7 +36,7 @@ if(!function_exists('scandir')) {
 }
 
 /* returns html-encoded title (image or video or text) - things that have titles: forum, thread, page.  */
-function get_title($type, $id) {			
+function get_title($location, $id) {			
 	
 	global $db, $filetypes_video;
 	
@@ -46,7 +46,7 @@ function get_title($type, $id) {
 		$level .= "../";
 	}
 
-	switch ($type) {
+	switch ($location) {
 		case 'forum':
 			$sql = "SELECT title FROM forums WHERE forum_id=".$id;
 			$title_path = $level.'uploads/forums/'.$id.'/';
@@ -105,8 +105,8 @@ function get_title($type, $id) {
 	return $title;
 }
 
-function get_message($type, $id) {			
-	global $db, $filetypes_video;
+function get_message($id) {			
+	global $db, $filetypes_video, $filetypes_image;
 	
 	$level = '';
 	$depth = substr_count(INCLUDE_PATH, '/');
@@ -114,25 +114,69 @@ function get_message($type, $id) {
 		$level .= "../";
 	}
 
-	switch ($type) {
-		case 'forum':
-			$sql = "SELECT title FROM forums_posts WHERE post_id=".$id;
-			$title_path = $level.'uploads/forums/'.$id.'/';
-			break;
-		case 'post':
-			$sql = "SELECT subject, subject_alt FROM forums_posts WHERE post_id=".$id;
-			$title_path = $level.'uploads/posts/'.$id.'/';
-			break;
-		case 'page':
-			break;
-	}
+	$sql = "SELECT msg, msg_alt FROM forums_posts WHERE post_id=".$id;
+	$msg_path = $level.'uploads/posts/'.$id.'/';
 
 	$result = mysql_query($sql, $db);
 	if ($result) {
-		$row = mysql_fetch_row($result);
+		if (!$row = mysql_fetch_row($result)) {
+			echo 'No message.';
+			return;
+		}
+		$msg = array();
+		$msg[0] = $row['login'];
+		$msg[1] = date('h:ia | M j, y', strtotime($row['date']));
 
-		//$login= $row['login'];
-		//$date = date('h:ia | M j, y', strtotime($row['date']));
+		if (!empty($row[0])) {
+			//the msg is plain text
+			$msg[2] = $row[0];
+		} else {
+			//the msg is a file
+			
+			//get files
+			$dir_files = scandir($msg_path);
+
+			if(!empty($dir_files)) {
+				foreach ($dir_files as $dir_file) {
+					if (substr($dir_file,0, 7) == "message") {
+						$msg_file = $dir_file;
+						break;
+					}
+				}
+
+				$ext = end(explode('.',$msg_file));
+
+				if (in_array($ext, $filetypes_video)) {
+					$msg[2] = '<object classid="clsid:02BF25D5-8C17-4B23-BC80-D3488ABDDC6B"
+					id="clip" width="150" height="113" codebase="http://www.apple.com/qtactivex/qtplugin.cab">
+						<param name="src" value="'.$msg_path.$msg_file.'"/>
+						<param name="autoplay" value="false"/>
+						<param name="controller" value="true"/>
+						<param name="scale" value="tofit"/>
+						<embed src="'.$msg_path.$msg_file.'" width="150" height="113" name="clip"
+						autoplay="false" controller="true" enablejavascript="true" scale="tofit"
+						alt="Quicktime ASL video"
+						pluginspage="http://www.apple.com/quicktime/download/"
+						style="float:left;" />
+					</object>';
+				} else if (in_array($ext, $filetypes_image)) {
+					$msg[2] = '<img src="'.$msg_path.$msg_file.'" alt="'.$row[1].'" title="'.$row[1].'" style="vertical-align:middle;" />';
+				} else { //signlink
+					$msg[2] = '<object width="250" height="400"
+						classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000"
+						codebase="http://fpdownload.macromedia.com/pub/
+						shockwave/cabs/flash/swflash.cab#version=8,0,0,0">
+						<param name="movie" value="'.$msg_path.$msg_file.'"/>
+						<param name="autoplay" value="false"/>
+						<embed src="mp3player.swf" width="250" height="400"
+						type="application/x-shockwave-flash" pluginspage=
+						"http://www.macromedia.com/go/getflashplayer" />
+					</object>';		
+				}
+
+				return $msg;
+			}
+		}
 	} else {
 		echo 'No message.';
 	}
