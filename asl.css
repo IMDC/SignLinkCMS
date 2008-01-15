@@ -151,7 +151,6 @@ div.cat {
 	width: 180px;
 	padding:5px;
 	margin:10px;
-
 	border:1px solid black;
 }
 
@@ -172,13 +171,17 @@ div.cat .title {
 	margin-bottom:5px;
 }
 
-/* posts */
+.cat div.title:hover, .post div.title:hover, .cat div.title a:focus, .post div.title a:focus {
+	background-color:#efefef; 
+}
+
+/* forum posts page */
 
 div.post {
 	float:left;
 	text-align:center;
 	vertical-align:middle;
-	background-color: #D9EFDC;
+	background-color: #efefef;
 	width: 180px;
 	padding:5px;
 	margin:10px;
@@ -204,27 +207,41 @@ div.post .title {
 }
 
 /* post page */
-
-div.post-user {
-	float:left;
+#post {
+	background-color:#efefef;
 	padding:10px;
-	margin-right:15px;
-	text-align:center;
-	background-color: #efefef;
-
 }
-div.post-msg {
-	background-color: #efefef;
 
-	padding:10px;
+#post-info {
+	float:left;
+	width: 10em;
+}
+#post-msg {
+	margin-left: 11em;
 }
 
 div#replies {
+	margin-top:10px;
 }
 
 div#replies h3 {
-	background-color:black; 
-	color:white;
+	background-color:#ccc; 
+	margin-left:-10px;
+	margin-right:-10px;
+	font-size:small;
+	padding-left:10px;
+}
+
+div#replies table {
+	background-color: #efefef;
+	width:100%;
+	margin:0px;
+	padding:0px;
+}
+
+#replies table tr {
+	border:1px solid #ccc;
+	padding:5px;
 }
 
 /*#replies a:link, #replies a:visited, #replies a:hover {

@@ -67,8 +67,14 @@ if (isset($this_login, $this_password) && !isset($_SESSION['session_test'])) {
 		//mysql_query($sql, $db);
 
 		$_SESSION['feedback'][] = 'Successfully logged in.';
-		require(INCLUDE_PATH.'header.inc.php');
-		require(INCLUDE_PATH.'footer.inc.php');
+
+		if (isset($_POST['f'])) {
+			header('Location:forum_post_create.php?f='.$_POST['f']);
+		} else {
+			require(INCLUDE_PATH.'header.inc.php');
+			debug($_POST['f']);
+			require(INCLUDE_PATH.'footer.inc.php');
+		}
 		exit;	
 	} else {
 		$_SESSION['errors'][] = 'Invalid login.';
@@ -104,6 +110,8 @@ require(INCLUDE_PATH.'header.inc.php'); ?>
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
 		<input type="hidden" name="login_action" value="true" />
 		<input type="hidden" name="password_hidden" value="" />
+
+		<input type="hidden" name="f" value="<?php echo intval($_REQUEST['f']); ?>" />
 
 	<dl class="col-list" style="width:25%; margin-left:auto; margin-right:auto;">
 		<dt><label for="login">Login:</label></dt> 

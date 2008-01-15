@@ -149,12 +149,12 @@ if (isset($_POST['cancel'])) {
 	}
 } 
 
-/*if (!$_SESSION['valid_user']) {
-	$_SESSION['errors'][] = 'You must be logged in to post a message. Please <a href="login.php">login</a>.';
+if (!$_SESSION['valid_user']) {
+	$_SESSION['errors'][] = 'You must be logged in to post a message. Please <a href="login.php?f='.intval($_REQUEST['f']).'">login</a>.';
 	require(INCLUDE_PATH.'header.inc.php');
 	require(INCLUDE_PATH.'footer.inc.php');
 	exit;
-}*/
+}
 
 require(INCLUDE_PATH.'header.inc.php');
 
@@ -170,7 +170,9 @@ if(isset($_REQUEST['parent'])) {
 
 	<?php if (isset($_REQUEST['parent'])) { ?>
 		<input type="hidden" name="parent" value="<?php echo intval($_REQUEST['parent']); ?>" />
-		<input type="hidden" name="subject" value="Re:" />
+		<input type="hidden" name="subject" value="text" />
+		<input type="hidden" name="sub-text" value="Re: " />
+
 	<?php 
 	} ?>
 

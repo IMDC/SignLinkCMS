@@ -20,69 +20,52 @@ $msg = get_message($parent);  //returns array of poster, date, html-encoded mess
 
 ?>
 
-<h2 style="display:inline;"><a href="forum_posts.php?f=<?php echo intval($_GET['f']); ?>"><?php echo get_title('forum', intval($_GET['f'])); ?></a> > <?php echo get_title('post', $parent); ?></h2>
+<h2><a href="forum_posts.php?f=<?php echo intval($_GET['f']); ?>"><?php echo get_title('forum', intval($_GET['f'])); ?></a></h2>
 
-<div>		
-		<div id="post">
-			
-			<div style="float:left;font-size:smaller;">
-					<img src="images/user_female.png" style="margin-bottom:-5px;" /><?php echo $msg[0]; ?>
-			</div>
-			<div style="float:right;padding-right:2px;font-size:smaller;">
-				<?php echo $msg[1]; ?>
-			</div>
+<div id="post">		
+	<div id="post-info">
+		<?php echo $msg[0]; ?><br />
+		<img src="images/user_female.png" />
+	</div>
 
-			<div style="clear:both; padding:10px; margin-bottom:7px;">
-				<?php 
-					echo $msg[2];
-				?>
-			</div>
-
-
-			<div style="float:right;padding-right:2px;">
-				<a href="forum_post_create.php?f=<?php echo intval($_GET['f']); ?>&parent=<?php echo intval($_REQUEST['parent']); ?>">Reply</a> | <a href="">Edit</a>
-			</div>
+	<div id="post-msg">
+		<div style="float:right;">
+			<a href="forum_post_create.php?f=<?php echo intval($_GET['f']); ?>&parent=<?php echo intval($_REQUEST['parent']); ?>">Reply</a> | <a href="">Edit</a>
 		</div>
 
+		<h3 style="margin:0px;"><?php echo get_title('post', $parent); ?></h3>
+		<small><?php echo $msg[1]; ?></small><br />
+		<?php  echo $msg[2]; ?>
+	</div>
 	<br style="clear:both" />
 </div>
 
 
 <div id="replies">
-	<h3>Responses</h3>
-
-<?php
-$sql = "SELECT * FROM forums_posts WHERE forum_id=".intval($_REQUEST['f'])." AND parent_id=".intval($_REQUEST['parent'])." ORDER BY last_comment DESC";
-$result = mysql_query($sql, $db);
-if (mysql_num_rows($result)) { 
-	while ($row = mysql_fetch_assoc($result)) { ?>
-		<div style="background-color:#efefef; margin-bottom:10px; padding:3px;">
-
-		<div style="float:right;padding-right:2px;font-size:smaller;">
-			<?php echo date('h:ia | M j, y', strtotime($row['last_comment'])); ?>
-		</div>
-
+	<?php
+	$sql = "SELECT * FROM forums_posts WHERE forum_id=".intval($_REQUEST['f'])." AND parent_id=".intval($_REQUEST['parent'])." ORDER BY last_comment DESC";
+	$result = mysql_query($sql, $db);
+	if (mysql_num_rows($result)) { ?>
+		<table>
+		<tr style="background-color:black; color:white;">
+			<th>Reply</th>
+			<th>Author</th>
+			<th>Date</th>
+		</tr>
+		<?php 
+			while ($row = mysql_fetch_assoc($result)) { ?>
+			<tr>
+				<?php print_reply_link($row['post_id']); ?>
+				<td>
+					<?php echo date('M j Y, h:ia', strtotime($row['last_comment'])); ?>
+				</td>
+			</tr>
 		<?php
-		if(!empty($row['msg_file'])) {
-			$ext = explode('.',$row['msg_file']);
-			$ext = $ext[1];
-			
-			switch ($ext) {
-				case ('gif'||'png'||'jpeg'||'jpg' ):
-					echo '<a href="forum_post_view.php?f=3&parent=13">image</a>';
-					break;
-				case ('mov' || $file_type=='mp4' || $file_type=='avi'):
-					break;
-			}
-		} else {
-			echo $row['msg'];
 		}
-		echo '</div>';
+	} else {
+		echo "<p>None found.</p>";
 	}
-} else {
-	echo "<p>None found.</p>";
-}
-?>
+	?>
 
 </div>
 
