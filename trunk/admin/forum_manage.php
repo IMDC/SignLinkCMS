@@ -32,7 +32,7 @@ if (mysql_num_rows($result)) { ?>
 		//print forum row info
 		echo '<tr class="row'.$r.'">';
 		echo '<td>'.$title.'</td>'; 
-		echo '<td style="text-align:center;">'.$row['description'].'</td>';  //get parent id title
+		echo '<td>'.$row['description'].'</td>';  //get parent id title
 		echo '<td style="text-align:center;">'.$row['num_topics'].'</td>';
 		echo '<td style="text-align:center;">'.$row['num_posts'].'</td>';
 		echo '<td style="text-align:center;">'.$row['last_post'].'</td>';		

@@ -114,22 +114,22 @@ function get_message($id) {
 		$level .= "../";
 	}
 
-	$sql = "SELECT msg, msg_alt FROM forums_posts WHERE post_id=".$id;
+	$sql = "SELECT login, date, msg, msg_alt FROM forums_posts WHERE post_id=".$id;
 	$msg_path = $level.'uploads/posts/'.$id.'/';
 
 	$result = mysql_query($sql, $db);
 	if ($result) {
-		if (!$row = mysql_fetch_row($result)) {
+		if (!$row = mysql_fetch_assoc($result)) {
 			echo 'No message.';
 			return;
-		}
+		}		
 		$msg = array();
 		$msg[0] = $row['login'];
-		$msg[1] = date('h:ia | M j, y', strtotime($row['date']));
+		$msg[1] = date('h:ia M j, y', strtotime($row['date']));
 
-		if (!empty($row[0])) {
+		if (!empty($row['msg'])) {
 			//the msg is plain text
-			$msg[2] = $row[0];
+			$msg[2] = $row['msg'];
 		} else {
 			//the msg is a file
 			
@@ -173,14 +173,59 @@ function get_message($id) {
 						"http://www.macromedia.com/go/getflashplayer" />
 					</object>';		
 				}
-
-				return $msg;
 			}
 		}
+		return $msg;
 	} else {
 		echo 'No message.';
+		return;
 	}
 
+}
+
+
+function print_reply_link($id) {	
+	global $db, $filetypes_video, $filetypes_image;
+
+	$sql = "SELECT forum_id, login, date, msg, msg_alt FROM forums_posts WHERE post_id=".$id;
+	$result = mysql_query($sql, $db);
+	if ($result) {
+		if (!$row = mysql_fetch_assoc($result)) {
+			return 'No message.';
+		}		
+
+		if (!empty($row['msg'])) {
+			//the msg is plain text
+			$link = substr($row['msg'],0,30).'...';
+		} else {
+			//the msg is a file
+			$level = '';
+			$depth = substr_count(INCLUDE_PATH, '/');
+			for ($i=1; $i<$depth; $i++) {
+				$level .= "../";
+			}
+			
+			//get files
+			$dir_files = scandir($level.'uploads/posts/'.$id.'/');
+
+			//pick out the "message" file and check its extension
+			if (!empty($dir_files)) {
+				foreach ($dir_files as $dir_file) {
+					if (substr($dir_file,0, 7) == "message") {
+						$msg_file = $dir_file;
+						break;
+					}
+				}
+				$ext = end(explode('.',$msg_file));
+
+				if (in_array($ext, $filetypes_video)) {
+					$link = '<img src="images/film.png" alt="movie content" style="border:0px;" />';
+				}
+			}
+		}
+		echo '<td><a href="forum_post_view.php?f='.$row['forum_id'].'&parent='.$id.'">'.$link.'</a></td>';
+		echo '<td>'.$row['login'].'</td>';
+	}
 }
 
 

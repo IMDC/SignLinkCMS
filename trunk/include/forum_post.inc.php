@@ -35,37 +35,40 @@
 	var er_string = "";
 	var count = 0;
 
-	//check subject
-	if (document.form.subject[0].checked) {
-		if (document.getElementById('isub-file').value==null || document.getElementById('isub-file').value=="") {
-			er_text[count] = "Image subject file missing.";
-			count++;
-		}
-		if (document.getElementById('isub-alt').value==null || document.getElementById('isub-alt').value=="") {
-			er_text[count] = "Image subject alt text missing.";
-			count++;
-		}
+	//check subject if not a reply
 
-	} else if (document.form.subject[1].checked) {
-		if (document.getElementById('vsub-file').value==null || document.getElementById('vsub-file').value=="") {
-			er_text[count] = "Video subject file missing.";
-			count++;
-		}
-		if (document.getElementById('vsub-alt').value==null || document.getElementById('vsub-alt').value=="") {
-			er_text[count] = "Video subject alt text missing.";
-			count++;
-		}
+	if (typeof(document.form.subject) == "undefined") {
+		if (document.form.subject[0].checked) {
+			if (document.getElementById('isub-file').value==null || document.getElementById('isub-file').value=="") {
+				er_text[count] = "Image subject file missing.";
+				count++;
+			}
+			if (document.getElementById('isub-alt').value==null || document.getElementById('isub-alt').value=="") {
+				er_text[count] = "Image subject alt text missing.";
+				count++;
+			}
 
-	} else if (document.form.subject[2].checked) {
-		if (document.getElementById('sub-text').value==null || document.getElementById('sub-text').value=="") {
-			er_text[count] = "Subject text missing.";
+		} else if (document.form.subject[1].checked) {
+			if (document.getElementById('vsub-file').value==null || document.getElementById('vsub-file').value=="") {
+				er_text[count] = "Video subject file missing.";
+				count++;
+			}
+			if (document.getElementById('vsub-alt').value==null || document.getElementById('vsub-alt').value=="") {
+				er_text[count] = "Video subject alt text missing.";
+				count++;
+			}
+
+		} else if (document.form.subject[2].checked) {
+			if (document.getElementById('sub-text').value==null || document.getElementById('sub-text').value=="") {
+				er_text[count] = "Subject text missing.";
+				count++;
+			}
+		} else {
+			er_text[count] = "Subject missing.";
 			count++;
 		}
-	} else {
-		er_text[count] = "Subject missing.";
-		count++;
-	}
-    
+    }
+
 	//check message
 	if (document.form.message[0].checked) {
 		if (document.getElementById('sl1msg-file').value==null || document.getElementById('sl1msg-file').value=="" ||
