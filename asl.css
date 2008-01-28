@@ -244,6 +244,11 @@ div#replies table {
 	padding:5px;
 }
 
+#replies table td {
+	padding:2px;
+}
+
+
 /*#replies a:link, #replies a:visited, #replies a:hover {
 	color:white;
 }*/

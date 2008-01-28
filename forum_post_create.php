@@ -77,7 +77,7 @@ if (isset($_POST['cancel'])) {
 
 		switch ($_POST['message']) {
 			case 'signlink':
-				$message = $addslashes($_FILES['sl1msg-file']['name']);
+				$message = '';
 				$message_alt = '';
 				break;
 			case 'video':
@@ -99,15 +99,15 @@ if (isset($_POST['cancel'])) {
 		if (!$result = mysql_query($sql, $db)) {
 			$_SESSION['errors'][] = 'Database error.';
 		} else {
+			$post_id = mysql_insert_id();
+
 			//edit 'last comment' field for parent to be now
 			if ($parent_id) {
-				$sql = "UPDATE forums_posts SET last_comment='$now' WHERE post_id=$parent_id";
+				$sql = "UPDATE forums_posts SET last_comment='$now', num_comments=num_comments+1 WHERE post_id=$parent_id";
 				$result = mysql_query($sql, $db);
 			}
 
-			//save files
-			$post_id = mysql_insert_id();
-
+			//save files			
 			switch ($_POST['subject']) {
 				case 'image':
 					if (is_uploaded_file($_FILES['isub-file']['tmp_name'])) {
@@ -159,13 +159,13 @@ if (!$_SESSION['valid_user']) {
 require(INCLUDE_PATH.'header.inc.php');
 
 if(isset($_REQUEST['parent'])) {
-	echo '<h2 style="display:inline;">Reply to '.get_title('post', $_REQUEST['parent']).'</h2>';
+	echo '<h2>Reply to '.get_title('post', $_REQUEST['parent']).'</h2>';
 } else {
 	echo '<h2>Post New Topic</h2>';
 }
 ?>
 
-<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form" enctype="multipart/form-data">
+<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form" enctype="multipart/form-data" style="clear:both; padding-top:2px;">
 	<input type="hidden" name="f" value="<?php echo intval($_REQUEST['f']); ?>" />
 
 	<?php if (isset($_REQUEST['parent'])) { ?>

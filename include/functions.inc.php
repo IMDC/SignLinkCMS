@@ -114,16 +114,20 @@ function get_message($id) {
 		$level .= "../";
 	}
 
-	$sql = "SELECT login, date, msg, msg_alt FROM forums_posts WHERE post_id=".$id;
 	$msg_path = $level.'uploads/posts/'.$id.'/';
+	$sql = "SELECT login, date, msg, msg_alt FROM forums_posts WHERE post_id=".$id;
 
 	$result = mysql_query($sql, $db);
 	if ($result) {
-		if (!$row = mysql_fetch_assoc($result)) {
-			echo 'No message.';
-			return;
-		}		
 		$msg = array();
+
+		if (!$row = mysql_fetch_assoc($result)) {
+			$msg[0] = '';
+			$msg[1] = '';
+			$msg[2] = "No message.";
+			return $msg;
+		}		
+
 		$msg[0] = $row['login'];
 		$msg[1] = date('h:ia M j, y', strtotime($row['date']));
 
@@ -145,7 +149,6 @@ function get_message($id) {
 				}
 
 				$ext = end(explode('.',$msg_file));
-
 				if (in_array($ext, $filetypes_video)) {
 					$msg[2] = '<object classid="clsid:02BF25D5-8C17-4B23-BC80-D3488ABDDC6B"
 					id="clip" width="150" height="113" codebase="http://www.apple.com/qtactivex/qtplugin.cab">
@@ -162,13 +165,13 @@ function get_message($id) {
 				} else if (in_array($ext, $filetypes_image)) {
 					$msg[2] = '<img src="'.$msg_path.$msg_file.'" alt="'.$row[1].'" title="'.$row[1].'" style="vertical-align:middle;" />';
 				} else { //signlink
-					$msg[2] = '<object width="250" height="400"
+					$msg[2] = '<object width="565" height="415"
 						classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000"
 						codebase="http://fpdownload.macromedia.com/pub/
 						shockwave/cabs/flash/swflash.cab#version=8,0,0,0">
 						<param name="movie" value="'.$msg_path.$msg_file.'"/>
 						<param name="autoplay" value="false"/>
-						<embed src="mp3player.swf" width="250" height="400"
+						<embed src="'.$msg_path.$msg_file.'" width="565" height="415"
 						type="application/x-shockwave-flash" pluginspage=
 						"http://www.macromedia.com/go/getflashplayer" />
 					</object>';		
@@ -191,7 +194,8 @@ function print_reply_link($id) {
 	$result = mysql_query($sql, $db);
 	if ($result) {
 		if (!$row = mysql_fetch_assoc($result)) {
-			return 'No message.';
+			echo 'No message.';
+			return;
 		}		
 
 		if (!empty($row['msg'])) {
@@ -217,9 +221,10 @@ function print_reply_link($id) {
 					}
 				}
 				$ext = end(explode('.',$msg_file));
-
 				if (in_array($ext, $filetypes_video)) {
 					$link = '<img src="images/film.png" alt="movie content" style="border:0px;" />';
+				} else if ($ext=="swf") {
+					$link = '<img src="images/television.png" alt="signlink content" style="border:0px;" />';
 				}
 			}
 		}
@@ -362,10 +367,16 @@ id - id of the forum, post, or page
 
 */
 
-function save_signlink ($location, $type, $tmp_file, $id) {
+function save_signlink ($location, $type, $file, $id) {
 	global $db, $_FILES;
 
-	$ext = end(explode('.',$tmp_file));
+	$ext = end(explode('.',$_FILES[$file]['name']));
+
+	if ($ext == "flv") {
+		$filename = $_FILES[$file]['name'];
+	} else {
+		$filename = $type.'.'.$ext;
+	}
 
 	$level = '';
 	$depth = substr_count(INCLUDE_PATH, '/');
@@ -375,16 +386,22 @@ function save_signlink ($location, $type, $tmp_file, $id) {
 
 	switch ($location) {
 		case 'forum':
-			$newfile = $level.UPLOAD_DIR.'forums/'.$id.'/'.$type.'.'.$ext;
+			if(!file_exists($level.UPLOAD_DIR.'forums/'.$id.'/')) {
+				mkdir($level.UPLOAD_DIR.'forums/'.$id.'/');
+			}
+			$newfile = $level.UPLOAD_DIR.'forums/'.$id.'/'.$filename;
 			break;
 		case 'post':
-			$newfile = $level.UPLOAD_DIR.'posts/'.$id.'/'.$type.'.'.$ext;
+			if(!file_exists($level.UPLOAD_DIR.'posts/'.$id.'/')) {
+				mkdir($level.UPLOAD_DIR.'posts/'.$id.'/');
+			}
+			$newfile = $level.UPLOAD_DIR.'posts/'.$id.'/'.$filename;
 			break;
 		case 'page':
 			break;
 	}
 
-	if (!copy($newfile, $tmp_file)) {
+	if (!move_uploaded_file($_FILES[$file]['tmp_name'], $newfile)) {
 	  print "Error Uploading File.";
 	  exit;
 	} 

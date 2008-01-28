@@ -24,23 +24,22 @@ if (mysql_num_rows($result)) {
 ?>
 		<div class="post">
 			
-			<div style="padding-right:2px;font-size:smaller;">
+			<!-- div style="padding-right:2px;font-size:smaller;">
 				<div style="float:left;">
 					<?php echo date('g:ia, M j, y', strtotime($row['date'])); ?>
 				</div>
 				<div style="float:right;">
 					<img src="images/user_female.png" style="margin-bottom:-5px;" /><?php echo $row['login']; ?>	
 				</div>
-			</div>
+			</div-->
 
 			<a href="forum_post_view.php?f=<?php echo $row['forum_id']; ?>&parent=<?php echo $row['post_id']; ?>"><div class="title"><?php echo $title; ?></div></a>
 
 			<div>
-				<div style="text-align:left;padding-right:2px;">
+				<div style="text-align:left;padding-right:2px; font-size:smaller;">
 					<img src="images/comments.png" style="margin-bottom:-5px;" /> <?php echo $row['num_comments']; ?>
 					<img src="images/magnifier.png" style="margin-bottom:-5px;" /><?php echo $views; ?>
-				</div>
-				<div style="text-align:right;font-size:smaller;">
+					<br />
 					Last post: <?php echo date('g:ia, M j, y', strtotime($row['last_comment'])); ?>
 				</div>
 			</div>

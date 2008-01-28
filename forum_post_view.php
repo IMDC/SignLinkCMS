@@ -34,8 +34,10 @@ $msg = get_message($parent);  //returns array of poster, date, html-encoded mess
 		</div>
 
 		<h3 style="margin:0px;"><?php echo get_title('post', $parent); ?></h3>
+		<div style="clear:both; width:100%;">
 		<small><?php echo $msg[1]; ?></small><br />
 		<?php  echo $msg[2]; ?>
+		</div>
 	</div>
 	<br style="clear:both" />
 </div>
@@ -63,7 +65,7 @@ $msg = get_message($parent);  //returns array of poster, date, html-encoded mess
 		<?php
 		}
 	} else {
-		echo "<p>None found.</p>";
+		echo "<p>No replies yet.</p>";
 	}
 	?>
 
