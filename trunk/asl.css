@@ -46,13 +46,11 @@ h1, h2 {
 #main-menu {
 	clear:both;
 	width:100%;
-	padding:0px;
 }
 
 #main-menu ul {
 	list-style:none;
 	margin:0px;
-	padding:5px;
 	padding-left:10px;
 }
 

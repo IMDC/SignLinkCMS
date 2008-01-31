@@ -3,11 +3,13 @@ define('INCLUDE_PATH', '../include/');
 require(INCLUDE_PATH.'vitals.inc.php');
 //admin_authenticate(AT_ADMIN_PRIV_USERS);
 
+
 if (isset($_POST['cancel'])) {
 	header('Location: '.INCLUDE_PATH.'../admin/forum_manage.php');
 	exit;
 } else if (isset($_POST['submit'])) {
 	//error check
+
 	if (empty($_POST['title-txt']) && empty($_FILES['title-file'])) {
 		$_SESSION['errors'][] = 'Please enter a title.';
 	} else {
