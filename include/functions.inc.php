@@ -70,7 +70,7 @@ function get_title($location, $id) {
 			//the title is a file
 			
 			//get files
-			$dir_files = scandir($title_path);
+			$dir_files = @scandir($title_path);
 
 			if(!empty($dir_files)) {
 			
@@ -138,7 +138,7 @@ function get_message($id) {
 			//the msg is a file
 			
 			//get files
-			$dir_files = scandir($msg_path);
+			$dir_files = @scandir($msg_path);
 
 			if(!empty($dir_files)) {
 				foreach ($dir_files as $dir_file) {
@@ -210,7 +210,7 @@ function print_reply_link($id) {
 			}
 			
 			//get files
-			$dir_files = scandir($level.'uploads/posts/'.$id.'/');
+			$dir_files = @scandir($level.'uploads/posts/'.$id.'/');
 
 			//pick out the "message" file and check its extension
 			if (!empty($dir_files)) {
