@@ -11,7 +11,7 @@ require(INCLUDE_PATH.'header.inc.php');
 $sql = "SELECT * FROM forums WHERE 1 ORDER BY title ASC";
 $result = mysql_query($sql, $db);
 if (mysql_num_rows($result)) { 
-	echo '<div class="block_container">';
+	echo '<div id="block-container">';
 	while ($row = mysql_fetch_assoc($result)) {
 		$title = get_title('forum', $row['forum_id']);
 
@@ -38,9 +38,16 @@ if (mysql_num_rows($result)) {
 				//echo '<div style="float:right;"><a href="forum_posts.php?f='.$row['forum_id'].'"><img src="images/arrow_right.png" alt="enter" /></a></div>';
 
 		echo '</div>';
-	}
-	echo '</div>';
 
+	} ?>
+		<br style="clear:both" />
+		<div id="paging">
+			Page: 1, 2, 3...
+		</div>
+	
+	</div>
+
+<?php
 } else {
 	echo "None found.";
 }

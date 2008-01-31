@@ -7,32 +7,35 @@
 
 <div id="container">
 
-	<div id="header">
-		<h1>SignLink Project</h1>
-	</div>
+	<div>
+		<div id="header">
+			<h1>SignLink Project</h1>
+		</div>
 
-	<div id="top">
-		<div id="menu-left">
+		<div id="menu-right">
 			<ul>
-				<li><a href="index.php">main</a> | </li>
-				<li><a href="forum_main.php">forums</a></li>
+				<li>
+				<?php 
+				if ($_SESSION['valid_user']) {
+					echo '<strong>'.$_SESSION['login'].'</strong> - <a href="login.php">logout</a>'; 
+				} else {
+					echo '<a href="login.php">login</a>'; 
+				}		
+				?> | </li>			
+				<li><a href="">help</a></li>
 			</ul>
 		</div>
-		<div id="menu-right">
-			<?php 
-			if ($_SESSION['valid_user']) {
-				echo '<strong>'.$_SESSION['login'].'</strong> - <a href="login.php">logout</a>'; 
-			} else {
-				echo '<a href="login.php">login</a>'; 
-			}		
-			?>
-			
-			| <a href="">help</a>
-		</div>
 	</div>
+
+	<div id="main-menu">
+		<ul>
+			<li><a href="index.php">main</a> | </li>
+			<li><a href="forum_main.php">forums</a></li>
+		</ul>
+	</div>
+
+
 	<div id="content">
-
-
 	<?php 
 	if (isset($_SESSION['errors'])) {
 		echo '<div class="error"><strong>Error:</strong><br />';

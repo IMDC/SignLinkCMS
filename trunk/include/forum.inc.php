@@ -6,16 +6,16 @@
 		<span class="bold">Video <span class="italic">or</span> Image</span>
 		<div class="row">
 			<?php 
-				$img_file = '../uploads/'. $_POST['title_file'];
-				if (!empty($_POST['title_file']) && file_exists($img_file)) {
+				$img_file = '../uploads/'. $_POST['title-file'];
+				if (!empty($_POST['title-file']) && file_exists($img_file)) {
 					echo '<img src="'.$img_file.'" /> (<a href="forum_delete.php?id='.$_REQUEST['fid'].'&d=title">Delete</a>)<br /><br />';
 				}
 			?>
-			Upload: <input type="file" name="title_file" /> 
+			Upload: <input type="file" name="title-file" /> 
 		</div>
 			<span class="bold">Text</span>
 			<div class="row">
-				<input type="text" name="title_txt" size="100" value="<?php echo $_POST['title_txt']; ?>" /><br />
+				<input type="text" name="title-txt" size="100" value="<?php echo $_POST['title-txt']; ?>" /><br />
 				(for browser page title, alternative text for the title image (if provided), or the title of the page if an image or video has not been provided) 
 			</div>
 </fieldset>
