@@ -14,7 +14,7 @@ if (INCLUDE_PATH !== 'NULL') {
 		trigger_error('VITAL#Unable to connect to db.', E_USER_ERROR);
 		exit;
 	}
-	if (!@mysql_select_db('signlink', $db)) {
+	if (!@mysql_select_db(DB_NAME, $db)) {
 		trigger_error('VITAL#DB connection established, but database "'.DB_HOST.'" cannot be selected.', E_USER_ERROR);
 		exit;
 	}
