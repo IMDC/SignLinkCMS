@@ -17,7 +17,7 @@
 				<li>
 				<?php 
 				if ($_SESSION['valid_user']) {
-					echo '<strong>'.$_SESSION['login'].'</strong> - <a href="login.php">logout</a>'; 
+					echo '<strong>'.$_SESSION['login'].'</strong> - <a href="logout.php">logout</a>'; 
 				} else {
 					echo '<a href="login.php">login</a>'; 
 				}		
