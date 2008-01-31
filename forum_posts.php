@@ -22,7 +22,7 @@ if (mysql_num_rows($result)) {
 		$views = mysql_fetch_assoc($result2);
 		$views = intval($views['views']);
 ?>
-		<div class="post">
+		<div class="cat">
 			
 			<!-- div style="padding-right:2px;font-size:smaller;">
 				<div style="float:left;">
@@ -40,7 +40,7 @@ if (mysql_num_rows($result)) {
 					<img src="images/comments.png" style="margin-bottom:-5px;" /> <?php echo $row['num_comments']; ?>
 					<img src="images/magnifier.png" style="margin-bottom:-5px;" /><?php echo $views; ?>
 					<br />
-					Last post: <?php echo date('g:ia, M j, y', strtotime($row['last_comment'])); ?>
+					Last: <?php echo date('g:ia, M j, y', strtotime($row['last_comment'])); ?>
 				</div>
 			</div>
 		</div>

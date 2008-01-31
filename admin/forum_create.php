@@ -8,11 +8,11 @@ if (isset($_POST['cancel'])) {
 	exit;
 } else if (isset($_POST['submit'])) {
 	//error check
-	if (empty($_POST['title_txt']) && empty($_FILES['title_file'])) {
+	if (empty($_POST['title-txt']) && empty($_FILES['title-file'])) {
 		$_SESSION['errors'][] = 'Please enter a title.';
 	} else {
-		$title = $addslashes($_POST['title_txt']);
-		$title_file = $addslashes($_POST['title_file']);
+		$title = $addslashes($_POST['title-txt']);
+		$title_file = $addslashes($_POST['title-file']);
 	}
 	
 	if (isset($_POST['descrip'])) {
@@ -26,9 +26,8 @@ if (isset($_POST['cancel'])) {
 
 		$fid = mysql_insert_id();
 
-		$ext = end(explode('.',$_FILES[$subject_source]['name']));
-		if (is_uploaded_file($_FILES['title_file']['tmp_name'])) {	
-			save_title_image('forum', $_FILES['title_file']['tmp_name'], $ext, $fid);
+		if (is_uploaded_file($_FILES['title-file']['tmp_name'])) {	
+			save_image('forum', 'title', 'title-file', $fid);
 		}
 	
 		//redirect

@@ -85,12 +85,12 @@ function get_title($location, $id) {
 
 				if (in_array($ext, $filetypes_video)) {
 					$title = '<object classid="clsid:02BF25D5-8C17-4B23-BC80-D3488ABDDC6B"
-					id="clip" width="150" height="113" codebase="http://www.apple.com/qtactivex/qtplugin.cab">
+					id="clip" width="BLOCK_WIDTH" height="113" codebase="http://www.apple.com/qtactivex/qtplugin.cab">
 						<param name="src" value="'.$title_path.$title_file.'"/>
 						<param name="autoplay" value="false"/>
 						<param name="controller" value="true"/>
 						<param name="scale" value="tofit"/>
-						<embed src="'.$title_path.$title_file.'" width="150" height="113" name="clip"
+						<embed src="'.$title_path.$title_file.'" width="145" height="109" name="clip"
 						autoplay="false" controller="true" enablejavascript="true" scale="tofit"
 						alt="Quicktime ASL video"
 						pluginspage="http://www.apple.com/quicktime/download/"
@@ -151,12 +151,12 @@ function get_message($id) {
 				$ext = end(explode('.',$msg_file));
 				if (in_array($ext, $filetypes_video)) {
 					$msg[2] = '<object classid="clsid:02BF25D5-8C17-4B23-BC80-D3488ABDDC6B"
-					id="clip" width="150" height="113" codebase="http://www.apple.com/qtactivex/qtplugin.cab">
+					id="clip" width="BLOCK_WIDTH" height="113" codebase="http://www.apple.com/qtactivex/qtplugin.cab">
 						<param name="src" value="'.$msg_path.$msg_file.'"/>
 						<param name="autoplay" value="false"/>
 						<param name="controller" value="true"/>
 						<param name="scale" value="tofit"/>
-						<embed src="'.$msg_path.$msg_file.'" width="150" height="113" name="clip"
+						<embed src="'.$msg_path.$msg_file.'" width="BLOCK_WIDTH" height="113" name="clip"
 						autoplay="false" controller="true" enablejavascript="true" scale="tofit"
 						alt="Quicktime ASL video"
 						pluginspage="http://www.apple.com/quicktime/download/"
@@ -247,6 +247,7 @@ function save_image($location, $type, $file, $id) {
 	
 	$tmp_file = $_FILES[$file]['tmp_name'];
 	$ext = end(explode('.',$_FILES[$file]['name']));
+
 	$level = '';
 	$depth = substr_count(INCLUDE_PATH, '/');
 	for ($i=1; $i<$depth; $i++) {
@@ -273,11 +274,11 @@ function save_image($location, $type, $file, $id) {
 	//if image, resize 
 	list($width, $height) = getimagesize($tmp_file); 
 
-	if ($width>150 || $height>150) {
-		if ($width >= $height && $width > 150) {
-			$percent = 150/$width;
-		} else if ($height > $width && $height > 150) {
-			$percent = 150/$height;
+	if ($width>BLOCK_WIDTH || $height>BLOCK_WIDTH) {
+		if ($width >= $height && $width > BLOCK_WIDTH) {
+			$percent = BLOCK_WIDTH/$width;
+		} else if ($height > $width && $height > BLOCK_WIDTH) {
+			$percent = BLOCK_WIDTH/$height;
 		} 
 
 		$newwidth = round($width * $percent);

@@ -2,15 +2,14 @@
 
 body, html {
 	padding:0px;
-	margin:0px;
 	height:100%;
 }
 
 body {
-	background-color: #E0DFDF;
-	font-family: Arial, Helvetica, sans-serif;
+	font-family: Verdana, Arial, sans-serif;
 	font-size: smaller;
 	line-height: 150%;
+	background-color: #F5F9FE;
 }
 
 table {
@@ -19,9 +18,13 @@ table {
 
 #container {
 	background-color: white;
-	margin-right: 10%;
-	border-left: 1px solid #9599A1;
-	border-right: 1px solid #9599A1;
+	border: 1px solid #9599A1;
+	
+	margin-left:auto;
+	margin-right:auto;
+	width:760px;
+	padding-left:10px;
+	padding-right:10px;
 
 	min-height: 100%;
 	position: relative;
@@ -30,46 +33,42 @@ table {
 }
 
 #header {
-	background-color: #91A9D5;
-	color:black;
-	height: 5em;
-	margin: 0px;
-}
-
-#header h1 {
-	margin:0px;
-	padding-left:10px;
-	padding-top:20px;
-}
-
-#top {
-	margin: 0px;
-	padding: 2px;
-	height: 1.2em;
-	border-bottom: 1px solid #9599A1;
-	line-height:100%;
-}
-
-#menu-left {
 	float:left;
+	color:black;
+	margin: 0px;
+	padding-left:10px;
 }
 
-#menu-left ul {
-	display:inline;
+h1, h2 {
+	color: #2D5E9B;
+}
+
+#main-menu {
+	clear:both;
+	width:100%;
+	padding:0px;
+}
+
+#main-menu ul {
 	list-style:none;
 	margin:0px;
-	padding-left:5px;
+	padding:5px;
+	padding-left:10px;
 }
 
-#menu-left li {
+#menu-right ul {
+	float:right;
+	list-style:none;
+	margin:0px;
+	padding-right:10px;
+	padding-top:10px;
+}
+
+#main-menu li, #menu-right li {
 	display:inline;
 	list-style:none;
 }
 
-#menu-right {
-	float:right;
-	margin-right:5px;
-}
 
 #page-menu {
 	list-style:none;
@@ -103,6 +102,7 @@ table {
 }
 
 #footer {
+	font-size:smaller;
 	color:black;
 	text-align: center;
 
@@ -143,15 +143,29 @@ table#cats td {
 	padding:3px;
 }
 
+#block-container {
+		width:auto;
+
+	margin-left:auto;
+	margin-right:auto;
+
+}
+
+#paging {
+	text-align:right;
+	font-size: smaller;
+	padding-right:10px;
+}
+
 div.cat {
 	float:left;
 	text-align:center;
 	vertical-align:middle;
 	background-color: #efefef;
-	width: 180px;
+	width: 160px;
 	padding:5px;
-	margin:10px;
-	border:1px solid black;
+	margin:6px;
+	border:1px solid #9A9A9A;
 }
 
 div.cat img {
@@ -164,10 +178,10 @@ div.cat object {
 
 div.cat .title {
 	background-color:white; 
-	height:150px; 
+	height:140px; 
 	clear:both; 
-	padding:10px; 
-	border:1px solid #9A9A9A;
+	padding:5px; 
+	border:1px solid #ccc;
 	margin-bottom:5px;
 }
 
