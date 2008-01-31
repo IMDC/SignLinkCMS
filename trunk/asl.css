@@ -122,6 +122,15 @@ a:hover {
 	color: blue;
 }
 
+#content a:link, #content a:visited {
+	text-decoration: underline;
+	color: #11568B;
+}
+#content a:hover {
+	text-decoration: none;
+	color: blue;
+}
+
 /* forums */
 
 /* category page */
@@ -406,7 +415,13 @@ div.feedback {
 dl.col-list {  
 	margin:0px;
 } 
-dl.col-list dt {  
+
+dl.col-list dt { 
+	margin-left:20px;
+
+}
+
+/* dl.col-list dt { 
 	float: left;  
 	font-weight: bold;  
 	text-align: right;  
@@ -415,10 +430,18 @@ dl.col-list dt {
 	vertical-align: middle; 
 	width:5em;
 } 
-dl.col-list dd {  
-	margin-left:5em;
+dl.col-list dd { 
+	margin-left:6em;
 	margin-bottom: 5px;  
 	clear: right;  
 	padding: 5px 0px 5px 10px;  
 	text-align:left;
+} */
+
+/*buttons */
+input.button {
+	border:1px solid black;
+	background-color: #efefef;
+	padding-left:10px;
+	padding-right:10px;
 }

@@ -68,11 +68,10 @@ if (isset($this_login, $this_password) && !isset($_SESSION['session_test'])) {
 
 		$_SESSION['feedback'][] = 'Successfully logged in.';
 
-		if (isset($_POST['f'])) {
+		if (isset($_POST['f']) && !empty($_POST['f'])) {
 			header('Location:forum_post_create.php?f='.$_POST['f']);
 		} else {
 			require(INCLUDE_PATH.'header.inc.php');
-			debug($_POST['f']);
 			require(INCLUDE_PATH.'footer.inc.php');
 		}
 		exit;	
@@ -107,22 +106,23 @@ require(INCLUDE_PATH.'header.inc.php'); ?>
 </script>
 
 <h2>Login</h2>
+
+<p><a href="register.php">Register</a> for a new account or use the <a href="password_reminder.php">Password Reminder</a> if you've forgotten your login information.</p>
+
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
 		<input type="hidden" name="login_action" value="true" />
 		<input type="hidden" name="password_hidden" value="" />
 
 		<input type="hidden" name="f" value="<?php echo intval($_REQUEST['f']); ?>" />
 
-	<dl class="col-list" style="width:25%; margin-left:auto; margin-right:auto;">
+	<dl class="col-list" style="width:33%; margin-left:auto; margin-right:auto;">
 		<dt><label for="login">Login:</label></dt> 
 			<dd><input name="login" type="text" id="login" value="<?php echo $_SERVER['login']; ?>" /></dd>
 		<dt><label for="pswd">Password:</label></dt> 
 			<dd><input name="password" type="password" id="pswd" value="" /></dd>
 	</dl>
 	<div style="text-align:center"><label><input type="checkbox" name="autologin" value="1" /> keep me logged-in</label><br /><br />
-	<input type="submit" name="submit" value="Submit" /></div>
+	<input type="submit" name="submit" value="Submit" class="button" /></div>
 </form>
-
-<p style="text-align:center;">If you do not yet have a login, please <a href="register.php">register</a> an account.</p>
 
 <?php require(INCLUDE_PATH.'footer.inc.php'); ?>
