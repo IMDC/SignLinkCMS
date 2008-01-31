@@ -7,20 +7,24 @@
 
 <div id="container">
 
-	<div id="header">
-		<h1>SignLink Project - Administration</h1>
-	</div>
-
-	<div id="top">
-		<div id="menu-left">
+	<div>
+		<div id="header">
+			<h1>SignLink Project - Administration</h1>
+		</div>
+		<div id="menu-right">
 			<ul>
-				<li><a href="index.php">main</a> | </li>
-				<li><a href="page_manage.php">pages</a> | </li>
-				<li><a href="forum_manage.php">forums</a> | </li>
-				<li><a href="settings.php">settings</a></li>
+				<li><a href="">help</a></li>
 			</ul>
 		</div>
-		<div id="menu-right"><a href="">help</a></div>
+	</div>
+
+	<div id="main-menu">
+		<ul>
+			<li><a href="index.php">main</a> | </li>
+			<li><a href="page_manage.php">pages</a> | </li>
+			<li><a href="forum_manage.php">forums</a> | </li>
+			<li><a href="settings.php">settings</a></li>
+		</ul>
 	</div>
 	<div id="content">
 
