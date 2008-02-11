@@ -10,7 +10,7 @@ require(INCLUDE_PATH.'header.inc.php');
 <?php
 $sql = "SELECT * FROM forums WHERE 1 ORDER BY subject ASC";
 $result = @mysql_query($sql, $db);
-if (mysql_num_rows($result)) { 
+if (@mysql_num_rows($result)) { 
 	echo '<div id="block-container">';
 	while ($row = mysql_fetch_assoc($result)) {
 		$title = get_title('forum', $row['forum_id']);
