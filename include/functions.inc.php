@@ -48,7 +48,7 @@ function get_title($location, $id) {
 
 	switch ($location) {
 		case 'forum':
-			$sql = "SELECT title FROM forums WHERE forum_id=".$id;
+			$sql = "SELECT subject, subject_alt FROM forums WHERE forum_id=".$id;
 			$title_path = $level.'uploads/forums/'.$id.'/';
 			break;
 		case 'post':
@@ -228,8 +228,8 @@ function print_reply_link($id) {
 				}
 			}
 		}
-		echo '<td><a href="forum_post_view.php?f='.$row['forum_id'].'&parent='.$id.'">'.$link.'</a></td>';
-		echo '<td>'.$row['login'].'</td>';
+		echo '<td><a href="forum_post_view.php?f='.$row['forum_id'].'&p='.$id.'">'.$link.'</a></td>';
+		echo '<td style="text-align:center;">'.$row['login'].'</td>';
 	}
 }
 
@@ -243,7 +243,7 @@ id - id of the forum, post, or page
 
 */
 function save_image($location, $type, $file, $id) {
-	global $db, $_FILES;
+	global $db;
 	
 	$tmp_file = $_FILES[$file]['tmp_name'];
 	$ext = end(explode('.',$_FILES[$file]['name']));
@@ -326,7 +326,7 @@ id - id of the forum, post, or page
 
 */
 function save_video($location, $type, $file, $id) {
-	global $db, $_FILES;
+	global $db;
 
 	$ext = end(explode('.',$_FILES[$file]['name']));
 	$level = '';
@@ -369,7 +369,7 @@ id - id of the forum, post, or page
 */
 
 function save_signlink ($location, $type, $file, $id) {
-	global $db, $_FILES;
+	global $db;
 
 	$ext = end(explode('.',$_FILES[$file]['name']));
 
@@ -406,6 +406,25 @@ function save_signlink ($location, $type, $file, $id) {
 	  print "Error Uploading File.";
 	  exit;
 	} 
+}
+
+function check_upload($varname) {
+
+	switch ($_FILES[$varname]['error']) {  
+		case 1:
+			   $_SESSION['errors'][] = 'The file is bigger than this PHP installation allows';
+			   break;
+		case 2:
+			   $_SESSION['errors'][] = 'The file is bigger than this form allows';
+			   break;
+		case 3:
+			   $_SESSION['errors'][] = 'Only part of the file was uploaded';
+			   break;
+		case 4:
+			   $_SESSION['errors'][] = 'No file was uploaded';
+			   break;
+	}
+	return;
 }
 
 

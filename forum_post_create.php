@@ -2,21 +2,24 @@
 define('INCLUDE_PATH', 'include/');
 require(INCLUDE_PATH.'vitals.inc.php');
 
-if (isset($_POST['parent'])) {
-	$parent_id = intval($_POST['parent']);
+if (isset($_POST['p'])) {
+	$parent_id = intval($_POST['p']);
 } else {
 	$parent_id = 0;
 }
 
 if (isset($_POST['cancel'])) {
 	if ($parent_id) {
-		header('Location: forum_post_view.php?f='.intval($_POST['f']).'&parent='.$parent_id);
+		header('Location: forum_post_view.php?f='.intval($_POST['f']).'&p='.$parent_id);
 	} else {
 		header('Location: forum_posts.php?f='.intval($_POST['f']));
 	}
 	exit;
 
-} else if ($_POST['f']) {
+} else if ($_POST['f'] || $_GET['processed']) {
+	if(empty($_POST)) {
+		$_SESSION['errors'][] = 'File too large.';
+	}
 
 	//error check subject
 	if (empty($_POST['subject']) || (empty($_FILES['isub-file']['tmp_name']) && empty($_FILES['vsub-file']['tmp_name']) && empty($_POST['sub-text'])) ) {
@@ -105,7 +108,14 @@ if (isset($_POST['cancel'])) {
 			if ($parent_id) {
 				$sql = "UPDATE forums_posts SET last_comment='$now', num_comments=num_comments+1 WHERE post_id=$parent_id";
 				$result = mysql_query($sql, $db);
+				$num_topics = '';
+			} else {
+				$num_topics = ", num_topics=num_topics+1";
 			}
+			
+			//update info for forum (last post, num posts, num topics)
+			$sql = "UPDATE forums SET last_post='$now', num_posts=num_posts+1 $num_topics WHERE forum_id=$forum_id";
+			$result = mysql_query($sql, $db);
 
 			//save files			
 			switch ($_POST['subject']) {
@@ -138,7 +148,7 @@ if (isset($_POST['cancel'])) {
 			//redirect
 			if ($parent_id) {
 				$_SESSION['feedback'][] = 'Replied successfully.';
-				header('Location: forum_post_view.php?f='.intval($_POST['f']).'&parent='.$parent_id);
+				header('Location: forum_post_view.php?f='.intval($_POST['f']).'&p='.$parent_id);
 				exit;
 			} else {
 				$_SESSION['feedback'][] = 'Forum topic created successfully.';
@@ -158,14 +168,14 @@ if (!$_SESSION['valid_user']) {
 
 require(INCLUDE_PATH.'header.inc.php');
 
-if(isset($_REQUEST['parent'])) {
-	echo '<h2>Reply to '.get_title('post', $_REQUEST['parent']).'</h2>';
+if(isset($_REQUEST['p'])) {
+	echo '<h2>Reply to '.get_title('post', $_REQUEST['p']).'</h2>';
 } else {
 	echo '<h2>Post New Topic</h2>';
 }
 ?>
 
-<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form" enctype="multipart/form-data" style="clear:both; padding-top:2px;">
+<form action="<?php echo $_SERVER['PHP_SELF']; ?>?processed=1" method="post" name="form" enctype="multipart/form-data" style="clear:both; padding-top:2px;">
 	<input type="hidden" name="f" value="<?php echo intval($_REQUEST['f']); ?>" />
 
 	<?php if (isset($_REQUEST['parent'])) { ?>

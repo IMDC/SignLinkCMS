@@ -170,7 +170,7 @@ div.cat {
 	vertical-align:middle;
 	background-color: #efefef;
 	width: 160px;
-	padding:5px;
+	padding:3px;
 	margin:6px;
 	border:1px solid #9A9A9A;
 }
@@ -185,7 +185,7 @@ div.cat object {
 
 div.cat .title {
 	background-color:white; 
-	height:140px; 
+	height:145px; 
 	clear:both; 
 	padding:5px; 
 	border:1px solid #ccc;
@@ -235,44 +235,12 @@ div.post .title {
 
 #post-info {
 	float:left;
-	width: 10em;
+	width: 8em;
+	text-align:center;
 }
 #post-msg {
-	margin-left: 11em;
+	margin-left: 9em;
 }
-
-div#replies {
-	margin-top:10px;
-}
-
-div#replies h3 {
-	background-color:#ccc; 
-	margin-left:-10px;
-	margin-right:-10px;
-	font-size:small;
-	padding-left:10px;
-}
-
-div#replies table {
-	background-color: #efefef;
-	width:100%;
-	margin:0px;
-	padding:0px;
-}
-
-#replies table tr {
-	border:1px solid #ccc;
-	padding:5px;
-}
-
-#replies table td {
-	padding:2px;
-}
-
-
-/*#replies a:link, #replies a:visited, #replies a:hover {
-	color:white;
-}*/
 
 /* "breadcrumbs" */
 
@@ -363,6 +331,7 @@ table.manage {
 	padding-top:20px;
 	border-collapse: collapse;
 	margin-top:10px;
+	background-color: #efefef;
 }
 table.manage td {
 	margin:0px;
