@@ -8,8 +8,8 @@ require(INCLUDE_PATH.'header.inc.php');
 <h2>Forums</h2>
 
 <?php
-$sql = "SELECT * FROM forums WHERE 1 ORDER BY title ASC";
-$result = mysql_query($sql, $db);
+$sql = "SELECT * FROM forums WHERE 1 ORDER BY subject ASC";
+$result = @mysql_query($sql, $db);
 if (mysql_num_rows($result)) { 
 	echo '<div id="block-container">';
 	while ($row = mysql_fetch_assoc($result)) {

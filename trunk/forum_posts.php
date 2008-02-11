@@ -33,7 +33,7 @@ if (mysql_num_rows($result)) {
 				</div>
 			</div-->
 
-			<a href="forum_post_view.php?f=<?php echo $row['forum_id']; ?>&parent=<?php echo $row['post_id']; ?>"><div class="title"><?php echo $title; ?></div></a>
+			<a href="forum_post_view.php?f=<?php echo $row['forum_id']; ?>&p=<?php echo $row['post_id']; ?>&parent=1"><div class="title"><?php echo $title; ?></div></a>
 
 			<div>
 				<div style="text-align:left;padding-right:2px; font-size:smaller;">
