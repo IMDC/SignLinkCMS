@@ -29,3 +29,7 @@ div.cat img {
 div.cat .title {
 	height:150px; 
 }
+
+table {
+	font-size: 90%;
+}
