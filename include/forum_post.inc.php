@@ -113,7 +113,7 @@
 </script>
 
 
-<?php if(empty($_REQUEST['parent'])) { ?>
+<?php if (empty($parent_id)) { ?>
 <div class="file-info">
 	<span class="bold"><label>Subject</label></span><br />
 		<div class="choice">

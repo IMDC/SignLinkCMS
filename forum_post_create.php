@@ -2,17 +2,19 @@
 define('INCLUDE_PATH', 'include/');
 require(INCLUDE_PATH.'vitals.inc.php');
 
-if (isset($_POST['p'])) {
-	$parent_id = intval($_POST['p']);
+if (isset($_REQUEST['p'])) {
+	$parent_id = intval($_REQUEST['p']);
 } else {
 	$parent_id = 0;
 }
 
+$forum_id = intval($_REQUEST['f']);
+
 if (isset($_POST['cancel'])) {
 	if ($parent_id) {
-		header('Location: forum_post_view.php?f='.intval($_POST['f']).'&p='.$parent_id);
+		header('Location: forum_post_view.php?f='.$forum_id.'&p='.$parent_id.'&parent=1');
 	} else {
-		header('Location: forum_posts.php?f='.intval($_POST['f']));
+		header('Location: forum_posts.php?f='.$forum_id);
 	}
 	exit;
 
@@ -93,7 +95,6 @@ if (isset($_POST['cancel'])) {
 				break;
 		}
 
-		$forum_id = intval($_POST['f']);
 		$now = date('Y-m-d G:i:s');
 
 		//insert into db
@@ -148,7 +149,7 @@ if (isset($_POST['cancel'])) {
 			//redirect
 			if ($parent_id) {
 				$_SESSION['feedback'][] = 'Replied successfully.';
-				header('Location: forum_post_view.php?f='.intval($_POST['f']).'&p='.$parent_id);
+				header('Location: forum_post_view.php?f='.intval($_POST['f']).'&p='.$parent_id.'&parent=1');
 				exit;
 			} else {
 				$_SESSION['feedback'][] = 'Forum topic created successfully.';
@@ -168,21 +169,20 @@ if (!$_SESSION['valid_user']) {
 
 require(INCLUDE_PATH.'header.inc.php');
 
-if(isset($_REQUEST['p'])) {
-	echo '<h2>Reply to '.get_title('post', $_REQUEST['p']).'</h2>';
+if ($parent_id) {
+	echo '<h2>Reply to '.get_title('post', $parent_id).'</h2>';
 } else {
 	echo '<h2>Post New Topic</h2>';
 }
 ?>
 
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>?processed=1" method="post" name="form" enctype="multipart/form-data" style="clear:both; padding-top:2px;">
-	<input type="hidden" name="f" value="<?php echo intval($_REQUEST['f']); ?>" />
+	<input type="hidden" name="f" value="<?php echo $forum_id; ?>" />
 
-	<?php if (isset($_REQUEST['parent'])) { ?>
-		<input type="hidden" name="parent" value="<?php echo intval($_REQUEST['parent']); ?>" />
+	<?php if ($parent_id) { ?>
+		<input type="hidden" name="p" value="<?php echo $parent_id; ?>" />
 		<input type="hidden" name="subject" value="text" />
 		<input type="hidden" name="sub-text" value="Re: " />
-
 	<?php 
 	} ?>
 

@@ -8,6 +8,9 @@ if ($_REQUEST['parent'] == 1) {
 	$parent_id = intval($_REQUEST['p']);
 }
 
+$post_id = intval($_REQUEST['p']);
+$forum_id = intval($_REQUEST['f']);
+
 if ($_SESSION['valid_user']) {
 	//update the # thread views and the last accessed date
 	$sql = "INSERT INTO forums_views VALUES ($parent_id, $_SESSION[member_id], NOW(), 0)";
@@ -18,11 +21,11 @@ if ($_SESSION['valid_user']) {
 	}
 }
 
-$msg = get_message($parent_id);  //returns array of poster, date, html-encoded message
+$msg = get_message($post_id);  //returns array of poster, date, html-encoded message
 
 ?>
 
-<h2><a href="forum_posts.php?f=<?php echo intval($_GET['f']); ?>"><?php echo get_title('forum', intval($_GET['f'])); ?></a></h2>
+<h2><a href="forum_posts.php?f=<?php echo $forum_id; ?>"><?php echo get_title('forum', $forum_id); ?></a></h2>
 
 <div id="post">		
 	<div id="post-info">
@@ -33,11 +36,11 @@ $msg = get_message($parent_id);  //returns array of poster, date, html-encoded m
 	<div id="post-msg">
 		<?php if (isset($parent_id)) { ?>
 		<div style="float:right;">
-			<a href="forum_post_create.php?f=<?php echo intval($_GET['f']); ?>&p=<?php echo intval($_REQUEST['p']); ?>">Reply</a> | <a href="">Edit</a>
+			<a href="forum_post_create.php?f=<?php echo $forum_id; ?>&p=<?php echo $post_id; ?>">Reply</a> | <a href="">Edit</a>
 		</div>
 		<?php } ?>
 
-		<h3 style="margin:0px;"><?php echo get_title('post', $parent_id); ?></h3>
+		<h3 style="margin:0px;"><?php echo get_title('post', $post_id); ?></h3>
 		<div style="clear:both; width:100%;">
 		<small><?php echo $msg[1]; ?></small><br />
 		<?php  echo $msg[2]; ?>
@@ -49,7 +52,7 @@ $msg = get_message($parent_id);  //returns array of poster, date, html-encoded m
 <?php
 if (isset($parent_id)) { 
 
-	$sql = "SELECT * FROM forums_posts WHERE forum_id=".intval($_REQUEST['f'])." AND parent_id=".intval($_REQUEST['parent'])." ORDER BY last_comment DESC";
+	$sql = "SELECT * FROM forums_posts WHERE forum_id=".$forum_id." AND parent_id=".$parent_id." ORDER BY last_comment DESC";
 	$result = mysql_query($sql, $db);
 	if (mysql_num_rows($result)) { ?>
 		<table class="manage">
