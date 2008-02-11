@@ -1,4 +1,4 @@
-/* styles for nan */
+/* styles for signlink project */
 
 body, html {
 	padding:0px;
@@ -178,6 +178,7 @@ div.cat {
 div.cat img {
 	padding:2px;
 	border:0px;
+	margin-bottom:-6px;
 }
 div.cat object {
 	padding:7px;

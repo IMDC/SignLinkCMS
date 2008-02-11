@@ -85,7 +85,7 @@ function get_title($location, $id) {
 
 				if (in_array($ext, $filetypes_video)) {
 					$title = '<object classid="clsid:02BF25D5-8C17-4B23-BC80-D3488ABDDC6B"
-					id="clip" width="BLOCK_WIDTH" height="113" codebase="http://www.apple.com/qtactivex/qtplugin.cab">
+					id="clip" width="'.BLOCK_WIDTH.'" height="113" codebase="http://www.apple.com/qtactivex/qtplugin.cab">
 						<param name="src" value="'.$title_path.$title_file.'"/>
 						<param name="autoplay" value="false"/>
 						<param name="controller" value="true"/>
