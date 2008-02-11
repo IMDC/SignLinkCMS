@@ -9,7 +9,7 @@ require(INCLUDE_PATH.'header.inc.php');
 
 <?php
 $sql = "SELECT * FROM forums WHERE 1 ORDER BY subject ASC";
-$result = @mysql_query($sql, $db);
+$result = mysql_query($sql, $db);
 if (@mysql_num_rows($result)) { 
 	echo '<div id="block-container">';
 	while ($row = mysql_fetch_assoc($result)) {
@@ -19,9 +19,9 @@ if (@mysql_num_rows($result)) {
 			echo '<a href="forum_posts.php?f='.$row['forum_id'].'"><div class="title">'.$title.'</div></a>';
 			echo '<div style="float:left;">';
 				if ($new_messages) {
-					echo '<img src="images/email_red.png" alt="new messages!" title="new messages!" style="margin-bottom:-6px;" /> ';
+					echo '<img src="images/email_red.png" alt="new messages!" title="new messages!" height="16" width="16" /> ';
 				} else {
-					echo '<img src="images/email.png" alt="messages" title="new messages" style="margin-bottom:-6px;" /> ';
+					echo '<img src="images/email.png" alt="messages" title="new messages" height="16" width="16" /> ';
 				}
 				
 				//get post info

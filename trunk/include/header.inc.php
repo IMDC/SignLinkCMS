@@ -3,6 +3,11 @@
 <head>
 	<title>Forum</title>
 	<link rel="stylesheet" href="asl.css" type="text/css" media="screen" />
+
+<!--[if IE]>
+	<link href="iehacks.css" rel="stylesheet" />
+<![endif]-->
+
 </head>
 
 <div id="container">
