@@ -408,21 +408,25 @@ function save_signlink ($location, $type, $file, $id) {
 	} 
 }
 
-function check_upload($varname) {
+function check_uploads() {
 
-	switch ($_FILES[$varname]['error']) {  
-		case 1:
-			   $_SESSION['errors'][] = 'The file is bigger than this PHP installation allows';
-			   break;
-		case 2:
-			   $_SESSION['errors'][] = 'The file is bigger than this form allows';
-			   break;
-		case 3:
-			   $_SESSION['errors'][] = 'Only part of the file was uploaded';
-			   break;
-		case 4:
-			   $_SESSION['errors'][] = 'No file was uploaded';
-			   break;
+	foreach ($_FILES as $file) {
+		if (!empty($file['name'])) {
+			switch ($file['error']) {  
+				case 1:
+					   $_SESSION['errors'][] = 'The file is bigger than this PHP installation allows.';
+					   break;
+				case 2:
+					   $_SESSION['errors'][] = 'The file is bigger than this form allows.';
+					   break;
+				case 3:
+					   $_SESSION['errors'][] = 'Only part of the file was uploaded.';
+					   break;
+				case 4:
+					   $_SESSION['errors'][] = 'No file was uploaded.';
+					   break;
+			}
+		}
 	}
 	return;
 }
