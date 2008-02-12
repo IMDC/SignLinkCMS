@@ -19,48 +19,53 @@ if (isset($_POST['cancel'])) {
 	exit;
 
 } else if ($_POST['f'] || $_GET['processed']) {
+
+	//check if there are any upload errors
 	if(empty($_POST)) {
 		$_SESSION['errors'][] = 'File too large.';
 	}
+	check_uploads();
 
-	//error check subject
-	if (empty($_POST['subject']) || (empty($_FILES['isub-file']['tmp_name']) && empty($_FILES['vsub-file']['tmp_name']) && empty($_POST['sub-text'])) ) {
-		$_SESSION['errors'][] = 'Subject empty.';
+	if (!isset($_SESSION['errors'])) {	
+	
+		//now error check subject
+		if (empty($_POST['subject']) || (empty($_FILES['isub-file']['tmp_name']) && empty($_FILES['vsub-file']['tmp_name']) && empty($_POST['sub-text'])) ) {
+			$_SESSION['errors'][] = 'Subject empty.';
+			
+		} else if ($_POST['subject'] == "image") {
+			$ext = explode('.', $_FILES['isub-file']['name']);
+			$ext = $ext[1];
+			if (!in_array($ext, $filetypes_image)) {
+				$_SESSION['errors'][] = 'You have chosen to use an image file for your subject - invalid file format.'. $ext;
+			}
+			
+		} else if ($_POST['subject'] == "video") {
+			$ext = explode('.', $_FILES['vsub-file']['name']);
+			$ext = $ext[1];
+			if (!in_array($ext, $filetypes_video)) {
+				$_SESSION['errors'][] = 'You have chosen a video file for your subject - invalid file format.';
+			}
+			
+		} else if ( ($_POST['subject'] == "text") && empty($_POST['sub-text']) ) {
+			$_SESSION['errors'][] = 'You have chosen text for your subject - message cannot be empty.';
+		}	
 		
-	} else if ($_POST['subject'] == "image") {
-		$ext = explode('.', $_FILES['isub-file']['name']);
-		$ext = $ext[1];
-		if (!in_array($ext, $filetypes_image)) {
-			$_SESSION['errors'][] = 'You have chosen to use an image file for your subject - invalid file format.'. $ext;
-		}
-		
-	} else if ($_POST['subject'] == "video") {
-		$ext = explode('.', $_FILES['vsub-file']['name']);
-		$ext = $ext[1];
-		if (!in_array($ext, $filetypes_video)) {
-			$_SESSION['errors'][] = 'You have chosen a video file for your subject - invalid file format.';
-		}
-		
-	} else if ( ($_POST['subject'] == "text") && empty($_POST['sub-text']) ) {
-		$_SESSION['errors'][] = 'You have chosen text for your subject - message cannot be empty.';
+		//error check message 
+		if (empty($_POST['message']) || ( (empty($_FILES['sl1msg-file']['tmp_name']) && empty($_FILES['sl2msg-file']['tmp_name'])) && empty($_FILES['vmsg-file']['tmp_name']) && empty($_POST['msg-text'])) ) {
+			$_SESSION['errors'][] = 'Message empty.';
+		} else if ($_POST['message'] == "signlink" && ( empty($_FILES['sl1msg-file']['tmp_name']) || empty($_FILES['sl2msg-file']['tmp_name']) ) )  {
+			$_SESSION['errors'][] = 'You have chosen to post a Signlink message - this requires that you submit two files: a flash file and a .flv file.';
+			
+		} else if ($_POST['message'] == "video") {
+			$ext = end(explode('.', $_FILES['vmsg-file']['name']));
+			if (!in_array($ext, $filetypes_video)) {
+				$_SESSION['errors'][] = 'You have chosen to post a video message - invalid file format.';
+			}
+			
+		} else if ( $_POST['message'] == "text" && empty($_POST['msg-text']) ) {
+			$_SESSION['errors'][] = 'You have chosen to post a text message - message cannot be empty.';
+		}		
 	}	
-	
-	//error check message 
-	if (empty($_POST['message']) || ( (empty($_FILES['sl1msg-file']['tmp_name']) && empty($_FILES['sl2msg-file']['tmp_name'])) && empty($_FILES['vmsg-file']['tmp_name']) && empty($_POST['msg-text'])) ) {
-		$_SESSION['errors'][] = 'Message empty.';
-	} else if ($_POST['message'] == "signlink" && ( empty($_FILES['sl1msg-file']['tmp_name']) || empty($_FILES['sl2msg-file']['tmp_name']) ) )  {
-		$_SESSION['errors'][] = 'You have chosen to post a Signlink message - this requires that you submit two files: a flash file and a .flv file.';
-		
-	} else if ($_POST['message'] == "video") {
-		$ext = end(explode('.', $_FILES['vmsg-file']['name']));
-		if (!in_array($ext, $filetypes_video)) {
-			$_SESSION['errors'][] = 'You have chosen to post a video message - invalid file format.';
-		}
-		
-	} else if ( $_POST['message'] == "text" && empty($_POST['msg-text']) ) {
-		$_SESSION['errors'][] = 'You have chosen to post a text message - message cannot be empty.';
-	}		
-	
 	
 	if (!isset($_SESSION['errors'])) {
 
@@ -178,6 +183,7 @@ if ($parent_id) {
 
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>?processed=1" method="post" name="form" enctype="multipart/form-data" style="clear:both; padding-top:2px;">
 	<input type="hidden" name="f" value="<?php echo $forum_id; ?>" />
+	<input type="hidden" name="MAX_FILE_SIZE" value="<?php echo MAX_UPLOAD_SIZE; ?>" />
 
 	<?php if ($parent_id) { ?>
 		<input type="hidden" name="p" value="<?php echo $parent_id; ?>" />

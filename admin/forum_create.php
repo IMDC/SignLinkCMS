@@ -8,36 +8,39 @@ if (isset($_POST['cancel'])) {
 	exit;
 } else if (isset($_POST['submit']) || $_GET['processed']) {
 
+	//check if there are any upload errors
 	if(empty($_POST)) {
 		$_SESSION['errors'][] = 'File too large.';
 	}
+	check_uploads();
 
-	//error check subject
-	if (empty($_POST['subject']) || (empty($_FILES['isub-file']['tmp_name']) && empty($_FILES['vsub-file']['tmp_name']) && empty($_POST['sub-text'])) ) {
-		$_SESSION['errors'][] = 'Subject empty.';
-		
-	} else if ($_POST['subject'] == "image") {
-		$ext = explode('.', $_FILES['isub-file']['name']);
-		$ext = $ext[1];
-		if (!in_array($ext, $filetypes_image)) {
-			$_SESSION['errors'][] = 'You have chosen to use an image file for your subject - invalid file format.'. $ext;
+	if (!isset($_SESSION['errors'])) {	
+		//error check subject
+		if (empty($_POST['subject']) || (empty($_FILES['isub-file']['tmp_name']) && empty($_FILES['vsub-file']['tmp_name']) && empty($_POST['sub-text'])) ) {
+			$_SESSION['errors'][] = 'Subject empty.';
+			
+		} else if ($_POST['subject'] == "image") {
+			$ext = explode('.', $_FILES['isub-file']['name']);
+			$ext = $ext[1];
+			if (!in_array($ext, $filetypes_image)) {
+				$_SESSION['errors'][] = 'You have chosen to use an image file for your subject - invalid file format.'. $ext;
+			}
+			
+		} else if ($_POST['subject'] == "video") {
+			$ext = explode('.', $_FILES['vsub-file']['name']);
+			$ext = $ext[1];
+			if (!in_array($ext, $filetypes_video)) {
+				$_SESSION['errors'][] = 'You have chosen a video file for your subject - invalid file format.';
+			}
+			
+		} else if ( ($_POST['subject'] == "text") && empty($_POST['sub-text']) ) {
+			$_SESSION['errors'][] = 'You have chosen text for your subject - message cannot be empty.';
 		}
 		
-	} else if ($_POST['subject'] == "video") {
-		$ext = explode('.', $_FILES['vsub-file']['name']);
-		$ext = $ext[1];
-		if (!in_array($ext, $filetypes_video)) {
-			$_SESSION['errors'][] = 'You have chosen a video file for your subject - invalid file format.';
-		}
-		
-	} else if ( ($_POST['subject'] == "text") && empty($_POST['sub-text']) ) {
-		$_SESSION['errors'][] = 'You have chosen text for your subject - message cannot be empty.';
+		if (isset($_POST['descrip'])) {
+			$descrip = $addslashes($_POST['descrip']);
+		} 
 	}
-	
-	if (isset($_POST['descrip'])) {
-		$descrip = $addslashes($_POST['descrip']);
-	} 
-
 	if (!isset($_SESSION['errors'])) {
 		//prepare to insert into db
 		switch ($_POST['subject']) {
