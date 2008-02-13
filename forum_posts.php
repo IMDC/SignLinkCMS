@@ -53,8 +53,13 @@ if (mysql_num_rows($result)) {
 			</div>
 		</div>
 <?php
-	}
-	echo '</div>';
+	} ?>
+		<br style="clear:both" />
+		<div id="paging">
+			Page: 1, 2, 3...
+		</div>
+	</div>
+<?php
 } else {
 	echo "<p>None found.</p>";
 }

@@ -51,10 +51,6 @@ if (@mysql_num_rows($result)) {
 
 	} ?>
 		<br style="clear:both" />
-		<div id="paging">
-			Page: 1, 2, 3...
-		</div>
-	
 	</div>
 
 <?php
