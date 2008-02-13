@@ -33,7 +33,15 @@ if (mysql_num_rows($result)) {
 				</div>
 			</div-->
 
-			<a href="forum_post_view.php?f=<?php echo $row['forum_id']; ?>&p=<?php echo $row['post_id']; ?>&parent=1"><div class="title"><?php echo $title; ?></div></a>
+			<div class="title">
+				<div style="height:150px">
+					<?php echo $title; ?>
+				</div>							
+
+				<a href="forum_post_view.php?f=<?php echo $row['forum_id']; ?>&p=<?php echo $row['post_id']; ?>&parent=1" class="goto">
+					<img src="images/hand.png" style="border:0px;padding:0px;" />
+				</a>
+			</div>
 
 			<div>
 				<div style="text-align:left;padding-right:2px; font-size:smaller;">

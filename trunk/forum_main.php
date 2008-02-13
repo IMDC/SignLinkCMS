@@ -14,10 +14,21 @@ if (@mysql_num_rows($result)) {
 	echo '<div id="block-container">';
 	while ($row = mysql_fetch_assoc($result)) {
 		$title = get_title('forum', $row['forum_id']);
+		?>
 
-		echo '<div class="cat">';			
-			echo '<a href="forum_posts.php?f='.$row['forum_id'].'"><div class="title">'.$title.'</div></a>';
-			echo '<div style="float:left;">';
+		<div class="cat">
+			<div class="title">
+				<div style="height:150px;">
+					<?php echo $title; ?>
+				</div>
+							
+				<a href="forum_posts.php?f=<?php echo $row['forum_id']; ?>" class="goto">
+					<img src="images/hand.png" style="border:0px;padding:0px;" />
+				</a>
+			</div>
+			
+			<div style="float:left;">
+			<?php
 				if ($new_messages) {
 					echo '<img src="images/email_red.png" alt="new messages!" title="new messages!" height="16" width="16" /> ';
 				} else {
@@ -35,7 +46,6 @@ if (@mysql_num_rows($result)) {
 
 				echo "<span style='font-size: smaller;'> $posts posts in $topics topics</span>";
 			echo '</div>';
-				//echo '<div style="float:right;"><a href="forum_posts.php?f='.$row['forum_id'].'"><img src="images/arrow_right.png" alt="enter" /></a></div>';
 
 		echo '</div>';
 
