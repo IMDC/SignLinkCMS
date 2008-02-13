@@ -90,11 +90,10 @@ function get_title($location, $id) {
 						<param name="autoplay" value="false"/>
 						<param name="controller" value="true"/>
 						<param name="scale" value="tofit"/>
-						<embed src="'.$title_path.$title_file.'" width="145" height="109" name="clip"
+						<embed src="'.$title_path.$title_file.'" width="'.BLOCK_WIDTH.'" height="113" name="clip"
 						autoplay="false" controller="true" enablejavascript="true" scale="tofit"
 						alt="Quicktime ASL video"
-						pluginspage="http://www.apple.com/quicktime/download/"
-						style="float:left;" />
+						pluginspage="http://www.apple.com/quicktime/download/" />
 					</object>';
 				} else {
 					$title = '<img src="'.$title_path.$title_file.'" alt="'.$row[0].'" title="'.$row[0].'" style="vertical-align:middle;" />';
