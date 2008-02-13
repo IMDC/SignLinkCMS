@@ -36,10 +36,6 @@ if (isset($_POST['cancel'])) {
 		} else if ( ($_POST['subject'] == "text") && empty($_POST['sub-text']) ) {
 			$_SESSION['errors'][] = 'You have chosen text for your subject - message cannot be empty.';
 		}
-		
-		if (isset($_POST['descrip'])) {
-			$descrip = $addslashes($_POST['descrip']);
-		} 
 	}
 	if (!isset($_SESSION['errors'])) {
 		//prepare to insert into db
