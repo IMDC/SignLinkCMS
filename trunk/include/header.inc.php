@@ -8,6 +8,8 @@
 	<link href="iehacks.css" rel="stylesheet" />
 <![endif]-->
 
+	<script type="text/javascript" src="jscripts/jquery-1.2.3.js"></script>          
+ 
 </head>
 
 <div id="container">
