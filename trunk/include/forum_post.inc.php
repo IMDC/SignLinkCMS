@@ -1,6 +1,14 @@
 <script type="text/javascript">
 	<!--
-
+	$(document).ready(function() {
+		$("#subject").click(function() {
+			$("#subject-image").toggle(function(){
+				$("#subject-image").hide('slow');
+				},function(){
+				$("#subject-image").show('fast');
+			});
+		});
+	});
 
 	function validateOnSubmit() {
 		var er_text = new Array();
@@ -87,7 +95,9 @@
 
 <?php if (empty($parent_id)) { ?>
 <div class="file-info">
-	<span class="bold"><label>Subject</label></span><br />
+	<span class="bold">Subject</span><br />
+		<?php echo $title.'<br /><br />'; ?>
+
 		<div class="choice">
 			<label><input type="radio" name="subject" id="subject" value="image" <?php if($_POST['subject'] == "image") { echo 'checked="checked"'; }?> />Image</label>
 
@@ -115,7 +125,9 @@
 <?php } ?>
 
 <div class="important-info">
-	<span class="bold">Message</span>
+	<span class="bold">Message</span><br />
+	<?php echo $msg[2].'<br /><br />'; ?>
+
 	<div class="choice">
 		<label><input type="radio" name="message" value="signlink" <?php if($_POST['message'] == "signlink") { echo 'checked="checked"'; }?> />Signlink Object</label>
 		<div class="choice-info">

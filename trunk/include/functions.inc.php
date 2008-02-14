@@ -430,5 +430,34 @@ function check_uploads() {
 	return;
 }
 
+function populate_post($row, $title) {
+	//subject
+	if (!empty($row['subject'])) {
+		$_POST['subject'] = 'text';
+		$_POST['sub-text'] = $row['subject'];
+	} else if (substr($title, 0, 4) == "<img") {
+		$_POST['subject'] = 'image';
+		$_POST['isub-alt'] = $row['subject_alt'];
+	} else if (substr($title, 0, 7) == "<object") {
+		$_POST['subject'] = 'video';
+		$_POST['vsub-alt'] = $row['subject_alt'];
+	}
+
+	//message
+	if (isset($row['msg']) || isset($row['msg_alt'])) {
+		if (!empty($row['msg'])) {
+			$_POST['message'] = 'text';
+			$_POST['msg-text'] = $row['msg'];
+		} else if (substr($title, 0, 4) == "<img") {
+			$_POST['message'] = 'image';
+			$_POST['imsg-alt'] = $row['msg_alt'];
+		} else if (substr($title, 0, 7) == "<object") {
+			$_POST['message'] = 'video';
+			$_POST['vmsg-alt'] = $row['subject_alt'];
+		}
+	}
+
+	return;
+}
 
 ?>
