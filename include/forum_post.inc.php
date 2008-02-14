@@ -108,7 +108,7 @@
 
 			<label><input type="radio" name="subject" value="text" <?php if($_POST['subject'] == "text") { echo 'checked="checked"'; }?> /> Text</label>
 			<div class="choice-info" id="subject-text">
-				<input type="text" id="sub-text" name="sub-text" size="80" value="<?php echo $_POST['sub-text']; ?>" />
+				<input type="text" id="sub-text" name="sub-text" size="85" value="<?php echo $_POST['sub-text']; ?>" />
 			</div>
 		</div>
 </div>

@@ -34,11 +34,16 @@ $msg = get_message($post_id);  //returns array of poster, date, html-encoded mes
 	</div>
 
 	<div id="post-msg">
-		<?php if (isset($parent_id)) { ?>
 		<div style="float:right;">
-			<a href="forum_post_create.php?f=<?php echo $forum_id; ?>&p=<?php echo $post_id; ?>">Reply</a> | <a href="">Edit</a>
+			<?php 
+			if (isset($parent_id)) { 
+				echo "<a href='forum_post_create.php?f=$forum_id&p=$post_id'>Reply</a>&nbsp;";
+			}
+			if ($_SESSION['login'] == $msg[0]) {
+				echo "<a href='forum_post_edit.php?f=$forum_id&p=$post_id&parent=$_GET[parent]'>Edit</a>";
+			}
+			?>
 		</div>
-		<?php } ?>
 
 		<h3 style="margin:0px;"><?php echo get_title('post', $post_id); ?></h3>
 		<div style="clear:both; width:100%;">
