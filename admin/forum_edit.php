@@ -90,20 +90,9 @@ if (isset($_POST['cancel'])) {
 	$result = mysql_query($sql, $db);
 
 	if ($row = mysql_fetch_assoc($result)) {
-		if (!empty($row['subject'])) {
-			$_POST['subject'] = 'text';
-			$_POST['sub-text'] = $row['subject'];
-		} else if (substr($title, 0, 4) == "<img") {
-			$_POST['subject'] = 'image';
-			$_POST['isub-alt'] = $row['subject_alt'];
-		} else if (substr($title, 0, 7) == "<object") {
-			$_POST['subject'] = 'video';
-			$_POST['vsub-alt'] = $row['subject_alt'];
-		}
-		
-
+		populate_post($row, $title);
 	} else {
-		//no such page
+		$_SESSION['error'][] = 'Forum not found.';
 	}
 }
 
@@ -111,7 +100,6 @@ require(INCLUDE_PATH.'admin_header.inc.php'); ?>
 
 <h2>Forum: Edit</h2>
 	<?php 
-	echo $title;
 	require(INCLUDE_PATH.'forum.inc.php'); ?>
 
 <?php require('../include/footer.inc.php'); ?>

@@ -2,23 +2,15 @@
 define('INCLUDE_PATH', 'include/');
 require(INCLUDE_PATH.'vitals.inc.php');
 
-if (isset($_REQUEST['p'])) {
-	$parent_id = intval($_REQUEST['p']);
-} else {
-	$parent_id = 0;
-}
-
+$post_id = intval($_REQUEST['p']);
 $forum_id = intval($_REQUEST['f']);
+$parent = intval($_REQUEST['parent']);
 
 if (isset($_POST['cancel'])) {
-	if ($parent_id) {
-		header('Location: forum_post_view.php?f='.$forum_id.'&p='.$parent_id.'&parent=1');
-	} else {
-		header('Location: forum_posts.php?f='.$forum_id);
-	}
+	header('Location: forum_post_view.php?f='.$forum_id.'&p='.$post_id.'&parent='.$parent);
 	exit;
 
-} else if ($_POST['f'] || $_GET['processed']) {
+} else if (($_POST['f'] && $_POST['p']) || $_GET['processed']) {
 
 	//check if there are any upload errors
 	if(empty($_POST)) {
@@ -103,25 +95,12 @@ if (isset($_POST['cancel'])) {
 		$now = date('Y-m-d G:i:s');
 
 		//insert into db
-		$sql = "INSERT INTO forums_posts VALUES (NULL, '$parent_id', '$_SESSION[member_id]', '$forum_id', '$_SESSION[login]', '$now', 0, '$subject', '$subject_alt', '$message', '$message_alt', NOW(),0, 0)";
+		$sql = "UPDATE forums_posts SET subject='$subject', subject_alt='$subject_alt', msg='$message', msg_alt='$message_alt' WHERE forum_id=$forum_id AND post_id=$post_id";
 
 		if (!$result = mysql_query($sql, $db)) {
 			$_SESSION['errors'][] = 'Database error.';
-		} else {
-			$post_id = mysql_insert_id();
-
-			//edit 'last comment' field for parent to be now
-			if ($parent_id) {
-				$sql = "UPDATE forums_posts SET last_comment='$now', num_comments=num_comments+1 WHERE post_id=$parent_id";
-				$result = mysql_query($sql, $db);
-				$num_topics = '';
-			} else {
-				$num_topics = ", num_topics=num_topics+1";
-			}
-			
-			//update info for forum (last post, num posts, num topics)
-			$sql = "UPDATE forums SET last_post='$now', num_posts=num_posts+1 $num_topics WHERE forum_id=$forum_id";
-			$result = mysql_query($sql, $db);
+		} else {		
+			//***** DELETE OLD FILES
 
 			//save files			
 			switch ($_POST['subject']) {
@@ -152,21 +131,38 @@ if (isset($_POST['cancel'])) {
 			}
 
 			//redirect
-			if ($parent_id) {
-				$_SESSION['feedback'][] = 'Replied successfully.';
-				header('Location: forum_post_view.php?f='.intval($_POST['f']).'&p='.$parent_id.'&parent=1');
-				exit;
-			} else {
-				$_SESSION['feedback'][] = 'Forum topic created successfully.';
-				header('Location: forum_posts.php?f='.intval($_POST['f']));
-				exit;
-			}
+			$_SESSION['feedback'][] = 'Post edited successfully.';
+			header('Location: forum_post_view.php?f='.$forum_id.'&p='.$post_id.'&parent='.$parent);
+			exit;			
 		}
 	}
-} 
+} else if ($forum_id & $post_id) {
+	$title = get_title('post', $post_id);
+	$msg = get_message($post_id);
+	$sql = "SELECT * FROM forums_posts WHERE forum_id=".$forum_id." AND post_id=".$post_id;
+	$result = mysql_query($sql, $db);
 
+	if ($row = mysql_fetch_assoc($result)) {
+		populate_post($row, $title);
+	} else {
+		$_SESSION['error'][] = 'Post not found.';
+		require(INCLUDE_PATH.'header.inc.php');
+		require(INCLUDE_PATH.'footer.inc.php');
+		exit;
+	}
+}
+
+//check if user has logged in and can post
 if (!$_SESSION['valid_user']) {
 	$_SESSION['errors'][] = 'You must be logged in to post a message. Please <a href="login.php?f='.intval($_REQUEST['f']).'">login</a>.';
+	require(INCLUDE_PATH.'header.inc.php');
+	require(INCLUDE_PATH.'footer.inc.php');
+	exit;
+}
+
+//check if user owns this post
+if ($_SESSION['login'] != $msg[0]) {
+	$_SESSION['errors'][] = "You don't have permission to edit this post.";
 	require(INCLUDE_PATH.'header.inc.php');
 	require(INCLUDE_PATH.'footer.inc.php');
 	exit;
@@ -175,22 +171,23 @@ if (!$_SESSION['valid_user']) {
 require(INCLUDE_PATH.'header.inc.php');
 
 if ($parent_id) {
-	echo '<h2>Reply to '.get_title('post', $parent_id).'</h2>';
+	echo '<h2>Edit reply to '.get_title('post', $parent_id).'</h2>';
 } else {
-	echo '<h2>Post New Topic</h2>';
+	echo '<h2>Edit Post</h2>';
 }
 ?>
 
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>?processed=1" method="post" name="form" enctype="multipart/form-data" style="clear:both; padding-top:2px;">
 	<input type="hidden" name="f" value="<?php echo $forum_id; ?>" />
+	<input type="hidden" name="p" value="<?php echo $post_id; ?>" />
+	<input type="hidden" name="parent" value="<?php echo $parent; ?>" />
+
 	<input type="hidden" name="MAX_FILE_SIZE" value="<?php echo MAX_UPLOAD_SIZE; ?>" />
 
-	<?php if ($parent_id) { ?>
-		<input type="hidden" name="p" value="<?php echo $parent_id; ?>" />
+	<?php if ($parent) { ?>
 		<input type="hidden" name="subject" value="text" />
 		<input type="hidden" name="sub-text" value="Re: " />
-	<?php 
-	} ?>
+	<?php } ?>
 
 	<?php require(INCLUDE_PATH.'forum_post.inc.php'); ?>
 </form>

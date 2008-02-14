@@ -5,12 +5,7 @@
 
 <div class="file-info">
 	<span class="bold"><label>Subject</label></span><br />
-		<?php 
-		$img_file = '../uploads/'. $_POST['title-file'];
-		if (!empty($_POST['title-file']) && file_exists($img_file)) {
-			echo '<img src="'.$img_file.'" /> (<a href="forum_delete.php?id='.$_REQUEST['fid'].'&d=title">Delete</a>)<br /><br />';
-		}
-		?>
+		<?php echo $title.'<br /><br />'; ?>
 		<div class="choice">
 			<label><input type="radio" name="subject" value="image" <?php if($_POST['subject'] == "image") { echo 'checked="checked"'; }?> />Image</label>
 			<div class="choice-info">
