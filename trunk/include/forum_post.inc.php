@@ -1,14 +1,5 @@
 <script type="text/javascript">
 	<!--
-	$(document).ready(function() {
-		$("#subject").click(function() {
-			$("#subject-image").toggle(function(){
-				$("#subject-image").hide('slow');
-				},function(){
-				$("#subject-image").show('fast');
-			});
-		});
-	});
 
 	function validateOnSubmit() {
 		var er_text = new Array();
