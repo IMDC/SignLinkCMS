@@ -176,6 +176,7 @@ if ($parent_id) {
 	echo '<h2>Edit Post</h2>';
 }
 ?>
+<script type="text/javascript" src="jscripts/forum_post.js"></script>
 
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>?processed=1" method="post" name="form" enctype="multipart/form-data" style="clear:both; padding-top:2px;">
 	<input type="hidden" name="f" value="<?php echo $forum_id; ?>" />
@@ -189,7 +190,74 @@ if ($parent_id) {
 		<input type="hidden" name="sub-text" value="Re: " />
 	<?php } ?>
 
-	<?php require(INCLUDE_PATH.'forum_post.inc.php'); ?>
+
+	<?php if (empty($parent_id)) { ?>
+	<div class="file-info">
+		<span class="bold">Subject</span><br />
+			<p>Choose what kind of subject you would like your post to have (image, video, or plain text) then provide the appropriate details.</p>
+
+			<?php if (!empty($title)) { echo $title.'<br /><br />'; } ?>
+
+			<div class="choice">
+				<label><input type="radio" name="subject" value="image" <?php if($_POST['subject'] == "image") { echo 'checked="checked"'; }?> />Image</label>
+
+				<div class="choice-info" id="subject-image">
+					<dl class="col-list">
+						<dt>File</dt> <dd><input type="file" id="isub-file" name="isub-file" /></dd>
+						<dt>Alt Text<dt> <dd><input type="text" id="isub-alt" name="isub-alt" size="80" value="<?php echo $_POST['isub-alt']; ?>" /></dd>
+					</dl>
+				</div><br />
+
+				<label><input type="radio" name="subject" value="video" <?php if($_POST['subject'] == "video") { echo 'checked="checked"'; }?> /> Video</label>
+				<div class="choice-info" id="subject-video">
+					<dl class="col-list">
+						<dt>File</dt> <dd><input type="file" id="vsub-file" name="vsub-file" /></dd>
+						<dt>Alt Text<dt> <dd><input type="text" id="vsub-alt" name="vsub-alt" size="80" value="<?php echo $_POST['vsub-alt']; ?>" /></dd>
+					</dl>
+				</div><br />
+
+				<label><input type="radio" name="subject" value="text" <?php if($_POST['subject'] == "text") { echo 'checked="checked"'; }?> /> Text</label>
+				<div class="choice-info" id="subject-text">
+					<input type="text" id="sub-text" name="sub-text" size="85" value="<?php echo $_POST['sub-text']; ?>" />
+				</div>
+			</div>
+	</div>
+	<?php } ?>
+
+	<div class="important-info">
+		<span class="bold">Message</span><br />
+		<?php if(!empty($msg[2])) { echo $msg[2].'<br /><br />'; } ?>
+
+		<p>Choose what kind of message you are posting (signlink object, video, or plain text) then provide the appropriate details.</p>
+
+		<div class="choice">
+			<label><input type="radio" name="message" value="signlink" <?php if($_POST['message'] == "signlink") { echo 'checked="checked"'; }?> />Signlink Object</label>
+			<div class="choice-info" id="message-sl">
+				<dl class="col-list">
+					<dt>Flash File</dt> <dd><input type="file" id="sl1msg-file" name="sl1msg-file" /></dd>
+					<dt>FLV File<dt> <dd><input type="file" id="sl2msg-file" name="sl2msg-file" /></dd>
+				</dl>
+			</div><br />
+
+			<label><input type="radio" name="message" value="video" <?php if($_POST['message'] == "video") { echo 'checked="checked"'; }?> /> Video</label>
+			<div class="choice-info" id="message-video">
+				<dl class="col-list">
+					<dt>File</dt> <dd><input type="file" id="vmsg-file" name="vmsg-file" /></dd>
+					<dt>Alt Text<dt> <dd><input type="text" id="vmsg-alt" name="vmsg-alt" value="<?php echo $_POST['vmsg-alt']; ?>" /></dd>
+				</dl>
+			</div><br />
+
+			<label><input type="radio" name="message" value="text" <?php if($_POST['message'] == "text") { echo 'checked="checked"'; }?> /> Text</label>
+			<div class="choice-info" id="message-text">
+				<textarea id="msg-text" id="msg-text" name="msg-text" rows="25" cols="90" style="height:20em;"><?php echo $_POST['msg-text']; ?></textarea>
+			</div>
+		</div>
+
+	</div>
+
+	<div class="row" style="text-align:right;">
+		<input type="button" onclick="validateOnSubmit()" name="submit_form" value="Submit"> | <input type="submit" name="cancel" value="Cancel" /> 
+	</div>
 </form>
 
 <?php require(INCLUDE_PATH.'footer.inc.php'); ?>
