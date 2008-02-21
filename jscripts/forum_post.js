@@ -17,7 +17,7 @@ $(document).ready(function() {
 	} else {
 		$("#subject-image").hide();
 		$("#subject-video").hide();
-		$("#subject-text").hied();
+		$("#subject-text").hide();
 	}
 
 	if ($("input[@name='message']:checked").val() == "signlink") {
