@@ -93,7 +93,8 @@ function validateSubject(myform) {
 	var er_string = "";
 	var count = 0;
 
-	if (myform.subject[0].checked) {
+	//if (myform.subject[0].checked) {
+	if ($("input[@name='subject']:checked").val() == "image") {
 		if (document.getElementById('isub-file').value==null || document.getElementById('isub-file').value=="") {
 			er_text[count] = "Image subject file missing.";
 			count++;
