@@ -1,23 +1,26 @@
 $(document).ready(function() {
 
-	if ($("input[@name='subject']:checked").val() == "image") {
-		$("#subject-image").show();
-		$("#subject-video").hide();
-		$("#subject-text").hide();
+	if(typeof(subject)=="undefined") {
 
-	} else if ($("input[@name='subject']:checked").val() == "video") {
-		$("#subject-image").hide();
-		$("#subject-video").show();
-		$("#subject-text").hide();
+		if ($("input[@name='subject']:checked").val() == "image") {
+			$("#subject-image").show();
+			$("#subject-video").hide();
+			$("#subject-text").hide();
 
-	} else if ($("input[@name='subject']:checked").val() == "text") {
-		$("#subject-image").hide();
-		$("#subject-video").hide();
-		$("#subject-text").show();
-	} else {
-		$("#subject-image").hide();
-		$("#subject-video").hide();
-		$("#subject-text").hide();
+		} else if ($("input[@name='subject']:checked").val() == "video") {
+			$("#subject-image").hide();
+			$("#subject-video").show();
+			$("#subject-text").hide();
+
+		} else if ($("input[@name='subject']:checked").val() == "text") {
+			$("#subject-image").hide();
+			$("#subject-video").hide();
+			$("#subject-text").show();
+		} else {
+			$("#subject-image").hide();
+			$("#subject-video").hide();
+			$("#subject-text").hide();
+		}
 	}
 
 	if ($("input[@name='message']:checked").val() == "signlink") {
@@ -81,56 +84,62 @@ $(document).ready(function() {
 		}
 
 	});
+
 });
 
-function validateOnSubmit() {
+
+function validateSubject(myform) {
 	var er_text = new Array();
 	var er_string = "";
 	var count = 0;
 
-	//check subject if not a reply
-
-	if (typeof(document.form.subject) == "undefined") {
-		if (document.form.subject[0].checked) {
-			if (document.getElementById('isub-file').value==null || document.getElementById('isub-file').value=="") {
-				er_text[count] = "Image subject file missing.";
-				count++;
-			}
-			if (document.getElementById('isub-alt').value==null || document.getElementById('isub-alt').value=="") {
-				er_text[count] = "Image subject alt text missing.";
-				count++;
-			}
-
-		} else if (document.form.subject[1].checked) {
-			if (document.getElementById('vsub-file').value==null || document.getElementById('vsub-file').value=="") {
-				er_text[count] = "Video subject file missing.";
-				count++;
-			}
-			if (document.getElementById('vsub-alt').value==null || document.getElementById('vsub-alt').value=="") {
-				er_text[count] = "Video subject alt text missing.";
-				count++;
-			}
-
-		} else if (document.form.subject[2].checked) {
-			if (document.getElementById('sub-text').value==null || document.getElementById('sub-text').value=="") {
-				er_text[count] = "Subject text missing.";
-				count++;
-			}
-		} else {
-			er_text[count] = "Subject missing.";
+	if (myform.subject[0].checked) {
+		if (document.getElementById('isub-file').value==null || document.getElementById('isub-file').value=="") {
+			er_text[count] = "Image subject file missing.";
 			count++;
 		}
+		if (document.getElementById('isub-alt').value==null || document.getElementById('isub-alt').value=="") {
+			er_text[count] = "Image subject alt text missing.";
+			count++;
+		}
+
+	} else if (myform.subject[1].checked) {
+		if (document.getElementById('vsub-file').value==null || document.getElementById('vsub-file').value=="") {
+			er_text[count] = "Video subject file missing.";
+			count++;
+		}
+		if (document.getElementById('vsub-alt').value==null || document.getElementById('vsub-alt').value=="") {
+			er_text[count] = "Video subject alt text missing.";
+			count++;
+		}
+
+	} else if (myform.subject[2].checked) {
+		if (document.getElementById('sub-text').value==null || document.getElementById('sub-text').value=="") {
+			er_text[count] = "Subject text missing.";
+			count++;
+		}
+	} else {
+		er_text[count] = "Subject missing.";
+		count++;
 	}
 
+	return er_text;
+} 
+
+function validateMessage(myform) {
+	var er_text = new Array();
+	var er_string = "";
+	var count = 0;
+
 	//check message
-	if (document.form.message[0].checked) {
+	if (myform.message[0].checked) {
 		if (document.getElementById('sl1msg-file').value==null || document.getElementById('sl1msg-file').value=="" ||
 			document.getElementById('sl2msg-file').value==null || document.getElementById('sl2msg-file').value=="" ) {
 			er_text[count] = "Signlink message file missing.";
 			count++;
 		}
 
-	} else if (document.form.message[1].checked) {
+	} else if (myform.message[1].checked) {
 		if (document.getElementById('vmsg-file').value==null || document.getElementById('vmsg-file').value=="") {
 			er_text[count] = "Video message file missing.";
 			count++;
@@ -140,7 +149,7 @@ function validateOnSubmit() {
 			count++;
 		}
 
-	} else if (document.form.message[2].checked) {
+	} else if (myform.message[2].checked) {
 		if (document.getElementById('msg-text').value==null || document.getElementById('msg-text').value=="") {
 			er_text[count] = "Message text missing.";
 			count++;
@@ -150,14 +159,35 @@ function validateOnSubmit() {
 		count++;
 	}
 
+	return er_text;
+};
+
+function validateOnSubmit(area) {
+	var er_text = new Array();
+	var er_string = "";
+	var myform = "";
+
+	if (area=="subject") {
+		myform = document.form[0];
+		er_text = validateSubject(myform);
+
+	} else if (area=="message") {
+		myform = document.form[1];
+		er_text = validateMessage(myform);
+
+	} else {
+		myform = document.form[0];
+		er_text1 = validateSubject(myform);
+		er_text2 = validateMessage(myform);
+		er_text = er_text1 + er_text2;
+	}
+
 	if (er_text!="") {
 		for (var i=0; i < er_text.length; i++) {
 			er_string = er_string + '\n' + er_text[i];
 		}
 		alert('Corrections required: ' + er_string);
 	} else {
-		document.form.submit();
+		myform.submit();
 	}
-
-	return;
-};
+} 
