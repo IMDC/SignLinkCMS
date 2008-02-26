@@ -297,7 +297,7 @@ $(document).ready(function() {
 		</div>
 	</div>
 <div class="row" style="text-align:right;">
-	<input type="submit" name="cancel" value="Cancel" /> 
+	<input type="submit" name="cancel" value="Finished" /> 
 </div>
 </form>
 
