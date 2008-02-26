@@ -88,34 +88,33 @@ $(document).ready(function() {
 });
 
 
-function validateSubject(myform) {
+function validateSubject() {
 	var er_text = new Array();
 	var er_string = "";
 	var count = 0;
 
-	//if (myform.subject[0].checked) {
 	if ($("input[@name='subject']:checked").val() == "image") {
-		if (document.getElementById('isub-file').value==null || document.getElementById('isub-file').value=="") {
+		if ($("#isub-file").val()==null || $("#isub-file").val()=="") {
 			er_text[count] = "Image subject file missing.";
 			count++;
 		}
-		if (document.getElementById('isub-alt').value==null || document.getElementById('isub-alt').value=="") {
+		if ($("#isub-alt").val()==null || $("#isub-alt").val()=="") {
 			er_text[count] = "Image subject alt text missing.";
 			count++;
 		}
 
-	} else if (myform.subject[1].checked) {
-		if (document.getElementById('vsub-file').value==null || document.getElementById('vsub-file').value=="") {
+	} else if ($("input[@name='subject']:checked").val() == "video") {
+		if ($("#vsub-file").val()==null || $("#vsub-file").val()=="") {
 			er_text[count] = "Video subject file missing.";
 			count++;
 		}
-		if (document.getElementById('vsub-alt').value==null || document.getElementById('vsub-alt').value=="") {
+		if ($("#vsub-alt").val()==null || $("#vsub-alt").val()=="") {
 			er_text[count] = "Video subject alt text missing.";
 			count++;
 		}
 
-	} else if (myform.subject[2].checked) {
-		if (document.getElementById('sub-text').value==null || document.getElementById('sub-text').value=="") {
+	} else if ($("input[@name='subject']:checked").val() == "text") {
+		if ($("#sub-text").val()==null || $("#sub-text").val()=="") {
 			er_text[count] = "Subject text missing.";
 			count++;
 		}
@@ -127,31 +126,31 @@ function validateSubject(myform) {
 	return er_text;
 } 
 
-function validateMessage(myform) {
+function validateMessage() {
 	var er_text = new Array();
 	var er_string = "";
 	var count = 0;
 
 	//check message
-	if (myform.message[0].checked) {
-		if (document.getElementById('sl1msg-file').value==null || document.getElementById('sl1msg-file').value=="" ||
-			document.getElementById('sl2msg-file').value==null || document.getElementById('sl2msg-file').value=="" ) {
+	if ($("input[@name='message']:checked").val() == "signlink") {
+		if ($("#sl1msg-file").val()==null || $("#sl1msg-file").val()=="" ||
+			$("#sl2msg-file").val()==null || $("#sl2msg-file").val()=="" ) {
 			er_text[count] = "Signlink message file missing.";
 			count++;
 		}
 
-	} else if (myform.message[1].checked) {
-		if (document.getElementById('vmsg-file').value==null || document.getElementById('vmsg-file').value=="") {
+	} else if ($("input[@name='message']:checked").val() == "video") {
+		if ($("#vmsg-file").val()==null || $("#vmsg-file").val()=="") {
 			er_text[count] = "Video message file missing.";
 			count++;
 		}
-		if (document.getElementById('vmsg-alt').value==null || document.getElementById('vmsg-alt').value=="") {
+		if ($("#vmsg-alt").val()==null || $("#vmsg-alt").val()=="") {
 			er_text[count] = "Video message alt text missing.";
 			count++;
 		}
 
-	} else if (myform.message[2].checked) {
-		if (document.getElementById('msg-text').value==null || document.getElementById('msg-text').value=="") {
+	} else if ($("input[@name='message']:checked").val() == "text") {
+		if ($("#msg-text").val()==null || $("#msg-text").val()=="") {
 			er_text[count] = "Message text missing.";
 			count++;
 		}
@@ -167,20 +166,22 @@ function validateOnSubmit(area) {
 	var er_text = new Array();
 	var er_string = "";
 	var myform = "";
+	var count = 0;
 
 	if (area=="subject") {
-		myform = document.form[0];
-		er_text = validateSubject(myform);
+		myform = $('#form_sub');
+		er_text = validateSubject();
 
 	} else if (area=="message") {
-		myform = document.form[1];
-		er_text = validateMessage(myform);
+		myform = $('#form_msg');
+		er_text = validateMessage();
 
 	} else {
-		myform = document.form[0];
-		er_text1 = validateSubject(myform);
-		er_text2 = validateMessage(myform);
-		er_text = er_text1 + er_text2;
+		myform = document.form;
+		er_text1 = validateSubject();
+		er_text2 = validateMessage();
+
+		er_text = er_text1.concat(er_text2);
 	}
 
 	if (er_text!="") {

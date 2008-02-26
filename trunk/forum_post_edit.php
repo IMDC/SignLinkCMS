@@ -5,6 +5,7 @@ require(INCLUDE_PATH.'vitals.inc.php');
 $post_id = intval($_REQUEST['p']);
 $forum_id = intval($_REQUEST['f']);
 $parent = intval($_REQUEST['parent']);
+$area = $_POST['area'];
 
 if (isset($_POST['cancel'])) {
 	header('Location: forum_post_view.php?f='.$forum_id.'&p='.$post_id.'&parent='.$parent);
@@ -14,12 +15,15 @@ if (isset($_POST['cancel'])) {
 
 	//check if there are any upload errors
 	if(empty($_POST)) {
-		$_SESSION['errors'][] = 'File too large.';
+		$_SESSION['errors'][] = "General error. Your URL is incorrect or you are trying to post a file that is too large for this installation.";
+		require(INCLUDE_PATH.'header.inc.php');
+		require(INCLUDE_PATH.'footer.inc.php');
+		exit;
 	}
 	check_uploads();
 
 	if (!isset($_SESSION['errors'])) {	
-		if (isset($_POST['area']) && $_POST['area']=="subject") {
+		if ($area=="subject") {
 			//error check subject
 			if (empty($_POST['subject']) || (empty($_FILES['isub-file']['tmp_name']) && empty($_FILES['vsub-file']['tmp_name']) && empty($_POST['sub-text'])) ) {
 				$_SESSION['errors'][] = 'Subject empty.';
@@ -44,95 +48,103 @@ if (isset($_POST['cancel'])) {
 		}
 		
 		//error check message 
-			if (isset($_POST['area']) && $_POST['area']=="message") {
-				if (empty($_POST['message']) || ( (empty($_FILES['sl1msg-file']['tmp_name']) && empty($_FILES['sl2msg-file']['tmp_name'])) && empty($_FILES['vmsg-file']['tmp_name']) && empty($_POST['msg-text'])) ) {
-					$_SESSION['errors'][] = 'Message empty.';
-				} else if ($_POST['message'] == "signlink" && ( empty($_FILES['sl1msg-file']['tmp_name']) || empty($_FILES['sl2msg-file']['tmp_name']) ) )  {
-					$_SESSION['errors'][] = 'You have chosen to post a Signlink message - this requires that you submit two files: a flash file and a .flv file.';
-					
-				} else if ($_POST['message'] == "video") {
-					$ext = end(explode('.', $_FILES['vmsg-file']['name']));
-					if (!in_array($ext, $filetypes_video)) {
-						$_SESSION['errors'][] = 'You have chosen to post a video message - invalid file format.';
-					}
-					
-				} else if ( $_POST['message'] == "text" && empty($_POST['msg-text']) ) {
-					$_SESSION['errors'][] = 'You have chosen to post a text message - message cannot be empty.';
-				}	
-			}
+		if ($area=="message") {
+			if (empty($_POST['message']) || ( (empty($_FILES['sl1msg-file']['tmp_name']) && empty($_FILES['sl2msg-file']['tmp_name'])) && empty($_FILES['vmsg-file']['tmp_name']) && empty($_POST['msg-text'])) ) {
+				$_SESSION['errors'][] = 'Message empty.';
+			} else if ($_POST['message'] == "signlink" && ( empty($_FILES['sl1msg-file']['tmp_name']) || empty($_FILES['sl2msg-file']['tmp_name']) ) )  {
+				$_SESSION['errors'][] = 'You have chosen to post a Signlink message - this requires that you submit two files: a flash file and a .flv file.';
+				
+			} else if ($_POST['message'] == "video") {
+				$ext = end(explode('.', $_FILES['vmsg-file']['name']));
+				if (!in_array($ext, $filetypes_video)) {
+					$_SESSION['errors'][] = 'You have chosen to post a video message - invalid file format.';
+				}
+				
+			} else if ( $_POST['message'] == "text" && empty($_POST['msg-text']) ) {
+				$_SESSION['errors'][] = 'You have chosen to post a text message - message cannot be empty.';
+			}	
+		}
 	}	
 	
 	if (!isset($_SESSION['errors'])) {
 
-		//prepare to insert into db
-		switch ($_POST['subject']) {
-			case 'image':
-				$subject = '';
-				$subject_alt = $addslashes(htmlspecialchars($_POST['isub-alt']));
-				break;
-			case 'video':
-				$subject = '';
-				$subject_alt = $addslashes(htmlspecialchars($_POST['vsub-alt']));
-				break;
-			case 'text':
-				$subject = $addslashes(htmlspecialchars($_POST['sub-text']));
-				$subject_alt = '';
-				break;
-		}
-
-		switch ($_POST['message']) {
-			case 'signlink':
-				$message = '';
-				$message_alt = '';
-				break;
-			case 'video':
-				$message = '';
-				$message_alt = $addslashes(htmlspecialchars($_POST['vmsg-alt']));
-				break;
-			case 'text':
-				$message = $addslashes(htmlspecialchars($_POST['msg-text']));
-				$message_alt = '';
-				break;
-		}
-
 		$now = date('Y-m-d G:i:s');
 
-		//insert into db
-		$sql = "UPDATE forums_posts SET subject='$subject', subject_alt='$subject_alt', msg='$message', msg_alt='$message_alt' WHERE forum_id=$forum_id AND post_id=$post_id";
+		if ($area=="subject") {
+			//prepare to insert into db
+			switch ($_POST['subject']) {
+				case 'image':
+					$subject = '';
+					$subject_alt = $addslashes(htmlspecialchars($_POST['isub-alt']));
+					break;
+				case 'video':
+					$subject = '';
+					$subject_alt = $addslashes(htmlspecialchars($_POST['vsub-alt']));
+					break;
+				case 'text':
+					$subject = $addslashes(htmlspecialchars($_POST['sub-text']));
+					$subject_alt = '';
+					break;
+			}
+
+			$sql = "UPDATE forums_posts SET subject='$subject', subject_alt='$subject_alt' WHERE forum_id=$forum_id AND post_id=$post_id";
+		}
+
+		if ($area=="message") {
+			switch ($_POST['message']) {
+				case 'signlink':
+					$message = '';
+					$message_alt = '';
+					break;
+				case 'video':
+					$message = '';
+					$message_alt = $addslashes(htmlspecialchars($_POST['vmsg-alt']));
+					break;
+				case 'text':
+					$message = $addslashes(htmlspecialchars($_POST['msg-text']));
+					$message_alt = '';
+					break;
+			}
+
+			$sql = "UPDATE forums_posts SET msg='$message', msg_alt='$message_alt' WHERE forum_id=$forum_id AND post_id=$post_id";
+		}
 
 		if (!$result = mysql_query($sql, $db)) {
 			$_SESSION['errors'][] = 'Database error.';
 		} else {		
 			//***** DELETE OLD FILES
 
-			//save files			
-			switch ($_POST['subject']) {
-				case 'image':
-					if (is_uploaded_file($_FILES['isub-file']['tmp_name'])) {
-						save_image('post', 'title', 'isub-file', $post_id);
-					}
-					break;
-				case 'video':
-					if (is_uploaded_file($_FILES['vsub-file']['tmp_name'])) {
-						save_video('post', 'title', 'vsub-file', $post_id);
-					}
-					break;
+			//save files
+			if ($area=="subject") { 
+				switch ($_POST['subject']) {
+					case 'image':
+						if (is_uploaded_file($_FILES['isub-file']['tmp_name'])) {
+							save_image('post', 'title', 'isub-file', $post_id);
+						}
+						break;
+					case 'video':
+						if (is_uploaded_file($_FILES['vsub-file']['tmp_name'])) {
+							save_video('post', 'title', 'vsub-file', $post_id);
+						}
+						break;
+				}
 			}
 
-			switch ($_POST['message']) {
-				case 'signlink':
-					if (is_uploaded_file($_FILES['sl1msg-file']['tmp_name']) && is_uploaded_file($_FILES['sl2msg-file']['tmp_name'])) {
-						save_signlink('post', 'message', 'sl1msg-file', $post_id);
-						save_signlink('post', 'message2', 'sl2msg-file', $post_id);
-					}
-					break;
-				case 'video':
-					if (is_uploaded_file($_FILES['vmsg-file']['tmp_name'])) {
-						save_video('post', 'message', 'vmsg-file', $post_id);
-					}
-					break;
+			if ($area=="message") {
+				switch ($_POST['message']) {
+					case 'signlink':
+						if (is_uploaded_file($_FILES['sl1msg-file']['tmp_name']) && is_uploaded_file($_FILES['sl2msg-file']['tmp_name'])) {
+							save_signlink('post', 'message', 'sl1msg-file', $post_id);
+							save_signlink('post', 'message2', 'sl2msg-file', $post_id);
+						}
+						break;
+					case 'video':
+						if (is_uploaded_file($_FILES['vmsg-file']['tmp_name'])) {
+							save_video('post', 'message', 'vmsg-file', $post_id);
+						}
+						break;
+				}
 			}
-
 			$_SESSION['feedback'][] = 'Post edited successfully.';
 		}
 	}
@@ -195,7 +207,7 @@ $(document).ready(function() {
 
 			<?php echo $title; ?> (<span id="edit-subject" style="color:#11568B;cursor:pointer;">Edit Subject</span>)
 
-		<form action="<?php echo $_SERVER['PHP_SELF']; ?>?processed=1" method="post" name="form" enctype="multipart/form-data" style="clear:both; padding-top:2px;">
+		<form action="<?php echo $_SERVER['PHP_SELF']; ?>?processed=1" method="post" name="form_sub" id="form_sub" enctype="multipart/form-data" style="clear:both; padding-top:2px;">
 			<input type="hidden" name="f" value="<?php echo $forum_id; ?>" />
 			<input type="hidden" name="p" value="<?php echo $post_id; ?>" />
 			<input type="hidden" name="parent" value="<?php echo $parent; ?>" />
@@ -242,7 +254,7 @@ $(document).ready(function() {
 
 		<?php echo $msg[2]; ?> (<span id="edit-message" style="color:#11568B;cursor:pointer;">Edit Message</span>)
 
-		<form action="<?php echo $_SERVER['PHP_SELF']; ?>?processed=1" method="post" name="form" enctype="multipart/form-data" style="clear:both; padding-top:2px;">
+		<form action="<?php echo $_SERVER['PHP_SELF']; ?>?processed=1" method="post" name="form_msg" id="form_msg" enctype="multipart/form-data" style="clear:both; padding-top:2px;">
 			<input type="hidden" name="f" value="<?php echo $forum_id; ?>" />
 			<input type="hidden" name="p" value="<?php echo $post_id; ?>" />
 			<input type="hidden" name="parent" value="<?php echo $parent; ?>" />
