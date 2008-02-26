@@ -22,7 +22,10 @@ if (isset($_POST['cancel'])) {
 
 	//check if there are any upload errors
 	if(empty($_POST)) {
-		$_SESSION['errors'][] = 'File too large.';
+		$_SESSION['errors'][] = "General error. Your URL is incorrect or you are trying to post a file that is too large for this installation.";
+		require(INCLUDE_PATH.'header.inc.php');
+		require(INCLUDE_PATH.'footer.inc.php');
+		exit;
 	}
 	check_uploads();
 
@@ -258,7 +261,7 @@ if ($parent_id) {
 	</div>
 
 	<div class="row" style="text-align:right;">
-		<input type="button" onclick="validateOnSubmit()" name="submit_form" value="Submit"> | <input type="submit" name="cancel" value="Cancel" /> 
+		<input type="button" onclick="validateOnSubmit('')" name="submit_form" value="Submit"> | <input type="submit" name="cancel" value="Cancel" /> 
 	</div>
 </form>
 
