@@ -261,7 +261,7 @@ if ($parent_id) {
 	</div>
 
 	<div class="row" style="text-align:right;">
-		<input type="button" onclick="<?php if(!isset($_POST['parent'])) { echo "validateOnSubmit('reply')"; } else { echo "validateOnSubmit('')"; } ?>" name="submit_form" value="Submit"> | <input type="submit" name="cancel" value="Cancel" /> 
+		<input type="button" onclick="<?php if($parent_id) { echo "validateOnSubmit('reply')"; } else { echo "validateOnSubmit('')"; } ?>" name="submit_form" value="Submit"> | <input type="submit" name="cancel" value="Cancel" /> 
 	</div>
 </form>
 
