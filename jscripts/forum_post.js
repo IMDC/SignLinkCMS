@@ -176,6 +176,10 @@ function validateOnSubmit(area) {
 		myform = $('#form_msg');
 		er_text = validateMessage();
 
+	} else if (area=="reply") {
+		myform = document.form;
+		er_text = validateMessage();
+
 	} else {
 		myform = document.form;
 		er_text1 = validateSubject();
