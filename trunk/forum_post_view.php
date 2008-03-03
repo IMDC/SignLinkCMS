@@ -25,7 +25,14 @@ $msg = get_message($post_id);  //returns array of poster, date, html-encoded mes
 
 ?>
 
-<h2><a href="forum_posts.php?f=<?php echo $forum_id; ?>"><?php echo get_title('forum', $forum_id); ?></a></h2>
+<h2 style="display:inline;"><a href="forum_posts.php?f=<?php echo $forum_id; ?>"><?php echo get_title('forum', $forum_id); ?></a></h2>
+ > <h3 style="display:inline;margin:0px;"><?php echo get_title('post', $post_id); ?></h3>
+<?php
+if (!$_REQUEST['parent']) {
+	echo get_title('post', $parent_id);
+}
+?>
+
 
 <div id="post">		
 	<div id="post-info">
@@ -44,11 +51,9 @@ $msg = get_message($post_id);  //returns array of poster, date, html-encoded mes
 			}
 			?>
 		</div>
-
-		<h3 style="margin:0px;"><?php echo get_title('post', $post_id); ?></h3>
 		<div style="clear:both; width:100%;">
-		<small><?php echo $msg[1]; ?></small><br />
-		<?php  echo $msg[2]; ?>
+			<small><?php echo $msg[1]; ?></small><br />
+			<?php  echo $msg[2]; ?>
 		</div>
 	</div>
 	<br style="clear:both" />

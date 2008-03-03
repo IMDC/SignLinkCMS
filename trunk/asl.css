@@ -236,6 +236,7 @@ div.post .title {
 
 /* post page */
 #post {
+	margin-top:10px;
 	background-color:#efefef;
 	padding:10px;
 }
