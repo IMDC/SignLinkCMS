@@ -189,7 +189,7 @@ function get_message($id) {
 function print_reply_link($id) {	
 	global $db, $filetypes_video, $filetypes_image;
 
-	$sql = "SELECT forum_id, login, date, msg, msg_alt FROM forums_posts WHERE post_id=".$id;
+	$sql = "SELECT forum_id, parent_id, login, date, msg, msg_alt FROM forums_posts WHERE post_id=".$id;
 	$result = mysql_query($sql, $db);
 	if ($result) {
 		if (!$row = mysql_fetch_assoc($result)) {
@@ -227,7 +227,7 @@ function print_reply_link($id) {
 				}
 			}
 		}
-		echo '<td><a href="forum_post_view.php?f='.$row['forum_id'].'&p='.$id.'">'.$link.'</a></td>';
+		echo '<td><a href="forum_post_view.php?f='.$row['forum_id'].'&p='.$id.'&par='.$_GET['p'].'">'.$link.'</a></td>';
 		echo '<td style="text-align:center;">'.$row['login'].'</td>';
 	}
 }
