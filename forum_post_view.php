@@ -4,10 +4,7 @@ require(INCLUDE_PATH.'vitals.inc.php');
 
 require('include/header.inc.php'); 
 
-if ($_REQUEST['parent'] == 1) {
-	$parent_id = intval($_REQUEST['p']);
-}
-
+$parent_id = intval($_REQUEST['par']);
 $post_id = intval($_REQUEST['p']);
 $forum_id = intval($_REQUEST['f']);
 
@@ -28,11 +25,10 @@ $msg = get_message($post_id);  //returns array of poster, date, html-encoded mes
 <h2 style="display:inline;"><a href="forum_posts.php?f=<?php echo $forum_id; ?>"><?php echo get_title('forum', $forum_id); ?></a></h2>
  > <h3 style="display:inline;margin:0px;"><?php echo get_title('post', $post_id); ?></h3>
 <?php
-if (!$_REQUEST['parent']) {
+if ($parent_id) {
 	echo get_title('post', $parent_id);
 }
 ?>
-
 
 <div id="post">		
 	<div id="post-info">
@@ -43,15 +39,15 @@ if (!$_REQUEST['parent']) {
 	<div id="post-msg">
 		<div style="float:right;">
 			<?php 
-			if (isset($parent_id)) { 
+			if (!$parent_id) { 
 				echo "<a href='forum_post_create.php?f=$forum_id&p=$post_id'>Reply</a>&nbsp;";
 			}
 			if ($_SESSION['login'] == $msg[0]) {
-				echo "<a href='forum_post_edit.php?f=$forum_id&p=$post_id&parent=$_GET[parent]'>Edit</a>";
+				echo "<a href='forum_post_edit.php?f=$forum_id&p=$post_id&par=$parent_id'>Edit</a>";
 			}
 			?>
 		</div>
-		<div style="clear:both; width:100%;">
+		<div style="width:100%;">
 			<small><?php echo $msg[1]; ?></small><br />
 			<?php  echo $msg[2]; ?>
 		</div>
@@ -60,9 +56,9 @@ if (!$_REQUEST['parent']) {
 </div>
 
 <?php
-if (isset($parent_id)) { 
+if (!$parent_id) { 
 
-	$sql = "SELECT * FROM forums_posts WHERE forum_id=".$forum_id." AND parent_id=".$parent_id." ORDER BY last_comment DESC";
+	$sql = "SELECT * FROM forums_posts WHERE forum_id=".$forum_id." AND parent_id=".$post_id." ORDER BY last_comment DESC";
 	$result = mysql_query($sql, $db);
 	if (mysql_num_rows($result)) { ?>
 		<table class="manage">

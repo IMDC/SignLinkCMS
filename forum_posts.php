@@ -38,7 +38,7 @@ if (mysql_num_rows($result)) {
 					<?php echo $title; ?>
 				</div>							
 
-				<a href="forum_post_view.php?f=<?php echo $row['forum_id']; ?>&p=<?php echo $row['post_id']; ?>&parent=1" class="goto">
+				<a href="forum_post_view.php?f=<?php echo $row['forum_id']; ?>&p=<?php echo $row['post_id']; ?>" class="goto">
 					<img src="images/hand.png" style="border:0px;padding:0px;" />
 				</a>
 			</div>
