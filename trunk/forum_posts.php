@@ -5,9 +5,11 @@ require(INCLUDE_PATH.'vitals.inc.php');
 require('include/header.inc.php'); 
 ?>
 
-<h2><?php echo get_title('forum', intval($_GET['f'])); ?></h2>
+<div style="float:right">
+	<a href="forum_post_create.php?f=<?php echo intval($_GET['f']); ?>"><img src="images/user_comment.png" alt="Start a new topic" title="Start a new topic" /></a>
+</div>
 
-<a href="forum_post_create.php?f=<?php echo intval($_GET['f']); ?>">Start a new topic</a>
+<h2><?php echo get_title('forum', intval($_GET['f'])); ?></h2>
 
 <?php
 $sql = "SELECT * FROM forums_posts WHERE forum_id=".intval($_REQUEST['f'])." AND parent_id=0 ORDER BY last_comment DESC";

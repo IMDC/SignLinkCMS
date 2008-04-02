@@ -6,7 +6,7 @@ require(INCLUDE_PATH.'vitals.inc.php');
 require(INCLUDE_PATH.'admin_header.inc.php'); 
 ?>
 
-<!-- ul class="admin-menu">
+<ul class="admin-menu">
 	<li><span class="bold">Pages</span>:
 		<ul>
 			<li><a href="page_sign_create.php">New SignLink Page</a></li> 
@@ -27,6 +27,6 @@ require(INCLUDE_PATH.'admin_header.inc.php');
 			<li><a href="">Manage Posts</a></li>
 		</ul>
 	</li>
-</ul  -->
+</ul>
 
 <?php require('../include/footer.inc.php'); ?>

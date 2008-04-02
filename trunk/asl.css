@@ -16,6 +16,10 @@ table {
 	font-size: small;
 }
 
+img {
+	border:0px;
+}
+
 #container {
 	background-color: white;
 	border: 1px solid #9599A1;
@@ -33,7 +37,6 @@ table {
 }
 
 #header {
-	float:left;
 	color:black;
 	margin: 0px;
 	padding-left:10px;
@@ -43,28 +46,18 @@ h1, h2 {
 	color: #2D5E9B;
 }
 
-#main-menu {
+#menu ul {
 	clear:both;
-	width:100%;
-}
-
-#main-menu ul {
 	list-style:none;
 	margin:0px;
 	padding-left:10px;
-}
-
-#menu-right ul {
-	float:right;
-	list-style:none;
-	margin:0px;
-	padding-right:10px;
 	padding-top:10px;
 }
 
-#main-menu li, #menu-right li {
+#menu li {
 	display:inline;
 	list-style:none;
+	margin-right:5px;
 }
 
 
@@ -265,12 +258,16 @@ h3.bread, h4.bread, h5.bread {
 	font-style:italic;
 }
 
-ul.admin-menu {
+ul#menu-right {
+	display:inline
 	list-style: none;
 }
-ul.admin-menu li {
-	padding:5px;
+
+ul#menu-right li {
+	display:inline
+	list-style: none;
 }
+
 
 
 /* forms */

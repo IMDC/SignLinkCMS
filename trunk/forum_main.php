@@ -5,7 +5,7 @@ require(INCLUDE_PATH.'vitals.inc.php');
 require(INCLUDE_PATH.'header.inc.php');
 ?>
 
-<h2>Forums</h2>
+<h2 style="margin:0"><img src="images/group_large.png" alt="Forums" title="Forums" /></h2>
 
 <?php
 $sql = "SELECT * FROM forums WHERE 1 ORDER BY subject ASC";

@@ -6,31 +6,67 @@
 		http://<?php echo $_SERVER['SERVER_NAME']; ?>/filename.php
 	</div>
 
-	<div class="important-info">	
-		<div class="row">
-			<span class="bold">Title</span><br />
-				<div class="row">
-				<?php 
-				if (isset($_POST['title_file']) && !empty($_POST['title_file'])) {
-					echo '<img src="../uploads/'.$_POST['title_file'].'" /><br />';
-				}
-				?>
-				Video <span class="italic">or</span> Image<br /><input type="file" name="title_file" value="<?php echo $_POST['title_file']; ?>" /> </div>
-				<div class="row">Text<br /><input type="text" name="title_txt" size="100" value="<?php echo $_POST['title_txt']; ?>" /><br />
-				Title text will be used for the browser page title, alternative text for the title image (if provided), or the title of the page if an image or video has not been provided. </div>
-		</div>
-		<div class="row">
-			<span class="bold">Parent</span><br />
-				<select>
-					<option>list of pages</option>
-				</select>
-		</div>
+	<div class="file-info">
+		<span class="bold">Subject</span><br />
+			<p>Choose what kind of subject you would like your post to have (image, video, or plain text) then provide the appropriate details.</p>
+
+			<?php if (!empty($title)) { echo $title.'<br /><br />'; } ?>
+
+			<div class="choice">
+				<label><input type="radio" name="subject" value="image" <?php if($_POST['subject'] == "image") { echo 'checked="checked"'; }?> />Image</label>
+
+				<div class="choice-info" id="subject-image">
+					<dl class="col-list">
+						<dt>File</dt> <dd><input type="file" id="isub-file" name="isub-file" /></dd>
+						<dt>Alt Text<dt> <dd><input type="text" id="isub-alt" name="isub-alt" size="80" value="<?php echo $_POST['isub-alt']; ?>" /></dd>
+					</dl>
+				</div><br />
+
+				<label><input type="radio" name="subject" value="video" <?php if($_POST['subject'] == "video") { echo 'checked="checked"'; }?> /> Video</label>
+				<div class="choice-info" id="subject-video">
+					<dl class="col-list">
+						<dt>File</dt> <dd><input type="file" id="vsub-file" name="vsub-file" /></dd>
+						<dt>Alt Text<dt> <dd><input type="text" id="vsub-alt" name="vsub-alt" size="80" value="<?php echo $_POST['vsub-alt']; ?>" /></dd>
+					</dl>
+				</div><br />
+
+				<label><input type="radio" name="subject" value="text" <?php if($_POST['subject'] == "text") { echo 'checked="checked"'; }?> /> Text</label>
+				<div class="choice-info" id="subject-text">
+					<input type="text" id="sub-text" name="sub-text" size="85" value="<?php echo $_POST['sub-text']; ?>" />
+				</div>
+			</div>
 	</div>
 
-	<div class="row file-info">
-		<span class="bold">SignLink File</span><br />
-		<input type="file" name="flash" value="<?php echo $_POST['sl_file']; ?>" /><br />
-		The Signlink file is the main content for the page. We suggest using the Signlink Workbench area to help you organise your content and signlinks before you begin filming).
+
+	<div class="important-info">
+		<span class="bold">Page Content</span><br />
+		<?php if(!empty($msg[2])) { echo $msg[2].'<br /><br />'; } ?>
+
+		<p>Choose what kind of content you are posting (signlink object, video, or plain text) then provide the appropriate details.</p>
+
+		<div class="choice">
+			<label><input type="radio" name="message" value="signlink" <?php if($_POST['message'] == "signlink") { echo 'checked="checked"'; }?> />Signlink Object</label>
+			<div class="choice-info" id="message-sl">
+				<dl class="col-list">
+					<dt>Flash File</dt> <dd><input type="file" id="sl1msg-file" name="sl1msg-file" /></dd>
+					<dt>FLV File<dt> <dd><input type="file" id="sl2msg-file" name="sl2msg-file" /></dd>
+				</dl>
+			</div><br />
+
+			<label><input type="radio" name="message" value="video" <?php if($_POST['message'] == "video") { echo 'checked="checked"'; }?> /> Video</label>
+			<div class="choice-info" id="message-video">
+				<dl class="col-list">
+					<dt>File</dt> <dd><input type="file" id="vmsg-file" name="vmsg-file" /></dd>
+					<dt>Alt Text<dt> <dd><input type="text" id="vmsg-alt" name="vmsg-alt" value="<?php echo $_POST['vmsg-alt']; ?>" /></dd>
+				</dl>
+			</div><br />
+
+			<label><input type="radio" name="message" value="text" <?php if($_POST['message'] == "text") { echo 'checked="checked"'; }?> /> Text</label>
+			<div class="choice-info" id="message-text">
+				<textarea id="msg-text" id="msg-text" name="msg-text" rows="25" cols="90" style="height:20em;"><?php echo $_POST['msg-text']; ?></textarea>
+			</div>
+		</div>
+
 	</div>
 
 
