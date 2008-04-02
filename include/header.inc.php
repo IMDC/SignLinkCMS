@@ -15,32 +15,24 @@
 <div id="container">
 
 	<div>
-		<div id="header">
-			<h1>SignLink Project</h1>
-		</div>
+		<div style="float:right; margin-top:10px;"><img src="images/fake_logo.png" alt="Signlink Studio" /></div>
 
-		<div id="menu-right">
-			<ul>
+		<div id="menu">
+			<ul>						
+				<li><a href="index.php"><img src="images/application_view_tile.png" alt="content" title="content" /></a></li>
+				<li><a href="forum_main.php"><img src="images/group.png" alt="forums" title="forums" /></a></li>				
+				<li><a href=""><img src="images/help.png" alt="help" title="help" /></a></li>
 				<li>
 				<?php 
 				if ($_SESSION['valid_user']) {
-					echo '<strong>'.$_SESSION['login'].'</strong> - <a href="logout.php">logout</a>'; 
+					echo '<a href="logout.php"><img src="images/door_out.png" alt="logout" title="logout" /></a> &nbsp;<strong>'.$_SESSION['login'].'</strong>'; 
 				} else {
-					echo '<a href="login.php">login</a>'; 
+					echo '<a href="login.php"><img src="images/door_in.png" alt="login" title="login" /></a>'; 
 				}		
-				?> | </li>			
-				<li><a href="">help</a></li>
+				?>&nbsp;</li>
 			</ul>
 		</div>
 	</div>
-
-	<div id="main-menu">
-		<ul>
-			<li><a href="index.php">main</a> | </li>
-			<li><a href="forum_main.php">forums</a></li>
-		</ul>
-	</div>
-
 
 	<div id="content">
 	<?php 

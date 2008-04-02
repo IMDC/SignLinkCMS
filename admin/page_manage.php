@@ -7,10 +7,18 @@ require(INCLUDE_PATH.'admin_header.inc.php'); ?>
 <h2>Pages</h2>
 
 <ul id="page-menu">
-	<li><a href="page_sign_create.php">New SignLink Page</a> | </li> 
-	<li><a href="page_html_create.php">New html Page</a></li> 
+	<li><a href="page_create.php">New Page</a></li> 
 </ul>
 
+<?php
+//get pages
+$sql = "SELECT * FROM content WHERE 1";
+$result = mysql_query($sql, $db);
+$r = 1;
+
+if ($row = mysql_fetch_assoc($result)) {
+
+?>
 <table class="manage">
 	<tr>
 		<th>Title</th>
@@ -20,11 +28,7 @@ require(INCLUDE_PATH.'admin_header.inc.php'); ?>
 		<th>Manage</th>
 	</tr>
 	<?php
-	//get pages
-	$sql = "SELECT * FROM content WHERE 1";
-	$result = mysql_query($sql, $db);
-	$r = 1;
-	while ($row = mysql_fetch_assoc($result)) {
+	do {
 
 		$title = get_title($row['title'], $row['title_file']);
 
@@ -58,10 +62,14 @@ require(INCLUDE_PATH.'admin_header.inc.php'); ?>
 		} else {
 			$r = 1;
 		}
-	}
+	} while ($row = mysql_fetch_assoc($result));
 	?>
 
 </table>
 
 
-<?php require('../include/footer.inc.php'); ?>
+<?php 
+} else {
+	echo "No pages found";
+}
+require('../include/footer.inc.php'); ?>

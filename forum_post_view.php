@@ -22,28 +22,59 @@ $msg = get_message($post_id);  //returns array of poster, date, html-encoded mes
 
 ?>
 
-<h2 style="display:inline;"><a href="forum_posts.php?f=<?php echo $forum_id; ?>"><?php echo get_title('forum', $forum_id); ?></a></h2>
- > <h3 style="display:inline;margin:0px;"><?php echo get_title('post', $post_id); ?></h3>
-<?php
-if ($parent_id) {
-	echo get_title('post', $parent_id);
-}
-?>
+<div class="cat">
+	<div class="title">
+		<div style="height:150px">
+			<?php echo get_title('forum', $forum_id); ?>
+		</div>							
 
+		<a href="forum_posts.php?f=<?php echo $forum_id; ?>" class="goto">
+			<img src="images/hand.png" style="border:0px;padding:0px;" alt="View forum" title="View forum" />
+		</a>
+	</div>
+</div>
+
+<div style="float:left; margin-top:4em;font-size:medium;font-weight:bold;"> > 
+	<?php 
+	if ($parent_id) {
+		echo "Re: "; 
+	} 
+	?>
+</div>
+
+<div class="cat">
+	<div class="title">
+		<div style="height:150px">
+			<?php 
+			if ($parent_id) {
+				echo get_title('post', $parent_id); 
+			} else {
+				echo get_title('post', $post_id); 
+			}
+			?>
+		</div>							
+
+		<a href="forum_posts.php?f=<?php echo $forum_id; ?>" class="goto">
+			<img src="images/hand.png" style="border:0px;padding:0px;" alt="View post" title="View post" />
+		</a>
+	</div>
+</div>
+
+<br style="clear:both" />
 <div id="post">		
 	<div id="post-info">
 		<?php echo $msg[0]; ?><br />
-		<img src="images/user_female.png" />
+		<img src="images/user_female.png" alt="avatar" />
 	</div>
 
 	<div id="post-msg">
 		<div style="float:right;">
 			<?php 
 			if (!$parent_id) { 
-				echo "<a href='forum_post_create.php?f=$forum_id&p=$post_id'>Reply</a>&nbsp;";
+				echo "<a href='forum_post_create.php?f=$forum_id&p=$post_id'><img src='images/comment_add.png' alt='Reply' title='Reply' /></a>&nbsp;";
 			}
 			if ($_SESSION['login'] == $msg[0]) {
-				echo "<a href='forum_post_edit.php?f=$forum_id&p=$post_id&par=$parent_id'>Edit</a>";
+				echo "<a href='forum_post_edit.php?f=$forum_id&p=$post_id&par=$parent_id'><img src='images/comment_edit.png' alt='Edit' title='Edit' /></a>";
 			}
 			?>
 		</div>
@@ -54,7 +85,6 @@ if ($parent_id) {
 	</div>
 	<br style="clear:both" />
 </div>
-
 <?php
 if (!$parent_id) { 
 
