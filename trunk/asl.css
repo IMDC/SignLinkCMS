@@ -46,12 +46,15 @@ h1, h2 {
 	color: #2D5E9B;
 }
 
+#menu {
+	margin-top:10px;
+}
+
 #menu ul {
+	display:inline;
 	clear:both;
 	list-style:none;
-	margin:0px;
-	padding-left:10px;
-	padding-top:10px;
+	padding-left:0px;
 }
 
 #menu li {
@@ -77,14 +80,9 @@ h1, h2 {
 
 #content {
 	clear: both;
-	padding:10px;
 	margin-left: auto;
 	margin-right: auto;
 	padding-bottom:2.8em;
-}
-
-#content h2 {
-	margin-top:5px;
 }
 
 #content textarea {
@@ -301,11 +299,18 @@ div.notes {
 	border:1px solid black;
 }
 
-div.url-info {
-	background-color: #CADAFF;
+div.workbench {
+	background-color: #efefef;
 	margin-bottom:10px; 
-	border:1px solid black;
+	border:1px dashed #666;
+	margin-top:10px;	
+	padding:10px;	
 }
+div.workbench h3 {
+	margin:0px;
+	font-size:small;
+}
+
 
 div.important-info {
 	background-color: #E2F0F4;

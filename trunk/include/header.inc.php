@@ -15,7 +15,7 @@
 <div id="container">
 
 	<div>
-		<div style="float:right; margin-top:10px;"><img src="images/fake_logo.png" alt="Signlink Studio" /></div>
+		<div style="float:right; margin-top:5px;"><img src="images/fake_logo.png" alt="Signlink Studio" /></div>
 
 		<div id="menu">
 			<ul>						
