@@ -12,7 +12,7 @@ require(INCLUDE_PATH.'admin_header.inc.php'); ?>
 
 <?php
 //get pages
-$sql = "SELECT * FROM content WHERE 1";
+$sql = "SELECT * FROM pages WHERE 1";
 $result = mysql_query($sql, $db);
 $r = 1;
 
@@ -30,7 +30,7 @@ if ($row = mysql_fetch_assoc($result)) {
 	<?php
 	do {
 
-		$title = get_title($row['title'], $row['title_file']);
+		$title = get_title('page', $row['page_id']);
 
 		if (empty($row['sl_file']) && $row['type']=='sl') {
 			//sl file missing

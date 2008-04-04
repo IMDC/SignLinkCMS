@@ -36,8 +36,7 @@ if(!function_exists('scandir')) {
 }
 
 /* returns html-encoded title (image or video or text) - things that have titles: forum, thread, page.  */
-function get_title($location, $id) {			
-	
+function get_title($location, $id) {				
 	global $db, $filetypes_video;
 	
 	$level = '';
@@ -56,13 +55,13 @@ function get_title($location, $id) {
 			$title_path = $level.'uploads/posts/'.$id.'/';
 			break;
 		case 'page':
+			$sql = "SELECT title, title_alt FROM pages WHERE page_id=".$id;
+			$title_path = $level.'uploads/pages/'.$id.'/';		
 			break;
 	}
-
 	$result = mysql_query($sql, $db);
 	if ($result) {
 		$row = mysql_fetch_row($result);
-
 		if (!empty($row[0])) {
 			//the title is plain text
 			$title = $row[0];
@@ -267,6 +266,10 @@ function save_image($location, $type, $file, $id) {
 			$newfile = $level.UPLOAD_DIR.'posts/'.$id.'/'.$type.'.'.$ext;
 			break;
 		case 'page':
+			if(!file_exists($level.UPLOAD_DIR.'pages/'.$id.'/')) {
+				mkdir($level.UPLOAD_DIR.'pages/'.$id.'/');
+			}
+			$newfile = $level.UPLOAD_DIR.'pages/'.$id.'/'.$type.'.'.$ext;
 			break;
 	}
 
@@ -458,6 +461,30 @@ function populate_post($row, $title) {
 	}
 
 	return;
+}
+
+function print_signlinks_to($id) {
+	global $db;
+
+	/*$sql = "SELECT workbench_links_to FROM forums_posts WHERE post_id=".$id;
+
+	$result = mysql_query($sql, $db);
+	if ($result) {
+		$msg = array();
+
+		if (!$row = mysql_fetch_assoc($result)) {
+			$msg[0] = '';	
+	
+	//output list
+	echo '<ul class="links-list">';
+	foreach($row['id'] as $id) {
+		echo "<li>".get_title('page', $id)."</li>";
+	}
+	echo "</ul>";	*/
+}
+
+function print_signlinks_from($id) {
+	global $db;
 }
 
 ?>
