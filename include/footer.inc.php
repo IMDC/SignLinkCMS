@@ -2,7 +2,7 @@
 
 	</div>
 	<div id="footer">
-		copyright
+		&nbsp;
 	</div>
 </div>
 
