@@ -15,12 +15,14 @@
 <div id="container">
 
 	<div>
-		<div style="float:right; margin-top:5px;"><img src="images/fake_logo.png" alt="Signlink Studio" /></div>
+		<div style="float:right; margin-top:5px;"><img src="images/fake_logo.jpg" style="width:100px" alt="Signlink Studio" /></div>
 
 		<div id="menu">
 			<ul>						
 				<li><a href="index.php"><img src="images/application_view_tile.png" alt="content" title="content" /></a></li>
-				<li><a href="forum_main.php"><img src="images/group.png" alt="forums" title="forums" /></a></li>				
+				<li><a href="forum_main.php"><img src="images/group.png" alt="forums" title="forums" /></a></li>	
+				<li><a href="vlogs.php"><img src="images/cup_edit.png" alt="vlogs" title="vlogs" /></a></li>				
+				
 				<li><a href=""><img src="images/help.png" alt="help" title="help" /></a></li>
 				<li>
 				<?php 
