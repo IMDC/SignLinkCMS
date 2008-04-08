@@ -222,12 +222,12 @@ require(INCLUDE_PATH.'admin_header.inc.php'); ?>
 	 
 	   <div class="row">
 		   <span class="bold">Signlinks on this page</span> (<a href="">Add Links</a> | <a href="">Remove Selected</a>)<br />
-		   <?php print_signlinks_from(); ?> list here.......
+		   <?php @print_signlinks_from(); ?> list here.......
 	   </div>
 	 
 	   <div class="row">
 		   <span class="bold">Pages linking to this page</span><br />
-		   <?php print_signlinks_to(); ?> list here.......
+		   <?php @print_signlinks_to(); ?> list here.......
 	   </div>
 	  
 	  <br style="clear:both;" />
