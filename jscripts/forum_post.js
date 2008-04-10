@@ -1,6 +1,15 @@
 $(document).ready(function() {
 
 	if(typeof(subject)=="undefined") {
+	
+		if ($("input[@name='parent']:checked").val() == "1") {
+			$("#parent-info").show();
+		} else {
+			$("#parent-info").hide();
+		}
+	}
+	
+	if(typeof(subject)=="undefined") {
 
 		if ($("input[@name='subject']:checked").val() == "image") {
 			$("#subject-image").show();
@@ -42,6 +51,18 @@ $(document).ready(function() {
 		$("#message-video").hide();
 		$("#message-text").hide();
 	}
+
+	$("input[@name='parent']").change(
+	function() {
+
+		if ($("input[@name='parent']:checked").val() == 0) {
+			$("#parent-info").hide();
+
+		} else if ($("input[@name='parent']:checked").val() == 1) {
+			$("#parent-info").show();
+		} 
+	});
+
 
 	$("input[@name='subject']").change(
 	function() {
