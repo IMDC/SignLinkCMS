@@ -23,8 +23,8 @@ if ($row = mysql_fetch_assoc($result)) {
 	<tr>
 		<th>Title</th>
 		<th>Parent</th>
-		<th>Type</th>
-		<th>Status</th>
+		<!-- th>Type</th>
+		<th>Status</th -->
 		<th>Manage</th>
 	</tr>
 	<?php
@@ -44,18 +44,16 @@ if ($row = mysql_fetch_assoc($result)) {
 		echo '<td>'.$title.'</td>'; 
 		echo '<td style="text-align:center;">'.$row['parent_id'].'</td>';  //get parent id title
 
-		if ($row['type'] == 'sl') {
+		/*if ($row['type'] == 'sl') {
 			echo '<td style="text-align:center;">SignLink</td>'; 
 		} else {
 			echo '<td style="text-align:center;">HTML</td>'; 
 		}
-		echo '<td style="text-align:center;">'.$status.'</td>';
-		if ($row['type'] == 'sl') {
-			echo '<td style="text-align:center;"><a href="page_sign_edit.php?cid='.$row['content_id'].'">Edit</a>';
-		} else {
-			echo '<td style="text-align:center;"><a href="page_reg_edit.php?cid='.$row['content_id'].'">Edit</a>';
-		}
-		echo ' | <a href="page_delete.php?cid='.$row['content_id'].'">Delete</a></td>';
+		echo '<td style="text-align:center;">'.$status.'</td>';*/
+		echo '<td style="text-align:center;">';
+		echo '<a href="page_view.php?c='.$row['page_id'].'">Preview</a>';
+		echo ' | <a href="page_edit.php?c='.$row['page_id'].'">Edit</a>';
+		echo ' | <a href="page_delete.php?c='.$row['page_id'].'">Delete</a></td>';
 		echo '</tr>';
 		if ($r == 1) {
 			$r = 2;

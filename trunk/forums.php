@@ -3,11 +3,7 @@ define('INCLUDE_PATH', 'include/');
 require(INCLUDE_PATH.'vitals.inc.php');
 
 require(INCLUDE_PATH.'header.inc.php');
-?>
 
-<h2 style="margin:0"><img src="images/group_large.png" alt="Forums" title="Forums" /></h2>
-
-<?php
 $sql = "SELECT * FROM forums WHERE 1 ORDER BY subject ASC";
 $result = mysql_query($sql, $db);
 if (@mysql_num_rows($result)) { 

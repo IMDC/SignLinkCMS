@@ -12,26 +12,34 @@
  
 </head>
 
+<ul id="menu-right">
+	<li><a href=""><img src="images/cog.png" alt="preferences" title="preferences" /></a></li>
+	<li><a href=""><img src="images/help.png" alt="help" title="help" /></a></li>
+	<li>
+	<?php 
+	if ($_SESSION['valid_user']) {
+		echo '<a href="logout.php"><img src="images/door_out.png" alt="logout" title="logout" /></a> '.$_SESSION['login']; 
+	} else {
+		echo '<a href="login.php"><img src="images/door_in.png" alt="login" title="login" /></a>'; 
+	}		
+	?>&nbsp;</li>
+</ul>
+			
 <div id="container">
 
 	<div>
-		<div style="float:right; margin-top:5px;"><img src="images/fake_logo.jpg" style="width:100px" alt="Signlink Studio" /></div>
+		<div style="margin-top:5px;"><img src="images/fake_logo.jpg" style="width:75px" alt="Signlink Studio" /></div>
 
 		<div id="menu">
-			<ul>						
-				<li><a href="index.php"><img src="images/application_view_tile.png" alt="content" title="content" /></a></li>
-				<li><a href="forum_main.php"><img src="images/group.png" alt="forums" title="forums" /></a></li>	
+		<?php
+		
+			$current_page = explode('/', $_SERVER['PHP_SELF']); 
+			$current_page = $current_page[count($current_page) - 1];
+		?>
+			<ul>					
+				<li><a href="index.php"><img src="images/house.png" alt="home" title="home" <?php if($current_page == 'index.php') { echo 'style="background-color: #cbdbef; border: 1px solid #7299C9;"'; } ?> /></a></li>
+				<li><a href="forums.php"><img src="images/group.png" alt="forums" title="forums" /></a></li>	
 				<li><a href=""><img src="images/cup_edit.png" alt="vlogs" title="vlogs" /></a></li>				
-				
-				<li><a href=""><img src="images/help.png" alt="help" title="help" /></a></li>
-				<li>
-				<?php 
-				if ($_SESSION['valid_user']) {
-					echo '<a href="logout.php"><img src="images/door_out.png" alt="logout" title="logout" /></a> &nbsp;<strong>'.$_SESSION['login'].'</strong>'; 
-				} else {
-					echo '<a href="login.php"><img src="images/door_in.png" alt="login" title="login" /></a>'; 
-				}		
-				?>&nbsp;</li>
 			</ul>
 		</div>
 	</div>

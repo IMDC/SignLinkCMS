@@ -487,4 +487,20 @@ function print_signlinks_from($id) {
 	global $db;
 }
 
+function get_top_pages() {
+	global $db;
+	$top_pages = array();
+	
+	$sql = "SELECT * FROM pages WHERE parent_id=0 ORDER BY created ASC";
+	$result = mysql_query($sql, $db);
+	
+	if (@mysql_num_rows($result)) { 
+		while($row = mysql_fetch_assoc($result)) {
+			$top_pages[] = $row;
+		}
+	}
+	return $top_pages;
+}
+
+
 ?>

@@ -5,6 +5,7 @@ require(INCLUDE_PATH.'vitals.inc.php');
 
 //echo '<pre>'.print_r($_POST).'</pre>';
 
+$page_id = intval($_REQUEST['p']);
 
 if (isset($_POST['cancel'])) {
 	header('Location: '.INCLUDE_PATH.'../admin/page_manage.php');
@@ -136,12 +137,29 @@ if (isset($_POST['cancel'])) {
 	}
 } 
 
+$title = get_title('page', $row['page_id']);
+
 require(INCLUDE_PATH.'admin_header.inc.php'); ?>
 
 <h2>Create Page</h2>
 	<script type="text/javascript" src="../jscripts/forum_post.js"></script>
 
-<form action ="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form" enctype="multipart/form-data">
+<form action ="<?php echo $_SERVER['PHP_SELF']; ?>?processed=1" method="post" name="form" enctype="multipart/form-data">
+	<div class="file-info" style="background-color:#fff5f5;">
+		<span class="bold">Parent</span><br />
+			<p>Choose if this will be a top-level page, or a sub-page with a parent.</p>
+				<label><input type="radio" name="parent" value="0" /> top-level page<label> <br />
+				<label><input type="radio" name="parent" value="1" /> sub-page with parent<label><br />
+					<div style="margin-left:20px; padding:5px;" id="parent-info">
+					<?php $top_pages = get_top_pages();
+					foreach ($top_pages as $top) {
+						echo '<label><input type="radio" name="parent_id" value="'.$top['page_id'].'" />';
+						echo get_title('page', $top['page_id']).'</label>&nbsp;';
+					}
+					?>
+					</div>
+	</div>
+
 	<div class="file-info">
 		<span class="bold">Title</span><br />
 			<p>Choose what kind of title you would like your page to have (image, video, or plain text) then provide the appropriate details.</p>
