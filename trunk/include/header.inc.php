@@ -38,8 +38,8 @@
 		?>
 			<ul>					
 				<li><a href="index.php"><img src="images/house.png" alt="home" title="home" <?php if($current_page == 'index.php') { echo 'style="background-color: #cbdbef; border: 1px solid #7299C9;"'; } ?> /></a></li>
-				<li><a href="forums.php"><img src="images/group.png" alt="forums" title="forums" /></a></li>	
-				<li><a href=""><img src="images/cup_edit.png" alt="vlogs" title="vlogs" /></a></li>				
+				<li><a href="forums.php"><img src="images/group.png" alt="forums" title="forums" <?php if($current_page == 'forums.php') { echo 'style="background-color: #cbdbef; border: 1px solid #7299C9;"'; } ?> /></a></li>	
+				<li><a href=""><img src="images/cup_edit.png" alt="vlogs" title="vlogs" <?php if($current_page == 'vlogs.php') { echo 'style="background-color: #cbdbef; border: 1px solid #7299C9;"'; } ?> /></a></li>				
 			</ul>
 		</div>
 	</div>
