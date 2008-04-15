@@ -1,0 +1,65 @@
+CONFIG FILE
+	max upload for subject, msg, # posts per page, etc.
+
+
+ADMIN AREA
+
+Forum
+	*Create
+	*Edit
+	*Delete
+	Manage Posts
+
+	paging forums, posts
+
+	View for each... #topics, #posts, last post
+
+Pages
+	Create
+		Order of links
+	Edit
+	Order
+
+Help Documentation for Admin
+
+
+FRONT
+
+Login
+	*secure login
+	*redirect if coming from create post page
+	auto-login
+	password reminder
+
+Edit Preferences
+	-avatar...icon or image
+	-email
+	-website
+	-auto-login
+
+Forum
+	*Create Post
+		*javascript (click on input, the corrent radio button automatically is chosen)
+		able to input more than one type (sl + vid + txt)
+
+		*javascript: checking subject empty
+	*Edit
+
+	*Reply
+		*title of reply
+		*breadcrumbs - use boxes. 
+		return to post link
+		reply to replies
+
+	*blue box link under each title
+	-mark new msgs
+	-orig poster's name
+
+Pages
+	View
+
+Help Documentation for User
+
+
+
+enforce ALT TEXT limit: 80 chars
