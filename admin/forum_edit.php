@@ -90,7 +90,7 @@ if (isset($_POST['cancel'])) {
 	$result = mysql_query($sql, $db);
 
 	if ($row = mysql_fetch_assoc($result)) {
-		populate_post($row, $title);
+		populate_page($row, $title);
 	} else {
 		$_SESSION['error'][] = 'Forum not found.';
 	}
