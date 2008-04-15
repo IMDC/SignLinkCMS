@@ -12,19 +12,20 @@ require(INCLUDE_PATH.'admin_header.inc.php'); ?>
 
 <?php
 //get pages
-$sql = "SELECT * FROM pages WHERE 1";
+$sql = "SELECT * FROM pages WHERE 1 ORDER BY title, title_alt, parent_id";
 $result = mysql_query($sql, $db);
 $r = 1;
 
 if ($row = mysql_fetch_assoc($result)) {
 
+//add author to table
 ?>
 <table class="manage">
 	<tr>
-		<th>Title</th>
+		<th style="width:1em;">Id</th>	
+		<th style="text-align:left;">Title</th>
 		<th>Parent</th>
-		<!-- th>Type</th>
-		<th>Status</th -->
+		<th>Created</th>
 		<th>Manage</th>
 	</tr>
 	<?php
@@ -41,19 +42,14 @@ if ($row = mysql_fetch_assoc($result)) {
 
 		//print page row info
 		echo '<tr class="row'.$r.'">';
+		echo '<td style="text-align:center;">'.$row['page_id'].'</td>'; 		
 		echo '<td>'.$title.'</td>'; 
 		echo '<td style="text-align:center;">'.$row['parent_id'].'</td>';  //get parent id title
-
-		/*if ($row['type'] == 'sl') {
-			echo '<td style="text-align:center;">SignLink</td>'; 
-		} else {
-			echo '<td style="text-align:center;">HTML</td>'; 
-		}
-		echo '<td style="text-align:center;">'.$status.'</td>';*/
+		echo '<td style="text-align:center;">'.$row['created'].'</td>';
 		echo '<td style="text-align:center;">';
-		echo '<a href="page_view.php?c='.$row['page_id'].'">Preview</a>';
+		echo '<a href="page_view.php?c='.$row['page_id'].'">View</a>';
 		echo ' | <a href="page_edit.php?c='.$row['page_id'].'">Edit</a>';
-		echo ' | <a href="page_delete.php?c='.$row['page_id'].'">Delete</a></td>';
+		echo ' | <a href="page_delete.php?c='.$row['page_id'].'" onclick="return confirm(\'Are you sure you want to delete this page?\')">Delete</a></td>';
 		echo '</tr>';
 		if ($r == 1) {
 			$r = 2;

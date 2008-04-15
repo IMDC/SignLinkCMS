@@ -90,8 +90,12 @@ if (isset($_POST['cancel'])) {
 				$message_alt = '';
 				break;
 		}
-
-		$parent_id = intval($_POST['parent_id']);
+	
+		if ($_POST['parent']) {
+			$parent_id = intval($_POST['parent_id']);
+		} else {
+			$parent_id = 0;
+		}
 		$outline = $addslashes(htmlspecialchars($_POST['outline']));
 
 		//insert into db
@@ -148,7 +152,7 @@ require(INCLUDE_PATH.'admin_header.inc.php'); ?>
 	<div class="file-info" style="background-color:#fff5f5;">
 		<span class="bold">Parent</span><br />
 			<p>Choose if this will be a top-level page, or a sub-page with a parent.</p>
-				<label><input type="radio" name="parent" value="0" /> top-level page<label> <br />
+				<label><input type="radio" name="parent" value="0" checked="checked" /> top-level page<label> <br />
 				<label><input type="radio" name="parent" value="1" /> sub-page with parent<label><br />
 					<div style="margin-left:20px; padding:5px;" id="parent-info">
 					<?php $top_pages = get_top_pages();

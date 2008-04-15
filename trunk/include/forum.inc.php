@@ -1,3 +1,5 @@
+<script type="text/javascript" src="../jscripts/forum_post.js"></script>
+
 <form action ="<?php echo $_SERVER['PHP_SELF']; ?>?processed=1" method="post" name="form" enctype="multipart/form-data">
 <input type="hidden" name="fid" value="<?php echo $_REQUEST['fid']; ?>" />
 
@@ -5,8 +7,9 @@
 
 <div class="file-info">
 	<span class="bold"><label>Subject</label></span><br />
-		<p>Choose what kind of subject you would like your forum to have (image, video, or plain text) then provide the appropriate details.</p>
 		<?php if (!empty($title)) { echo $title.'<br /><br />'; } ?>
+
+		<p>Choose what kind of subject you would like your forum to have (image, video, or plain text) then provide the appropriate details.</p>
 		<div class="choice">
 			<label><input type="radio" name="subject" value="image" <?php if($_POST['subject'] == "image") { echo 'checked="checked"'; }?> />Image</label>
 			<div class="choice-info">

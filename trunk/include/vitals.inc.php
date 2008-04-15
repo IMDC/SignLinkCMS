@@ -1,5 +1,4 @@
 <?php
-
 if (!defined('INCLUDE_PATH')) { exit; }
 
 require('config.inc.php');
@@ -34,6 +33,8 @@ if ( get_magic_quotes_gpc() == 1 ) {
 	$stripslashes = 'my_null_slashes';
 }
 
-require('functions.inc.php');
+require('lib/functions.inc.php'); 
+require('lib/forums.inc.php');
+require('lib/pages.inc.php');
 
 ?>
