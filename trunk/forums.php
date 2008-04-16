@@ -25,10 +25,13 @@ if (@mysql_num_rows($result)) {
 			
 			<div style="float:left;">
 			<?php
-				if ($new_messages) {
-					echo '<img src="images/email_red.png" alt="new messages!" title="new messages!" height="16" width="16" /> ';
-				} else {
+				//.... finish sql: join with forums_posts			
+				$sql2 = "SELECT * FROM forums_read WHERE forum_id=".$row['forum_id']." AND member_id=".intval($_SESSION['member_id']);
+				$result2 = mysql_query($sql2, $db);
+				if (@mysql_num_rows($result2)) { 
 					echo '<img src="images/email.png" alt="messages" title="new messages" height="16" width="16" /> ';
+				} else {
+					echo '<img src="images/email_red.png" alt="new messages!" title="new messages!" height="16" width="16" /> ';
 				}
 				
 				//get post info
