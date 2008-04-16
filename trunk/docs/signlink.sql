@@ -100,3 +100,17 @@ CREATE TABLE IF NOT EXISTS `pages` (
   `links_to` varchar(50) NOT NULL default '',
   PRIMARY KEY  (`page_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=12 ;
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `forums_read`
+--
+
+CREATE TABLE IF NOT EXISTS `forums_read` (
+  `post_id` mediumint(9) NOT NULL,
+  `member_id` mediumint(9) NOT NULL,
+  `forum_id` mediumint(9) NOT NULL,
+  KEY `post_id` (`post_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
