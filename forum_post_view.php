@@ -16,6 +16,10 @@ if ($_SESSION['valid_user']) {
 		$sql = "UPDATE forums_views SET last_accessed=NOW(), views=views+1 WHERE post_id=$parent_id AND member_id=$_SESSION[member_id]";
 		$result = mysql_query($sql, $db);
 	}
+	
+	//update that this member viewed this post
+	$sql = "REPLACE INTO forums_read VALUES ($post_id, $_SESSION[member_id], $forum_id)";
+	$result = mysql_query($sql, $db);	
 }
 
 $msg = get_message($post_id);  //returns array of poster, date, html-encoded message
