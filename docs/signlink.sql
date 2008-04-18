@@ -27,7 +27,7 @@ CREATE TABLE IF NOT EXISTS `forums` (
   `num_posts` mediumint(8) unsigned NOT NULL default '0',
   `last_post` datetime NOT NULL default '0000-00-00 00:00:00',
   PRIMARY KEY  (`forum_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -51,7 +51,7 @@ CREATE TABLE IF NOT EXISTS `forums_posts` (
   `locked` tinyint(4) NOT NULL default '0',
   `sticky` tinyint(4) NOT NULL default '0',
   PRIMARY KEY  (`post_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=46 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -77,8 +77,10 @@ CREATE TABLE IF NOT EXISTS `members` (
   `member_id` mediumint(9) NOT NULL auto_increment,
   `login` varchar(20) NOT NULL default '',
   `password` varchar(20) NOT NULL default '',
+  `name` varchar(265) NOT NULL,
+  `email` varchar(265) NOT NULL,
   PRIMARY KEY  (`member_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -99,7 +101,7 @@ CREATE TABLE IF NOT EXISTS `pages` (
   `last_modified` datetime NOT NULL default '0000-00-00 00:00:00',
   `links_to` varchar(50) NOT NULL default '',
   PRIMARY KEY  (`page_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=12 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 
 -- --------------------------------------------------------

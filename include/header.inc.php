@@ -31,14 +31,13 @@
 		<div style="margin-top:5px;"><img src="images/fake_logo.jpg" style="width:75px" alt="Signlink Studio" /></div>
 
 		<div id="menu">
-		<?php
-		
+		<?php		
 			$current_page = explode('/', $_SERVER['PHP_SELF']); 
 			$current_page = $current_page[count($current_page) - 1];
 		?>
 			<ul>					
-				<li><a href="index.php"><img src="images/house.png" alt="home" title="home" <?php if($current_page == 'index.php') { echo 'style="background-color: #cbdbef; border: 1px solid #7299C9;"'; } ?> /></a></li>
-				<li><a href="forums.php"><img src="images/group.png" alt="forums" title="forums" <?php if($current_page == 'forums.php') { echo 'style="background-color: #cbdbef; border: 1px solid #7299C9;"'; } ?> /></a></li>	
+				<li><a href="index.php"><img src="images/house.png" alt="home" title="home" <?php if($current_page == 'index.php' || $current_page == 'page_view.php') { echo 'style="background-color: #cbdbef; border: 1px solid #7299C9;"'; } ?> /></a></li>
+				<li><a href="forums.php"><img src="images/group.png" alt="forums" title="forums" <?php if(in_array($current_page, $forum_pages)) { echo 'style="background-color: #cbdbef; border: 1px solid #7299C9;"'; } ?> /></a></li>	
 				<li><a href=""><img src="images/cup_edit.png" alt="vlogs" title="vlogs" <?php if($current_page == 'vlogs.php') { echo 'style="background-color: #cbdbef; border: 1px solid #7299C9;"'; } ?> /></a></li>				
 			</ul>
 		</div>

@@ -10,14 +10,15 @@ session_start();
 if (INCLUDE_PATH !== 'NULL') {
 	$db = @mysql_connect(DB_HOST . ':' . DB_PORT, DB_USER, DB_PASSWORD);
 	if (!$db) {
-		trigger_error('VITAL#Unable to connect to db.', E_USER_ERROR);
-		exit;
+		die('Could not connect: ' . mysql_error());
 	}
 	if (!@mysql_select_db(DB_NAME, $db)) {
-		trigger_error('VITAL#DB connection established, but database "'.DB_HOST.'" cannot be selected.', E_USER_ERROR);
+		echo 'DB connection established, but database "'.DB_HOST.'" cannot be selected.';
 		exit;
 	}
 }
+
+
 
 function my_add_null_slashes( $string ) {
     return mysql_real_escape_string(stripslashes($string));

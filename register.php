@@ -3,6 +3,7 @@ define('INCLUDE_PATH', 'include/');
 require(INCLUDE_PATH.'vitals.inc.php');
 
 if (isset($_POST['submit'])) {
+
 	$chk_email = $addslashes($_POST['email']);
 	$chk_login = $addslashes($_POST['login']);
 
@@ -59,6 +60,7 @@ if (isset($_POST['submit'])) {
 		$email      = $addslashes(trim($_POST['email']));
 		$login      = $addslashes(trim($_POST['login']));
 		$password   = $addslashes(trim($_POST['password']));
+
 
 		$sql = "INSERT INTO members VALUES (NULL, '$login', '$password', '$name', '$email')";
 		$result = mysql_query($sql, $db);
