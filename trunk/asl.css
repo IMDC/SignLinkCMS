@@ -50,18 +50,21 @@ h1, h2 {
 
 #menu {
 	margin-top:15px;
-	margin-bottom:5px;
 }
 
-#menu ul {
+#submenu {
+	padding-left:20px;
+	vertical-align:middle;
+}
+
+#menu ul, #submenu ul {
 	display:inline;
 	clear:both;
 	list-style:none;
 	padding-left:0px;
 }
 
-#menu li {
-
+#menu li, #submenu li {
 	display:inline;
 	list-style:none;
 	margin-right:5px;
@@ -73,9 +76,19 @@ h1, h2 {
 	background-color: #efefef;
 }
 
+#submenu li img {
+	padding:8px;
+	margin-bottom:-5px;
+	background-color: #cbdbef;
+}
+
 #menu li img:hover {
 	background-color: #cbdbef;
 	border: 1px solid #7299C9;
+}
+
+#submenu li img:hover {
+	background-color: #efefef;
 }
 
 #page-menu {

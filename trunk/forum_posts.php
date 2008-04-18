@@ -5,11 +5,16 @@ require(INCLUDE_PATH.'vitals.inc.php');
 require('include/header.inc.php'); 
 ?>
 
-<div style="float:right">
-	<a href="forum_post_create.php?f=<?php echo intval($_GET['f']); ?>"><img src="images/user_comment.png" alt="Start a new topic" title="Start a new topic" /></a>
+<div style="background-colour:#efefef">
+
+<h2 style="display:inline"><?php echo get_title('forum', intval($_GET['f'])); ?></h2>
+<div id="submenu" style="display:inline;">
+	<ul>					
+		<li><a href="forum_post_create.php?f=<?php echo intval($_GET['f']); ?>"><img src="images/user_comment.png" alt="Start a new topic" title="Start a new topic" <?php if($current_page == 'forum_post_create.php') { echo 'style="background-color: #cbdbef; border: 1px solid #7299C9;"'; } ?> /></a></li>			
+	</ul>	
 </div>
 
-<h2><?php echo get_title('forum', intval($_GET['f'])); ?></h2>
+</div>
 
 <?php
 $sql = "SELECT * FROM forums_posts WHERE forum_id=".intval($_REQUEST['f'])." AND parent_id=0 ORDER BY last_comment DESC";
@@ -63,7 +68,7 @@ if (mysql_num_rows($result)) {
 	</div>
 <?php
 } else {
-	echo "<p>None found.</p>";
+	echo "<p>No topics yet.</p>";
 }
 ?>
 

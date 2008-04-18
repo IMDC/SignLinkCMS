@@ -45,7 +45,7 @@ if (!empty($top_pages)) {
 
 <?php
 } else {
-	echo "None found.";
+	echo "No content found.";
 }
 
 require(INCLUDE_PATH.'footer.inc.php'); 
