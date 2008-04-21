@@ -5,17 +5,16 @@ require(INCLUDE_PATH.'vitals.inc.php');
 require('include/header.inc.php'); 
 ?>
 
-<div style="background-colour:#efefef">
+<div style="background-color:#efefef; padding:5px; height:75px;">
 
-<h2 style="display:inline"><?php echo get_title('forum', intval($_GET['f'])); ?></h2>
-<div id="submenu" style="display:inline;">
-	<ul>					
-		<li><a href="forum_post_create.php?f=<?php echo intval($_GET['f']); ?>"><img src="images/user_comment.png" alt="Start a new topic" title="Start a new topic" <?php if($current_page == 'forum_post_create.php') { echo 'style="background-color: #cbdbef; border: 1px solid #7299C9;"'; } ?> /></a></li>			
-	</ul>	
+	<h2 style="display:inline;float:left;margin:0px;"><?php echo get_title('forum', intval($_GET['f']), 'small'); ?></h2>
+	<div id="submenu" style="float:right;margin-top:40px;">
+		<ul>					
+			<li><a href="forum_post_create.php?f=<?php echo intval($_GET['f']); ?>"><img src="images/user_comment.png" alt="Start a new topic" title="Start a new topic" <?php if($current_page == 'forum_post_create.php') { echo 'style="background-color: #cbdbef; border: 1px solid #7299C9;"'; } ?> /></a></li>			
+		</ul>	
+	</div>
+	<div style="clear:both" /></div>
 </div>
-
-</div>
-
 <?php
 $sql = "SELECT * FROM forums_posts WHERE forum_id=".intval($_REQUEST['f'])." AND parent_id=0 ORDER BY last_comment DESC";
 $result = mysql_query($sql, $db);

@@ -36,7 +36,7 @@ if(!function_exists('scandir')) {
 }
 
 /* returns html-encoded title (image or video or text) - things that have titles: forum, thread, page.  */
-function get_title($location, $id) {				
+function get_title($location, $id, $size='reg') {				
 	global $db, $filetypes_video;
 	
 	$level = '';
@@ -81,21 +81,28 @@ function get_title($location, $id) {
 				}
 
 				$ext = end(explode('.',$title_file));
+				if ($size == 'small') {
+					$height='75px';
+					$width = '';
+				} else {
+					$width=BLOCK_WIDTH;
+					$height='113';
+				}
 
 				if (in_array($ext, $filetypes_video)) {
 					$title = '<object classid="clsid:02BF25D5-8C17-4B23-BC80-D3488ABDDC6B"
-					id="clip" width="'.BLOCK_WIDTH.'" height="113" codebase="http://www.apple.com/qtactivex/qtplugin.cab">
+					id="clip" width="'.$width.'" height="'.$height.'" codebase="http://www.apple.com/qtactivex/qtplugin.cab">
 						<param name="src" value="'.$title_path.$title_file.'"/>
 						<param name="autoplay" value="false"/>
 						<param name="controller" value="true"/>
 						<param name="scale" value="tofit"/>
-						<embed src="'.$title_path.$title_file.'" width="'.BLOCK_WIDTH.'" height="113" name="clip"
+						<embed src="'.$title_path.$title_file.'" width="'.$width.'" height="'.$height.'" name="clip"
 						autoplay="false" controller="true" enablejavascript="true" scale="tofit"
 						alt="Quicktime ASL video"
 						pluginspage="http://www.apple.com/quicktime/download/" />
 					</object>';
 				} else {
-					$title = '<img src="'.$title_path.$title_file.'" alt="'.$row[0].'" title="'.$row[0].'" style="vertical-align:middle;" />';
+					$title = '<img src="'.$title_path.$title_file.'" alt="'.$row[0].'" title="'.$row[0].'" class="title" style="height:'.$height.'; width:'.$width.'" />';
 				}
 			}
 		}

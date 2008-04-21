@@ -477,3 +477,7 @@ input.button {
 	padding-left:10px;
 	padding-right:10px;
 }
+
+img.title {
+	vertical-align:middle;
+}
