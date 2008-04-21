@@ -13,7 +13,7 @@
 </head>
 
 <ul id="menu-right">
-	<li><a href=""><img src="images/cog.png" alt="preferences" title="preferences" /></a></li>
+	<li><a href="preferences.php"><img src="images/cog.png" alt="preferences" title="preferences" /></a></li>
 	<li><a href=""><img src="images/help.png" alt="help" title="help" /></a></li>
 	<li>
 	<?php 

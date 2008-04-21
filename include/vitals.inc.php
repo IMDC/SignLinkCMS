@@ -2,6 +2,7 @@
 if (!defined('INCLUDE_PATH')) { exit; }
 
 require('config.inc.php');
+require('constants.inc.php');
 
 //define('AT_BASE_HREF', 'http://142.150.154.124/asl/');
 
