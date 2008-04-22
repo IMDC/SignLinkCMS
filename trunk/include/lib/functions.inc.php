@@ -84,9 +84,11 @@ function get_title($location, $id, $size='reg') {
 				if ($size == 'small') {
 					$height='75px';
 					$width = '';
+					$style="style='height:75px;'";
 				} else {
 					$width=BLOCK_WIDTH;
 					$height='113';
+					$style= '';
 				}
 
 				if (in_array($ext, $filetypes_video)) {
@@ -102,7 +104,7 @@ function get_title($location, $id, $size='reg') {
 						pluginspage="http://www.apple.com/quicktime/download/" />
 					</object>';
 				} else {
-					$title = '<img src="'.$title_path.$title_file.'" alt="'.$row[0].'" title="'.$row[0].'" class="title" style="height:'.$height.'; width:'.$width.'" />';
+					$title = '<img src="'.$title_path.$title_file.'" alt="'.$row[0].'" title="'.$row[0].'" '.$style.' />';
 				}
 			}
 		}

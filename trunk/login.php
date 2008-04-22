@@ -107,7 +107,7 @@ require(INCLUDE_PATH.'header.inc.php'); ?>
 
 <h2>Login</h2>
 
-<p><a href="register.php">Register</a> for a new account or use the <a href="password_reminder.php">Password Reminder</a> if you've forgotten your login information.</p>
+<p><a href="register.php">Register</a> for a new account or use the <a href="password_reminder.php">Password Reminder</a> if you have forgotten your login information.</p>
 
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
 		<input type="hidden" name="login_action" value="true" />
@@ -122,8 +122,10 @@ require(INCLUDE_PATH.'header.inc.php'); ?>
 		<dt><label for="pswd">Password:</label></dt> 
 			<dd><input name="password" type="password" id="pswd" value="" /></dd>
 	</dl>
-	<div style="text-align:center"><label><input type="checkbox" name="autologin" value="1" /> keep me logged-in</label><br /><br />
-	<input type="submit" name="submit" value="Submit" class="button" /></div>
+	<div style="text-align:center">
+		<!-- label><input type="checkbox" name="autologin" value="1" /> keep me logged-in</label><br / --><br />
+		<input type="submit" name="submit" value="Submit" class="button" />
+	</div>
 </form>
 
 <?php require(INCLUDE_PATH.'footer.inc.php'); ?>

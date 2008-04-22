@@ -5,14 +5,12 @@ require(INCLUDE_PATH.'vitals.inc.php');
 require('include/header.inc.php'); 
 ?>
 
-<div style="background-color:#efefef; padding:5px; height:75px;">
-
-	<h2 style="display:inline;float:left;margin:0px;"><?php echo get_title('forum', intval($_GET['f']), 'small'); ?></h2>
-	<div id="submenu" style="float:right;margin-top:40px;">
-		<ul>					
-			<li><a href="forum_post_create.php?f=<?php echo intval($_GET['f']); ?>"><img src="images/user_comment.png" alt="Start a new topic" title="Start a new topic" <?php if($current_page == 'forum_post_create.php') { echo 'style="background-color: #cbdbef; border: 1px solid #7299C9;"'; } ?> /></a></li>			
-		</ul>	
-	</div>
+<div id="post-title">
+	<h2><?php echo get_title('forum', intval($_GET['f']), 'small'); ?></h2>
+	<ul id="submenu" style="margin-top:41px;">	
+		<li><a href="forums.php?f=<?php echo intval($_GET['f']); ?>"><img src="images/arrow_left.png" alt="Back to forums" title="Back to forums" /></a></li>	
+		<li><a href="forum_post_create.php?f=<?php echo intval($_GET['f']); ?>"><img src="images/user_comment.png" alt="Start a new topic" title="Start a new topic" /></a></li>			
+	</ul>	
 	<div style="clear:both" /></div>
 </div>
 <?php
@@ -51,10 +49,23 @@ if (mysql_num_rows($result)) {
 
 			<div>
 				<div style="text-align:left;padding-right:2px; font-size:smaller;">
+					<div style="float:left;">
+						<?php 	//check for new messages - get number of posts in the forums, get number of read forum posts in forum_read. if equal, no unread
+						$sql = "SELECT * FROM forums_read WHERE forum_id=".$row['forum_id']." AND member_id=".intval($_SESSION['member_id']);
+						$result2 = mysql_query($sql, $db);
+						$read = @mysql_num_rows($result2);
+						
+						if ($posts > $read) { 
+							echo '<img src="images/email_red.png" alt="new messages!" title="new messages!" height="16" width="16" /> ';					
+						} else {
+							echo '<img src="images/email.png" alt="messages" title="new messages" height="16" width="16" /> ';
+						} ?>
+					</div>
+					<div style="float:right;">
 					<img src="images/comments.png" style="margin-bottom:-5px;" /> <?php echo $row['num_comments']; ?>
 					<img src="images/magnifier.png" style="margin-bottom:-5px;" /><?php echo $views; ?>
-					<br />
-					Last: <?php echo date('g:ia, M j, y', strtotime($row['last_comment'])); ?>
+					</div>
+					<div style="clear:both;">Last: <?php echo date('g:ia, M j, y', strtotime($row['last_comment'])); ?></div>
 				</div>
 			</div>
 		</div>
@@ -62,7 +73,7 @@ if (mysql_num_rows($result)) {
 	} ?>
 		<br style="clear:both" />
 		<div id="paging">
-			Page: 1, 2, 3...
+			
 		</div>
 	</div>
 <?php

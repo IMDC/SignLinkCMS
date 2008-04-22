@@ -53,8 +53,8 @@ h1, h2 {
 }
 
 #submenu {
-	padding-left:20px;
-	vertical-align:middle;
+	vertical-align:bottom;
+	float:right;
 }
 
 #menu ul, #submenu ul {
@@ -64,10 +64,15 @@ h1, h2 {
 	padding-left:0px;
 }
 
-#menu li, #submenu li {
+#menu li {
 	display:inline;
 	list-style:none;
 	margin-right:5px;
+}
+
+#submenu li {
+	display:inline;
+	list-style:none;
 }
 
 #menu li img {
@@ -79,16 +84,12 @@ h1, h2 {
 #submenu li img {
 	padding:8px;
 	margin-bottom:-5px;
-	background-color: #cbdbef;
+	border:1px solid #efefef;	
 }
 
-#menu li img:hover {
+#menu li img:hover, #submenu li img:hover {
 	background-color: #cbdbef;
 	border: 1px solid #7299C9;
-}
-
-#submenu li img:hover {
-	background-color: #efefef;
 }
 
 #page-menu {
@@ -277,18 +278,20 @@ div.post .title {
 
 /* post page */
 #post {
-	margin-top:10px;
-	background-color:#efefef;
-	padding:10px;
+	border:1px solid #ccc;
 }
 
 #post-info {
+	padding:10px 5px 10px 5px;
 	float:left;
 	width: 8em;
 	text-align:center;
 }
 #post-msg {
+	padding:10px 5px 10px 5px;
+
 	margin-left: 9em;
+	height:50%;
 }
 
 /* "breadcrumbs" */
@@ -393,7 +396,6 @@ table.manage {
 	width:100%;
 	padding-top:20px;
 	border-collapse: collapse;
-	margin-top:10px;
 	background-color: #efefef;
 }
 table.manage td {
@@ -407,6 +409,7 @@ table.manage tr.row2 {
 	background-color: #fbfbfb;
 }
 table.manage th {
+	text-align:left;
 	background-color: #D6E5F1;
 }
 
@@ -450,6 +453,7 @@ dl.col-list {
 
 dl.col-list dt { 
 	margin-left:20px;
+	padding-bottom:5px;
 
 }
 
@@ -478,6 +482,18 @@ input.button {
 	padding-right:10px;
 }
 
-img.title {
+#post-title {
 	vertical-align:middle;
+	background-color:#efefef; 
+	padding:5px; 
+	height:75px; 
+	border:1px solid #ccc; 
+	margin-top:5px;
+	margin-bottom:5px;
+}
+
+#post-title h2 {
+	display:inline;
+	float:left;
+	margin:0px;	
 }
