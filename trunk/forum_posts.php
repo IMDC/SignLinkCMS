@@ -50,20 +50,21 @@ if (mysql_num_rows($result)) {
 			<div>
 				<div style="text-align:left;padding-right:2px; font-size:smaller;">
 					<div style="float:left;">
-						<?php 	//check for new messages - get number of posts in the forums, get number of read forum posts in forum_read. if equal, no unread
-						$sql = "SELECT * FROM forums_read WHERE forum_id=".$row['forum_id']." AND member_id=".intval($_SESSION['member_id']);
+						<?php //check for new messages - #comments vs number of read child posts in forum_read. if equal, no unread
+						
+						$sql = "SELECT * FROM forums_read WHERE (post_id=".$row['post_id']." OR parent_id=".$row['post_id'].") AND member_id=".intval($_SESSION['member_id']);
 						$result2 = mysql_query($sql, $db);
 						$read = @mysql_num_rows($result2);
-						
-						if ($posts > $read) { 
-							echo '<img src="images/email_red.png" alt="new messages!" title="new messages!" height="16" width="16" /> ';					
+												
+						if ($_SESSION['valid_user'] && $row['num_comments']+1>$read) { 
+							echo '<img src="images/email_red.png" alt="new messages" title="new messages" height="16" width="16" /> ';					
 						} else {
-							echo '<img src="images/email.png" alt="messages" title="new messages" height="16" width="16" /> ';
+							echo '<img src="images/email.png" alt="no new messages" title="no new messages" height="16" width="16" /> ';
 						} ?>
 					</div>
 					<div style="float:right;">
-					<img src="images/comments.png" style="margin-bottom:-5px;" /> <?php echo $row['num_comments']; ?>
-					<img src="images/magnifier.png" style="margin-bottom:-5px;" /><?php echo $views; ?>
+						<img src="images/comments.png" style="margin-bottom:-5px;" /> <?php echo $row['num_comments']; ?>
+						<img src="images/magnifier.png" style="margin-bottom:-5px;" /><?php echo $views; ?>
 					</div>
 					<div style="clear:both;">Last: <?php echo date('g:ia, M j, y', strtotime($row['last_comment'])); ?></div>
 				</div>

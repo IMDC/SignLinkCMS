@@ -411,6 +411,7 @@ table.manage tr.row2 {
 table.manage th {
 	text-align:left;
 	background-color: #D6E5F1;
+	padding:5px;
 }
 
 fieldset {

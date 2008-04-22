@@ -40,9 +40,9 @@ if (@mysql_num_rows($result)) {
 				$read = @mysql_num_rows($result2);
 				
 				if ($_SESSION['valid_user'] && $posts>$read) { 
-					echo '<img src="images/email_red.png" alt="new messages!" title="new messages!" height="16" width="16" /> ';					
+					echo '<img src="images/email_red.png" alt="new messages" title="new messages" height="16" width="16" /> ';					
 				} else {
-					echo '<img src="images/email.png" alt="messages" title="new messages" height="16" width="16" /> ';
+					echo '<img src="images/email.png" alt="no new messages" title="no new messages" height="16" width="16" /> ';
 				}
 
 				echo "<span style='font-size: smaller;'> $posts posts in $topics topics</span>";
