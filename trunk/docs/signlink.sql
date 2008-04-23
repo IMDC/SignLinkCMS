@@ -114,5 +114,6 @@ CREATE TABLE IF NOT EXISTS `forums_read` (
   `post_id` mediumint(9) NOT NULL,
   `member_id` mediumint(9) NOT NULL,
   `forum_id` mediumint(9) NOT NULL,
-  KEY `post_id` (`post_id`)
+  `parent_id` mediumint(9) NOT NULL,
+  PRIMARY KEY  (`post_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;

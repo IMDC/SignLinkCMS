@@ -2,10 +2,11 @@
 define('INCLUDE_PATH', '../include/');
 require(INCLUDE_PATH.'vitals.inc.php');
 
+$forum_id = intval($_GET['f']);
 
 if (isset($_GET['t']) && !empty($_GET['t'])) {
 	//delete title file
-	$sql = "UPDATE forums SET title_file='' WHERE forum_id=".intval($_GET['fid']);
+	$sql = "UPDATE forums SET title_file='' WHERE forum_id=".$forum_id;
 	$result = mysql_query($sql, $db);
 	$_SESSION['feedback'][] = 'Forum title deleted.';
 
@@ -16,7 +17,7 @@ if (isset($_GET['t']) && !empty($_GET['t'])) {
 	
 
 	//delete forum
-	$sql = "DELETE FROM forums WHERE forum_id=".intval($_GET['fid']);
+	$sql = "DELETE FROM forums WHERE forum_id=".$forum_id;
 	$result = mysql_query($sql, $db);
 	$_SESSION['feedback'][] = 'Forum deleted.';
 }

@@ -3,7 +3,7 @@ define('INCLUDE_PATH', '../include/');
 require(INCLUDE_PATH.'vitals.inc.php');
 //admin_authenticate(AT_ADMIN_PRIV_USERS);
 
-$forum_id = intval($_REQUEST['fid']);
+$forum_id = intval($_REQUEST['f']);
 
 if (isset($_POST['cancel'])) {
 	header('Location: '.INCLUDE_PATH.'../admin/forum_manage.php');

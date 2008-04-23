@@ -62,7 +62,7 @@ if (isset($_POST['submit'])) {
 		$password   = $addslashes(trim($_POST['password']));
 
 
-		$sql = "INSERT INTO members VALUES (NULL, '$login', '$password', '$name', '$email')";
+		$sql = "INSERT INTO members VALUES (NULL, '$login', '$password', '$name', '$username', '$email')";
 		$result = mysql_query($sql, $db);
 
 		if (!$result) {
