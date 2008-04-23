@@ -82,8 +82,8 @@ function get_title($location, $id, $size='reg') {
 
 				$ext = end(explode('.',$title_file));
 				if ($size == 'small') {
-					$height='75px';
-					$width = '';
+					$height='75';
+					$width = '75';
 					$style="style='height:75px;'";
 				} else {
 					$width=BLOCK_WIDTH;
