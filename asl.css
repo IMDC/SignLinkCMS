@@ -288,10 +288,9 @@ div.post .title {
 	text-align:center;
 }
 #post-msg {
-	padding:10px 5px 10px 5px;
+	padding:10px 5px 5em 5px;
 
 	margin-left: 9em;
-	height:50%;
 }
 
 /* "breadcrumbs" */
