@@ -34,7 +34,7 @@ if (mysql_num_rows($result)) { ?>
 		echo '<td style="text-align:center;">'.$row['num_topics'].'</td>';
 		echo '<td style="text-align:center;">'.$row['num_posts'].'</td>';
 		echo '<td style="text-align:center;">'.$row['last_post'].'</td>';		
-		echo '<td style="text-align:center;"><a href="forum_manage_posts.php?f='.$row['forum_id'].'">Posts</a>';
+		echo '<td style="text-align:center;"><a href="forum_posts_manage.php?f='.$row['forum_id'].'">Posts</a>';
 		echo ' | <a href="forum_edit.php?f='.$row['forum_id'].'">Edit</a>';
 		echo ' | <a href="forum_delete.php?f='.$row['forum_id'].'" onclick="return confirm(\'Are you sure you want to delete this forum?\')">Delete</a></td>';
 		echo '</tr>';
