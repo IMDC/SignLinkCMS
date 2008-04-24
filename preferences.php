@@ -23,7 +23,7 @@ if (isset($_POST['cancel'])) {
 }
 
 if (!$_SESSION['valid_user']) {
-	$_SESSION['errors'][] = 'You must be logged in to manage your preferences. Please <a href="login.php?f='.intval($_REQUEST['f']).'&p='.intval($_REQUEST['p']).'">login</a>.';
+	$_SESSION['notices'][] = 'You must be logged in to manage your preferences. Please <a href="login.php">login</a>.';
 	require(INCLUDE_PATH.'header.inc.php');
 	require(INCLUDE_PATH.'footer.inc.php');
 	exit;

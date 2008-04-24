@@ -62,4 +62,12 @@
 		echo '</div>';
 		unset($_SESSION['feedback']);
 	}
+	if (isset($_SESSION['notices'])) {
+		echo '<div class="notice"><strong>Notice:</strong><br />';
+		foreach ($_SESSION['notices'] as $nmsg) {
+			echo $nmsg.'<br />';	
+		}
+		echo '</div>';
+		unset($_SESSION['notices']);
+	}	
 	?>
