@@ -24,8 +24,11 @@ if ($post_id) {
 		$result = mysql_query($sql, $db);
 
 		//delete from forums_views & forums_read
-		$sql = "DELETE FROM forums_views WHERE forum_id=".$forum_id." AND post_id=".$post_id;
+		$sql = "DELETE FROM forums_views WHERE post_id=".$post_id;
 		$result = mysql_query($sql, $db);		
+		
+		$sql = "DELETE FROM forums_read WHERE forum_id=".$forum_id." AND post_id=".$post_id;
+		$result = mysql_query($sql, $db);			
 		
 		//delete post files
 		$level = '';
@@ -43,7 +46,7 @@ if ($post_id) {
 			}
 			
 			//delete directory
-			rmdir($pist_path);
+			rmdir($post_path);
 		}		
 		
 		
