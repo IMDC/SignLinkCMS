@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 $filetypes_image = array("jpg", "jpeg", "gif", "png");
 $filetypes_video = array("avi", "mpeg", "mpg", "wma", "mov", "mp4");
 
