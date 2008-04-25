@@ -23,7 +23,7 @@ if ($row) {
 }
 
 echo '<br style="clear:both;" /><br />';
-echo '<a href="index.php" />Back to page index</a>';
+echo '<a href="index.php" /><img src="images/arrow_left.png" alt="Back to pages" title="Back to pages" style="margin-top:20px" class="buttonimage" /></a>';
 
 require(INCLUDE_PATH.'footer.inc.php'); 
 ?>

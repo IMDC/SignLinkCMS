@@ -88,7 +88,13 @@ h1, h2 {
 	border:1px solid #efefef;	
 }
 
-#menu li img:hover, #submenu li img:hover {
+.buttonimage {
+	padding:8px;	
+	border:1px solid #ccc;
+	background-color: #efefef;
+}
+
+#menu li img:hover, #submenu li img:hover, .buttonimage:hover {
 	background-color: #cbdbef;
 	border: 1px solid #7299C9;
 }
