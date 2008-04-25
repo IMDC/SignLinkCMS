@@ -47,7 +47,7 @@ function get_message($id) {
 				$ext = end(explode('.',$msg_file));
 				if (in_array($ext, $filetypes_video)) {
 					$msg[2] = '<object classid="clsid:02BF25D5-8C17-4B23-BC80-D3488ABDDC6B"
-					id="clip" codebase="http://www.apple.com/qtactivex/qtplugin.cab">
+					id="clip" codebase="http://www.apple.com/qtactivex/qtplugin.cab" width="96" height="75">
 						<param name="src" value="'.$msg_path.$msg_file.'"/>
 						<param name="autoplay" value="false"/>
 						<param name="controller" value="true"/>
