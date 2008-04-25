@@ -31,7 +31,7 @@ if ($row = mysql_fetch_assoc($result)) {
 	<?php
 	do {
 
-		$title = get_title('page', $row['page_id']);
+		$title = get_title('page', $row['page_id'], "small");
 
 		if (empty($row['sl_file']) && $row['type']=='sl') {
 			//sl file missing

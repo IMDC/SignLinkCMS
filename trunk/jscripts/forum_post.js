@@ -52,7 +52,7 @@ $(document).ready(function() {
 		$("#message-text").hide();
 	}
 
-	$("input[@name='parent']").change(
+	$("input[@name='parent']").click(
 	function() {
 
 		if ($("input[@name='parent']:checked").val() == 0) {
@@ -64,7 +64,7 @@ $(document).ready(function() {
 	});
 
 
-	$("input[@name='subject']").change(
+	$("input[@name='subject']").click(
 	function() {
 
 		if ($("input[@name='subject']:checked").val() == "image") {
@@ -85,7 +85,7 @@ $(document).ready(function() {
 
 	});
 
-	$("input[@name='message']").change(
+	$("input[@name='message']").click(
 	function() {
 
 		if ($("input[@name='message']:checked").val() == "signlink") {
