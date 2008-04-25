@@ -29,7 +29,7 @@ function get_message($id) {
 
 		if (!empty($row['msg'])) {
 			//the msg is plain text
-			$msg[2] = $row['msg'];
+			$msg[2] = nl2br($row['msg']);
 		} else {
 			//the msg is a file
 			
