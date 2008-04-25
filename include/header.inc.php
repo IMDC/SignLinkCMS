@@ -29,7 +29,7 @@
 <div id="container">
 
 	<div>
-		<div style="margin-top:5px;"><img src="images/fake_logo.jpg" style="width:75px" alt="Signlink Studio" /></div>
+		<div style="margin-top:5px;"><img src="images/fallback_forum_banner.png" alt="Signlink Studio Forum" /></div>
 
 		<div id="menu">
 		<?php		

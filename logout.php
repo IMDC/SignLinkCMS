@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 define('INCLUDE_PATH', 'include/');
 require(INCLUDE_PATH.'vitals.inc.php');
