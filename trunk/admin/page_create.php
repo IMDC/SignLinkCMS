@@ -158,7 +158,7 @@ require(INCLUDE_PATH.'admin_header.inc.php'); ?>
 					<?php $top_pages = get_top_pages();
 					foreach ($top_pages as $top) {
 						echo '<label><input type="radio" name="parent_id" value="'.$top['page_id'].'" />';
-						echo get_title('page', $top['page_id']).'</label>&nbsp;';
+						echo get_title('page', $top['page_id'], "small").'</label>&nbsp;';
 					}
 					?>
 					</div>
