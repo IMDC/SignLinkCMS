@@ -63,8 +63,8 @@ if (mysql_num_rows($result)) {
 						} ?>
 					</div>
 					<div style="float:right;">
-						<img src="images/comments.png" style="margin-bottom:-5px;" /> <?php echo $row['num_comments']; ?>
-						<img src="images/magnifier.png" style="margin-bottom:-5px;" /><?php echo $views; ?>
+						<img src="images/comments.png" style="margin-bottom:-5px;" alt="number of replies:" title="number of replies" /> <?php echo $row['num_comments']; ?>
+						<img src="images/magnifier.png" style="margin-bottom:-5px;" alt="number of views:" title="number of views" /><?php echo $views; ?>
 					</div>
 					<div style="clear:both;">Last: <?php echo date('g:ia, M j, y', strtotime($row['last_comment'])); ?></div>
 				</div>

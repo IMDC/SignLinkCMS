@@ -47,10 +47,6 @@ $msg = get_message($post_id);  //returns array of poster, date, html-encoded mes
 		} else {
 			echo "<li><a href='forum_post_view.php?f=$forum_id&p=$parent_id'><img src='images/arrow_left.png' alt='Back to parent post' title='Back to parent post' /></a></li>";
 		}
-		
-		if ($_SESSION['login'] == $msg[0]) {
-			echo "<li><a href='forum_post_edit.php?f=$forum_id&p=$post_id&par=$parent_id'><img src='images/comment_edit.png' alt='Edit' title='Edit' /></a></li>";
-		}
 		?>		
 		
 	</ul>	
@@ -64,6 +60,12 @@ $msg = get_message($post_id);  //returns array of poster, date, html-encoded mes
 	</div>
 
 	<div id="post-msg">
+		<div style="float:right">
+		<?php
+		if ($_SESSION['login'] == $msg[0]) {
+			echo "<a href='forum_post_edit.php?f=$forum_id&p=$post_id&par=$parent_id'><img src='images/comment_edit.png' alt='Edit' title='Edit' /></a>";
+		} ?>
+		</div>
 		<div style="width:100%;">
 			<small><?php echo $msg[1]; ?></small><br />
 			<?php  echo $msg[2]; ?>
@@ -102,9 +104,9 @@ $msg = get_message($post_id);  //returns array of poster, date, html-encoded mes
 				</tr>
 			<?php
 			}
-		} else {
+		} /*else {
 			echo "<p>No replies yet.</p>";
-		}
+		}*/
 	}
 	?>
 </div>
