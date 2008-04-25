@@ -22,7 +22,7 @@ function get_content($id) {
 
 		if (!empty($row['content'])) {
 			//plain text
-			$content = $row['content'];
+			$content = nl2br($row['content']);
 		} else {
 			//file
 			
