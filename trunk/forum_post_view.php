@@ -38,18 +38,16 @@ $msg = get_message($post_id);  //returns array of poster, date, html-encoded mes
 		echo get_title('post', $post_id, 'small'); 
 	} ?>
 	</div>
-
-	<ul id="submenu" style="margin-top:41px;">		
+	<div id="submenu" style="margin-top:41px;">
 		<?php 
 		if (!$parent_id) { 
-			echo "<li><a href='forum_posts.php?f=$forum_id'><img src='images/arrow_left.png' alt='Back to forum posts' title='Back to forum posts' /></a></li>";
-			echo "<li><a href='forum_post_create.php?f=$forum_id&p=$post_id'><img src='images/comment_add.png' alt='Reply' title='Reply' /></a></li>";
+			echo "<li><a href='forum_posts.php?f=$forum_id'><img src='images/arrow_left.png' alt='Back to forum posts' title='Back to forum posts' class='buttonimage' /></a></li>";
 		} else {
-			echo "<li><a href='forum_post_view.php?f=$forum_id&p=$parent_id'><img src='images/arrow_left.png' alt='Back to parent post' title='Back to parent post' /></a></li>";
+			echo "<li><a href='forum_post_view.php?f=$forum_id&p=$parent_id'><img src='images/arrow_left.png' alt='Back to parent post' title='Back to parent post' class='buttonimage' /></a></li>";
 		}
 		?>		
 		
-	</ul>	
+	</div>	
 	<div style="clear:both" /></div>
 </div>
 
@@ -60,16 +58,23 @@ $msg = get_message($post_id);  //returns array of poster, date, html-encoded mes
 	</div>
 
 	<div id="post-msg">
-		<div style="float:right">
+		<div style="text-align:right">
+		<ul style="list-style:none;display:inline;">
 		<?php
 		if ($_SESSION['login'] == $msg[0]) {
-			echo "<a href='forum_post_edit.php?f=$forum_id&p=$post_id&par=$parent_id'><img src='images/comment_edit.png' alt='Edit' title='Edit' /></a>";
-		} ?>
+			echo "<li style='display:inline;padding:8px;'><a href='forum_post_edit.php?f=$forum_id&p=$post_id&par=$parent_id'><img src='images/comment_edit.png' alt='Edit' title='Edit' /></a></li>";
+		}		
+		if (!$parent_id) { 
+			echo "<li style='display:inline;padding:8px;'><a href='forum_post_create.php?f=$forum_id&p=$post_id'><img src='images/comment_add.png' alt='Reply' title='Reply' /></a></li>";
+		} 
+		 ?>
+		</ul>
 		</div>
 		<div style="width:100%;">
 			<small><?php echo $msg[1]; ?></small><br />
 			<?php  echo $msg[2]; ?>
 		</div>
+		<br style="clear:both" />
 	</div>
 	<br style="clear:both" />
 
