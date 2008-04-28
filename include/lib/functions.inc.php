@@ -339,7 +339,6 @@ function save_avatar($id) {
 				if (substr($dir_file,0, 6) == "avatar") {
 					$av_path .= $dir_file;
 					unlink($av_path); 
-					debug($av_path);
 					break;
 				}
 			}
