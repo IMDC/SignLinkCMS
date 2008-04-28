@@ -167,9 +167,9 @@ function save_image($location, $type, $file, $id) {
 		$newwidth = round($width * $percent);
 		$newheight = round($height * $percent);
 
-		if ($ext == "jpg" or $ext=='jpeg') {
+		if ($ext == "jpg" || $ext=='jpeg') {
 			$smaller = imagecreatetruecolor($newwidth, $newheight);
-			$source = imagecreatefromjpeg($tmp_file);
+			$source = imagecreatefromjpeg($tmp_file); 
 		} elseif ($ext == "gif") {
 			$smaller = imagecreate($newwidth, $newheight);
 			$source = imagecreatefromgif($tmp_file);
@@ -314,5 +314,115 @@ function check_uploads() {
 	return;
 }
 
+function save_avatar($id) {
+	global $db;
+
+
+		
+	$tmp_file = $_FILES['avatar']['tmp_name'];
+	$ext = end(explode('.',$_FILES['avatar']['name']));
+
+	$level = '';
+	$depth = substr_count(INCLUDE_PATH, '/');
+	for ($i=1; $i<$depth; $i++) {
+		$level .= "../";
+	}
+	
+	if(!file_exists($level.UPLOAD_DIR.'members/'.$id.'/')) {
+		mkdir($level.UPLOAD_DIR.'members/'.$id.'/');
+	} else { 
+		//delete old avatar
+		$av_path = $level.UPLOAD_DIR.'members/'.$id.'/';
+		$dir_files = @scandir($av_path);		
+		if(!empty($dir_files)) {
+			foreach ($dir_files as $dir_file) {
+				if (substr($dir_file,0, 6) == "avatar") {
+					$av_path .= $dir_file;
+					unlink($av_path); 
+					debug($av_path);
+					break;
+				}
+			}
+		}
+	}
+	
+	$newfile = $level.UPLOAD_DIR.'members/'.$id.'/avatar.'.$ext;
+
+
+		
+	//if image, resize 
+	list($width, $height) = getimagesize($tmp_file); 
+
+	if ($width>120 || $height>120) {
+	
+		if ($width >= $height && $width > 120) {
+			$percent = 120/$width;
+		} else if ($height > $width && $height > 120) {
+			$percent = 120/$height;
+		} 
+
+		$newwidth = round($width * $percent);
+		$newheight = round($height * $percent);
+
+		if ($ext == "jpg" || $ext=='jpeg') { 
+			$smaller = imagecreatetruecolor($newwidth, $newheight);	
+			$source = imagecreatefromjpeg($tmp_file); 
+		} elseif ($ext == "gif") {
+			$smaller = imagecreate($newwidth, $newheight);
+			$source = imagecreatefromgif($tmp_file);
+		} elseif ($ext == 'png') {
+			$smaller = imagecreatetruecolor($newwidth, $newheight);
+			$source = imagecreatefrompng($tmp_file);
+		}
+
+		if (!imagecopyresized($smaller, $source, 0, 0, 0, 0, $newwidth, $newheight, $width, $height)) {
+			print "Error Uploading File.";
+			exit();
+		}
+
+		if ($ext == "jpg" or $ext=='jpeg') {
+			imagejpeg($smaller, $newfile);
+		} elseif ($ext == "gif") {
+			imagegif($smaller, $newfile); 
+		} elseif ($ext == 'png') {
+			imagepng($smaller, $newfile); 
+		}	
+	}
+
+	unset($_FILES);
+
+	if (!copy($newfile, $tmp_file)) {
+	  print "Error Uploading File.";
+	  exit;
+	} 
+}
+
+function get_avatar($id) {
+	global $db;
+	
+	$level = '';
+	$depth = substr_count(INCLUDE_PATH, '/');
+	for ($i=1; $i<$depth; $i++) {
+		$level .= "../";
+	}
+				
+	//get file
+	$av_path = $level.UPLOAD_DIR.'members/'.$id.'/';
+	$dir_files = @scandir($av_path);
+	$av_file = '';
+	if(!empty($dir_files)) {
+		foreach ($dir_files as $dir_file) {
+			if (substr($dir_file,0, 6) == "avatar") {
+				$av_file = $dir_file;
+				break;
+			}
+		}
+	}
+
+	if ($av_file) {
+		echo '<img src="uploads/members/'.$id.'/'.$av_file.'" alt="'.$_SESSION['login'].'\'s avatar" /><br /><br />';
+	}
+	return;
+}
 
 ?>
