@@ -11,7 +11,7 @@ function get_message($id) {
 	}
 
 	$msg_path = $level.'uploads/posts/'.$id.'/';
-	$sql = "SELECT login, date, msg, msg_alt FROM forums_posts WHERE post_id=".$id;
+	$sql = "SELECT member_id, login, date, msg, msg_alt FROM forums_posts WHERE post_id=".$id;
 
 	$result = mysql_query($sql, $db);
 	if ($result) {
@@ -26,6 +26,7 @@ function get_message($id) {
 
 		$msg[0] = $row['login'];
 		$msg[1] = date('h:ia M j, y', strtotime($row['date']));
+		$msg[3] = $row['member_id'];
 
 		if (!empty($row['msg'])) {
 			//the msg is plain text

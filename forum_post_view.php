@@ -54,7 +54,7 @@ $msg = get_message($post_id);  //returns array of poster, date, html-encoded mes
 <div id="post">		
 	<div id="post-info">
 		<?php echo $msg[0]; ?><br />
-		<img src="images/user_female.png" alt="avatar" />
+		<?php get_avatar($msg[3]); ?>
 	</div>
 
 	<div id="post-msg">
