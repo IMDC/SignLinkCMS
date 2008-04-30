@@ -70,7 +70,7 @@ if (isset($_POST['cancel'])) {
 
 		$now = date('Y-m-d G:i:s');
 
-		if ($area=="subject") {
+		if ($area=="subject") {		
 			//prepare to insert into db
 			switch ($_POST['subject']) {
 				case 'image':
@@ -111,11 +111,11 @@ if (isset($_POST['cancel'])) {
 
 		if (!$result = mysql_query($sql, $db)) {
 			$_SESSION['errors'][] = 'Database error.';
-		} else {		
-			//***** DELETE OLD FILES
+		} else {					
+			//delete old files, save new
+			if ($area=="subject") { 				
+				delete_files('posts', $post_id, 'title');
 
-			//save files
-			if ($area=="subject") { 
 				switch ($_POST['subject']) {
 					case 'image':
 						if (is_uploaded_file($_FILES['isub-file']['tmp_name'])) {
@@ -131,6 +131,7 @@ if (isset($_POST['cancel'])) {
 			}
 
 			if ($area=="message") {
+				delete_files('posts', $post_id);
 				switch ($_POST['message']) {
 					case 'signlink':
 						if (is_uploaded_file($_FILES['sl1msg-file']['tmp_name']) && is_uploaded_file($_FILES['sl2msg-file']['tmp_name'])) {
@@ -260,11 +261,6 @@ $(document).ready(function() {
 			<input type="hidden" name="parent" value="<?php echo $parent; ?>" />
 			<input type="hidden" name="MAX_FILE_SIZE" value="<?php echo MAX_UPLOAD_SIZE; ?>" />
 			<input type="hidden" name="area" value="message" />
-
-			<?php if (!$parent) { ?>
-				<input type="hidden" name="subject" value="text" />
-				<input type="hidden" name="sub-text" value="Re: " />
-			<?php } ?>
 
 		<div class="choice" id="edit-message-form">
 			<p>Choose what kind of message you are posting (signlink object, video, or plain text) then provide the appropriate details.</p>

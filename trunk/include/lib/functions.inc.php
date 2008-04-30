@@ -424,4 +424,32 @@ function get_avatar($id) {
 	return;
 }
 
+/*
+* location: directory in /uploads - forums, members, pages, or posts
+* id
+* type: title or message
+*/
+
+function delete_files($location, $id, $type="message") {
+	global $db;
+	
+	$level = '';
+	$depth = substr_count(INCLUDE_PATH, '/');
+	for ($i=1; $i<$depth; $i++) {
+		$level .= "../";
+	}
+	
+	$path = $level.UPLOAD_DIR.$location.'/'.$id.'/';
+	
+	$dir_files = @scandir($path);		
+	if(!empty($dir_files)) {
+		foreach ($dir_files as $dir_file) {		
+			if ( (substr($dir_file,0,5) == substr($type,0,5)) || (substr($dir_file,-3,3) =="flv")) {
+				unlink($path.$dir_file); 
+			}
+		}
+	}	
+	return;
+}
+
 ?>
