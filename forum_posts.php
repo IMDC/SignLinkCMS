@@ -14,10 +14,32 @@ require('include/header.inc.php');
 	<div style="clear:both" /></div>
 </div>
 <?php
-$sql = "SELECT * FROM forums_posts WHERE forum_id=".intval($_REQUEST['f'])." AND parent_id=0 ORDER BY last_comment DESC";
+
+$sql = "SELECT count(post_id) FROM forums_posts WHERE forum_id=".intval($_REQUEST['f'])." AND parent_id=0";
+$result = mysql_query($sql, $db);
+$total = mysql_fetch_assoc($result);
+
+$perpage = 4;
+if (isset($_GET['page'])) {
+    $page = $_GET['page'];
+} else {
+	$page = 1;
+}
+$offset = ($page - 1) * $perpage;
+
+$sql = "SELECT * FROM forums_posts WHERE forum_id=".intval($_REQUEST['f'])." AND parent_id=0 ORDER BY last_comment DESC LIMIT $offset, $perpage";
 $result = mysql_query($sql, $db);
 if (mysql_num_rows($result)) { 
 	echo '<div>';
+	
+	for($page = 1; $page <= $maxPage; $page++) {
+	   if ($page == $pageNum) {
+		  $nav .= $page;
+	   } else {
+		  $nav .= '<a href="'.$_SERVER['PHP_SELF'].'page='.$page.'">'.$page.'</a>';
+	   }
+	}	
+	
 	while ($row = mysql_fetch_assoc($result)) {
 		$title = get_title('post', $row['post_id']); 
 
@@ -35,7 +57,7 @@ if (mysql_num_rows($result)) {
 				<div style="float:right;">
 					<img src="images/user_female.png" style="margin-bottom:-5px;" /><?php echo $row['login']; ?>	
 				</div>
-			</div-->
+			</div -->
 
 			<div class="title">
 				<div style="height:150px">
