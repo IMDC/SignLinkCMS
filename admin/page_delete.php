@@ -26,7 +26,7 @@ if (isset($_GET['c']) && !empty($_GET['c'])) {
 			//delete files
 			$dir_files = @scandir($page_path);			
 			foreach ($dir_files as $dir_file) {
-				unset($dir_file);
+				unlink($dir_file);
 			}
 			
 			//delete directory

@@ -1,7 +1,7 @@
 <html>
 <body>
 <head>
-	<title>title</title>
+	<title>Admin</title>
 	<link rel="stylesheet" href="../asl.css" type="text/css" media="screen" />
 
 	<!--[if IE]>
