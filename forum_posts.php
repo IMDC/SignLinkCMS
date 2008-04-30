@@ -3,6 +3,8 @@ define('INCLUDE_PATH', 'include/');
 require(INCLUDE_PATH.'vitals.inc.php');
 
 require('include/header.inc.php'); 
+
+$forum_id = intval($_REQUEST['f']);
 ?>
 
 <div id="post-title">
@@ -15,12 +17,16 @@ require('include/header.inc.php');
 </div>
 <?php
 
-$sql = "SELECT count(post_id) as numrows FROM forums_posts WHERE forum_id=".intval($_REQUEST['f'])." AND parent_id=0";
+//paging
+$perpage = 8;
+
+$sql = "SELECT count(post_id) as numrows FROM forums_posts WHERE forum_id=".$forum_id." AND parent_id=0";
 $result = mysql_query($sql, $db);
 $total = mysql_fetch_assoc($result);
 $total = $total['numrows'];
 
-$perpage = 4;
+$numpages = ceil($total/$perpage);
+
 if (isset($_GET['page'])) {
     $curpage = $_GET['page'];
 } else {
@@ -28,18 +34,35 @@ if (isset($_GET['page'])) {
 }
 $offset = ($curpage - 1) * $perpage;
 
-$sql = "SELECT * FROM forums_posts WHERE forum_id=".intval($_REQUEST['f'])." AND parent_id=0 ORDER BY last_comment DESC LIMIT $offset, $perpage";
+//print page links
+for ($page=1; $page<=$numpages; $page++) {
+	if ($page == $curpage) {
+	  $nav .= $page.'&nbsp;';
+	} else {
+	  $nav .= '<a href="'.$_SERVER['PHP_SELF'].'?f='.$forum_id.'&page='.$page.'">'.$page.'</a>&nbsp;';
+	}
+}	
+
+if ($curpage > 1) {
+   $page  = $curpage-1;
+   $prev = '<a href="'.$_SERVER['PHP_SELF'].'?f='.$forum_id.'&page='.$page.'"><</a>&nbsp;';
+} 
+
+if ($curpage < $numpages) {
+	$page = $curpage + 1;
+	$next = '<a href="'.$_SERVER['PHP_SELF'].'?f='.$forum_id.'&page='.$page.'">></a>';
+} else {
+	$next = '&nbsp;&nbsp;';
+}
+
+if ($total>$perpage) {
+	echo '<div style="text-align:right;clear:both;">'.$prev.$nav.$next.'</div>';
+}
+
+$sql = "SELECT * FROM forums_posts WHERE forum_id=".$forum_id." AND parent_id=0 ORDER BY last_comment DESC LIMIT $offset, $perpage";
 $result = mysql_query($sql, $db);
 if (mysql_num_rows($result)) { 
 	echo '<div>';
-	
-	for($page=1; $page<=$maxPage; $page++) {
-	   if ($page == $pageNum) {
-		  $nav .= $page;
-	   } else {
-		  $nav .= '<a href="'.$_SERVER['PHP_SELF'].'page='.$page.'">'.$page.'</a>';
-	   }
-	}	
 	
 	while ($row = mysql_fetch_assoc($result)) {
 		$title = get_title('post', $row['post_id']); 
