@@ -15,24 +15,25 @@ require('include/header.inc.php');
 </div>
 <?php
 
-$sql = "SELECT count(post_id) FROM forums_posts WHERE forum_id=".intval($_REQUEST['f'])." AND parent_id=0";
+$sql = "SELECT count(post_id) as numrows FROM forums_posts WHERE forum_id=".intval($_REQUEST['f'])." AND parent_id=0";
 $result = mysql_query($sql, $db);
 $total = mysql_fetch_assoc($result);
+$total = $total['numrows'];
 
 $perpage = 4;
 if (isset($_GET['page'])) {
-    $page = $_GET['page'];
+    $curpage = $_GET['page'];
 } else {
-	$page = 1;
+	$curpage = 1;
 }
-$offset = ($page - 1) * $perpage;
+$offset = ($curpage - 1) * $perpage;
 
 $sql = "SELECT * FROM forums_posts WHERE forum_id=".intval($_REQUEST['f'])." AND parent_id=0 ORDER BY last_comment DESC LIMIT $offset, $perpage";
 $result = mysql_query($sql, $db);
 if (mysql_num_rows($result)) { 
 	echo '<div>';
 	
-	for($page = 1; $page <= $maxPage; $page++) {
+	for($page=1; $page<=$maxPage; $page++) {
 	   if ($page == $pageNum) {
 		  $nav .= $page;
 	   } else {
