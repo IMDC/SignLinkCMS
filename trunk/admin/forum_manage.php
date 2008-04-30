@@ -25,7 +25,7 @@ if (mysql_num_rows($result)) { ?>
 	</tr>
 	<?php
 	while ($row = mysql_fetch_assoc($result)) {
-	
+
 		$title = get_title('forum', $row['forum_id'],'small');
 
 		//print forum row info
