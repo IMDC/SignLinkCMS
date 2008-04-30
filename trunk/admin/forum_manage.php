@@ -21,7 +21,7 @@ if (mysql_num_rows($result)) { ?>
 		<th>#Topics</th>
 		<th>#Posts</th>
 		<th>Last Post</th>
-		<th>Manage</th>
+		<th style="text-align:center;">Manage</th>
 	</tr>
 	<?php
 	while ($row = mysql_fetch_assoc($result)) {
@@ -49,6 +49,5 @@ if (mysql_num_rows($result)) { ?>
 	echo "None found.";
 }
 ?>
-
 
 <?php require('../include/footer.inc.php'); ?>
