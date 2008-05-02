@@ -28,7 +28,7 @@ $msg = get_message($post_id);  //returns array of poster, date, html-encoded mes
 
 <div id="post-title">
 	<div style="float:left;height:75px;"><?php echo get_title('forum', $forum_id, 'small'); ?></div>
-	<div style="float:left;height:75px;">&nbsp; > &nbsp;<?php if ($parent_id) { echo "Re: "; } ?></div>
+	<div style="float:left;height:75px;">&nbsp; > &nbsp;<?php if ($parent_id) { echo "Re: &nbsp;"; } ?></div>
 	
 	<div style="float:left; vertical-align:middle; height:75px;">
 	<?php 
