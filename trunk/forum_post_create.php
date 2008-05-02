@@ -204,7 +204,7 @@ if ($parent_id) {
 			<?php if (!empty($title)) { echo $title.'<br /><br />'; } ?>
 
 			<div class="choice">
-				<label><input type="radio" name="subject" value="image" <?php if($_POST['subject'] == "image") { echo 'checked="checked"'; }?> />Image</label>
+				<label><input type="radio" name="subject" value="image" <?php if($_POST['subject'] == "image") { echo 'checked="checked"'; }?> /> Image</label>
 
 				<div class="choice-info" id="subject-image">
 					<dl class="col-list">

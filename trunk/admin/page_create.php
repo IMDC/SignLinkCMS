@@ -99,7 +99,8 @@ if (isset($_POST['cancel'])) {
 		$outline = $addslashes(htmlspecialchars($_POST['outline']));
 
 		//insert into db
-		$sql = "INSERT INTO pages VALUES (NULL, '$parent_id', '$_SESSION[member_id]', '$subject', '$subject_alt', '$message', '$message_alt', '$outline', NOW(), NOW(),'')";
+		$sql = "INSERT INTO pages VALUES (NULL, '$parent_id', 0, '$subject', '$subject_alt', '$message', '$message_alt', '$outline', NOW(), NOW(),'')";
+
 		if (!$result = mysql_query($sql, $db)) {
 			$_SESSION['errors'][] = 'Database error.';
 		} else {

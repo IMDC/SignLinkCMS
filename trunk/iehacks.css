@@ -30,3 +30,9 @@ ul#menu-right {
 #menu ul {
 	margin-left:0px;
 }
+
+#post-title h2 {
+	color: black;
+	font-size: small;
+	font-weight:normal;
+}
