@@ -53,13 +53,13 @@ $msg = get_message($post_id);  //returns array of poster, date, html-encoded mes
 
 <div id="post">		
 	<div id="post-info">
-		<?php echo $msg[0]; ?><br />
+		<div style="padding-bottom:5px;"><?php echo $msg[0]; ?></div>
 		<?php get_avatar($msg[3]); ?>
 	</div>
 
 	<div id="post-msg">
 		<div style="text-align:right">
-		<ul style="list-style:none;display:inline;">
+		<ul>
 		<?php
 		if ($_SESSION['login'] == $msg[0]) {
 			echo "<li style='display:inline;padding:8px;'><a href='forum_post_edit.php?f=$forum_id&p=$post_id&par=$parent_id'><img src='images/comment_edit.png' alt='Edit' title='Edit' /></a></li>";
@@ -70,7 +70,7 @@ $msg = get_message($post_id);  //returns array of poster, date, html-encoded mes
 		 ?>
 		</ul>
 		</div>
-		<div style="width:100%;">
+		<div id="post-msg-text">
 			<small><?php echo $msg[1]; ?></small><br />
 			<?php  echo $msg[2]; ?>
 		</div>

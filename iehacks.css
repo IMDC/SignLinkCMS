@@ -36,3 +36,20 @@ ul#menu-right {
 	font-size: small;
 	font-weight:normal;
 }
+
+
+#post-msg {
+	margin-top:0px;
+	padding-top:0px;
+	margin-left:150px;
+}
+
+#post-msg ul {
+	margin-top:10px;
+	margin-right:-6px;
+	padding:0px;
+}
+
+#post-msg-text {
+	margin-top:-20px;
+}
