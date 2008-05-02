@@ -40,6 +40,7 @@ if (isset($_POST['cancel'])) {
 	}
 	if (!isset($_SESSION['errors'])) {
 		//prepare to insert into db
+
 		switch ($_POST['subject']) {
 			case 'image':
 				$subject = '';

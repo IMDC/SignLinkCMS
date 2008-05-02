@@ -1,7 +1,7 @@
 <script type="text/javascript" src="../jscripts/forum_post.js"></script>
 
 <form action ="<?php echo $_SERVER['PHP_SELF']; ?>?processed=1" method="post" name="form" enctype="multipart/form-data">
-<input type="hidden" name="fid" value="<?php echo $_REQUEST['fid']; ?>" />
+<input type="hidden" name="f" value="<?php echo $forum_id; ?>" />
 
 <input type="hidden" name="MAX_FILE_SIZE" value="<?php echo MAX_UPLOAD_SIZE; ?>" />
 
