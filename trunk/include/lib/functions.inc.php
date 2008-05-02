@@ -420,7 +420,10 @@ function get_avatar($id) {
 
 	if ($av_file) {
 		echo '<img src="uploads/members/'.$id.'/'.$av_file.'" alt="'.$_SESSION['login'].'\'s avatar" /><br /><br />';
+	} else {
+		echo '<img src="images/noavatar.jpg" alt="No avatar" /><br /><br />';
 	}
+
 	return;
 }
 

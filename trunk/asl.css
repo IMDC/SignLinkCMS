@@ -289,15 +289,28 @@ div.post .title {
 }
 
 #post-info {
-	padding:10px 5px 10px 5px;
+	margin:10px;
+	padding:5px;
 	float:left;
-	width: 150px;
+	width: 120px;
+	height:140px;
 	text-align:center;
+	background-color: #efefef;
 }
 #post-msg {
-	padding:10px 5px 4em 5px;
+	padding:5px 5px 100px 5px;
+	margin-left:145px;
+}
 
-	margin-left: 9em;
+#post-msg ul {
+	list-style:none;
+	display:inline; 
+	float:right; 
+	margin-top:0px;
+}
+
+#post-msg-text {
+	width:100%;
 }
 
 /* "breadcrumbs" */
