@@ -1,7 +1,8 @@
 <?php 
 define('INCLUDE_PATH', '../include/');
 require(INCLUDE_PATH.'vitals.inc.php');
-//admin_authenticate(AT_ADMIN_PRIV_USERS);
+
+admin_authenticate();
 
 require(INCLUDE_PATH.'admin_header.inc.php'); 
 ?>
