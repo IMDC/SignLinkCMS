@@ -17,7 +17,7 @@
 		<h1>SignLink Project - Administration</h1>
 	</div>
 
-	<?php if($_SESSION['valid_admin']) { ?>
+	<?php if($_SESSION['is_admin']) { ?>
 	<div id="menu">
 		<ul>
 			<li><a href="index.php">main</a> | </li>
@@ -26,11 +26,9 @@
 			<li><a href="settings.php">settings</a> | </li>
 			<li><a href="">help</a></li>
 			<li><?php 
-			if ($_SESSION['valid_admin']) {
+			if ($_SESSION['is_admin']) {
 				echo '<a href="logout.php"><img src="images/door_out.png" alt="logout" title="logout" /></a> '.$_SESSION['login']; 
-			} else {
-				echo '<a href="login.php"><img src="images/door_in.png" alt="login" title="login" /></a>'; 
-			}		
+			} 		
 			?>&nbsp;</li>
 		</ul>
 	</div>
