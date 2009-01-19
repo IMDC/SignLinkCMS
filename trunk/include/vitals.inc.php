@@ -35,6 +35,18 @@ if ( get_magic_quotes_gpc() == 1 ) {
 	$stripslashes = 'my_null_slashes';
 }
 
+function admin_authenticate() {
+	//check if logged in as admin
+	if ($_SESSION['valid_user'] && $_SESSION['is_admin'] && !empty($_SESSION['member_id']) && $_SESSION['login']=="admin") {
+		return true;
+	} else {
+		$_SESSION['errors'][] = 'You must <a href="login.php">login</a> as an administrator.';
+		require(INCLUDE_PATH.'admin_header.inc.php');
+		require(INCLUDE_PATH.'footer.inc.php');
+		exit;
+	}
+}
+
 require('lib/functions.inc.php'); 
 require('lib/forums.inc.php');
 require('lib/pages.inc.php');
