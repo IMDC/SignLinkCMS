@@ -24,10 +24,10 @@
 			<li><a href="page_manage.php">pages</a> | </li>
 			<li><a href="forum_manage.php">forums</a> | </li>
 			<li><a href="settings.php">settings</a> | </li>
-			<li><a href="">help</a></li>
+			<li><a href="">help</a> | </li>
 			<li><?php 
 			if ($_SESSION['is_admin']) {
-				echo '<a href="logout.php"><img src="images/door_out.png" alt="logout" title="logout" /></a> '.$_SESSION['login']; 
+				echo '<a href="logout.php"><img src="../images/door_out.png" alt="logout" title="logout" /></a> '.$_SESSION['login']; 
 			} 		
 			?>&nbsp;</li>
 		</ul>
