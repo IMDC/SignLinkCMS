@@ -1,6 +1,7 @@
 <?php 
 define('INCLUDE_PATH', '../include/');
 require(INCLUDE_PATH.'vitals.inc.php');
+admin_authenticate();
 
 $page_id = intval($_REQUEST['c']);
 

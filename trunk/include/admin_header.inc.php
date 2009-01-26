@@ -14,22 +14,23 @@
 <div id="container">
 
 	<div id="header">
-		<h1>SignLink Project - Administration</h1>
+		<h1 style="margin-left:-10px">SignLink Project - Administration</h1>
 	</div>
-
+	
+	<?php 
+	if ($_SESSION['is_admin']) {
+		echo '<div style="float:right">'.$_SESSION['login'].' <a href="logout.php"><img src="../images/door_out.png" alt="logout" title="logout" style="margin-bottom:-3px;" /></a></div>'; 
+	} 		
+	?>
 	<?php if($_SESSION['is_admin']) { ?>
 	<div id="menu">
 		<ul>
-			<li><a href="index.php">main</a> | </li>
+			<li><a href="index.php">home</a> | </li>
+			<li><a href="member_manage.php">members</a> | </li>
 			<li><a href="page_manage.php">pages</a> | </li>
 			<li><a href="forum_manage.php">forums</a> | </li>
 			<li><a href="settings.php">settings</a> | </li>
-			<li><a href="">help</a> | </li>
-			<li><?php 
-			if ($_SESSION['is_admin']) {
-				echo '<a href="logout.php"><img src="../images/door_out.png" alt="logout" title="logout" /></a> '.$_SESSION['login']; 
-			} 		
-			?>&nbsp;</li>
+			<li><a href="">help</a></li>
 		</ul>
 	</div>
 	<?php } ?>
