@@ -2,6 +2,7 @@
 
 define('INCLUDE_PATH', '../include/');
 require(INCLUDE_PATH.'vitals.inc.php');
+admin_authenticate();
 
 require(INCLUDE_PATH.'admin_header.inc.php'); ?>
 

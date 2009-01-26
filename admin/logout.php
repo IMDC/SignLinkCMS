@@ -2,6 +2,7 @@
 
 define('INCLUDE_PATH', '../include/');
 require(INCLUDE_PATH.'vitals.inc.php');
+admin_authenticate();
 
 unset($_SESSION['login']);
 unset($_SESSION['valid_user']);
