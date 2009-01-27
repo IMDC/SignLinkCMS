@@ -218,7 +218,7 @@ require(INCLUDE_PATH.'admin_header.inc.php'); ?>
 				</dl>
 			</div><br />
 
-			<label><input type="radio" name="message" value="text" <?php if($_POST['message'] == "text") { echo 'checked="checked"'; }?> /> Text -- HTML content w/ wsywig editor?</label>
+			<label><input type="radio" name="message" value="text" <?php if($_POST['message'] == "text") { echo 'checked="checked"'; }?> /> Text</label>
 			<div class="choice-info" id="message-text">
 				<textarea id="msg-text" id="msg-text" name="msg-text" rows="25" cols="90" style="height:20em;"><?php echo $_POST['msg-text']; ?></textarea>
 			</div>
@@ -226,7 +226,7 @@ require(INCLUDE_PATH.'admin_header.inc.php'); ?>
 
 	</div>
 
-	<div class="workbench">
+	<!--div class="workbench">
 		<h3>Workbench</h3>
 		<p>This area may be useful in the creation of your signlink videos. Content entered here is not viewable by others.</p>
 	 
@@ -252,7 +252,7 @@ require(INCLUDE_PATH.'admin_header.inc.php'); ?>
 	   </div>
 	  
 	  <br style="clear:both;" />
-	</div>	  
+	</div -->	  
 	  
 	<div class="row" style="text-align:right;">
 		<input type="submit" name="submit" value="Submit" /> | <input type="submit" name="cancel" value="Cancel" /> 

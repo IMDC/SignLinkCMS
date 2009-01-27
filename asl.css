@@ -528,3 +528,24 @@ input.button {
 	margin:0px;	
 	font-size: medium;
 }
+
+.col {
+	float:left;
+	width:30%;
+	margin-right:5px;
+	text-align:center;
+	border:1px solid #ccc;
+	padding:5px;
+}
+
+#login-area {
+	background-color:#efefef; 
+	border-left:1px solid #ccc;
+	border-bottom:1px solid #ccc;
+	float:right; 
+	font-size:smaller; 
+	padding:10px 10px 0px 10px;	
+	width:200px;
+	margin-right:-10px;
+	min-height:75px;
+}
