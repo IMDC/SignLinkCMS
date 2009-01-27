@@ -4,19 +4,9 @@ require(INCLUDE_PATH.'vitals.inc.php');
 
 require(INCLUDE_PATH.'header.inc.php'); ?>
 
+<!-- h2 style="margin:0px;"><img src="images/application_view_tile_large.png" alt="Pages" title="Pages" /></h2 -->
+
 <?php
-
-/* top 4 forums */
-$sql = "SELECT * FROM forums WHERE forum_id=".$forum_id." AND parent_id=0 ORDER BY last_comment DESC LIMIT 0, 4";
-$result = mysql_query($sql, $db);
-if (mysql_num_rows($result)) { 
-	echo '<div>';
-	
-	while ($row = mysql_fetch_assoc($result)) {
-	}
-}
-
-
 
 $top_pages = get_top_pages();
 
