@@ -71,8 +71,7 @@ if (isset($this_login, $this_password) && !isset($_SESSION['session_test'])) {
 		if (isset($_POST['f']) && !empty($_POST['f'])) {
 			header('Location:forum_post_create.php?f='.$_POST['f'].'&p='.$_POST['p']);
 		} else {
-			require(INCLUDE_PATH.'header.inc.php');
-			require(INCLUDE_PATH.'footer.inc.php');
+			header('Location:index.php');
 		}
 		exit;	
 	} else {
@@ -117,9 +116,9 @@ require(INCLUDE_PATH.'header.inc.php'); ?>
 		<input type="hidden" name="p" value="<?php echo intval($_REQUEST['p']); ?>" />
 
 	<dl class="col-list" style="width:33%; margin-left:auto; margin-right:auto;">
-		<dt><label for="login">Login:</label></dt> 
+		<dt><img src="images/user.png" alt="login" title="login" /> <label for="login">Login:</label></dt> 
 			<dd><input name="login" type="text" id="login" value="<?php echo $_SERVER['login']; ?>" /></dd>
-		<dt><label for="pswd">Password:</label></dt> 
+		<dt><img src="images/key.png" alt="password" title="password" /> <label for="pswd">Password:</label></dt> 
 			<dd><input name="password" type="password" id="pswd" value="" /></dd>
 	</dl>
 	<div style="text-align:center">

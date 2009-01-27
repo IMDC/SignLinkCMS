@@ -12,7 +12,7 @@ unset($_SESSION['notices']);
 
 $_SESSION['feedback'][] = 'Successfully logged out.';
 
-header('Location: login.php');
+header('Location: index.php');
 exit;
 
 ?>

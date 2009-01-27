@@ -28,16 +28,31 @@
 			
 <div id="container">
 
-	<div id="login" style="float:right; font-size:smaller; padding:10px;">
-		<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
-		
+	<div id="login-area">
+		<?php if(isset($_SESSION['member_id']) && $_SESSION['member_id'] && $_SESSION['valid_user']) { ?>
+
+			<img src="images/user.png" alt="login" title="login" /> <?php echo $_SESSION['login']; ?> <br />
+			<div style="float:right">
+				<a href="settings.php"><img src="images/cog.png" alt="log out" title="log out" /></a>&nbsp;
+				<a href="logout.php"><img src="images/door_out.png" alt="log out" title="log out" /></a>
+			</div>
+
+		<?php
+		} else { ?>
+		<form action="login.php" method="post" name="form">
+			<!-- img src="images/door_in.png" alt="log out" title="log out" / -->
+
 			<input type="hidden" name="f" value="<?php echo intval($_REQUEST['f']); ?>" />
 			<input type="hidden" name="p" value="<?php echo intval($_REQUEST['p']); ?>" />
-		
-			<div style="width:5em"><label for="login">Login:</label></div> <input name="login" type="text" id="login" value="<?php echo $_SERVER['login']; ?>" style="width:10em" />
-			<div style="width:5em"><label for="pswd">Password:</label></div> <input name="password" type="password" id="pswd" value="" style="width:10em" />
-			<input type="submit" name="submit" value="Submit" class="button" style="font-size:smaller;margin-left:1em" />
+			
+			<label for="login"><img src="images/user.png" alt="login" title="login" /></label> <input name="login" type="text" id="login" value="<?php echo $_SERVER['login']; ?>" style="width:45%;font-size:smaller;" /><br />
+			<label for="pswd"><img src="images/key.png" alt="password" title="password" /></label> <input name="password" type="password" id="pswd" value="" style="width:45%; font-size:smaller;" /> &nbsp;<input type="submit" name="submit" value="Login" class="button" style="font-size:smaller;margin-top:5px;" />
+
+			<br style="clear:both" /><p style="text-align:center"><a href="register.php">Register</a> | <a href="password_reminder.php">Password Reminder</a></p>
 		</form>
+		<?php 							
+		} 
+		?>
 	</div>
 
 	<div style="margin-top:5px;"><img src="images/fallback_forum_banner.png" alt="Signlink Studio Forum" /></div>
@@ -53,7 +68,8 @@
 			<li><a href="index.php"><img src="images/house.png" alt="home" title="home" <?php if($current_page == 'index.php' || $current_page == 'page_view.php') { echo 'style="background-color: #cbdbef; border: 1px solid #7299C9;"'; } ?> /></a></li>
 			<li><a href="content.php"><img src="images/picture.png" alt="pages" title="pages" <?php if(in_array($current_page, $content_pages)) { echo 'style="background-color: #cbdbef; border: 1px solid #7299C9;"'; } ?> /></a></li>
 			<li><a href="forums.php"><img src="images/group.png" alt="forums" title="forums" <?php if(in_array($current_page, $forum_pages)) { echo 'style="background-color: #cbdbef; border: 1px solid #7299C9;"'; } ?> /></a></li>	
-			<li><a href="vlogs.php"><img src="images/cup_edit.png" alt="vlogs" title="vlogs" <?php if($current_page == 'vlogs.php') { echo 'style="background-color: #cbdbef; border: 1px solid #7299C9;"'; } ?> /></a></li>				
+			<li><a href="vlogs.php"><img src="images/cup_edit.png" alt="vlogs" title="vlogs" <?php if($current_page == 'vlogs.php') { echo 'style="background-color: #cbdbef; border: 1px solid #7299C9;"'; } ?> /></a></li>	
+			<li><a href="vlogs.php"><img src="images/help.png" alt="help" title="help" <?php if($current_page == 'help.php') { echo 'style="background-color: #cbdbef; border: 1px solid #7299C9;"'; } ?> /></a></li>	
 		</ul>
 	</div>
 
