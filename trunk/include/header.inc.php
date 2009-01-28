@@ -66,7 +66,7 @@
 	?>
 		<ul>					
 			<li><a href="index.php"><img src="images/house.png" alt="home" title="home" <?php if($current_page == 'index.php' || $current_page == 'page_view.php') { echo 'style="background-color: #cbdbef; border: 1px solid #7299C9;"'; } ?> /></a></li>
-			<li><a href="content.php"><img src="images/picture.png" alt="pages" title="pages" <?php if(in_array($current_page, $content_pages)) { echo 'style="background-color: #cbdbef; border: 1px solid #7299C9;"'; } ?> /></a></li>
+			<li><a href="content.php"><img src="images/picture.png" alt="pages" title="pages" /></a></li>
 			<li><a href="forums.php"><img src="images/group.png" alt="forums" title="forums" <?php if(in_array($current_page, $forum_pages)) { echo 'style="background-color: #cbdbef; border: 1px solid #7299C9;"'; } ?> /></a></li>	
 			<li><a href="vlogs.php"><img src="images/cup_edit.png" alt="vlogs" title="vlogs" <?php if($current_page == 'vlogs.php') { echo 'style="background-color: #cbdbef; border: 1px solid #7299C9;"'; } ?> /></a></li>	
 			<li><a href="vlogs.php"><img src="images/help.png" alt="help" title="help" <?php if($current_page == 'help.php') { echo 'style="background-color: #cbdbef; border: 1px solid #7299C9;"'; } ?> /></a></li>	
