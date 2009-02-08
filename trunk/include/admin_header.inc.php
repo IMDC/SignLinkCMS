@@ -7,8 +7,7 @@
 	<!--[if IE]>
 		<link href="../iehacks.css" rel="stylesheet" />
 	<![endif]-->
-	<script type="text/javascript" src="../jscripts/jquery-1.2.3.pack.js"></script>          
-
+	<script type="text/javascript" src="../jscripts/jquery-1.2.3.pack.js"></script>  
 </head>
 
 <div id="container">
@@ -29,6 +28,7 @@
 			<li><a href="member_manage.php">members</a> | </li>
 			<li><a href="page_manage.php">pages</a> | </li>
 			<li><a href="forum_manage.php">forums</a> | </li>
+			<li><a href="vlog_manage.php">vlogs</a> | </li>
 			<li><a href="settings.php">settings</a> | </li>
 			<li><a href="">help</a></li>
 		</ul>
