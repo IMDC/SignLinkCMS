@@ -64,7 +64,7 @@ if (mysql_num_rows($result)) {
 /* top vlogs pages */
 $sql = "SELECT * FROM vlogs WHERE 1 ORDER BY last_modified DESC LIMIT 0, 2";
 $result = mysql_query($sql, $db);
-if (mysql_num_rows($result)) { 
+if (@mysql_num_rows($result)) { 
 	echo '<div class="col" style="background-color:#ffced6">';
 	echo '<div style="text-align:left;"><img src="images/picture.png" alt="forums" title="forums" /></div>';
 	

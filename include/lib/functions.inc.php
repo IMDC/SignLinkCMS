@@ -148,7 +148,7 @@ function save_image($location, $type, $file, $id) {
 			break;
 		case 'page':
 			if(!file_exists($level.UPLOAD_DIR.'pages/'.$id.'/')) {
-				mkdir($level.UPLOAD_DIR.'pages/'.$id.'/');
+				mkdir($level.UPLOAD_DIR.'pages/'.$id.'/', 0777);
 			}
 			$newfile = $level.UPLOAD_DIR.'pages/'.$id.'/'.$type.'.'.$ext;
 			break;
@@ -193,9 +193,11 @@ function save_image($location, $type, $file, $id) {
 	}
 
 	unset($_FILES);
-
-	if (!copy($newfile, $tmp_file)) {
-	  print "Error Uploading File.";
+	//if (!@copy(trim($newfile), trim($tmp_file))) {
+	//echo substr(sprintf('%o', fileperms($level.UPLOAD_DIR.'pages/'.$id.'/')), -4);
+	
+	if (!move_uploaded_file($newfile, $tmp_file)) {
+	  print "Error Uploading File - check directory permissions.";
 	  exit;
 	} 
 }
@@ -316,8 +318,6 @@ function check_uploads() {
 
 function save_avatar($id) {
 	global $db;
-
-
 		
 	$tmp_file = $_FILES['avatar']['tmp_name'];
 	$ext = end(explode('.',$_FILES['avatar']['name']));
@@ -331,23 +331,10 @@ function save_avatar($id) {
 	if(!file_exists($level.UPLOAD_DIR.'members/'.$id.'/')) {
 		mkdir($level.UPLOAD_DIR.'members/'.$id.'/');
 	} else { 
-		//delete old avatar
-		$av_path = $level.UPLOAD_DIR.'members/'.$id.'/';
-		$dir_files = @scandir($av_path);		
-		if(!empty($dir_files)) {
-			foreach ($dir_files as $dir_file) {
-				if (substr($dir_file,0, 6) == "avatar") {
-					$av_path .= $dir_file;
-					unlink($av_path); 
-					break;
-				}
-			}
-		}
+		delete_avatar($id);
 	}
 	
 	$newfile = $level.UPLOAD_DIR.'members/'.$id.'/avatar.'.$ext;
-
-
 		
 	//if image, resize 
 	list($width, $height) = getimagesize($tmp_file); 
@@ -394,6 +381,30 @@ function save_avatar($id) {
 	  print "Error Uploading File.";
 	  exit;
 	} 
+}
+
+function delete_avatar($id) {
+	$dir = INCLUDE_PATH.'../'.UPLOAD_DIR.'members/'.$id.'/';
+	$dh = opendir($dir);
+	while ( $file = readdir($dh) ) {
+		if ( $file != '.' || $file != '..') {
+			@unlink($dir.$file);
+		}
+	}
+	closedir ($dh);
+	@rmdir($dir);	
+
+	/*$av_path = INCLUDE_DIR.'../'.UPLOAD_DIR.'members/'.$id.'/';
+	$dir_files = @scandir($av_path);		
+	if(!empty($dir_files)) {
+		foreach ($dir_files as $dir_file) {
+			if (substr($dir_file,0, 6) == "avatar") {
+				$av_path .= $dir_file;
+				unlink($av_path); 
+				break;
+			}
+		}
+	}*/	
 }
 
 function get_avatar($id) {
@@ -454,5 +465,24 @@ function delete_files($location, $id, $type="message") {
 	}	
 	return;
 }
+
+/* get members */
+function print_members_dropdown() {
+	global $db;
+	
+	$sql = "SELECT member_id, login, name FROM members WHERE login!='admin'";
+	$result = mysql_query($sql, $db);
+	if (@mysql_num_rows($result) != 0) {
+		echo '<select name="member">';
+		while($row = mysql_fetch_assoc($result)) {
+			echo '<option value='.$row['member_id'].'>'.$row['name'].' ('.$row['login'].')</option>';
+		}
+		echo '</select>';
+	} else {
+		echo "No members.";
+	}
+}
+
+
 
 ?>

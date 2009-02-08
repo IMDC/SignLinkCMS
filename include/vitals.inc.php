@@ -50,8 +50,8 @@ function admin_authenticate() {
 
 $_SESSION['token'] = 'signtokenlink09';
 
-require('lib/functions.inc.php'); 
-require('lib/forums.inc.php');
-require('lib/pages.inc.php');
+require(INCLUDE_PATH.'lib/functions.inc.php'); 
+require(INCLUDE_PATH.'lib/forums.inc.php');
+require(INCLUDE_PATH.'lib/pages.inc.php');
 
 ?>

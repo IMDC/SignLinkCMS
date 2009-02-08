@@ -33,7 +33,7 @@
 
 			<img src="images/user.png" alt="login" title="login" /> <?php echo $_SESSION['login']; ?> <br />
 			<div style="float:right">
-				<a href="settings.php"><img src="images/cog.png" alt="log out" title="log out" /></a>&nbsp;
+				<a href="preferences.php"><img src="images/cog.png" alt="log out" title="log out" /></a>&nbsp;
 				<a href="logout.php"><img src="images/door_out.png" alt="log out" title="log out" /></a>
 			</div>
 
