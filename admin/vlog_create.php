@@ -6,7 +6,7 @@ admin_authenticate();
 $page_id = intval($_REQUEST['p']);
 
 if (isset($_POST['cancel'])) {
-	header('Location: '.INCLUDE_PATH.'../admin/page_manage.php');
+	header('Location: '.INCLUDE_PATH.'../admin/vlog_manage.php');
 	exit;
 } else if (isset($_POST['submit']) || $_GET['processed']) {
 
@@ -144,4 +144,4 @@ require(INCLUDE_PATH.'admin_header.inc.php'); ?>
 	</div>
 </form>
 
-<?php require(INCLUDE_PATH.'.footer.inc.php'); ?>
+<?php require(INCLUDE_PATH.'footer.inc.php'); ?>
