@@ -471,6 +471,17 @@ function delete_files($location, $id, $type="message") {
 }
 
 /* get members */
+
+function get_login($id) {
+	global $db;
+	
+	$sql = "SELECT login FROM members WHERE member_id=".$id;
+	$result = mysql_query($sql, $db);
+	$row = @mysql_fetch_assoc($result);
+			
+	return $row['login'];
+}
+
 function print_members_dropdown() {
 	global $db;
 	
