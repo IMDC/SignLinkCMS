@@ -62,7 +62,7 @@ if (mysql_num_rows($result)) {
 
 
 /* top vlogs pages */
-$sql = "SELECT * FROM vlogs WHERE 1 ORDER BY last_post DESC LIMIT 0, 2";
+$sql = "SELECT * FROM vlogs WHERE 1 ORDER BY last_entry DESC LIMIT 0, 2";
 $result = mysql_query($sql, $db);
 if (@mysql_num_rows($result)) { 
 	echo '<div class="col" style="background-color:#ffced6">';
@@ -77,7 +77,7 @@ if (@mysql_num_rows($result)) {
 					<?php echo $title; ?>
 				</div>
 							
-				<a href="vlog_posts.php?v=<?php echo $row['vlog_id']; ?>" class="goto">
+				<a href="vlog_entries.php?v=<?php echo $row['vlog_id']; ?>" class="goto">
 					<img src="images/hand.png" style="border:0px;padding:0px;" />
 				</a>
 			</div>

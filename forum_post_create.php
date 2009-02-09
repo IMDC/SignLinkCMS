@@ -180,7 +180,7 @@ require(INCLUDE_PATH.'header.inc.php');
 if ($parent_id) {
 	echo '<h2>Reply to '.get_title('post', $parent_id).'</h2>';
 } else {
-	echo '<h2>Post New Topic</h2>';
+	echo '<h2>New Forum Topic</h2>';
 }
 ?>
 <script type="text/javascript" src="jscripts/forum_post.js"></script>
