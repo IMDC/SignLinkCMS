@@ -116,3 +116,40 @@ CREATE TABLE IF NOT EXISTS `pages` (
   `links_to` varchar(50) NOT NULL default '',
   PRIMARY KEY  (`page_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `vlogs`
+--
+
+CREATE TABLE `signlinkcms`.`vlogs` (
+  `vlog_id` MEDIUMINT UNSIGNED NOT NULL ,
+  `member_id` MEDIUMINT NOT NULL ,
+  `title` VARCHAR( 255 ) NOT NULL ,
+  `title_alt` VARCHAR( 255 ) NOT NULL ,
+  `num_entries` MEDIUMINT NOT NULL ,
+  `last_entry` DATETIME NOT NULL ,
+  PRIMARY KEY ( `vlog_id` )
+) ENGINE = InnoDB ;
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `vlogs_entries`
+--
+
+CREATE TABLE IF NOT EXISTS `vlogs_entries` (
+  `entry_id` mediumint(8) unsigned NOT NULL auto_increment,
+  `vlog_id` mediumint(8) unsigned NOT NULL default '0',
+  `login` varchar(20) NOT NULL default '',
+  `last_comment` datetime NOT NULL default '0000-00-00 00:00:00',
+  `num_comments` mediumint(8) unsigned NOT NULL default '0',
+  `subject` varchar(100) NOT NULL default '',
+  `subject_alt` varchar(255) NOT NULL default '',
+  `msg` text NOT NULL,
+  `msg_alt` varchar(255) NOT NULL default '',
+  `date` datetime NOT NULL default '0000-00-00 00:00:00',
+  PRIMARY KEY  (`entry_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 ;

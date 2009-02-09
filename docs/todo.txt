@@ -1,3 +1,19 @@
+admin
+-member edit
+
+
+front
+-register: add avatar
+
+-code for forums.php # posts
+
+
+
+
+
+
+
+
 CONFIG FILE
 	max upload for subject, msg, # posts per page, etc.
 

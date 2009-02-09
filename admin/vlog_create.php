@@ -65,7 +65,7 @@ if (isset($_POST['cancel'])) {
 		}
 
 		//insert into db
-		$sql = "INSERT INTO vlogs VALUES (NULL, '$parent_id', 0, '$subject', '$subject_alt', '$message', '$message_alt', '$outline', NOW(), NOW(),'')";
+		$sql = "INSERT INTO vlogs VALUES (0, '$member', '$subject', '$subject_alt', 0, NOW())";
 
 		if (!$result = mysql_query($sql, $db)) {
 			$_SESSION['errors'][] = 'Database error.';
@@ -94,12 +94,10 @@ if (isset($_POST['cancel'])) {
 	}
 } 
 
-$title = get_title('vlog', $row['vlog_id']);
-
 require(INCLUDE_PATH.'admin_header.inc.php'); ?>
 
 <h2>Create Vlog</h2>
-
+<script type="text/javascript" src="../jscripts/forum_post.js"></script>
 <form action ="<?php echo $_SERVER['PHP_SELF']; ?>?processed=1" method="post" name="form" enctype="multipart/form-data">
 		
 	<div class="file-info" style="background-color:#fff5f5;">
@@ -111,8 +109,6 @@ require(INCLUDE_PATH.'admin_header.inc.php'); ?>
 	<div class="file-info">
 		<span class="bold">Title</span><br />
 			<p>Choose what kind of title you would like your vlog to have (image, video, or plain text) then provide the appropriate details.</p>
-
-			<?php if (!empty($title)) { echo $title.'<br /><br />'; } ?>
 
 			<div class="choice">
 				<label><input type="radio" name="subject" value="image" <?php if($_POST['subject'] == "image") { echo 'checked="checked"'; }?> />Image</label>
