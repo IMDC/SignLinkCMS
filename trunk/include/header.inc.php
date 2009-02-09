@@ -31,11 +31,14 @@
 	<div id="login-area">
 		<?php if(isset($_SESSION['member_id']) && $_SESSION['member_id'] && $_SESSION['valid_user']) { ?>
 
-			<img src="images/user.png" alt="login" title="login" /> <?php echo $_SESSION['login']; ?> <br />
 			<div style="float:right">
-				<a href="preferences.php"><img src="images/cog.png" alt="log out" title="log out" /></a>&nbsp;
+				<img src="images/user.png" alt="" title="" /> <?php echo $_SESSION['login']; ?><br />
+				<div style="vertical-align:bottom">
+				<a href="preferences.php"><img src="images/cog.png" alt="preferences" title="preferences" /></a>&nbsp;
 				<a href="logout.php"><img src="images/door_out.png" alt="log out" title="log out" /></a>
+				</div>
 			</div>
+			<?php get_avatar($_SESSION['member_id']) ?>
 
 		<?php
 		} else { ?>
@@ -45,8 +48,8 @@
 			<input type="hidden" name="f" value="<?php echo intval($_REQUEST['f']); ?>" />
 			<input type="hidden" name="p" value="<?php echo intval($_REQUEST['p']); ?>" />
 			
-			<label for="login"><img src="images/user.png" alt="login" title="login" /></label> <input name="login" type="text" id="login" value="<?php echo $_SERVER['login']; ?>" style="width:45%;font-size:smaller;" /><br />
-			<label for="pswd"><img src="images/key.png" alt="password" title="password" /></label> <input name="password" type="password" id="pswd" value="" style="width:45%; font-size:smaller;" /> &nbsp;<input type="submit" name="submit" value="Login" class="button" style="font-size:smaller;margin-top:5px;" />
+			<label for="login"><img src="images/user.png" alt="login" title="login" /></label> <input name="login" type="text" id="login" value="<?php echo $_SERVER['login']; ?>" style="width:55%;font-size:smaller;" /><br />
+			<label for="pswd"><img src="images/key.png" alt="password" title="password" /></label> <input name="password" type="password" id="pswd" value="" style="width:55%; font-size:smaller;" /> &nbsp;<input type="submit" name="submit" value="Login" class="button" style="font-size:smaller;margin-top:5px;" />
 
 			<br style="clear:both" /><p style="text-align:center"><a href="register.php">Register</a> | <a href="password_reminder.php">Password Reminder</a></p>
 		</form>
