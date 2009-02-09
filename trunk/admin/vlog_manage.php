@@ -5,7 +5,7 @@ admin_authenticate();
 
 require(INCLUDE_PATH.'admin_header.inc.php'); ?>
 
-<h2>Forums</h2>
+<h2>Vlogs</h2>
 <ul id="page-menu">
 	<li><a href="vlog_create.php">New Vlog</a></li> 
 </ul>

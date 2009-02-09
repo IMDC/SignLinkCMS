@@ -2,7 +2,7 @@
 <html>
 <body>
 <head>
-	<title>Forum</title>
+	<title>Signlink</title>
 	<link rel="stylesheet" href="asl.css" type="text/css" media="screen" />
 
 <!--[if IE]>
