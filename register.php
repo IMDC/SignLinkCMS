@@ -97,7 +97,7 @@ require(INCLUDE_PATH.'header.inc.php'); ?>
 			<dd><input name="password2" type="password" id="pswd2" value="<?php echo $_POST['password2']; ?>" /></dd>
 	</dl>
 	<!-- div style="text-align:center"><label><input type="checkbox" name="autologin" value="1" /> keep me logged-in</label --><br /><br />
-	<input type="submit" name="submit" value="Register" class="button" /></div>
+	<input type="button" name="cancel" value="Cancel" class="button" onClick="javavscript:history.back(1);" /> | <input type="submit" name="submit" value="Register" class="button" /></div>
 </form>
 
 <?php require(INCLUDE_PATH.'footer.inc.php'); ?>
