@@ -124,7 +124,7 @@ CREATE TABLE IF NOT EXISTS `pages` (
 --
 
 CREATE TABLE `signlinkcms`.`vlogs` (
-  `vlog_id` MEDIUMINT UNSIGNED NOT NULL ,
+  `vlog_id` MEDIUMINT UNSIGNED NOT NULL auto_increment,
   `member_id` MEDIUMINT NOT NULL ,
   `title` VARCHAR( 255 ) NOT NULL ,
   `title_alt` VARCHAR( 255 ) NOT NULL ,
@@ -143,13 +143,11 @@ CREATE TABLE `signlinkcms`.`vlogs` (
 CREATE TABLE IF NOT EXISTS `vlogs_entries` (
   `entry_id` mediumint(8) unsigned NOT NULL auto_increment,
   `vlog_id` mediumint(8) unsigned NOT NULL default '0',
-  `login` varchar(20) NOT NULL default '',
-  `last_comment` datetime NOT NULL default '0000-00-00 00:00:00',
-  `num_comments` mediumint(8) unsigned NOT NULL default '0',
   `subject` varchar(100) NOT NULL default '',
   `subject_alt` varchar(255) NOT NULL default '',
   `msg` text NOT NULL,
   `msg_alt` varchar(255) NOT NULL default '',
   `date` datetime NOT NULL default '0000-00-00 00:00:00',
+  `num_comments` mediumint(9) NOT NULL,
   PRIMARY KEY  (`entry_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 ;
