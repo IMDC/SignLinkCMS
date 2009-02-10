@@ -156,6 +156,12 @@ function save_image($location, $type, $file, $id) {
 			}
 			$newfile = $level.UPLOAD_DIR.'pages/'.$id.'/'.$type.'.'.$ext;
 			break;
+		case 'vlog':
+			if(!file_exists($level.UPLOAD_DIR.'vlogs/'.$id.'/')) {
+				mkdir($level.UPLOAD_DIR.'vlogs/'.$id.'/', 0777);
+			}
+			$newfile = $level.UPLOAD_DIR.'vlogs/'.$id.'/'.$type.'.'.$ext;
+			break;			
 	}
 
 	//if image, resize 
@@ -200,7 +206,7 @@ function save_image($location, $type, $file, $id) {
 	//if (!@copy(trim($newfile), trim($tmp_file))) {
 	//echo substr(sprintf('%o', fileperms($level.UPLOAD_DIR.'pages/'.$id.'/')), -4);
 	
-	if (!move_uploaded_file($newfile, $tmp_file)) {
+	if (!@move_uploaded_file($newfile, $tmp_file)) {
 	  print "Error Uploading File - check directory permissions.";
 	  exit;
 	} 
@@ -238,11 +244,21 @@ function save_video($location, $type, $file, $id) {
 			$newfile = $level.UPLOAD_DIR.'posts/'.$id.'/'.$type.'.'.$ext;
 			break;
 		case 'page':
-			break;
+			if(!file_exists($level.UPLOAD_DIR.'pages/'.$id.'/')) {
+				mkdir($level.UPLOAD_DIR.'pages/'.$id.'/');
+			}
+			$newfile = $level.UPLOAD_DIR.'pages/'.$id.'/'.$type.'.'.$ext;
+			break;		
+		case 'vlog':
+			if(!file_exists($level.UPLOAD_DIR.'vlogs/'.$id.'/')) {
+				mkdir($level.UPLOAD_DIR.'vlogs/'.$id.'/');
+			}
+			$newfile = $level.UPLOAD_DIR.'vlogs/'.$id.'/'.$type.'.'.$ext;
+			break;			
 	}
 
-	if (!move_uploaded_file($_FILES[$file]['tmp_name'], $newfile)) {
-	  print "Error Uploading File.";
+	if (!@move_uploaded_file($_FILES[$file]['tmp_name'], $newfile)) {
+	  print "Error Uploading File - check directory permissions.";
 	  exit;
 	} 
 
@@ -489,6 +505,7 @@ function print_members_dropdown() {
 	$result = mysql_query($sql, $db);
 	if (@mysql_num_rows($result) != 0) {
 		echo '<select name="member">';
+		echo '<option value="0">---Choose a member---</option>';
 		while($row = mysql_fetch_assoc($result)) {
 			echo '<option value='.$row['member_id'].'>'.$row['name'].' ('.$row['login'].')</option>';
 		}

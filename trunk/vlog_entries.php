@@ -64,7 +64,7 @@ if ($total>$perpage) {
 
 $sql = "SELECT * FROM vlogs_entries WHERE vlog_id=".$vlog_id." ORDER BY last_entry DESC LIMIT $offset, $perpage";
 $result = mysql_query($sql, $db);
-if (mysql_num_rows($result)) { 
+if (@mysql_num_rows($result)) { 
 	echo '<div>';
 	
 	while ($row = mysql_fetch_assoc($result)) {

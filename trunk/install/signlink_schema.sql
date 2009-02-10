@@ -123,7 +123,7 @@ CREATE TABLE IF NOT EXISTS `pages` (
 -- Table structure for table `vlogs`
 --
 
-CREATE TABLE `signlinkcms`.`vlogs` (
+CREATE TABLE `vlogs` (
   `vlog_id` MEDIUMINT UNSIGNED NOT NULL auto_increment,
   `member_id` MEDIUMINT NOT NULL ,
   `title` VARCHAR( 255 ) NOT NULL ,
