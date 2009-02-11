@@ -20,8 +20,8 @@ if (mysql_num_rows($result)) { ?>
 	<tr>
 		<th>Member</th>
 		<th>Title</th>
-		<th>#Posts</th>
-		<th>Last Post</th>
+		<th>#Entries</th>
+		<th>Last Entry</th>
 		<th style="text-align:center;">Manage</th>
 	</tr>
 	<?php
@@ -33,11 +33,12 @@ if (mysql_num_rows($result)) { ?>
 		echo '<tr class="row'.$r.'">';
 		echo '<td>'.$row['member_id'].'</td>';
 		echo '<td>'.$title.'</td>'; 
-		echo '<td style="text-align:center;">'.$row['num_posts'].'</td>';
-		echo '<td style="text-align:center;">'.$row['last_post'].'</td>';		
-		echo '<td style="text-align:center;"><a href="vlog_posts_manage.php?v='.$row['vlog_id'].'">Posts</a>';
-		echo ' | <a href="vlog_edit.php?v='.$row['vlog_id'].'">Edit</a>';
-		echo ' | <a href="vlog_delete.php?v='.$row['vlog_id'].'" onclick="return confirm(\'Are you sure you want to delete this vlog?\')">Delete</a></td>';
+		echo '<td style="text-align:center;">'.$row['num_entries'].'</td>';
+		echo '<td style="text-align:center;">'.$row['last_entry'].'</td>';		
+		echo '<td style="text-align:center;">';
+		//<a href="vlog_posts_manage.php?v='.$row['vlog_id'].'">Posts</a>';
+		//echo ' | <a href="vlog_edit.php?v='.$row['vlog_id'].'">Edit</a>';
+		echo '<a href="vlog_delete.php?v='.$row['vlog_id'].'" onclick="return confirm(\'Are you sure you want to delete this vlog?\')">Delete</a></td>';
 		echo '</tr>';
 		if ($r == 1) {
 			$r = 2;
