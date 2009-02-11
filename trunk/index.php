@@ -9,8 +9,8 @@ require(INCLUDE_PATH.'header.inc.php');
 $sql = "SELECT * FROM pages WHERE 1 ORDER BY last_modified DESC LIMIT 0, 2";
 $result = mysql_query($sql, $db);
 if (mysql_num_rows($result)) { 
-	echo '<div class="col" style="background-color:#fffdce">';
-	echo '<div style="text-align:left;"><img src="images/picture.png" alt="forums" title="forums" /></div>';
+	echo '<div class="col">';
+	echo '<div style="text-align:left; background-color:#fffdce; padding:5px;"><img src="images/picture.png" alt="content pages" title="content pages" /></div>';
 	
 	while ($row = mysql_fetch_assoc($result)) { 
 	$title = get_title('page', $row['page_id']);
@@ -36,8 +36,8 @@ if (mysql_num_rows($result)) {
 $sql = "SELECT * FROM forums WHERE 1 ORDER BY last_post DESC LIMIT 0, 2";
 $result = mysql_query($sql, $db);
 if (mysql_num_rows($result)) { 
-	echo '<div class="col" style="background-color:#cbdbef">';
-		echo '<div style="text-align:left;"><img src="images/group.png" alt="forums" title="forums" /></div>';
+	echo '<div class="col">';
+		echo '<div style="text-align:left; background-color:#cbdbef; padding:5px;"><img src="images/group.png" alt="forums" title="forums" /></div>';
 		
 		while ($row = mysql_fetch_assoc($result)) { 
 		$title = get_title('forum', $row['forum_id']);
@@ -65,8 +65,8 @@ if (mysql_num_rows($result)) {
 $sql = "SELECT * FROM vlogs WHERE 1 ORDER BY last_entry DESC LIMIT 0, 2";
 $result = mysql_query($sql, $db);
 if (@mysql_num_rows($result)) { 
-	echo '<div class="col" style="background-color:#ffced6">';
-	echo '<div style="text-align:left;"><img src="images/cup_edit.png" alt="vlogs" title="vlogs" /></div>';
+	echo '<div class="col">';
+	echo '<div style="text-align:left;background-color:#ffced6;padding:5px;"><img src="images/cup_edit.png" alt="vlogs" title="vlogs" /></div>';
 	
 	while ($row = mysql_fetch_assoc($result)) { 
 	$title = get_title('vlog', $row['vlog_id']);
