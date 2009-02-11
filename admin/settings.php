@@ -12,7 +12,6 @@ require(INCLUDE_PATH.'admin_header.inc.php'); ?>
 		<ul>
 			<li><a href="">header</li> 
 			<li><a href="">admin email</li>
-			<li><a href="">Users</a> - view and manage list (incl blacklisted)</li>
 		</ul>
 	</li>
 

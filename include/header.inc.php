@@ -66,6 +66,8 @@
 	<?php		
 		$current_page = explode('/', $_SERVER['PHP_SELF']); 
 		$current_page = $current_page[count($current_page) - 1];
+		
+		if($current_page != 'index.php') {
 	?>
 		<ul>					
 			<li><a href="index.php"><img src="images/house.png" alt="home" title="home" <?php if($current_page == 'index.php') { echo 'style="background-color: #cbdbef; border: 1px solid #7299C9;"'; } ?> /></a></li>
@@ -78,6 +80,7 @@
 			
 			<li><a href="vlogs.php"><img src="images/help.png" alt="help" title="help" <?php if($current_page == 'help.php') { echo 'style="background-color: #cbdbef; border: 1px solid #7299C9;"'; } ?> /></a></li>	
 		</ul>
+		<?php } ?>
 	</div>
 
 
