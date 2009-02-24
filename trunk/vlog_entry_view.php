@@ -54,7 +54,7 @@ if (!$row = @mysql_fetch_assoc($result)) {
 		/* comments */
 		$sql = "SELECT * FROM vlog_comments WHERE vlog_id=".$vlog_id." AND entry_id=".$entry_id." ORDER BY date DESC";
 		$result = mysql_query($sql, $db);
-		if (@mysql_num_rows($result)) { 
+		if (!$row = @mysql_fetch_assoc($result)) { 
 			
 		} else {
 			echo "No comments.";
