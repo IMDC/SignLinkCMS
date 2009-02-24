@@ -62,20 +62,15 @@ if ($total>$perpage) {
 	echo '<div style="text-align:right;clear:both;">'.$prev.$nav.$next.'</div>';
 }
 
-$sql = "SELECT * FROM vlogs_entries WHERE vlog_id=".$vlog_id." ORDER BY last_entry DESC LIMIT $offset, $perpage";
+$sql = "SELECT * FROM vlogs_entries WHERE vlog_id=".$vlog_id." ORDER BY date DESC LIMIT $offset, $perpage";
 $result = mysql_query($sql, $db);
 if (@mysql_num_rows($result)) { 
 	echo '<div>';
 	
 	while ($row = mysql_fetch_assoc($result)) {
-		$title = get_title('vlog', $row['vlog_id']); 
+		$title = get_title('entry', $row['entry_id']); 
 ?>
 		<div class="cat">
-			
-			<div style="padding-right:2px;font-size:smaller;">
-				<?php echo date('g:ia, M j, y', strtotime($row['date'])); ?>
-			</div>
-
 			<div class="title">
 				<div style="height:150px">
 					<?php echo $title; ?>
@@ -91,6 +86,7 @@ if (@mysql_num_rows($result)) {
 					<div style="float:right;">
 						<img src="images/comments.png" style="margin-bottom:-5px;" alt="number of replies:" title="number of replies" /> <?php echo $row['num_comments']; ?>
 					</div>
+					<?php echo date('M j Y, h:ia', strtotime($row['date'])); ?>
 				</div>
 			</div>
 		</div>

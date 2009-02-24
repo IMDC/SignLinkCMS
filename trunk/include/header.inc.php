@@ -67,20 +67,18 @@
 		$current_page = explode('/', $_SERVER['PHP_SELF']); 
 		$current_page = $current_page[count($current_page) - 1];
 		
-		if($current_page != 'index.php') {
 	?>
 		<ul>					
-			<li><a href="index.php"><img src="images/house.png" alt="home" title="home" <?php if($current_page == 'index.php') { echo 'style="background-color: #cbdbef; border: 1px solid #7299C9;"'; } ?> /></a></li>
+			<li id="menu-home"><a href="index.php"><img src="images/house.png" alt="home" title="home" <?php if($current_page == 'index.php') { echo 'class="menu-current" style="background-color:white;"'; } ?> /></a></li>
 			
-			<li><a href="content.php"><img src="images/picture.png" alt="pages" title="pages" <?php if(in_array($current_page, $content_pages)) { echo 'style="background-color: #cbdbef; border: 1px solid #7299C9;"'; } else { echo 'style="background-color:#fffdce"'; } ?> /></a></li>
+			<li id="menu-content"><a href="content.php"><img src="images/picture.png" alt="pages" title="pages" <?php if(in_array($current_page, $content_pages)) { echo 'class="menu-current" style="background-color:#fffdce;"'; } ?> /></a></li>
 			
-			<li><a href="forums.php"><img src="images/group.png" alt="forums" title="forums" <?php if(in_array($current_page, $forum_pages)) { echo 'style="background-color: #cbdbef; border: 1px solid #7299C9;"'; } else { echo 'style="background-color:#cbdbef"'; } ?> /></a></li>	
+			<li id="menu-forum"><a href="forums.php"><img src="images/group.png" alt="forums" title="forums" <?php if(in_array($current_page, $forum_pages)) { echo 'class="menu-current" style="background-color:#cbdbef;"'; } ?> /></a></li>	
 			
-			<li><a href="vlogs.php"><img src="images/cup_edit.png" alt="vlogs" title="vlogs" <?php if(in_array($current_page, $forum_pages)) { echo 'style="background-color: #cbdbef; border: 1px solid #7299C9;"'; } else { echo 'style="background-color:#ffced6"'; } ?> /></a></li>	
+			<li id="menu-vlog"><a href="vlogs.php"><img src="images/cup_edit.png" alt="vlogs" title="vlogs" <?php if(in_array($current_page, $vlog_pages)) { echo 'class="menu-current" style="background-color:#ffced6;"'; } ?> /></a></li>	
 			
-			<li><a href="vlogs.php"><img src="images/help.png" alt="help" title="help" <?php if($current_page == 'help.php') { echo 'style="background-color: #cbdbef; border: 1px solid #7299C9;"'; } ?> /></a></li>	
+			<li id="menu-help"><a href="help.php"><img src="images/help.png" alt="help" title="help" <?php if($current_page == 'help.php') { echo 'class="menu-current" style="background-color:#cbefd2;"';} ?> /></a></li>	
 		</ul>
-		<?php } ?>
 	</div>
 
 

@@ -9,7 +9,7 @@ require(INCLUDE_PATH.'header.inc.php');
 $sql = "SELECT * FROM pages WHERE 1 ORDER BY last_modified DESC LIMIT 0, 2";
 $result = mysql_query($sql, $db);
 if (mysql_num_rows($result)) { 
-	echo '<div class="col">';
+	echo '<div class="row">';
 	echo '<a href="content.php"><div style="text-align:left; background-color:#fffdce; padding:5px;"><img src="images/picture.png" alt="content pages" title="content pages" /></div></a>';
 	
 	while ($row = mysql_fetch_assoc($result)) { 
@@ -26,17 +26,16 @@ if (mysql_num_rows($result)) {
 			</a>
 		</div>
 	</div>
-	<br style="clear:both" />
 <?php
 	}
-	echo '</div>';
+	echo '</div>	<br style="clear:both" />';
 }
 
 /* top forums */
 $sql = "SELECT * FROM forums WHERE 1 ORDER BY last_post DESC LIMIT 0, 2";
 $result = mysql_query($sql, $db);
 if (mysql_num_rows($result)) { 
-	echo '<div class="col">';
+	echo '<div class="row">';
 		echo '<a href="forums.php"><div style="text-align:left; background-color:#cbdbef; padding:5px;"><img src="images/group.png" alt="forums" title="forums" /></div></a>';
 		
 		while ($row = mysql_fetch_assoc($result)) { 
@@ -53,19 +52,19 @@ if (mysql_num_rows($result)) {
 				</a>
 			</div>		
 		</div>
-		<br style="clear:both" />
+		
 		<?php
 		}
-	echo '</div>';
+	echo '</div><br style="clear:both" />';
 }
 
 
 
 /* top vlogs pages */
-$sql = "SELECT * FROM vlogs WHERE 1 ORDER BY last_entry DESC LIMIT 0, 2";
+$sql = "SELECT * FROM vlogs WHERE 1 ORDER BY last_entry DESC LIMIT 0, 3";
 $result = mysql_query($sql, $db);
 if (@mysql_num_rows($result)) { 
-	echo '<div class="col">';
+	echo '<div class="row">';
 	echo '<a href="vlogs.php"><div style="text-align:left;background-color:#ffced6;padding:5px;"><img src="images/cup_edit.png" alt="vlogs" title="vlogs" /></div></a>';
 	
 	while ($row = mysql_fetch_assoc($result)) { 
@@ -82,10 +81,10 @@ if (@mysql_num_rows($result)) {
 				</a>
 			</div>
 		</div>
-		<br style="clear:both" />
+		
 <?php
 	}
-	echo '</div>';
+	echo '</div><br style="clear:both" />';
 }
 
 require(INCLUDE_PATH.'footer.inc.php'); 

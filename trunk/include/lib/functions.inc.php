@@ -62,6 +62,10 @@ function get_title($location, $id, $size='reg') {
 			$sql = "SELECT title, title_alt FROM vlogs WHERE vlog_id=".$id;
 			$title_path = $level.'uploads/vlogs/'.$id.'/';		
 			break;
+		case 'entry':
+			$sql = "SELECT title, title_alt FROM vlogs_entries WHERE entry_id=".$id;
+			$title_path = $level.'uploads/entries/'.$id.'/';		
+			break;			
 	}
 	$result = mysql_query($sql, $db);
 	if ($result) {
@@ -161,7 +165,13 @@ function save_image($location, $type, $file, $id) {
 				mkdir($level.UPLOAD_DIR.'vlogs/'.$id.'/', 0777);
 			}
 			$newfile = $level.UPLOAD_DIR.'vlogs/'.$id.'/'.$type.'.'.$ext;
-			break;			
+			break;		
+		case 'entry':
+			if(!file_exists($level.UPLOAD_DIR.'entries/'.$id.'/')) {
+				mkdir($level.UPLOAD_DIR.'entries/'.$id.'/', 0777);
+			}
+			$newfile = $level.UPLOAD_DIR.'entries/'.$id.'/'.$type.'.'.$ext;
+			break;				
 	}
 
 	//if image, resize 
@@ -254,7 +264,13 @@ function save_video($location, $type, $file, $id) {
 				mkdir($level.UPLOAD_DIR.'vlogs/'.$id.'/');
 			}
 			$newfile = $level.UPLOAD_DIR.'vlogs/'.$id.'/'.$type.'.'.$ext;
-			break;			
+			break;	
+		case 'entry':
+			if(!file_exists($level.UPLOAD_DIR.'entries/'.$id.'/')) {
+				mkdir($level.UPLOAD_DIR.'entries/'.$id.'/');
+			}
+			$newfile = $level.UPLOAD_DIR.'entries/'.$id.'/'.$type.'.'.$ext;
+			break;				
 	}
 
 	if (!@move_uploaded_file($_FILES[$file]['tmp_name'], $newfile)) {
@@ -304,7 +320,23 @@ function save_signlink ($location, $type, $file, $id) {
 			$newfile = $level.UPLOAD_DIR.'posts/'.$id.'/'.$filename;
 			break;
 		case 'page':
+			if(!file_exists($level.UPLOAD_DIR.'pages/'.$id.'/')) {
+				mkdir($level.UPLOAD_DIR.'pages/'.$id.'/');
+			}
+			$newfile = $level.UPLOAD_DIR.'pages/'.$id.'/'.$filename;
 			break;
+		case 'vlog':
+			if(!file_exists($level.UPLOAD_DIR.'vlogs/'.$id.'/')) {
+				mkdir($level.UPLOAD_DIR.'vlogs/'.$id.'/');
+			}
+			$newfile = $level.UPLOAD_DIR.'vlogs/'.$id.'/'.$filename;
+			break;
+		case 'entry':
+			if(!file_exists($level.UPLOAD_DIR.'entries/'.$id.'/')) {
+				mkdir($level.UPLOAD_DIR.'entries/'.$id.'/');
+			}
+			$newfile = $level.UPLOAD_DIR.'entries/'.$id.'/'.$filename;
+			break;			
 	}
 
 	if (!move_uploaded_file($_FILES[$file]['tmp_name'], $newfile)) {

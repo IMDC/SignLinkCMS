@@ -83,7 +83,7 @@ $msg = get_message($post_id);  //returns array of poster, date, html-encoded mes
 	
 		$sql = "SELECT * FROM forums_posts WHERE forum_id=".$forum_id." AND parent_id=".$post_id." ORDER BY last_comment DESC";
 		$result = mysql_query($sql, $db);
-		if (mysql_num_rows($result)) { ?>
+		if (@mysql_num_rows($result)) { ?>
 			<table class="manage">
 			<tr>
 				<th colspan="4">Replies</th>
