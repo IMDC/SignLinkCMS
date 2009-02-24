@@ -57,8 +57,6 @@ if (isset($_POST['cancel'])) {
 				break;
 		}
 
-		$now = date('Y-m-d G:i:s');
-
 		//insert into db
 		$sql = "INSERT INTO vlogs_comments VALUES (NULL, '$_SESSION[member_id]', '$vlog_id', '$entry_id', '$message', '$message_alt', NOW())";
 		if (!$result = mysql_query($sql, $db)) {
@@ -101,7 +99,7 @@ require(INCLUDE_PATH.'header.inc.php');
 
 <script type="text/javascript" src="jscripts/forum_post.js"></script>
 
-<form action="<?php echo $_SERVER['PHP_SELF']; ?>?processed=1" method="post" name="form" enctype="multipart/form-data" style="clear:both; padding-top:2px;">
+<form action="<?php echo $_SERVER['PHP_SELF']; ?>?processed=1" method="post" name="form_msg" id="form_msg" enctype="multipart/form-data" style="clear:both; padding-top:2px;">
 	<input type="hidden" name="v" value="<?php echo $vlog_id; ?>" />
 	<input type="hidden" name="MAX_FILE_SIZE" value="<?php echo MAX_UPLOAD_SIZE; ?>" />
 
@@ -137,7 +135,7 @@ require(INCLUDE_PATH.'header.inc.php');
 	</div>
 
 	<div class="row" style="text-align:right;">
-		<input type="button" onclick="validateOnSubmit('')" name="submit_form" value="Submit"> | <input type="submit" name="cancel" value="Cancel" /> 
+		<input type="button" onclick="validateOnSubmit('message')" name="submit_form" value="Submit"> | <input type="submit" name="cancel" value="Cancel" /> 
 	</div>
 </form>
 

@@ -156,25 +156,25 @@ function save_image($location, $type, $file, $id) {
 			break;
 		case 'page':
 			if(!file_exists($level.UPLOAD_DIR.'pages/'.$id.'/')) {
-				mkdir($level.UPLOAD_DIR.'pages/'.$id.'/', 0777);
+				mkdir($level.UPLOAD_DIR.'pages/'.$id.'/');
 			}
 			$newfile = $level.UPLOAD_DIR.'pages/'.$id.'/'.$type.'.'.$ext;
 			break;
 		case 'vlog':
 			if(!file_exists($level.UPLOAD_DIR.'vlogs/'.$id.'/')) {
-				mkdir($level.UPLOAD_DIR.'vlogs/'.$id.'/', 0777);
+				mkdir($level.UPLOAD_DIR.'vlogs/'.$id.'/');
 			}
 			$newfile = $level.UPLOAD_DIR.'vlogs/'.$id.'/'.$type.'.'.$ext;
 			break;		
 		case 'entry':
 			if(!file_exists($level.UPLOAD_DIR.'entries/'.$id.'/')) {
-				mkdir($level.UPLOAD_DIR.'entries/'.$id.'/', 0777);
+				mkdir($level.UPLOAD_DIR.'entries/'.$id.'/');
 			}
 			$newfile = $level.UPLOAD_DIR.'entries/'.$id.'/'.$type.'.'.$ext;
 			break;				
 		case 'comment':
 			if(!file_exists($level.UPLOAD_DIR.'comments/'.$id.'/')) {
-				mkdir($level.UPLOAD_DIR.'comments/'.$id.'/', 0777);
+				mkdir($level.UPLOAD_DIR.'comments/'.$id.'/');
 			}
 			$newfile = $level.UPLOAD_DIR.'comments/'.$id.'/'.$type.'.'.$ext;
 			break;				
@@ -276,7 +276,13 @@ function save_video($location, $type, $file, $id) {
 				mkdir($level.UPLOAD_DIR.'entries/'.$id.'/');
 			}
 			$newfile = $level.UPLOAD_DIR.'entries/'.$id.'/'.$type.'.'.$ext;
-			break;				
+			break;	
+		case 'comment':
+			if(!file_exists($level.UPLOAD_DIR.'comments/'.$id.'/')) {
+				mkdir($level.UPLOAD_DIR.'comments/'.$id.'/');
+			}
+			$newfile = $level.UPLOAD_DIR.'comments/'.$id.'/'.$type.'.'.$ext;
+			break;					
 	}
 
 	if (!@move_uploaded_file($_FILES[$file]['tmp_name'], $newfile)) {
@@ -343,6 +349,12 @@ function save_signlink ($location, $type, $file, $id) {
 			}
 			$newfile = $level.UPLOAD_DIR.'entries/'.$id.'/'.$filename;
 			break;			
+		case 'comment':
+			if(!file_exists($level.UPLOAD_DIR.'comments/'.$id.'/')) {
+				mkdir($level.UPLOAD_DIR.'comments/'.$id.'/');
+			}
+			$newfile = $level.UPLOAD_DIR.'comments/'.$id.'/'.$filename;
+			break;					
 	}
 
 	if (!move_uploaded_file($_FILES[$file]['tmp_name'], $newfile)) {
