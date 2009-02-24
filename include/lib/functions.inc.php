@@ -172,6 +172,12 @@ function save_image($location, $type, $file, $id) {
 			}
 			$newfile = $level.UPLOAD_DIR.'entries/'.$id.'/'.$type.'.'.$ext;
 			break;				
+		case 'comment':
+			if(!file_exists($level.UPLOAD_DIR.'comments/'.$id.'/')) {
+				mkdir($level.UPLOAD_DIR.'comments/'.$id.'/', 0777);
+			}
+			$newfile = $level.UPLOAD_DIR.'comments/'.$id.'/'.$type.'.'.$ext;
+			break;				
 	}
 
 	//if image, resize 
