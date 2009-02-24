@@ -64,17 +64,17 @@ if (isset($_POST['cancel'])) {
 		if (!$result = mysql_query($sql, $db)) {
 			$_SESSION['errors'][] = 'Database error.';
 		} else {
-			$entry_id = mysql_insert_id();
+			$comment_id = mysql_insert_id();
 			switch ($_POST['message']) {
 				case 'signlink':
 					if (is_uploaded_file($_FILES['sl1msg-file']['tmp_name']) && is_uploaded_file($_FILES['sl2msg-file']['tmp_name'])) {
-						save_signlink('post', 'message', 'sl1msg-file', $post_id);
-						save_signlink('post', 'message2', 'sl2msg-file', $post_id);
+						save_signlink('comment', 'message', 'sl1msg-file', $post_id);
+						save_signlink('comment', 'message2', 'sl2msg-file', $post_id);
 					}
 					break;
 				case 'video':
 					if (is_uploaded_file($_FILES['vmsg-file']['tmp_name'])) {
-						save_video('post', 'message', 'vmsg-file', $post_id);
+						save_video('comment', 'message', 'vmsg-file', $post_id);
 					}
 					break;
 			}
