@@ -94,9 +94,33 @@ h1, h2 {
 	background-color: #efefef;
 }
 
-#menu li img:hover, #submenu li img:hover, .buttonimage:hover {
-	background-color: #cbdbef;
+/*#menu li img:hover, #submenu li img:hover, .buttonimage:hover {
+	background-color: #7299C9;
 	border: 1px solid #7299C9;
+}*/
+
+.menu-current {
+	border: 2px solid #0d3668;
+}
+
+#menu-home img:hover {
+	background-color:white;
+}
+
+#menu-content img:hover {
+	background-color:#fffdce;
+}
+
+#menu-forum img:hover {
+background-color:#cbdbef;
+}
+
+#menu-vlog img:hover {
+	background-color:#ffced6;
+}
+
+#menu-help img:hover {
+	background-color:#cbefd2;
 }
 
 #page-menu {

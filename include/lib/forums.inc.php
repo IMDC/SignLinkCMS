@@ -25,7 +25,7 @@ function get_message($id) {
 		}		
 
 		$msg[0] = $row['login'];
-		$msg[1] = date('h:ia M j, y', strtotime($row['date']));
+		$msg[1] = date('M j Y, h:ia', strtotime($row['date']));
 		$msg[3] = $row['member_id'];
 
 		if (!empty($row['msg'])) {

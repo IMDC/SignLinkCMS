@@ -19,8 +19,6 @@ if (INCLUDE_PATH !== 'NULL') {
 	}
 }
 
-
-
 function my_add_null_slashes( $string ) {
     return mysql_real_escape_string(stripslashes($string));
 }
