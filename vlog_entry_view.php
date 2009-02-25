@@ -3,6 +3,7 @@ define('INCLUDE_PATH', 'include/');
 require(INCLUDE_PATH.'vitals.inc.php');
 
 require(INCLUDE_PATH.'header.inc.php'); 
+require(INCLUDE_PATH.'lib/vlogs.inc.php'); 
 
 $entry_id = intval($_REQUEST['e']);
 $vlog_id = intval($_REQUEST['v']);
@@ -39,7 +40,7 @@ if (!$row = @mysql_fetch_assoc($result)) {
 		?>
 		</div>
 		<div id="post-msg-text">
-			<?php  echo $row['content']; ?>
+			<?php  echo get_vlog_message($row['content'], $row['content_alt'], 'entries'); ?>
 		</div>
 		<br style="clear:both" />
 	</div>
@@ -52,10 +53,16 @@ if (!$row = @mysql_fetch_assoc($result)) {
 	<div style="padding:5px">	
 		<?php
 		/* comments */
-		$sql = "SELECT * FROM vlog_comments WHERE vlog_id=".$vlog_id." AND entry_id=".$entry_id." ORDER BY date DESC";
+		$sql = "SELECT * FROM vlogs_comments WHERE vlog_id=".$vlog_id." AND entry_id=".$entry_id." ORDER BY date DESC";
 		$result = mysql_query($sql, $db);
-		if (!$row = @mysql_fetch_assoc($result)) { 
-			
+		
+		if (mysql_num_rows($result)) {
+			while ($row = @mysql_fetch_assoc($result)) { 
+				echo '<div style="float:left">'.get_avatar($row['member_id']).'</div>';
+				echo get_login($row['member_id']).' - ';
+				echo get_vlog_message($row['comment'], $row['comment_alt'], 'comments');
+				echo '<br />';				
+			}
 		} else {
 			echo "No comments.";
 		}	
