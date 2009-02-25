@@ -141,13 +141,29 @@ CREATE TABLE `vlogs` (
 --
 
 CREATE TABLE IF NOT EXISTS `vlogs_entries` (
-  `entry_id` mediumint(8) unsigned NOT NULL auto_increment,
-  `vlog_id` mediumint(8) unsigned NOT NULL default '0',
-  `subject` varchar(100) NOT NULL default '',
-  `subject_alt` varchar(255) NOT NULL default '',
-  `msg` text NOT NULL,
-  `msg_alt` varchar(255) NOT NULL default '',
-  `date` datetime NOT NULL default '0000-00-00 00:00:00',
+  `entry_id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
+  `vlog_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `title` varchar(100) NOT NULL,
+  `title_alt` varchar(255) NOT NULL,
+  `content` text NOT NULL,
+  `content_alt` varchar(255) NOT NULL,
+  `date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `num_comments` mediumint(9) NOT NULL,
-  PRIMARY KEY  (`entry_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 ;
+  PRIMARY KEY (`entry_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `vlogs_comments`
+--
+CREATE TABLE IF NOT EXISTS `vlogs_comments` (
+  `comment_id` int(11) NOT NULL AUTO_INCREMENT,
+  `member_id` mediumint(9) NOT NULL,
+  `vlog_id` mediumint(9) NOT NULL,
+  `entry_id` mediumint(9) NOT NULL,
+  `comment` varchar(255) NOT NULL,
+  `comment_alt` varchar(100) NOT NULL,
+  `date` datetime NOT NULL,
+  PRIMARY KEY (`comment_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 ;
