@@ -58,7 +58,7 @@ if (isset($_POST['cancel'])) {
 		}
 
 		//insert into db
-		$sql = "INSERT INTO vlogs_comments VALUES (NULL, '$_SESSION[member_id]', '$vlog_id', '$entry_id', '$message', '$message_alt', NOW())";
+		$sql = "INSERT INTO vlogs_comments VALUES (NULL, $_SESSION[member_id], $vlog_id, $entry_id, '$message', '$message_alt', NOW())";
 		if (!$result = mysql_query($sql, $db)) {
 			$_SESSION['errors'][] = 'Database error.';
 		} else {
@@ -79,7 +79,7 @@ if (isset($_POST['cancel'])) {
 
 			//redirect	
 			$_SESSION['feedback'][] = 'Comment posted successfully.';
-			header('Location: vlog_entries.php?v='.intval($_POST['v']));
+			header('Location: vlog_entry_view.php?v='.$vlog_id.'&e='.$entry_id);
 			exit;			
 		}
 	}
@@ -100,6 +100,7 @@ require(INCLUDE_PATH.'header.inc.php');
 <script type="text/javascript" src="jscripts/forum_post.js"></script>
 
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>?processed=1" method="post" name="form_msg" id="form_msg" enctype="multipart/form-data" style="clear:both; padding-top:2px;">
+	<input type="hidden" name="e" value="<?php echo $entry_id; ?>" />
 	<input type="hidden" name="v" value="<?php echo $vlog_id; ?>" />
 	<input type="hidden" name="MAX_FILE_SIZE" value="<?php echo MAX_UPLOAD_SIZE; ?>" />
 
