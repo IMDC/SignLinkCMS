@@ -58,10 +58,14 @@ if (!$row = @mysql_fetch_assoc($result)) {
 		
 		if (mysql_num_rows($result)) {
 			while ($row = @mysql_fetch_assoc($result)) { 
-				echo '<div style="float:left">'.get_avatar($row['member_id']).'</div>';
-				echo get_login($row['member_id']).' - ';
+				echo '<div style="float:left; text-align:center; width:100px;">';
+				get_avatar($row['member_id']);
+				echo '<div style="margin-top:-20px;padding-bottom:10px;">'.get_login($row['member_id']).'</div>';
+				echo '</div>';
+				
+				echo '<div style="margin-left:110px;">';				
 				echo get_vlog_message($row['comment'], $row['comment_alt'], 'comments');
-				echo '<br />';				
+				echo '</div><br style="clear:both" />';		
 			}
 		} else {
 			echo "No comments.";
