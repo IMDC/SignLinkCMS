@@ -2,15 +2,9 @@
 define('INCLUDE_PATH', 'include/');
 require(INCLUDE_PATH.'vitals.inc.php');
 
-$vlog_id = intval($_REQUEST['v']);
 
-//if not vlog owner, redirect
-$owner_id = get_vlog_owner($vlog_id);
-if ($owner_id != $_SESSION['member_id']) {
-	$_SESSION['errors'][] = 'You do not own this vlog.';
-	header('Location: vlog_entries.php?v='.$vlog_id);
-	exit;
-}
+
+$vlog_id = intval($_REQUEST['v']);
 
 if (isset($_POST['cancel'])) {
 	header('Location: vlog_entries.php?v='.$vlog_id);
@@ -101,17 +95,15 @@ if (isset($_POST['cancel'])) {
 				break;
 		}
 
-		$now = date('Y-m-d G:i:s');
 
 		//insert into db
 		$sql = "INSERT INTO vlogs_entries VALUES (NULL, '$vlog_id', '$subject', '$subject_alt', '$message', '$message_alt', NOW(), 0)";
-
 		if (!$result = mysql_query($sql, $db)) {
 			$_SESSION['errors'][] = 'Database error.';
 		} else {
 			$entry_id = mysql_insert_id();
 			
-			//update info for forum (last post, num posts, num topics)
+			//update info for vlog
 			$sql = "UPDATE vlogs SET last_entry='$now', num_entries=num_entries+1 WHERE vlog_id=$vlog_id";
 			$result = mysql_query($sql, $db);
 
@@ -119,12 +111,12 @@ if (isset($_POST['cancel'])) {
 			switch ($_POST['subject']) {
 				case 'image':
 					if (is_uploaded_file($_FILES['isub-file']['tmp_name'])) {
-						save_image('entry', 'title', 'isub-file', $entry_id);
+						save_image('post', 'title', 'isub-file', $post_id);
 					}
 					break;
 				case 'video':
 					if (is_uploaded_file($_FILES['vsub-file']['tmp_name'])) {
-						save_video('entry', 'title', 'vsub-file', $entry_id);
+						save_video('post', 'title', 'vsub-file', $post_id);
 					}
 					break;
 			}
@@ -132,13 +124,13 @@ if (isset($_POST['cancel'])) {
 			switch ($_POST['message']) {
 				case 'signlink':
 					if (is_uploaded_file($_FILES['sl1msg-file']['tmp_name']) && is_uploaded_file($_FILES['sl2msg-file']['tmp_name'])) {
-						save_signlink('entry', 'message', 'sl1msg-file', $entry_id);
-						save_signlink('entry', 'message2', 'sl2msg-file', $entry_id);
+						save_signlink('post', 'message', 'sl1msg-file', $post_id);
+						save_signlink('post', 'message2', 'sl2msg-file', $post_id);
 					}
 					break;
 				case 'video':
 					if (is_uploaded_file($_FILES['vmsg-file']['tmp_name'])) {
-						save_video('entry', 'message', 'vmsg-file', $entry_id);
+						save_video('post', 'message', 'vmsg-file', $post_id);
 					}
 					break;
 			}
@@ -152,7 +144,7 @@ if (isset($_POST['cancel'])) {
 } 
 
 if (!$_SESSION['valid_user']) {
-	$_SESSION['errors'][] = 'You must be logged in to post a message. Please <a href="login.php">login</a>.';
+	$_SESSION['errors'][] = 'You must be logged in to post an entry. Please <a href="login.php?f='.intval($_REQUEST['f']).'&p='.intval($_REQUEST['p']).'">login</a>.';
 	require(INCLUDE_PATH.'header.inc.php');
 	require(INCLUDE_PATH.'footer.inc.php');
 	exit;
@@ -160,17 +152,29 @@ if (!$_SESSION['valid_user']) {
 
 require(INCLUDE_PATH.'header.inc.php');
 
+if ($parent_id) {
+	echo '<h2>Reply to '.get_title('vlog', $parent_id).'</h2>';
+} else {
+	echo '<h2>New Vlog Entry</h2>';
+}
 ?>
-<h2>New Entry</h2>
 <script type="text/javascript" src="jscripts/forum_post.js"></script>
 
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>?processed=1" method="post" name="form" enctype="multipart/form-data" style="clear:both; padding-top:2px;">
 	<input type="hidden" name="v" value="<?php echo $vlog_id; ?>" />
 	<input type="hidden" name="MAX_FILE_SIZE" value="<?php echo MAX_UPLOAD_SIZE; ?>" />
 
+	<?php if ($parent_id) { ?>
+		<input type="hidden" name="p" value="<?php echo $parent_id; ?>" />
+		<input type="hidden" name="subject" value="text" />
+		<input type="hidden" name="sub-text" value="Re: " />
+	<?php 
+	} ?>
+
+	<?php if (empty($parent_id)) { ?>
 	<div class="file-info">
 		<span class="bold">Title</span><br />
-			<p>Choose what kind of title you would like your post to have (image, video, or plain text) then provide the appropriate details.</p>
+			<p>Choose what kind of title you would like your entry to have (image, video, or plain text) then provide the appropriate details.</p>
 
 			<?php if (!empty($title)) { echo $title.'<br /><br />'; } ?>
 
@@ -198,6 +202,7 @@ require(INCLUDE_PATH.'header.inc.php');
 				</div>
 			</div>
 	</div>
+	<?php } ?>
 
 	<div class="important-info">
 		<span class="bold">Content</span><br />
