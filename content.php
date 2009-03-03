@@ -4,8 +4,6 @@ require(INCLUDE_PATH.'vitals.inc.php');
 
 require(INCLUDE_PATH.'header.inc.php'); ?>
 
-<!-- h2 style="margin:0px;"><img src="images/application_view_tile_large.png" alt="Pages" title="Pages" /></h2 -->
-
 <?php
 
 $top_pages = get_top_pages();

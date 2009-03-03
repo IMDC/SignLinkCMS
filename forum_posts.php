@@ -8,7 +8,7 @@ $forum_id = intval($_REQUEST['f']);
 ?>
 
 <div id="post-title">
-	<h2><?php echo get_title('forum', intval($_GET['f']), 'small'); ?></h2>
+	<h3><?php echo get_title('forum', intval($_GET['f']), 'small'); ?></h3>
 	<ul id="submenu" style="margin-top:41px;">	
 		<li><a href="forums.php?f=<?php echo intval($_GET['f']); ?>"><img src="images/arrow_left.png" alt="Back to forums" title="Back to forums" /></a></li>	
 		<li><a href="forum_post_create.php?f=<?php echo intval($_GET['f']); ?>"><img src="images/user_comment.png" alt="New topic" title="New topic" /></a></li>			
@@ -62,7 +62,7 @@ if ($total>$perpage) {
 $sql = "SELECT * FROM forums_posts WHERE forum_id=".$forum_id." AND parent_id=0 ORDER BY last_comment DESC LIMIT $offset, $perpage";
 $result = mysql_query($sql, $db);
 if (mysql_num_rows($result)) { 
-	echo '<div>';
+	echo '<div id="block-container">';
 	
 	while ($row = mysql_fetch_assoc($result)) {
 		$title = get_title('post', $row['post_id']); 

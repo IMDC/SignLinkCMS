@@ -77,6 +77,9 @@ if (isset($_POST['cancel'])) {
 					break;
 			}
 
+			$sql = "UPDATE vlogs_entries SET num_comments=num_comments+1";
+			$result = mysql_query($sql, $db);
+
 			//redirect	
 			$_SESSION['feedback'][] = 'Comment posted successfully.';
 			header('Location: vlog_entry_view.php?v='.$vlog_id.'&e='.$entry_id);
@@ -95,7 +98,7 @@ if (!$_SESSION['valid_user']) {
 require(INCLUDE_PATH.'header.inc.php');
 
 ?>
-<h2>New Comment</h2>
+<h3>New Comment</h3>
 
 <script type="text/javascript" src="jscripts/forum_post.js"></script>
 

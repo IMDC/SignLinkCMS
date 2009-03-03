@@ -4,14 +4,13 @@ require(INCLUDE_PATH.'vitals.inc.php');
 
 require(INCLUDE_PATH.'header.inc.php'); 
 
-
 /* top content pages */
 $sql = "SELECT * FROM pages WHERE 1 ORDER BY last_modified DESC LIMIT 0, 2";
 $result = mysql_query($sql, $db);
 if (mysql_num_rows($result)) { 
-	echo '<div class="row">';
-	echo '<a href="content.php"><div style="text-align:left; background-color:#fffdce; padding:5px;"><img src="images/picture.png" alt="content pages" title="content pages" /></div></a>';
-	
+	echo '<h2><a href="content.php"><img src="images/picture.png" alt="content pages" title="content pages" style="padding:3px;" /></a></h2>';
+
+	echo '<div class="row">';	
 	while ($row = mysql_fetch_assoc($result)) { 
 	$title = get_title('page', $row['page_id']);
 ?>
@@ -28,16 +27,15 @@ if (mysql_num_rows($result)) {
 	</div>
 <?php
 	}
-	echo '</div>	<br style="clear:both" />';
+	echo '<br style="clear:both;" /></div>	';
 }
 
 /* top forums */
 $sql = "SELECT * FROM forums WHERE 1 ORDER BY last_post DESC LIMIT 0, 2";
 $result = mysql_query($sql, $db);
 if (mysql_num_rows($result)) { 
-	echo '<div class="row">';
-		echo '<a href="forums.php"><div style="text-align:left; background-color:#cbdbef; padding:5px;"><img src="images/group.png" alt="forums" title="forums" /></div></a>';
-		
+	echo '<h2><a href="forums.php"><img src="images/group.png" alt="forums" title="forums" style="padding:3px;" /></a></h2>';
+	echo '<div class="row">';		
 		while ($row = mysql_fetch_assoc($result)) { 
 		$title = get_title('forum', $row['forum_id']);
 		?>
@@ -55,18 +53,16 @@ if (mysql_num_rows($result)) {
 		
 		<?php
 		}
-	echo '</div><br style="clear:both" />';
+	echo '<br style="clear:both;" /></div>';
 }
-
-
 
 /* top vlogs pages */
 $sql = "SELECT * FROM vlogs WHERE 1 ORDER BY last_entry DESC LIMIT 0, 3";
 $result = mysql_query($sql, $db);
 if (@mysql_num_rows($result)) { 
-	echo '<div class="row">';
-	echo '<a href="vlogs.php"><div style="text-align:left;background-color:#ffced6;padding:5px;"><img src="images/cup_edit.png" alt="vlogs" title="vlogs" /></div></a>';
-	
+	echo '<h2><a href="vlogs.php"><img src="images/cup_edit.png" alt="vlogs" title="vlogs" style="padding:3px;" /></a></h2>';
+
+	echo '<div class="row">';	
 	while ($row = mysql_fetch_assoc($result)) { 
 	$title = get_title('vlog', $row['vlog_id']);
 ?>
@@ -84,7 +80,7 @@ if (@mysql_num_rows($result)) {
 		
 <?php
 	}
-	echo '</div><br style="clear:both" />';
+	echo '<br style="clear:both;" /></div>';
 }
 
 require(INCLUDE_PATH.'footer.inc.php'); 

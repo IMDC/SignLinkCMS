@@ -174,9 +174,9 @@ if ($_SESSION['login'] != $msg[0]) {
 require(INCLUDE_PATH.'header.inc.php');
 
 if ($parent_id) {
-	echo '<h2>Edit reply to '.get_title('post', $parent_id).'</h2>';
+	echo '<h3>Edit reply to '.get_title('post', $parent_id).'</h3>';
 } else {
-	echo '<h2>Edit Post</h2>';
+	echo '<h3>Edit Post</h3>';
 }
 ?>
 <script type="text/javascript" src="jscripts/forum_post.js"></script>
@@ -292,7 +292,7 @@ $(document).ready(function() {
 
 		</div>
 	</div>
-<div class="row" style="text-align:right;">
+<div class="row" style="padding-top:10px;text-align:right;">
 	<input type="submit" name="cancel" value="Finished" /> 
 </div>
 </form>

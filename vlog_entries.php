@@ -8,7 +8,7 @@ $vlog_id = intval($_REQUEST['v']);
 ?>
 
 <div id="post-title">
-	<h2><?php echo get_title('vlog', intval($_GET['v']), 'small'); ?></h2>
+	<h3><?php echo get_title('vlog', intval($_GET['v']), 'small'); ?></h3>
 	<ul id="submenu" style="margin-top:41px;">	
 		<li><a href="vlogs.php?v=<?php echo intval($_GET['v']); ?>"><img src="images/arrow_left.png" alt="Back to vlogs" title="Back to vlogs" /></a></li>	
 
@@ -84,7 +84,7 @@ if (@mysql_num_rows($result)) {
 			<div>
 				<div style="text-align:left;padding-right:2px; font-size:smaller;">
 					<div style="float:right;">
-						<img src="images/comments.png" style="margin-bottom:-5px;" alt="number of replies:" title="number of replies" /> <?php echo $row['num_comments']; ?>
+						<img src="images/comments.png" style="margin-bottom:-5px;" alt="number of comments" title="number of comments" /> <?php echo $row['num_comments']; ?>
 					</div>
 					<?php echo date('M j Y, h:ia', strtotime($row['date'])); ?>
 				</div>
