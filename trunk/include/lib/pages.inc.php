@@ -15,6 +15,7 @@ function get_content($id) {
 
 	$result = mysql_query($sql, $db);
 	if ($result) {
+
 		if (!$row = mysql_fetch_assoc($result)) {
 			$content = "No message.";
 			return $content;
@@ -23,11 +24,12 @@ function get_content($id) {
 		if (!empty($row['content'])) {
 			//plain text
 			$content = nl2br($row['content']);
+			
 		} else {
 			//file
 			
 			//get files
-			$dir_files = @scandir($page_path);
+			$dir_files = @scandir($content_path);
 
 			if(!empty($dir_files)) {
 				foreach ($dir_files as $dir_file) {
@@ -41,7 +43,7 @@ function get_content($id) {
 				if (in_array($ext, $filetypes_video)) {
 					$content = '<object classid="clsid:02BF25D5-8C17-4B23-BC80-D3488ABDDC6B"
 					id="clip" codebase="http://www.apple.com/qtactivex/qtplugin.cab">
-						<param name="src" value="'.$content_path.$content_file.'"/>
+						<param name="src" va lue="'.$content_path.$content_file.'"/>
 						<param name="autoplay" value="false"/>
 						<param name="controller" value="true"/>
 						<param name="scale" value="tofit"/>
@@ -54,13 +56,13 @@ function get_content($id) {
 				} else if (in_array($ext, $filetypes_image)) {
 					$content = '<img src="'.$content_path.$content_file.'" alt="'.$row[1].'" title="'.$row[1].'" style="vertical-align:middle;" />';
 				} else { //signlink
-					$content = '<object width="565" height="415"
+					$content = '<object width="565" height="425"
 						classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000"
 						codebase="http://fpdownload.macromedia.com/pub/
 						shockwave/cabs/flash/swflash.cab#version=8,0,0,0">
 						<param name="movie" value="'.$content_path.$content_file.'"/>
 						<param name="autoplay" value="false"/>
-						<embed src="'.$content_path.$content_file.'" width="565" height="415"
+						<embed src="'.$content_path.$content_file.'" width="565" height="435"
 						type="application/x-shockwave-flash" pluginspage=
 						"http://www.macromedia.com/go/getflashplayer" />
 					</object>';		

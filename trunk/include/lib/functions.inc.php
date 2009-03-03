@@ -305,8 +305,7 @@ function save_signlink ($location, $type, $file, $id) {
 	global $db;
 
 	$ext = end(explode('.',$_FILES[$file]['name']));
-
-	if ($ext == "flv") {
+	if ($ext == "mp4") {
 		$filename = $_FILES[$file]['name'];
 	} else {
 		$filename = $type.'.'.$ext;

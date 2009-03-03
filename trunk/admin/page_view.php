@@ -15,8 +15,7 @@ $sql = "SELECT * FROM pages WHERE page_id=".$page_id;
 $result = mysql_query($sql, $db);	
 $row = mysql_fetch_assoc($result);
 if ($row) {
-	echo get_title('page', $row['page_id']); 
-	echo '<br /><br />';			
+	echo '<h3>'.get_title('page', $row['page_id']).'</h3>'; 
 	echo get_content($row['page_id']);
 
 } else {
@@ -24,7 +23,7 @@ if ($row) {
 }
 
 echo '<br style="clear:both;" /><br />';
-echo '<a href="page_manage.php" />Back</a>';
+echo '<a href="page_manage.php" /><img src="../images/arrow_left.png" alt="Back to pages" title="Back to pages" style="margin-top:20px" class="buttonimage" /></a>';
 
 require(INCLUDE_PATH.'footer.inc.php'); 
 ?>
