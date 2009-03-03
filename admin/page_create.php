@@ -41,10 +41,12 @@ if (isset($_POST['cancel'])) {
 		}	
 		
 		//error check message 
+		$ext = strtolower(end(explode('.',$_FILES['sl2msg-file']['name'])));
+
 		if (empty($_POST['message']) || ( (empty($_FILES['sl1msg-file']['tmp_name']) && empty($_FILES['sl2msg-file']['tmp_name'])) && empty($_FILES['vmsg-file']['tmp_name']) && empty($_POST['msg-text'])) ) {
 			$_SESSION['errors'][] = 'Content empty.';
-		} else if ($_POST['message'] == "signlink" && ( empty($_FILES['sl1msg-file']['tmp_name']) || empty($_FILES['sl2msg-file']['tmp_name']) ) )  {
-			$_SESSION['errors'][] = 'You have chosen to post signlink object as content - this requires that you submit two files: a flash file and a .flv file.';
+		} else if ($_POST['message'] == "signlink" && ( empty($_FILES['sl1msg-file']['tmp_name']) || empty($_FILES['sl2msg-file']['tmp_name']) || $ext!="mp4")  )  {
+			$_SESSION['errors'][] = 'You have chosen to post signlink object as content - this requires that you submit two files: a flash file and a .mp4 file.';
 			
 		} else if ($_POST['message'] == "video") {
 			$ext = end(explode('.', $_FILES['vmsg-file']['name']));
@@ -151,7 +153,7 @@ require(INCLUDE_PATH.'admin_header.inc.php'); ?>
 
 <?php $top_pages = get_top_pages(); 
 	if (!empty($top_pages)) { ?>			
-	<div class="file-info" style="background-color:#fff5f5;">
+	<div class="file-info">
 		<span class="bold">Parent</span><br />
 		<p>Choose if this will be a top-level page, or a sub-page with a parent.</p>
 		<label><input type="radio" name="parent" value="0" checked="checked" /> top-level page<label> <br />
@@ -198,7 +200,6 @@ require(INCLUDE_PATH.'admin_header.inc.php'); ?>
 			</div>
 	</div>
 
-
 	<div class="important-info">
 		<span class="bold">Content</span><br />
 		<?php if(!empty($msg[2])) { echo $msg[2].'<br /><br />'; } ?>
@@ -210,7 +211,7 @@ require(INCLUDE_PATH.'admin_header.inc.php'); ?>
 			<div class="choice-info" id="message-sl">
 				<dl class="col-list">
 					<dt>Flash File</dt> <dd><input type="file" id="sl1msg-file" name="sl1msg-file" /></dd>
-					<dt>FLV File<dt> <dd><input type="file" id="sl2msg-file" name="sl2msg-file" /></dd>
+					<dt>MP4 File<dt> <dd><input type="file" id="sl2msg-file" name="sl2msg-file" /></dd>
 				</dl>
 			</div><br />
 

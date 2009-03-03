@@ -45,33 +45,33 @@ if (!$row = @mysql_fetch_assoc($result)) {
 		<br style="clear:both" />
 	</div>
 	<br style="clear:both" />
+</div>
 
-	<div style="background-color:#ffced6;padding-left:5px; padding-right:5px;">
-		<a style="float:right;" href="vlog_comment.php?v=<?php echo $vlog_id.'&e='.$entry_id; ?>"><img src='images/comment_add.png' alt='Add comment' title='Add comment' /></a>
-		<h3>Comments</h3>	
-	</div>
-	<div style="padding:5px">	
-		<?php
-		/* comments */
-		$sql = "SELECT * FROM vlogs_comments WHERE vlog_id=".$vlog_id." AND entry_id=".$entry_id." ORDER BY date DESC";
-		$result = mysql_query($sql, $db);
-		
-		if (mysql_num_rows($result)) {
-			while ($row = @mysql_fetch_assoc($result)) { 
-				echo '<div style="float:left; text-align:center; width:100px;">';
-				get_avatar($row['member_id']);
-				echo '<div style="margin-top:-20px;padding-bottom:10px;">'.get_login($row['member_id']).'</div>';
-				echo '</div>';
-				
-				echo '<div style="margin-left:110px;">';				
-				echo get_vlog_message($row['comment'], $row['comment_alt'], 'comments');
-				echo '</div><br style="clear:both" />';		
-			}
-		} else {
-			echo "No comments.";
-		}	
-		?>
-	</div>
+<div style="padding-left:5px; padding-right:5px;">
+	<a style="float:right;" href="vlog_comment.php?v=<?php echo $vlog_id.'&e='.$entry_id; ?>"><img src='images/comment_add.png' alt='Add comment' title='Add comment' /></a>
+	<h3>Comments</h3>	
+</div>
+<div style="padding:5px;background-color:#efefef;">	
+	<?php
+	/* comments */
+	$sql = "SELECT * FROM vlogs_comments WHERE vlog_id=".$vlog_id." AND entry_id=".$entry_id." ORDER BY date DESC";
+	$result = mysql_query($sql, $db);
+	
+	if (mysql_num_rows($result)) {
+		while ($row = @mysql_fetch_assoc($result)) { 
+			echo '<div style="float:left; text-align:center; width:100px;">';
+			get_avatar($row['member_id']);
+			echo '<div style="padding-bottom:10px;">'.get_login($row['member_id']).'</div>';
+			echo '</div>';
+			
+			echo '<div style="margin-left:110px;">';				
+			echo get_vlog_message($row['comment'], $row['comment_alt'], 'comments');
+			echo '</div><br style="clear:both" />';		
+		}
+	} else {
+		echo "No comments.";
+	}	
+	?>
 </div>
 
 <?php require(INCLUDE_PATH.'footer.inc.php'); ?>

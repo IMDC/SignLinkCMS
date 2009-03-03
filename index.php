@@ -5,7 +5,7 @@ require(INCLUDE_PATH.'vitals.inc.php');
 require(INCLUDE_PATH.'header.inc.php'); 
 
 /* top content pages */
-$sql = "SELECT * FROM pages WHERE 1 ORDER BY last_modified DESC LIMIT 0, 2";
+$sql = "SELECT * FROM pages WHERE 1 ORDER BY last_modified DESC LIMIT 0, 4";
 $result = mysql_query($sql, $db);
 if (mysql_num_rows($result)) { 
 	echo '<h2><a href="content.php"><img src="images/picture.png" alt="content pages" title="content pages" style="padding:3px;" /></a></h2>';
@@ -31,7 +31,7 @@ if (mysql_num_rows($result)) {
 }
 
 /* top forums */
-$sql = "SELECT * FROM forums WHERE 1 ORDER BY last_post DESC LIMIT 0, 2";
+$sql = "SELECT * FROM forums WHERE 1 ORDER BY last_post DESC LIMIT 0, 4";
 $result = mysql_query($sql, $db);
 if (mysql_num_rows($result)) { 
 	echo '<h2><a href="forums.php"><img src="images/group.png" alt="forums" title="forums" style="padding:3px;" /></a></h2>';
@@ -57,7 +57,7 @@ if (mysql_num_rows($result)) {
 }
 
 /* top vlogs pages */
-$sql = "SELECT * FROM vlogs WHERE 1 ORDER BY last_entry DESC LIMIT 0, 3";
+$sql = "SELECT * FROM vlogs WHERE 1 ORDER BY last_entry DESC LIMIT 0, 4";
 $result = mysql_query($sql, $db);
 if (@mysql_num_rows($result)) { 
 	echo '<h2><a href="vlogs.php"><img src="images/cup_edit.png" alt="vlogs" title="vlogs" style="padding:3px;" /></a></h2>';
