@@ -30,15 +30,14 @@
 
 	<div id="login-area">
 		<?php if(isset($_SESSION['member_id']) && $_SESSION['member_id'] && $_SESSION['valid_user']) { ?>
-
-			<div style="float:right">
-				<img src="images/user.png" alt="" title="" /> <?php echo $_SESSION['login']; ?><br />
-				<div style="vertical-align:bottom">
+			<div style="float:left;width:60px; text-align:center;">
+				<?php get_avatar($_SESSION['member_id']) ?><br />
+				<?php echo $_SESSION['login']; ?>
+			</div>
+			<div style="float:right; padding-right:5px;">
 				<a href="preferences.php"><img src="images/cog.png" alt="preferences" title="preferences" /></a>&nbsp;
 				<a href="logout.php"><img src="images/door_out.png" alt="log out" title="log out" /></a>
-				</div>
 			</div>
-			<?php get_avatar($_SESSION['member_id']) ?>
 
 		<?php
 		} else { ?>
@@ -58,9 +57,7 @@
 		?>
 	</div>
 
-	<div style="margin-top:5px;"><img src="images/fallback_forum_banner.png" alt="Signlink Studio Forum" /></div>
-
-	
+	<div style="margin-top:5px;"><img src="images/signlink_banner.png" alt="Signlink Studio Sharing" /></div>
 
 	<div id="menu" style="clear:both">
 	<?php		
@@ -69,20 +66,18 @@
 		
 	?>
 		<ul>					
-			<li id="menu-home"><a href="index.php"><img src="images/house.png" alt="home" title="home" <?php if($current_page == 'index.php') { echo 'class="menu-current" style="background-color:white;"'; } ?> /></a></li>
+			<li id="menu-home"><a href="index.php"><img src="images/house.png" alt="home" title="home" <?php if($current_page == 'index.php') { echo 'class="menu-current"'; } ?> /></a></li>
 			
-			<li id="menu-content"><a href="content.php"><img src="images/picture.png" alt="pages" title="pages" <?php if(in_array($current_page, $content_pages)) { echo 'class="menu-current" style="background-color:#fffdce;"'; } ?> /></a></li>
+			<li id="menu-content"><a href="content.php"><img src="images/picture.png" alt="pages" title="pages" <?php if(in_array($current_page, $content_pages)) { echo 'class="menu-current"'; } ?> /></a></li>
 			
-			<li id="menu-forum"><a href="forums.php"><img src="images/group.png" alt="forums" title="forums" <?php if(in_array($current_page, $forum_pages)) { echo 'class="menu-current" style="background-color:#cbdbef;"'; } ?> /></a></li>	
+			<li id="menu-forum"><a href="forums.php"><img src="images/group.png" alt="forums" title="forums" <?php if(in_array($current_page, $forum_pages)) { echo 'class="menu-current"'; } ?> /></a></li>	
 			
-			<li id="menu-vlog"><a href="vlogs.php"><img src="images/cup_edit.png" alt="vlogs" title="vlogs" <?php if(in_array($current_page, $vlog_pages)) { echo 'class="menu-current" style="background-color:#ffced6;"'; } ?> /></a></li>	
+			<li id="menu-vlog"><a href="vlogs.php"><img src="images/cup_edit.png" alt="vlogs" title="vlogs" <?php if(in_array($current_page, $vlog_pages)) { echo 'class="menu-current"'; } ?> /></a></li>	
 			
-			<li id="menu-help"><a href="help.php"><img src="images/help.png" alt="help" title="help" <?php if($current_page == 'help.php') { echo 'class="menu-current" style="background-color:#cbefd2;"';} ?> /></a></li>	
+			<li id="menu-help"><a href="help.php"><img src="images/help.png" alt="help" title="help" <?php if($current_page == 'help.php') { echo 'class="menu-current"';} ?> /></a></li>	
 		</ul>
 	</div>
-
-
-	<div id="content">
+<div id="content">
 	<?php 
 	if (isset($_SESSION['errors'])) {
 		echo '<div class="error"><strong>Error:</strong><br />';
@@ -108,4 +103,12 @@
 		echo '</div>';
 		unset($_SESSION['notices']);
 	}	
-	?>
+
+	if (in_array($current_page, $content_pages)) {
+		echo '<h2><a href="content.php"><img src="images/picture.png" alt="content pages" title="content pages" style="padding:3px;" /></a></h2>';
+	} else if (in_array($current_page, $forum_pages)) {
+		echo '<h2><a href="forums.php"><img src="images/group.png" alt="forums" title="forums" style="padding:3px;" /></a></h2>';
+	} else if (in_array($current_page, $vlog_pages)) {
+		echo '<h2><a href="vlogs.php"><img src="images/cup_edit.png" alt="vlogs" title="vlogs" style="padding:3px;" /></a></h2>';
+	}
+?>

@@ -218,7 +218,6 @@ function save_image($location, $type, $file, $id) {
 		}			  
 	}
 
-	unset($_FILES);
 	//if (!@copy(trim($newfile), trim($tmp_file))) {
 	//echo substr(sprintf('%o', fileperms($level.UPLOAD_DIR.'pages/'.$id.'/')), -4);
 	
@@ -226,6 +225,7 @@ function save_image($location, $type, $file, $id) {
 	  print "Error Uploading File - check directory permissions.";
 	  exit;
 	} 
+	unset($_FILES);
 }
 
 /* saves uploaded video 
@@ -500,9 +500,9 @@ function get_avatar($id) {
 	}
 
 	if ($av_file) {
-		echo '<img src="uploads/members/'.$id.'/'.$av_file.'" alt="'.$_SESSION['login'].'\'s avatar" /><br /><br />';
+		echo '<img id="avatar" src="uploads/members/'.$id.'/'.$av_file.'" alt="'.$_SESSION['login'].'\'s avatar" />';
 	} else {
-		echo '<img src="images/no_avatar.jpg" alt="No avatar" /><br /><br />';
+		echo '<img id="avatar" src="images/no_avatar.jpg" alt="No avatar" />';
 	}
 
 	return;

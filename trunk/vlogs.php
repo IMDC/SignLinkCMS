@@ -26,7 +26,14 @@ if (@mysql_num_rows($result)) {
 			<div style="float:left;">
 				<span style='font-size: smaller;'><img src="images/user.png" /> <?php echo get_login($row['member_id']); ?></span>				
 			</div>
-			<span style='float:right; font-size: smaller;'> <?php echo $row['num_entries']; ?> entries </span>
+			<span style='float:right; font-size: smaller;'> 
+				<?php echo $row['num_entries']; 
+				if ($row['num_entries']==1) { 
+					echo ' entry';
+				} else { 
+					echo ' entries';
+				} ?>
+			</span>
 		</div>
 <?php
 	} ?>

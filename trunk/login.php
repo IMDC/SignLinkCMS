@@ -70,6 +70,8 @@ if (isset($this_login, $this_password) && !isset($_SESSION['session_test'])) {
 
 		if (isset($_POST['f']) && !empty($_POST['f'])) {
 			header('Location:forum_post_create.php?f='.$_POST['f'].'&p='.$_POST['p']);
+		} else if (isset($_POST['v']) && isset($_POST['e'])) {
+			header('Location:vlog_comment.php?v='.$_POST['v'].'&e='.$_POST['e']);
 		} else {
 			header('Location:index.php');
 		}
@@ -114,6 +116,8 @@ require(INCLUDE_PATH.'header.inc.php'); ?>
 
 		<input type="hidden" name="f" value="<?php echo intval($_REQUEST['f']); ?>" />
 		<input type="hidden" name="p" value="<?php echo intval($_REQUEST['p']); ?>" />
+		<input type="hidden" name="v" value="<?php echo intval($_REQUEST['v']); ?>" />
+		<input type="hidden" name="e" value="<?php echo intval($_REQUEST['e']); ?>" />
 
 	<dl class="col-list" style="width:33%; margin-left:auto; margin-right:auto;">
 		<dt><img src="images/user.png" alt="login" title="login" /> <label for="login">Login:</label></dt> 

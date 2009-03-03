@@ -178,9 +178,9 @@ if (!$_SESSION['valid_user']) {
 require(INCLUDE_PATH.'header.inc.php');
 
 if ($parent_id) {
-	echo '<h2>Reply to '.get_title('post', $parent_id).'</h2>';
+	echo '<h3>Reply to '.get_title('post', $parent_id).'</h3>';
 } else {
-	echo '<h2>New Forum Topic</h2>';
+	echo '<h3>New Forum Topic</h3>';
 }
 ?>
 <script type="text/javascript" src="jscripts/forum_post.js"></script>
