@@ -219,11 +219,11 @@ function save_image($location, $type, $file, $id) {
 	}
 
 	//if (!@copy(trim($newfile), trim($tmp_file))) {
-/*	echo substr(sprintf('%o', fileperms($level.UPLOAD_DIR.'entries/'.$id.'/')), -4);
-	echo '<br>'.$newfile.'<br>'.$tmp_file;
-	exit;*/
+	//echo substr(sprintf('%o', fileperms($level.UPLOAD_DIR.'posts/'.$id.'/')), -4);
+	//echo '<br>'.$newfile.'<br>'.$tmp_file;
 	
-	if (!@move_uploaded_file($newfile, $tmp_file)) {
+	
+	if (!@move_uploaded_file($tmp_file,$newfile)) {
 	  print "Error Uploading File - check directory permissions.";
 	  exit;
 	} 
