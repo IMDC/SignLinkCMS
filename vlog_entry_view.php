@@ -17,6 +17,14 @@ if (!$row = @mysql_fetch_assoc($result)) {
 }
 
 ?>
+<script type="text/javascript">
+<!--
+	function confirmDelete(entry_id) {
+		confirm("Are you sure you want to delete this entry?");
+	}	
+	
+//-->
+</script>
 
 <div id="post-title">
 	<div style="float:left;height:75px;"><?php echo get_title('vlog', $vlog_id, 'small'); ?> &nbsp;> &nbsp;</div>
@@ -37,7 +45,7 @@ if (!$row = @mysql_fetch_assoc($result)) {
 			<?php
 			if ($_SESSION['valid_user'] && get_vlog_owner($vlog_id) == $_SESSION['member_id']) {
 				echo "<li style='display:inline;padding:8px;'><a href='vlog_entry_edit.php?v=$vlog_id&e=$entry_id'><img src='images/comment_edit.png' alt='Edit' title='Edit' /></a></li>";
-				echo "<li style='display:inline;padding:8px;'><a href='vlog_entry_delete.php?f=$vlog_id&p=$entry_id'><img src='images/delete.png' alt='Delete' title='Delete' /></a></li>";
+				echo "<li style='display:inline;padding:8px;'><a href='vlog_entry_delete.php?v=$vlog_id&e=$entry_id'><img src='images/delete.png' alt='Delete' title='Delete' onClick='javascript:confirmDelete()' /></a></li>";
 			}						
 			 ?>
 			</ul>
