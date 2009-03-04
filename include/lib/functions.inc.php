@@ -566,15 +566,4 @@ function print_members_dropdown() {
 	}
 }
 
-function get_vlog_owner($id) {
-	global $db;
-	
-	$sql = "SELECT member_id FROM vlogs WHERE vlog_id=".$id;
-	$result = mysql_query($sql, $db);
-	
-	$row = @mysql_fetch_assoc($result);
-			
-	return $row['member_id'];
-}
-
 ?>

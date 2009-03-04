@@ -31,18 +31,18 @@ if (!$row = @mysql_fetch_assoc($result)) {
 </div>
 
 <div id="post">		
-	<div style="padding:5px;">
-		<div style="text-align:right">
-		<?php
-		if (get_vlog_owner($vlog_id) == $_SESSION['login']) {
-			echo "<li style='display:inline;padding:8px;'><a href='vlog_entry_edit.php?v=$vlog_id&e=$entry_id'><img src='images/comment_edit.png' alt='Edit' title='Edit' /></a>";
-		}		
-		?>
+	<div id="post-msg-text" style="padding-left:10px; padding-right:10px;">
+		<div style="text-align:right;padding-right:10px;">
+			<ul>
+			<?php
+			if ($_SESSION['valid_user'] && get_vlog_owner($vlog_id) == $_SESSION['member_id']) {
+				echo "<li style='display:inline;padding:8px;'><a href='vlog_entry_edit.php?v=$vlog_id&e=$entry_id'><img src='images/comment_edit.png' alt='Edit' title='Edit' /></a></li>";
+				echo "<li style='display:inline;padding:8px;'><a href='vlog_entry_delete.php?f=$vlog_id&p=$entry_id'><img src='images/delete.png' alt='Delete' title='Delete' /></a></li>";
+			}						
+			 ?>
+			</ul>
 		</div>
-		<div id="post-msg-text">
-			<?php  echo get_vlog_message($row['content'], $row['content_alt'], 'entries', $entry_id); ?>
-		</div>
-		<br style="clear:both" />
+		<?php  echo get_vlog_message($row['content'], $row['content_alt'], 'entries', $entry_id); ?>
 	</div>
 	<br style="clear:both" />
 </div>
