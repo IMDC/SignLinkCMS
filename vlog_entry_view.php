@@ -74,7 +74,7 @@ if (!$row = @mysql_fetch_assoc($result)) {
 			echo '</div>';
 			
 			echo '<div style="margin-left:110px;">';				
-			echo get_vlog_message($row['comment'], $row['comment_alt'], 'comments');
+			echo get_vlog_message($row['comment'], $row['comment_alt'], 'comments', $row['comment_id']);
 			echo '</div><br style="clear:both" />';		
 			echo '</div>';
 		}

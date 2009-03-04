@@ -79,6 +79,14 @@
 	</div>
 <div id="content">
 	<?php 
+	if (in_array($current_page, $content_pages)) {
+		echo '<h2><a href="content.php"><img src="images/picture.png" alt="content pages" title="content pages" style="padding:3px;" /></a></h2>';
+	} else if (in_array($current_page, $forum_pages)) {
+		echo '<h2><a href="forums.php"><img src="images/group.png" alt="forums" title="forums" style="padding:3px;" /></a></h2>';
+	} else if (in_array($current_page, $vlog_pages)) {
+		echo '<h2><a href="vlogs.php"><img src="images/cup_edit.png" alt="vlogs" title="vlogs" style="padding:3px;" /></a></h2>';
+	}	
+	
 	if (isset($_SESSION['errors'])) {
 		echo '<div class="error"><strong>Error:</strong><br />';
 		foreach ($_SESSION['errors'] as $errmsg) {
@@ -103,12 +111,4 @@
 		echo '</div>';
 		unset($_SESSION['notices']);
 	}	
-
-	if (in_array($current_page, $content_pages)) {
-		echo '<h2><a href="content.php"><img src="images/picture.png" alt="content pages" title="content pages" style="padding:3px;" /></a></h2>';
-	} else if (in_array($current_page, $forum_pages)) {
-		echo '<h2><a href="forums.php"><img src="images/group.png" alt="forums" title="forums" style="padding:3px;" /></a></h2>';
-	} else if (in_array($current_page, $vlog_pages)) {
-		echo '<h2><a href="vlogs.php"><img src="images/cup_edit.png" alt="vlogs" title="vlogs" style="padding:3px;" /></a></h2>';
-	}
 ?>
