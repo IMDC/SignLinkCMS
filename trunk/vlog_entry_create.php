@@ -98,7 +98,7 @@ if (isset($_POST['cancel'])) {
 
 		//insert into db
 		$now = date('Y-m-d G:i:s');
-		$sql = "INSERT INTO vlogs_entries VALUES (NULL, '$vlog_id', '$subject', '$subject_alt', '$message', '$message_alt', $now, 0)";
+		$sql = "INSERT INTO vlogs_entries VALUES (NULL, '$vlog_id', '$subject', '$subject_alt', '$message', '$message_alt', '$now', 0)";
 		if (!$result = mysql_query($sql, $db)) {
 			$_SESSION['errors'][] = 'Database error.';
 		} else {
@@ -112,12 +112,12 @@ if (isset($_POST['cancel'])) {
 			switch ($_POST['subject']) {
 				case 'image':
 					if (is_uploaded_file($_FILES['isub-file']['tmp_name'])) {
-						save_image('entry', 'title', 'isub-file', $post_id);
+						save_image('entry', 'title', 'isub-file', $entry_id);
 					}
 					break;
 				case 'video':
 					if (is_uploaded_file($_FILES['vsub-file']['tmp_name'])) {
-						save_video('entry', 'title', 'vsub-file', $post_id);
+						save_video('entry', 'title', 'vsub-file', $entry_id);
 					}
 					break;
 			}
@@ -125,13 +125,13 @@ if (isset($_POST['cancel'])) {
 			switch ($_POST['message']) {
 				case 'signlink':
 					if (is_uploaded_file($_FILES['sl1msg-file']['tmp_name']) && is_uploaded_file($_FILES['sl2msg-file']['tmp_name'])) {
-						save_signlink('entry', 'message', 'sl1msg-file', $post_id);
-						save_signlink('entry', 'message2', 'sl2msg-file', $post_id);
+						save_signlink('entry', 'message', 'sl1msg-file', $entry_id);
+						save_signlink('entry', 'message2', 'sl2msg-file', $entry_id);
 					}
 					break;
 				case 'video':
 					if (is_uploaded_file($_FILES['vmsg-file']['tmp_name'])) {
-						save_video('entry', 'message', 'vmsg-file', $post_id);
+						save_video('entry', 'message', 'vmsg-file', $entry_id);
 					}
 					break;
 			}
