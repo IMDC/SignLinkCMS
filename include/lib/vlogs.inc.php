@@ -1,7 +1,7 @@
 <?php
 /* functions related to vlogs only */
 
-function get_vlog_message($msg, $msg_alt, $type) {			
+function get_vlog_message($msg, $msg_alt, $type, $id) {			
 	global $db, $filetypes_video, $filetypes_image;
 	
 	$formatted_msg = '';
@@ -23,7 +23,7 @@ function get_vlog_message($msg, $msg_alt, $type) {
 		//get files
 		$dir_files = @scandir($msg_path);
 
-		if(!empty($dir_files)) {
+		if(!empty($dir_files)) {  
 			foreach ($dir_files as $dir_file) {
 				if (substr($dir_file,0, 7) == "message") {
 					$msg_file = $dir_file;

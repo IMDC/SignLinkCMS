@@ -40,7 +40,7 @@ if (!$row = @mysql_fetch_assoc($result)) {
 		?>
 		</div>
 		<div id="post-msg-text">
-			<?php  echo get_vlog_message($row['content'], $row['content_alt'], 'entries'); ?>
+			<?php  echo get_vlog_message($row['content'], $row['content_alt'], 'entries', $entry_id); ?>
 		</div>
 		<br style="clear:both" />
 	</div>
