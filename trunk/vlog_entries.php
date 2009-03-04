@@ -1,6 +1,7 @@
 <?php 
 define('INCLUDE_PATH', 'include/');
 require(INCLUDE_PATH.'vitals.inc.php');
+require(INCLUDE_PATH.'lib/vlogs.inc.php'); 
 
 require('include/header.inc.php'); 
 
