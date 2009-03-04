@@ -20,7 +20,7 @@ if (mysql_num_rows($result)) {
 				<?php echo $title; ?>
 			</div>
 						
-			<a href="page_view.php?f=<?php echo $row['page_id']; ?>" class="goto">
+			<a href="page_view.php?c=<?php echo $row['page_id']; ?>" class="goto">
 				<img src="images/hand.png" style="border:0px;padding:0px;" />
 			</a>
 		</div>
