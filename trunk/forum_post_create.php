@@ -54,10 +54,12 @@ if (isset($_POST['cancel'])) {
 		}	
 		
 		//error check message 
+		$ext = strtolower(end(explode('.',$_FILES['sl2msg-file']['name'])));
+
 		if (empty($_POST['message']) || ( (empty($_FILES['sl1msg-file']['tmp_name']) && empty($_FILES['sl2msg-file']['tmp_name'])) && empty($_FILES['vmsg-file']['tmp_name']) && empty($_POST['msg-text'])) ) {
 			$_SESSION['errors'][] = 'Message empty.';
-		} else if ($_POST['message'] == "signlink" && ( empty($_FILES['sl1msg-file']['tmp_name']) || empty($_FILES['sl2msg-file']['tmp_name']) ) )  {
-			$_SESSION['errors'][] = 'You have chosen to post a Signlink message - this requires that you submit two files: a flash file and a .flv file.';
+		} else if ($_POST['message'] == "signlink" && ( empty($_FILES['sl1msg-file']['tmp_name']) || empty($_FILES['sl2msg-file']['tmp_name']) || $ext!="mp4" ) )  {
+			$_SESSION['errors'][] = 'You have chosen to post a Signlink message - this requires that you submit two files: a flash file and a .mp4 file.';
 			
 		} else if ($_POST['message'] == "video") {
 			$ext = end(explode('.', $_FILES['vmsg-file']['name']));
@@ -185,7 +187,7 @@ if ($parent_id) {
 ?>
 <script type="text/javascript" src="jscripts/forum_post.js"></script>
 
-<form action="<?php echo $_SERVER['PHP_SELF']; ?>?processed=1" method="post" name="form" enctype="multipart/form-data" style="clear:both; padding-top:2px;">
+<form action="<?php echo $_SERVER['PHP_SELF']; ?>?processed=1" method="post" name="form" enctype="multipart/form-data">
 	<input type="hidden" name="f" value="<?php echo $forum_id; ?>" />
 	<input type="hidden" name="MAX_FILE_SIZE" value="<?php echo MAX_UPLOAD_SIZE; ?>" />
 
@@ -240,7 +242,7 @@ if ($parent_id) {
 			<div class="choice-info" id="message-sl">
 				<dl class="col-list">
 					<dt>SWF File</dt> <dd><input type="file" id="sl1msg-file" name="sl1msg-file" /></dd>
-					<dt>FLV File<dt> <dd><input type="file" id="sl2msg-file" name="sl2msg-file" /></dd>
+					<dt>MP4 File<dt> <dd><input type="file" id="sl2msg-file" name="sl2msg-file" /></dd>
 				</dl>
 			</div><br />
 
@@ -260,7 +262,7 @@ if ($parent_id) {
 
 	</div>
 
-	<div class="row" style="text-align:right;">
+	<div class="row" style="text-align:right;padding-top:5px;">
 		<input type="button" onclick="<?php if($parent_id) { echo "validateOnSubmit('reply')"; } else { echo "validateOnSubmit('')"; } ?>" name="submit_form" value="Submit"> | <input type="submit" name="cancel" value="Cancel" /> 
 	</div>
 </form>

@@ -45,7 +45,7 @@ if (isset($_POST['cancel'])) {
 
 		if (empty($_POST['message']) || ( (empty($_FILES['sl1msg-file']['tmp_name']) && empty($_FILES['sl2msg-file']['tmp_name'])) && empty($_FILES['vmsg-file']['tmp_name']) && empty($_POST['msg-text'])) ) {
 			$_SESSION['errors'][] = 'Content empty.';
-		} else if ($_POST['message'] == "signlink" && ( empty($_FILES['sl1msg-file']['tmp_name']) || empty($_FILES['sl2msg-file']['tmp_name']) || $ext!="mp4")  )  {
+		} else if ($_POST['message'] == "signlink" && ( empty($_FILES['sl1msg-file']['tmp_name']) || empty($_FILES['sl2msg-file']['tmp_name'] || $ext!="mp4"))  )  {
 			$_SESSION['errors'][] = 'You have chosen to post signlink object as content - this requires that you submit two files: a flash file and a .mp4 file.';
 			
 		} else if ($_POST['message'] == "video") {

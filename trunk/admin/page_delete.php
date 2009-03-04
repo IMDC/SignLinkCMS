@@ -26,11 +26,11 @@ if (isset($_GET['c']) && !empty($_GET['c'])) {
 			//delete files
 			$dir_files = @scandir($page_path);			
 			foreach ($dir_files as $dir_file) {
-				unlink($dir_file);
+				@unlink($dir_file);
 			}
 			
 			//delete directory
-			rmdir($page_path);
+			@rmdir($page_path);
 		}		
 	
 		//delete page
