@@ -51,7 +51,7 @@ if (!$row = @mysql_fetch_assoc($result)) {
 	<a style="float:right;" href="vlog_comment.php?v=<?php echo $vlog_id.'&e='.$entry_id; ?>"><img src='images/comment_add.png' alt='Add comment' title='Add comment' /></a>
 	<h3>Comments</h3>	
 </div>
-<div style="padding:5px;background-color:#efefef;">	
+<div style="padding:5px;">	
 	<?php
 	/* comments */
 	$sql = "SELECT * FROM vlogs_comments WHERE vlog_id=".$vlog_id." AND entry_id=".$entry_id." ORDER BY date DESC";
@@ -59,6 +59,7 @@ if (!$row = @mysql_fetch_assoc($result)) {
 	
 	if (mysql_num_rows($result)) {
 		while ($row = @mysql_fetch_assoc($result)) { 
+			echo '<div style="background-color:#efefef; margin-bottom:10px; padding:10px;">';
 			echo '<div style="float:left; text-align:center; width:100px;">';
 			get_avatar($row['member_id']);
 			echo '<div style="padding-bottom:10px;">'.get_login($row['member_id']).'</div>';
@@ -67,6 +68,7 @@ if (!$row = @mysql_fetch_assoc($result)) {
 			echo '<div style="margin-left:110px;">';				
 			echo get_vlog_message($row['comment'], $row['comment_alt'], 'comments');
 			echo '</div><br style="clear:both" />';		
+			echo '</div>';
 		}
 	} else {
 		echo "No comments.";

@@ -474,7 +474,7 @@ legend, .form-title {
 /* msgs */
 
 div.error {
-	width:90%;
+	width:60%;
 	background-color: #F4E0E0;
 	border: 1px solid #A64040;
 	padding:10px;
@@ -482,7 +482,7 @@ div.error {
 }
 
 div.feedback {
-	width:90%;
+	width:60%;
 	background-color: #D4ECD1;
 	border: 1px solid #4CA640;
 	padding:10px;
@@ -492,7 +492,7 @@ div.feedback {
 div.notice {
 	background-color: #f3edf6;
 	border: 1px solid #9977a8;
-	width:90%;
+	width:60%;
 	padding:10px;
 	margin-top:10px;
 }

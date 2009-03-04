@@ -48,11 +48,13 @@ if (isset($_POST['cancel'])) {
 		}
 		
 		//error check message 
+		$ext = strtolower(end(explode('.',$_FILES['sl2msg-file']['name'])));
+		
 		if ($area=="message") {
 			if (empty($_POST['message']) || ( (empty($_FILES['sl1msg-file']['tmp_name']) && empty($_FILES['sl2msg-file']['tmp_name'])) && empty($_FILES['vmsg-file']['tmp_name']) && empty($_POST['msg-text'])) ) {
 				$_SESSION['errors'][] = 'Message empty.';
-			} else if ($_POST['message'] == "signlink" && ( empty($_FILES['sl1msg-file']['tmp_name']) || empty($_FILES['sl2msg-file']['tmp_name']) ) )  {
-				$_SESSION['errors'][] = 'You have chosen to post a Signlink message - this requires that you submit two files: a flash file and a .flv file.';
+			} else if ($_POST['message'] == "signlink" && ( empty($_FILES['sl1msg-file']['tmp_name']) || empty($_FILES['sl2msg-file']['tmp_name']) || $ext!="mp4") )  {
+				$_SESSION['errors'][] = 'You have chosen to post a Signlink message - this requires that you submit two files: a flash file and a .mp4 file.';
 				
 			} else if ($_POST['message'] == "video") {
 				$ext = end(explode('.', $_FILES['vmsg-file']['name']));
@@ -269,7 +271,7 @@ $(document).ready(function() {
 			<div class="choice-info" id="message-sl">
 				<dl class="col-list">
 					<dt>SWF File</dt> <dd><input type="file" id="sl1msg-file" name="sl1msg-file" /></dd>
-					<dt>FLV File<dt> <dd><input type="file" id="sl2msg-file" name="sl2msg-file" /></dd>
+					<dt>MP4 File<dt> <dd><input type="file" id="sl2msg-file" name="sl2msg-file" /></dd>
 				</dl>
 			</div><br />
 
