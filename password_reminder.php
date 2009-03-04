@@ -51,7 +51,7 @@ require(INCLUDE_PATH.'header.inc.php');
 	
 	Email address: <input type="text" name="email" style="width:20em;" /><br /><br />
 	
-	<input type="submit" name="submit" value="Submit" /> | <input type="button" onclick="javascript:history.back(1)" value="Cancel" />
+	<input type="submit" name="submit" value="Submit" /> | <input type="submit" name="cancel" value="Cancel" />
 
 </form>
 
