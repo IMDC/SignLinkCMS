@@ -111,12 +111,12 @@ if (isset($_POST['cancel'])) {
 			switch ($_POST['subject']) {
 				case 'image':
 					if (is_uploaded_file($_FILES['isub-file']['tmp_name'])) {
-						save_image('post', 'title', 'isub-file', $post_id);
+						save_image('entry', 'title', 'isub-file', $post_id);
 					}
 					break;
 				case 'video':
 					if (is_uploaded_file($_FILES['vsub-file']['tmp_name'])) {
-						save_video('post', 'title', 'vsub-file', $post_id);
+						save_video('entry', 'title', 'vsub-file', $post_id);
 					}
 					break;
 			}
@@ -124,13 +124,13 @@ if (isset($_POST['cancel'])) {
 			switch ($_POST['message']) {
 				case 'signlink':
 					if (is_uploaded_file($_FILES['sl1msg-file']['tmp_name']) && is_uploaded_file($_FILES['sl2msg-file']['tmp_name'])) {
-						save_signlink('post', 'message', 'sl1msg-file', $post_id);
-						save_signlink('post', 'message2', 'sl2msg-file', $post_id);
+						save_signlink('entry', 'message', 'sl1msg-file', $post_id);
+						save_signlink('entry', 'message2', 'sl2msg-file', $post_id);
 					}
 					break;
 				case 'video':
 					if (is_uploaded_file($_FILES['vmsg-file']['tmp_name'])) {
-						save_video('post', 'message', 'vmsg-file', $post_id);
+						save_video('entry', 'message', 'vmsg-file', $post_id);
 					}
 					break;
 			}
@@ -208,7 +208,7 @@ echo '<h3>New Vlog Entry</h3>';
 		<p>Choose what kind of content you are posting (signlink object, video, or plain text) then provide the appropriate details.</p>
 
 		<div class="choice">
-			<label><input type="radio" name="message" value="signlink" <?php if($_POST['message'] == "signlink") { echo 'checked="checked"'; }?> /> Signlink Object</label>
+			<label><input type="radio" name="message" value="signlink" <?php if($_POST['message'] == "signlink") { echo 'checked="checked"'; }?> /> Signlink Object</label> 
 			<div class="choice-info" id="message-sl">
 				<dl class="col-list">
 					<dt>SWF File</dt> <dd><input type="file" id="sl1msg-file" name="sl1msg-file" /></dd>
@@ -232,7 +232,7 @@ echo '<h3>New Vlog Entry</h3>';
 
 	</div>
 
-	<div class="row" style="text-align:right;">
+	<div class="row" style="text-align:right;padding-top:10px;">
 		<input type="button" onclick="<?php if($parent_id) { echo "validateOnSubmit('reply')"; } else { echo "validateOnSubmit('')"; } ?>" name="submit_form" value="Submit"> | <input type="submit" name="cancel" value="Cancel" /> 
 	</div>
 </form>
