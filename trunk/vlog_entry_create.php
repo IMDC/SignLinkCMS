@@ -2,8 +2,6 @@
 define('INCLUDE_PATH', 'include/');
 require(INCLUDE_PATH.'vitals.inc.php');
 
-
-
 $vlog_id = intval($_REQUEST['v']);
 
 if (isset($_POST['cancel'])) {
@@ -46,10 +44,12 @@ if (isset($_POST['cancel'])) {
 		}	
 		
 		//error check message 
+		$ext = strtolower(end(explode('.',$_FILES['sl2msg-file']['name'])));
+		
 		if (empty($_POST['message']) || ( (empty($_FILES['sl1msg-file']['tmp_name']) && empty($_FILES['sl2msg-file']['tmp_name'])) && empty($_FILES['vmsg-file']['tmp_name']) && empty($_POST['msg-text'])) ) {
 			$_SESSION['errors'][] = 'Message empty.';
-		} else if ($_POST['message'] == "signlink" && ( empty($_FILES['sl1msg-file']['tmp_name']) || empty($_FILES['sl2msg-file']['tmp_name']) ) )  {
-			$_SESSION['errors'][] = 'You have chosen to post a Signlink message - this requires that you submit two files: a flash file and a .flv file.';
+		} else if ($_POST['message'] == "signlink" && ( empty($_FILES['sl1msg-file']['tmp_name']) || empty($_FILES['sl2msg-file']['tmp_name']) || $ext!="mp4") )  {
+			$_SESSION['errors'][] = 'You have chosen to post a Signlink message - this requires that you submit two files: a flash file and a .mp4 file.';
 			
 		} else if ($_POST['message'] == "video") {
 			$ext = end(explode('.', $_FILES['vmsg-file']['name']));
@@ -152,15 +152,12 @@ if (!$_SESSION['valid_user']) {
 
 require(INCLUDE_PATH.'header.inc.php');
 
-if ($parent_id) {
-	echo '<h2>Reply to '.get_title('vlog', $parent_id).'</h2>';
-} else {
-	echo '<h2>New Vlog Entry</h2>';
-}
+echo '<h3>New Vlog Entry</h3>';
+
 ?>
 <script type="text/javascript" src="jscripts/forum_post.js"></script>
 
-<form action="<?php echo $_SERVER['PHP_SELF']; ?>?processed=1" method="post" name="form" enctype="multipart/form-data" style="clear:both; padding-top:2px;">
+<form action="<?php echo $_SERVER['PHP_SELF']; ?>?processed=1" method="post" name="form" enctype="multipart/form-data">
 	<input type="hidden" name="v" value="<?php echo $vlog_id; ?>" />
 	<input type="hidden" name="MAX_FILE_SIZE" value="<?php echo MAX_UPLOAD_SIZE; ?>" />
 
@@ -215,7 +212,7 @@ if ($parent_id) {
 			<div class="choice-info" id="message-sl">
 				<dl class="col-list">
 					<dt>SWF File</dt> <dd><input type="file" id="sl1msg-file" name="sl1msg-file" /></dd>
-					<dt>FLV File<dt> <dd><input type="file" id="sl2msg-file" name="sl2msg-file" /></dd>
+					<dt>MP4 File<dt> <dd><input type="file" id="sl2msg-file" name="sl2msg-file" /></dd>
 				</dl>
 			</div><br />
 
