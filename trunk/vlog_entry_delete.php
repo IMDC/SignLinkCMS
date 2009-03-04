@@ -1,5 +1,5 @@
 <?php 
-define('INCLUDE_PATH', '../include/');
+define('INCLUDE_PATH', 'include/');
 require(INCLUDE_PATH.'vitals.inc.php');
 require(INCLUDE_PATH.'lib/vlogs.inc.php'); 
 
@@ -42,7 +42,7 @@ if ($entry_id) {
 	$sql = "SELECT comment_id FROM vlogs_comments WHERE vlog_id=".$vlog_id." AND entry_id=".$entry_id;
 	$result = mysql_query($sql, $db);		
 	
-	foreach ($row = mysql_fetch_assoc($result)) {	
+	while ($row = mysql_fetch_assoc($result)) {	
 		//delete comment files		
 		$comment_path = $level.UPLOAD_DIR.'comments/'.$row['comment_id'].'/';
 		if (file_exists($comment_path)) {
