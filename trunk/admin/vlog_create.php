@@ -100,7 +100,7 @@ require(INCLUDE_PATH.'admin_header.inc.php'); ?>
 <script type="text/javascript" src="../jscripts/forum_post.js"></script>
 <form action ="<?php echo $_SERVER['PHP_SELF']; ?>?processed=1" method="post" name="form" enctype="multipart/form-data">
 		
-	<div class="file-info" style="background-color:#fff5f5;">
+	<div class="file-info">
 		<span class="bold">Owner</span><br />
 		<p>Choose who will own this vlog (only the owner can post to it).</p>
 		<label>Member<br /> <?php print_members_dropdown(); ?><label>
