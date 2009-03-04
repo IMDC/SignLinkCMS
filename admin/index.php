@@ -7,6 +7,6 @@ admin_authenticate();
 require(INCLUDE_PATH.'admin_header.inc.php'); 
 ?>
 
-Use the above menu to manage each section of your website.
+<p>Use the above menu to manage each section of your website.</p>
 
 <?php require('../include/footer.inc.php'); ?>
