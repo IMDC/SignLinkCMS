@@ -152,6 +152,14 @@ if (!$_SESSION['valid_user']) {
 	exit;
 }
 
+//check if user owns this vlog
+if ($_SESSION['member_id'] != get_vlog_owner($vlog_id)) {
+	$_SESSION['errors'][] = "You don't have permission to add an entry to this vlog.";
+	require(INCLUDE_PATH.'header.inc.php');
+	require(INCLUDE_PATH.'footer.inc.php');
+	exit;
+}
+
 require(INCLUDE_PATH.'header.inc.php');
 
 echo '<h3>New Vlog Entry</h3>';
