@@ -6,6 +6,8 @@ require(INCLUDE_PATH.'lib/vlogs.inc.php');
 $vlog_id = intval($_GET['v']);
 $entry_id = intval($_GET['e']);
 
+$comment_id = intval($_GET['c']);
+
 //check if user owns this vlog
 if ($_SESSION['member_id'] != get_vlog_owner($vlog_id)) {
 	$_SESSION['errors'][] = "You don't have permission to delete entries from this vlog.";
@@ -14,10 +16,37 @@ if ($_SESSION['member_id'] != get_vlog_owner($vlog_id)) {
 	exit;
 }
 
-if ($entry_id) {
+if ($comment_id) {
+	//just deleting a comment
+	$comment_path = $level.UPLOAD_DIR.'comments/'.$comment_id.'/';
+	if (file_exists($comment_path)) {
+		$dir_files = @scandir($comment_path);			
+		foreach ($dir_files as $dir_file) {
+			unset($dir_file);
+		}
+		rmdir($comment_path);
+	}		
+	
+	//delete entry comments
+	$sql = "DELETE FROM vlogs_comments WHERE vlog_id=".$vlog_id." AND entry_id=".$entry_id." AND comment_id=".$comment_id;
+	$result = mysql_query($sql, $db);		
+		
+	//adjust num comments
+	$sql = "UPDATE vlogs_entries SET num_comments=num_comments-1 WHERE vlog_id=".$vlog_id." AND entry_id=".$entry_id;
+	$result = mysql_query($sql, $db);			
+		
+	$_SESSION['feedback'][] = 'Vlog comment deleted.';
+	//redirect
+	header('Location: vlog_entry_view.php?v='.$vlog_id.'&e='.$entry_id);
+	exit; 
+	
+} else if ($entry_id) {
 	//delete vlog entry
 	$sql = "DELETE FROM vlogs_entries WHERE vlog_id=".$vlog_id." AND entry_id=".$entry_id;
 	$result = mysql_query($sql, $db);		
+	
+	$sql = "UPDATE vlogs SET num_entries=num_entries-1 WHERE vlog_id=".$vlog_id;
+	$result = mysql_query($sql, $db);			
 	
 	//delete entry files
 	$level = '';
@@ -61,7 +90,7 @@ if ($entry_id) {
 	$_SESSION['feedback'][] = 'Vlog entry deleted.';
 	
 } else {
-	$_SESSION['errors'][] = 'No such entry.';	
+	$_SESSION['errors'][] = 'Not found.';	
 }
 
 //redirect
