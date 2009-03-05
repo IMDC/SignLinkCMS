@@ -140,7 +140,7 @@ require(INCLUDE_PATH.'header.inc.php');
 
 	</div>
 
-	<div class="row" style="text-align:right;">
+	<div class="row" style="text-align:right;padding-top:10px;">
 		<input type="button" onclick="validateOnSubmit('message')" name="submit_form" value="Submit"> | <input type="submit" name="cancel" value="Cancel" /> 
 	</div>
 </form>
