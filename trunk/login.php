@@ -2,22 +2,7 @@
 define('INCLUDE_PATH', 'include/');
 require(INCLUDE_PATH.'vitals.inc.php');
 
-// check if we have a cookie
-if (isset($_COOKIE['SLLogin'])) {
-	$cookie_login = $_COOKIE['SLLogin'];
-}
-if (isset($_COOKIE['SLPass'])) {
-	$cookie_pass  = $_COOKIE['SLPass'];
-}
-
-if (isset($cookie_login, $cookie_pass) && !isset($_POST['submit'])) {
-	/* auto login */
-	$this_login		= $cookie_login;
-	$this_password	= $cookie_pass;
-	$auto_login		= 1;
-	$used_cookie	= true;
-
-} else if (isset($_POST['submit'])) {
+if (isset($_POST['submit'])) {
 	$this_login		= $_POST['login'];
 
 	if (strlen($_POST['password_hidden']) < 40) { // <noscript> on client end
@@ -25,14 +10,10 @@ if (isset($cookie_login, $cookie_pass) && !isset($_POST['submit'])) {
 	} else { // sha1 ok
 		$this_password = $_POST['password_hidden'];
 	}
-
-	$auto_login		= isset($_POST['auto']) ? intval($_POST['auto']) : 0;
 	$used_cookie	= false;
 }
 
-if (isset($this_login, $this_password) && !isset($_SESSION['session_test'])) {
-	$_SESSION['errors'][] = 'Cookies not turned on.';
-} else if (isset($this_login, $this_password)) {
+if (isset($this_login, $this_password)) {
 	if (version_compare(PHP_VERSION, '5.1.0', '>=')) {
 		session_regenerate_id(TRUE);
 	}
@@ -71,7 +52,7 @@ if (isset($this_login, $this_password) && !isset($_SESSION['session_test'])) {
 		if (isset($_POST['f']) && !empty($_POST['f'])) {
 			header('Location:forum_post_create.php?f='.$_POST['f'].'&p='.$_POST['p']);
 		} else if (isset($_POST['v']) && isset($_POST['e'])) {
-			header('Location:vlog_comment.php?v='.$_POST['v'].'&e='.$_POST['e']);
+			header('Location:vlog_comment_create.php?v='.$_POST['v'].'&e='.$_POST['e']);
 		} else {
 			header('Location:index.php');
 		}
