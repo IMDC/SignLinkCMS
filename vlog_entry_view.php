@@ -60,7 +60,7 @@ if (!$row = @mysql_fetch_assoc($result)) {
 	if (@mysql_num_rows($result)) { ?>
 		<table class="manage">
 		<tr>
-			<th colspan="3"><a style="float:right" href="vlog_comment.php?v=<?php echo $vlog_id.'&e='.$entry_id; ?>"><img src='images/comment_add.png' alt='Add comment' title='Add comment' /></a> Comments</th>
+			<th colspan="3"><a style="float:right" href="vlog_comment_create.php?v=<?php echo $vlog_id.'&e='.$entry_id; ?>"><img src='images/comment_add.png' alt='Add comment' title='Add comment' /></a> Comments</th>
 		</tr>
 		<?php 
 			while ($row = mysql_fetch_assoc($result)) { 
