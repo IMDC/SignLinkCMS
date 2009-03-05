@@ -68,13 +68,13 @@ if (isset($_POST['cancel'])) {
 			switch ($_POST['message']) {
 				case 'signlink':
 					if (is_uploaded_file($_FILES['sl1msg-file']['tmp_name']) && is_uploaded_file($_FILES['sl2msg-file']['tmp_name'])) {
-						save_signlink('comment', 'message', 'sl1msg-file', $post_id);
-						save_signlink('comment', 'message2', 'sl2msg-file', $post_id);
+						save_signlink('comment', 'message', 'sl1msg-file', $comment_id);
+						save_signlink('comment', 'message2', 'sl2msg-file', $comment_id);
 					}
 					break;
 				case 'video':
 					if (is_uploaded_file($_FILES['vmsg-file']['tmp_name'])) {
-						save_video('comment', 'message', 'vmsg-file', $post_id);
+						save_video('comment', 'message', 'vmsg-file', $comment_id);
 					}
 					break;
 			}

@@ -23,7 +23,8 @@ function get_vlog_message($msg, $msg_alt, $type, $id) {
 		//get files
 		$dir_files = @scandir($msg_path);
 
-		if(!empty($dir_files)) {  
+		if(!empty($dir_files)) { 
+
 			foreach ($dir_files as $dir_file) {
 				if (substr($dir_file,0, 7) == "message") {
 					$msg_file = $dir_file;
@@ -73,50 +74,4 @@ function get_vlog_owner($id) {
 	$row = @mysql_fetch_assoc($result);
 			
 	return $row['member_id'];
-}
-
-function print_comment_link($id) {	
-	global $db, $filetypes_video, $filetypes_image;
-
-	$sql = "SELECT forum_id, parent_id, login, date, msg, msg_alt FROM forums_posts WHERE post_id=".$id;
-	$result = mysql_query($sql, $db);
-	if ($result) {
-		if (!$row = mysql_fetch_assoc($result)) {
-			echo 'No message.';
-			return;
-		}		
-
-		if (!empty($row['msg'])) {
-			//the msg is plain text
-			$link = substr($row['msg'],0,30).'...';
-		} else {
-			//the msg is a file
-			$level = '';
-			$depth = substr_count(INCLUDE_PATH, '/');
-			for ($i=1; $i<$depth; $i++) {
-				$level .= "../";
-			}
-			
-			//get files
-			$dir_files = @scandir($level.'uploads/posts/'.$id.'/');
-
-			//pick out the "message" file and check its extension
-			if (!empty($dir_files)) {
-				foreach ($dir_files as $dir_file) {
-					if (substr($dir_file,0, 7) == "message") {
-						$msg_file = $dir_file;
-						break;
-					}
-				}
-				$ext = end(explode('.',$msg_file));
-				if (in_array($ext, $filetypes_video)) {
-					$link = '<img src="images/film.png" alt="movie content" style="border:0px;" />';
-				} else if ($ext=="swf") {
-					$link = '<img src="images/television.png" alt="signlink content" style="border:0px;" />';
-				}
-			}
-		}
-		echo '<td><a href="forum_post_view.php?f='.$row['forum_id'].'&p='.$id.'&par='.$_GET['p'].'">'.$link.'</a></td>';
-		echo '<td style="text-align:center;">'.$row['login'].'</td>';
-	}
 }
