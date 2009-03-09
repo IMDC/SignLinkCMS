@@ -3,7 +3,7 @@ define('INCLUDE_PATH', '../include/');
 require(INCLUDE_PATH.'vitals.inc.php');
 
 if (isset($_POST['submit'])) {
-	$this_login		= $addslashes($_POST['login']);
+	$this_login		= "admin"; //$addslashes($_POST['login']);
 	//$this_password = $addslashes(sha1($_POST['password'] . $_SESSION['token']));
 	$this_password = $addslashes($_POST['password']);
 }

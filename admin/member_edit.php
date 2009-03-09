@@ -3,104 +3,96 @@ define('INCLUDE_PATH', '../include/');
 require(INCLUDE_PATH.'vitals.inc.php');
 admin_authenticate();
 
-$forum_id = intval($_REQUEST['f']);
+$member_id = intval($_REQUEST['m']);
+
+$sql = "SELECT * FROM members WHERE member_id=".$member_id;
+$result = mysql_query($sql, $db);
+
+if (!$row = mysql_fetch_assoc($result)) {
+	$_SESSION['errors'][] = "Member not found";
+	require(INCLUDE_PATH.'admin_header.inc.php');
+	require(INCLUDE_PATH.'footer.inc.php');
+	exit;
+}
 
 if (isset($_POST['cancel'])) {
-	header('Location: '.INCLUDE_PATH.'../admin/forum_manage.php');
+	header('Location: member_manage.php');
 	exit;
 } else if (isset($_POST['submit']) || $_GET['processed']) {
-	//check if there are any upload errors
-	if(empty($_POST)) {
-		$_SESSION['errors'][] = 'File too large.';
-	}
-	check_uploads();
-
-	if (!isset($_SESSION['errors'])) {	
-		//error check subject
-		if (empty($_POST['subject']) || (empty($_FILES['isub-file']['tmp_name']) && empty($_FILES['vsub-file']['tmp_name']) && empty($_POST['sub-text'])) ) {
-			$_SESSION['errors'][] = 'Subject empty.';
-			
-		} else if ($_POST['subject'] == "image") {
-			$ext = explode('.', $_FILES['isub-file']['name']);
-			$ext = $ext[1];
-			if (!in_array($ext, $filetypes_image)) {
-				$_SESSION['errors'][] = 'You have chosen to use an image file for your subject - invalid file format.'. $ext;
-			}
-			
-		} else if ($_POST['subject'] == "video") {
-			$ext = explode('.', $_FILES['vsub-file']['name']);
-			$ext = $ext[1];
-			if (!in_array($ext, $filetypes_video)) {
-				$_SESSION['errors'][] = 'You have chosen a video file for your subject - invalid file format.';
-			}
-			
-		} else if ( ($_POST['subject'] == "text") && empty($_POST['sub-text']) ) {
-			$_SESSION['errors'][] = 'You have chosen text for your subject - message cannot be empty.';
-		}
-	}
-	if (!isset($_SESSION['errors'])) {
-		//prepare to insert into db
-
-		switch ($_POST['subject']) {
-			case 'image':
-				$subject = '';
-				$subject_alt = $addslashes(htmlspecialchars($_POST['isub-alt']));
-				break;
-			case 'video':
-				$subject = '';
-				$subject_alt = $addslashes(htmlspecialchars($_POST['vsub-alt']));
-				break;
-			case 'text':
-				$subject = $addslashes(htmlspecialchars($_POST['sub-text']));
-				$subject_alt = '';
-				break;
-		}
-
-		$now = date('Y-m-d G:i:s');
-
-		//insert into db
-		$sql = "UPDATE forums SET subject='$subject', subject_alt='$subject_alt' WHERE forum_id=$forum_id";
-
-		if (!$result = mysql_query($sql, $db)) {
-			$_SESSION['errors'][] = 'Database error.';
+	if ($_POST['password'] != $row['password']) {
+		if ($_POST['password'] == '') { 
+			$_SESSION['errors'][] = 'Password cannot be empty.';
 		} else {
-			//save files			
-			switch ($_POST['subject']) {
-				case 'image':
-					if (is_uploaded_file($_FILES['isub-file']['tmp_name'])) {
-						save_image('forum', 'title', 'isub-file', $forum_id);
-					}
-					break;
-				case 'video':
-					if (is_uploaded_file($_FILES['vsub-file']['tmp_name'])) {
-						save_video('forum', 'title', 'vsub-file', $forum_id);
-					}
-					break;
+			if ($_POST['password'] != $_POST['password2']){
+				$_SESSION['errors'][] = 'Passwords do not match.';
 			}
-		
-			//redirect
-			$_SESSION['feedback'][] = 'Forum edited successfully.';
-			header('Location: forum_manage.php');
-			exit;
+			if (!preg_match('/^\S{8,}$/u', $_POST['password'])) { 
+				$_SESSION['errors'][] = 'Passwords must be greater than 8 characters.';
+			} 
+			if ((preg_match('/[a-z]+/i', $_POST['password']) + preg_match('/[0-9]+/i', $_POST['password']) + preg_match('/[_\-\/+!@#%^$*&)(|.]+/i', $_POST['password'])) < 2) {
+				$_SESSION['errors'][] = 'Passwords must use a combination of letters, numbers and symbols.';
+			}
+		}
+		if (!isset($_SESSION['errors'])) {
+			//prepare to insert into db
+			$new_password = $addslashes(trim($_POST['password']));
+			$sql = "UPDATE members SET password='$new_password' WHERE member_id=".intval($_POST['m']);
+			$result = mysql_query($sql, $db);
 		}
 	}
-} else if ($forum_id) {
-	$title = get_title('forum', $forum_id);
+	if ($_POST['email'] != $row['email']) {
 
-	$sql = "SELECT * FROM forums WHERE forum_id=".$forum_id;
-	$result = mysql_query($sql, $db);
-
-	if ($row = mysql_fetch_assoc($result)) {
-		populate_page($row, $title);
-	} else {
-		$_SESSION['error'][] = 'Forum not found.';
+		if (empty($_POST['email'])) {
+			$_SESSION['errors'][] = 'Email cannot be empty.';
+		} else if (!eregi("^[a-z0-9\._-]+@+[a-z0-9\._-]+\.+[a-z]{2,6}$", $_POST['email'])) {
+			$_SESSION['errors'][] = 'Please enter a valid email.';
+		} 
+		
+		$result = @mysql_query("SELECT * FROM members WHERE email=".addslashes($_POST['email']), $db);
+		if (@mysql_num_rows($result) != 0) {
+			$_SESSION['errors'][] = 'Email address already in use. Try the Password Reminder.';
+		}
+		if (!isset($_SESSION['errors'])) {
+			//prepare to insert into db
+			$new_email = $addslashes(trim($_POST['email']));
+			$sql = "UPDATE members SET email='$new_email' WHERE member_id=".intval($_POST['m']);
+			$result = mysql_query($sql, $db);
+		}		
+	}	
+	if (!isset($_SESSION['errors'])) {
+		$_SESSION['feedback'][] = "Member details updated.";
+		header('Location:member_manage.php');
+		exit;
 	}
 }
 
 require(INCLUDE_PATH.'admin_header.inc.php'); ?>
 
-<h2>Forum: Edit</h2>
-	<?php 
-	require(INCLUDE_PATH.'forum.inc.php'); ?>
+<h2>Member Edit</h2>
 
-<?php require('../include/footer.inc.php'); ?>
+
+<form action="<?php echo $_SERVER['PHP_SELF']; ?>?processed=1" method="post" name="form" enctype="multipart/form-data">
+	<input type="hidden" name="m" value="<?php echo $member_id; ?>" />
+	<dl>
+		<dt>Login
+		<dd><?php echo $row['login']; ?>
+	
+		<dt>Password
+		<dd><input type="password" name="password" value="<?php echo $row['password']; ?>" />
+	
+		<dt>Password Again
+		<dd><input type="password" name="password2" value="<?php echo $row['password']; ?>" />	
+	
+		<dt>Name
+		<dd><?php echo $row['name']; ?>
+		
+		<dt>Email
+		<dd><input type="text" name="email" value="<?php echo $row['email']; ?>" />
+		
+	</dl>
+	<div class="row" style="text-align:right;padding-top:5px;">
+		<input type="submit" name="submit" value="Submit"> | <input type="submit" name="cancel" value="Cancel" /> 
+	</div>	
+</form>
+
+<?php require(INCLUDE_PATH.'footer.inc.php'); ?>

@@ -13,7 +13,7 @@
 <div id="container">
 
 	<div id="header">
-		<h1 style="margin-left:-10px">SignLink Project - Administration</h1>
+		<h1>SignLink CMS - Administration</h1>
 	</div>
 	
 	<?php 
