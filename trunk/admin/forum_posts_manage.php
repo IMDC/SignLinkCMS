@@ -16,7 +16,7 @@ echo get_title('forum', $forum_id, "small");
 echo '</div>';
 
 //get forum posts
-$sql = "SELECT * FROM forums_posts WHERE forum_id=".$forum_id;
+$sql = "SELECT * FROM forums_posts WHERE forum_id=".$forum_id." ORDER BY parent_id, subject";
 $result = mysql_query($sql, $db);
 $r = 1;
 if (mysql_num_rows($result)) { ?> 
