@@ -46,6 +46,12 @@ function admin_authenticate() {
 	}
 }
 
+/* set administrator preferences for the site */
+$result = mysql_query( "SELECT * FROM settings WHERE 1", $db);
+while ($row = mysql_fetch_assoc($result)) {
+	define(strtoupper($row['name']), $row['value']);
+}
+
 $_SESSION['token'] = 'signtokenlink09';
 
 require(INCLUDE_PATH.'lib/functions.inc.php'); 

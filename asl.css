@@ -508,6 +508,10 @@ dl.col-list dt {
 
 }
 
+dl.admin dt {
+	padding:5px;
+}
+
 /* dl.col-list dt { 
 	float: left;  
 	font-weight: bold;  

@@ -6,7 +6,7 @@ admin_authenticate();
 $page_id = intval($_REQUEST['c']);
 
 if (isset($_POST['cancel'])) {
-	header('Location: '.INCLUDE_PATH.'../admin/page_manage.php');
+	header('Location: page_manage.php');
 	exit;
 } else if (isset($_POST['submit']) || $_GET['processed']) {
 

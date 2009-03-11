@@ -1,7 +1,7 @@
 <html>
 <body>
 <head>
-	<title>Admin</title>
+	<title><?php echo SITE_NAME; ?> - Administration</title>
 	<link rel="stylesheet" href="../asl.css" type="text/css" media="screen" />
 
 	<!--[if IE]>
@@ -13,7 +13,7 @@
 <div id="container">
 
 	<div id="header">
-		<h1>SignLink CMS - Administration</h1>
+		<h1><?php echo SITE_NAME; ?> - Administration</h1>
 	</div>
 	
 	<?php 
