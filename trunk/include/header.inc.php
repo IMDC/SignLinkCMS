@@ -2,7 +2,7 @@
 <html>
 <body>
 <head>
-	<title>Signlink</title>
+	<title><?php echo SITE_NAME; ?></title>
 	<link rel="stylesheet" href="asl.css" type="text/css" media="screen" />
 
 <!--[if IE]>
@@ -12,19 +12,6 @@
 	<script type="text/javascript" src="jscripts/jquery-1.2.3.pack.js"></script>          
  
 </head>
-
-<!-- ul id="menu-right">
-	<li><a href="preferences.php"><img src="images/cog.png" alt="preferences" title="preferences" /></a></li>
-	<li><a href="help.php"><img src="images/help.png" alt="help" title="help" /></a></li>
-	<li>
-	<?php 
-	if ($_SESSION['valid_user']) {
-		echo '<a href="logout.php"><img src="images/door_out.png" alt="logout" title="logout" /></a> '.$_SESSION['login']; 
-	} else {
-		echo '<a href="login.php"><img src="images/door_in.png" alt="login" title="login" /></a>'; 
-	}		
-	?>&nbsp;</li>
-</ul -->
 			
 <div id="container">
 
@@ -57,7 +44,7 @@
 		?>
 	</div>
 
-	<div style="margin-top:5px;"><img src="images/signlink_banner.png" alt="Signlink Studio Sharing" /></div>
+	<div style="margin-top:5px;"><img src="images/signlink_banner.png" alt="<?php echo SITE_NAME; ?>" title="<?php echo SITE_NAME; ?>" /></div>
 
 	<div id="menu" style="clear:both">
 	<?php		
