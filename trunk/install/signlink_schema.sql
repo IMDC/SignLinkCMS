@@ -96,6 +96,9 @@ CREATE TABLE IF NOT EXISTS `members` (
   PRIMARY KEY  (`member_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 ;
 
+INSERT INTO `members` (`member_id`, `login`, `password`, `name`, `email`) VALUES
+(1, 'admin', 'admin', '', '');
+
 -- --------------------------------------------------------
 
 --
@@ -120,6 +123,28 @@ CREATE TABLE IF NOT EXISTS `pages` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `settings`
+--
+
+CREATE TABLE IF NOT EXISTS `settings` (
+  `setting_id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `value` varchar(255) NOT NULL,
+  PRIMARY KEY (`setting_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+
+--
+-- Dumping data for table `settings`
+--
+
+INSERT INTO `settings` (`setting_id`, `name`, `value`) VALUES
+(1, 'contact', 'admin@admin.org'),
+(2, 'site_name', 'Signlink CMS'),
+(3, 'max_upload_size', '5242880');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `vlogs`
 --
 
@@ -133,6 +158,21 @@ CREATE TABLE `vlogs` (
   PRIMARY KEY ( `vlog_id` )
 ) ENGINE = InnoDB ;
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `vlogs_comments`
+--
+CREATE TABLE IF NOT EXISTS `vlogs_comments` (
+  `comment_id` int(11) NOT NULL AUTO_INCREMENT,
+  `member_id` mediumint(9) NOT NULL,
+  `vlog_id` mediumint(9) NOT NULL,
+  `entry_id` mediumint(9) NOT NULL,
+  `comment` varchar(255) NOT NULL,
+  `comment_alt` varchar(100) NOT NULL,
+  `date` datetime NOT NULL,
+  PRIMARY KEY (`comment_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 ;
 
 -- --------------------------------------------------------
 
@@ -153,17 +193,3 @@ CREATE TABLE IF NOT EXISTS `vlogs_entries` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 ;
 
 -- --------------------------------------------------------
-
---
--- Table structure for table `vlogs_comments`
---
-CREATE TABLE IF NOT EXISTS `vlogs_comments` (
-  `comment_id` int(11) NOT NULL AUTO_INCREMENT,
-  `member_id` mediumint(9) NOT NULL,
-  `vlog_id` mediumint(9) NOT NULL,
-  `entry_id` mediumint(9) NOT NULL,
-  `comment` varchar(255) NOT NULL,
-  `comment_alt` varchar(100) NOT NULL,
-  `date` datetime NOT NULL,
-  PRIMARY KEY (`comment_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 ;
