@@ -15,4 +15,4 @@ Installation
 
 4. Run the mySQL script /install/signlink_schema.sql to set up the necessary tables for your site's database.
 
-5. Edit the admin password by logging into the admin area (add /admin to the end of your site's URL) with login "admin" and password "admin". Go to the settings area and change the admin password to something more secure.
+5. Edit the admin password and email address by logging into the admin area (add /admin to the end of your site's URL) with login "admin" and password "admin". Go to the settings area and change the admin password to something more secure, and update the contact email.
