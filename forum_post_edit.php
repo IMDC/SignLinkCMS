@@ -203,7 +203,7 @@ $(document).ready(function() {
 
 
 
-	<?php if (!$parent_id) { ?>
+	<?php echo $paretn; if (!$parent) { ?>
 	<div class="file-info">
 		<span class="bold">Subject</span><br />
 			<p>If you would like to change the subject of your post, choose "Edit Subject", enter the appropriate information, and use the Submit button.</p>

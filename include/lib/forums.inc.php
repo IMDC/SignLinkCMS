@@ -124,7 +124,7 @@ function print_reply_link($id) {
 				}
 			}
 		}
-		echo '<td><a href="forum_post_view.php?f='.$row['forum_id'].'&p='.$id.'&par='.$_GET['p'].'">'.$link.'</a></td>';
+		echo '<td><a href="forum_post_view.php?f='.$row['forum_id'].'&p='.$id.'&parent='.$_GET['p'].'">'.$link.'</a></td>';
 		echo '<td style="text-align:center;">'.$row['login'].'</td>';
 	}
 }
