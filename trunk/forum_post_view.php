@@ -4,7 +4,7 @@ require(INCLUDE_PATH.'vitals.inc.php');
 
 require('include/header.inc.php'); 
 
-$parent_id = intval($_REQUEST['par']);
+$parent_id = intval($_REQUEST['parent']);
 $post_id = intval($_REQUEST['p']);
 $forum_id = intval($_REQUEST['f']);
 
@@ -62,7 +62,7 @@ $msg = get_message($post_id);  //returns array of poster, date, html-encoded mes
 		<ul>
 		<?php
 		if ($_SESSION['login'] == $msg[0]) {
-			echo "<li style='display:inline;padding:8px;'><a href='forum_post_edit.php?f=$forum_id&p=$post_id&par=$parent_id'><img src='images/comment_edit.png' alt='Edit' title='Edit' /></a></li>";
+			echo "<li style='display:inline;padding:8px;'><a href='forum_post_edit.php?f=$forum_id&p=$post_id&parent=$parent_id'><img src='images/comment_edit.png' alt='Edit' title='Edit' /></a></li>";
 		}		
 		if (!$parent_id) { 
 			echo "<li style='display:inline;padding:8px;'><a href='forum_post_create.php?f=$forum_id&p=$post_id'><img src='images/comment_add.png' alt='Reply' title='Reply' /></a></li>";
