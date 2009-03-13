@@ -99,7 +99,7 @@ $msg = get_message($post_id);  //returns array of poster, date, html-encoded mes
 						if ($_SESSION['valid_user'] && !$read) { 
 							echo '<img src="images/email_red.png" alt="new message" title="new message" height="16" width="16" /> ';					
 						} else {
-							echo '<img src="images/email.png" alt="read message" title="read message" height="16" width="16" /> ';
+							echo '<img src="images/email.png" alt="no new messages" title="no new messages" height="16" width="16" /> ';
 						} ?>
 					</td>
 					<?php print_reply_link($row['post_id']); ?>
