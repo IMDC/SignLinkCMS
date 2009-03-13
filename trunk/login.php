@@ -51,7 +51,7 @@ if (isset($this_login, $this_password)) {
 
 		if (isset($_POST['f']) && !empty($_POST['f'])) {
 			header('Location:forum_post_create.php?f='.$_POST['f'].'&p='.$_POST['p']);
-		} else if (isset($_POST['v']) && isset($_POST['e'])) {
+		} else if (isset($_POST['v']) && !empty($_POST['v']) && isset($_POST['e']) && !empty($_POST['e'])) {
 			header('Location:vlog_comment_create.php?v='.$_POST['v'].'&e='.$_POST['e']);
 		} else {
 			header('Location:index.php');
