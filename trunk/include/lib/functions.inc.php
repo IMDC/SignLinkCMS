@@ -456,13 +456,13 @@ function save_avatar($id) {
 
 function delete_avatar($id) {
 	$dir = INCLUDE_PATH.'../'.UPLOAD_DIR.'members/'.$id.'/';
-	$dh = opendir($dir);
-	while ( $file = readdir($dh) ) {
+	$dh = @opendir($dir);
+	while ( $file = @readdir($dh) ) {
 		if ( $file != '.' || $file != '..') {
 			@unlink($dir.$file);
 		}
 	}
-	closedir ($dh);
+	@closedir ($dh);
 	@rmdir($dir);	
 
 	/*$av_path = INCLUDE_DIR.'../'.UPLOAD_DIR.'members/'.$id.'/';
