@@ -43,7 +43,7 @@ $msg = get_message($post_id);  //returns array of poster, date, html-encoded mes
 		if (!$parent_id) { 
 			echo "<li><a href='forum_posts.php?f=$forum_id'><img src='images/arrow_left.png' alt='Back to forum posts' title='Back to forum posts' class='buttonimage' /></a></li>";
 		} else {
-			echo "<li><a href='forum_post_view.php?f=$forum_id&p=$parent_id'><img src='images/arrow_left.png' alt='Back to parent post' title='Back to parent post' class='buttonimage' /></a></li>";
+			echo "<li><a href='forum_post_view.php?f=$forum_id&p=$post_id'><img src='images/arrow_left.png' alt='Back to parent post' title='Back to parent post' class='buttonimage' /></a></li>";
 		}
 		?>		
 		

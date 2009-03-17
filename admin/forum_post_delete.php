@@ -47,7 +47,7 @@ if ($post_id) {
 			}
 			
 			//delete directory
-			rmdir($post_path);
+			@rmdir($post_path);
 		}		
 		
 		
