@@ -6,7 +6,7 @@
 <input type="hidden" name="MAX_FILE_SIZE" value="<?php echo MAX_UPLOAD_SIZE; ?>" />
 
 <div class="file-info">
-	<span class="bold"><label>Subject</label></span><br />
+	<span class="bold"><label>Title</label></span><br />
 		<?php if (!empty($title)) { echo $title.'<br /><br />'; } ?>
 
 		<p>Choose what kind of subject you would like your forum to have (image, video, or plain text) then provide the appropriate details.</p>
