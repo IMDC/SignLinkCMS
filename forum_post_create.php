@@ -159,7 +159,7 @@ if (isset($_POST['cancel'])) {
 			//redirect
 			if ($parent_id) {
 				$_SESSION['feedback'][] = 'Replied successfully.';
-				header('Location: forum_post_view.php?f='.intval($_POST['f']).'&p='.$parent_id.'&parent=1');
+				header('Location: forum_post_view.php?f='.intval($_POST['f']).'&p='.$parent_id);
 				exit;
 			} else {
 				$_SESSION['feedback'][] = 'Forum post created successfully.';
