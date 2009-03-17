@@ -43,7 +43,7 @@ if ($post_id) {
 			//delete files
 			$dir_files = @scandir($post_path);			
 			foreach ($dir_files as $dir_file) {
-				unset($dir_file);
+				@unlink($post_path.$dir_file);
 			}
 			
 			//delete directory

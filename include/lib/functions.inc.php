@@ -94,7 +94,7 @@ function get_title($location, $id, $size='reg') {
 					$width = '96';
 					$style="style='height:75px;'";
 				} else {
-					$width=BLOCK_WIDTH;
+					$width='145';
 					$height='113';
 					$style= '';
 				}
