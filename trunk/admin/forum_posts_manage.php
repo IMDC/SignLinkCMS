@@ -21,7 +21,8 @@ $result = mysql_query($sql, $db);
 $r = 1;
 if (mysql_num_rows($result)) { ?> 
 	<table class="manage">
-	<tr>
+	<tr>	
+		<th>ID</th>
 		<th style="width:40%;">Subject</th>
 		<th>Author</th>
 		<th>Date</th>
@@ -30,10 +31,11 @@ if (mysql_num_rows($result)) { ?>
 	<?php
 	while ($row = mysql_fetch_assoc($result)) {
 	
-		$title = get_title('post', $row['post_id']);
+		$title = get_title('post', $row['post_id'], 'small');
 
 		//print forum row info
 		echo '<tr class="row'.$r.'">';
+		echo '<td>'.$row['post_id'].'</td>';
 		echo '<td>'.$title;
 		if ($row['parent_id']) { echo get_title('post', $row['parent_id'], 'small'); }	
 		echo '</td>'; 
