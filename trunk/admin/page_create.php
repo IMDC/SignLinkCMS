@@ -150,6 +150,7 @@ require(INCLUDE_PATH.'admin_header.inc.php'); ?>
 	<script type="text/javascript" src="../jscripts/forum_post.js"></script>
 
 <form action ="<?php echo $_SERVER['PHP_SELF']; ?>?processed=1" method="post" name="form" enctype="multipart/form-data">
+	<input type="hidden" name="MAX_FILE_SIZE" value="<?php echo MAX_UPLOAD_SIZE; ?>" />
 
 <?php $top_pages = get_top_pages(); 
 	if (!empty($top_pages)) { ?>			
