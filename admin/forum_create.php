@@ -90,7 +90,7 @@ if (isset($_POST['cancel'])) {
 
 require(INCLUDE_PATH.'admin_header.inc.php'); ?>
 
-<h2>Forum: New</h2>
+<h2>New Forum</h2>
 <?php require(INCLUDE_PATH.'forum.inc.php'); ?>
 
 <?php require('../include/footer.inc.php'); ?>

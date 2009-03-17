@@ -178,7 +178,7 @@ require(INCLUDE_PATH.'header.inc.php');
 if ($parent_id) {
 	echo '<h3>Edit reply to '.get_title('post', $parent_id).'</h3>';
 } else {
-	echo '<h3>Edit Post</h3>';
+	echo '<h3>Edit Forum Post</h3>';
 }
 ?>
 <script type="text/javascript" src="jscripts/forum_post.js"></script>

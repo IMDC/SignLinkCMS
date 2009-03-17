@@ -162,7 +162,7 @@ if (isset($_POST['cancel'])) {
 				header('Location: forum_post_view.php?f='.intval($_POST['f']).'&p='.$parent_id.'&parent=1');
 				exit;
 			} else {
-				$_SESSION['feedback'][] = 'Forum topic created successfully.';
+				$_SESSION['feedback'][] = 'Forum post created successfully.';
 				header('Location: forum_posts.php?f='.intval($_POST['f']));
 				exit;
 			}
@@ -182,7 +182,7 @@ require(INCLUDE_PATH.'header.inc.php');
 if ($parent_id) {
 	echo '<h3>Reply to '.get_title('post', $parent_id).'</h3>';
 } else {
-	echo '<h3>New Forum Topic</h3>';
+	echo '<h3>New Forum Post</h3>';
 }
 ?>
 <script type="text/javascript" src="jscripts/forum_post.js"></script>
