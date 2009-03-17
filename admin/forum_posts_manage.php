@@ -22,7 +22,7 @@ $r = 1;
 if (mysql_num_rows($result)) { ?> 
 	<table class="manage">
 	<tr>
-		<th style="width:40%;">Title</th>
+		<th style="width:40%;">Subject</th>
 		<th>Author</th>
 		<th>Date</th>
 		<th style="text-align:center;">Manage</th>
