@@ -17,7 +17,7 @@ $row = mysql_fetch_assoc($result);
 $password = $stripslashes($row['password']);
 
 if (isset($_POST['cancel'])) {
-	header('Location: index.php');
+	header('Location: settings.php');
 	exit;
 } else if (isset($_POST['submit']) || $_GET['processed']) {
 	//check each
@@ -115,7 +115,7 @@ require(INCLUDE_PATH.'admin_header.inc.php'); ?>
 		<!-- dt>Banner Image
 		<dd><input type="file" name="banner" value="<?php echo $settings['banner']; ?>" / -->
 	
-		<dt>Max file size (for uploads)
+		<dt>Maximum file size (for uploads)
 		<dd><input type="text" name="max_upload_size" value="<?php echo $settings['max_upload_size']; ?>" /> (Default: 5Mb = 5242880b)	
 	</dl>
 	<div class="row" style="text-align:right;padding-top:5px;">

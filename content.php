@@ -14,7 +14,7 @@ if (!empty($top_pages)) {
 		$title = get_title('page', $row['page_id']);
 		?>
 
-		<div class="page">
+		<div class="cat">
 			<div class="title">
 				<div style="height:150px;">
 					<?php echo $title; ?>
@@ -25,15 +25,15 @@ if (!empty($top_pages)) {
 				</a>
 			</div>
 			
-			<!-- div style="float:right; padding-right:3px;">
+			<div style="float:right; padding-right:3px;">
 			<?php		
 				//get sub pages
-				$sql = "SELECT post_id FROM pages WHERE parent_id=".$row['page_id'];
+				$sql = "SELECT page_id FROM pages WHERE parent_id=".$row['page_id'];
 				$result2 = mysql_query($sql, $db);
 				$sub_pages = intval(@mysql_num_rows($result2));
 
-				echo "<span style='font-size: smaller;'> $sub_pages signlinks</span>";
-			echo '</div -->';
+				echo "<span style='font-size: smaller;'> $sub_pages <img src='images/pictures.png' alt='Sub-pages' title='Sub-pages' /></span>";
+			echo '</div>';
 
 		echo '</div>';
 

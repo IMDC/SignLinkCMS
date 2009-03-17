@@ -206,12 +206,14 @@ require(INCLUDE_PATH.'admin_header.inc.php'); ?>
 					<div style="margin-left:20px; padding:5px;" id="parent-info">
 					<?php $top_pages = get_top_pages();
 					foreach ($top_pages as $top) {
-						echo '<label><input type="radio" name="parent_id" value="'.$top['page_id'].'"';
-						if ($_POST['parent_id'] == $top['page_id']) { 
-							echo 'checked="checked"'; 
+						if ($page_id != $top['page_id']) { 
+							echo '<label><input type="radio" name="parent_id" value="'.$top['page_id'].'"';
+							if ($_POST['parent_id'] == $top['page_id']) { 
+								echo 'checked="checked"'; 
+							}
+							echo ' />';
+							echo get_title('page', $top['page_id']).'</label>&nbsp;';
 						}
-						echo ' />';
-						echo get_title('page', $top['page_id']).'</label>&nbsp;';
 					}
 					?>
 					</div>
@@ -268,7 +270,7 @@ require(INCLUDE_PATH.'admin_header.inc.php'); ?>
 
 	<div class="important-info">
 		<span class="bold">Content</span><br />
-		<?php echo get_content($row['page_id']); ?><br /> (<span id="edit-message" style="color:#11568B;cursor:pointer;">Edit Content</span>)
+		<?php echo get_content($row['page_id']); ?><br style="clear:both;" /> (<span id="edit-message" style="color:#11568B;cursor:pointer;">Edit Content</span>)
 
 		<form action="<?php echo $_SERVER['PHP_SELF']; ?>?processed=1" method="post" name="form_sub" id="form_sub" enctype="multipart/form-data" style="clear:both; padding-top:2px;">
 			<input type="hidden" name="c" value="<?php echo $page_id; ?>" />
