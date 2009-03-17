@@ -10,4 +10,7 @@ define('DB_NAME', '');
 /* uploads directory */
 define('UPLOAD_DIR', 'uploads/');
 
+/* width of column */
+define('BLOCK_WIDTH', '145');
+
 ?>

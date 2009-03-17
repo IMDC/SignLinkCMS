@@ -22,7 +22,7 @@ if ($comment_id) {
 	if (file_exists($comment_path)) {
 		$dir_files = @scandir($comment_path);			
 		foreach ($dir_files as $dir_file) {
-			unset($dir_file);
+			unlink($comment_path.$dir_file);
 		}
 		rmdir($comment_path);
 	}		
@@ -60,7 +60,7 @@ if ($comment_id) {
 		//delete files
 		$dir_files = @scandir($entry_path);			
 		foreach ($dir_files as $dir_file) {
-			unset($dir_file);
+			unlink($entry_path.$dir_file);
 		}
 		
 		//delete directory
@@ -77,7 +77,7 @@ if ($comment_id) {
 		if (file_exists($comment_path)) {
 			$dir_files = @scandir($comment_path);			
 			foreach ($dir_files as $dir_file) {
-				unset($dir_file);
+				unlink($comment_path.$dir_file);
 			}
 			rmdir($comment_path);
 		}	
