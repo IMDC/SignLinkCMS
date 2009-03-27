@@ -10,10 +10,10 @@ $forum_id = intval($_REQUEST['f']);
 
 if ($_SESSION['valid_user']) {
 	//update the # thread views and the last accessed date
-	$sql = "INSERT INTO forums_views VALUES ($parent_id, $_SESSION[member_id], NOW(), 0)";
+	$sql = "INSERT INTO forums_views VALUES ($post_id, $_SESSION[member_id], NOW(), 0)";
 	$result = mysql_query($sql, $db);
 	if (!$result) {
-		$sql = "UPDATE forums_views SET last_accessed=NOW(), views=views+1 WHERE post_id=$parent_id AND member_id=$_SESSION[member_id]";
+		$sql = "UPDATE forums_views SET last_accessed=NOW(), views=views+1 WHERE post_id=$post_id AND member_id=$_SESSION[member_id]";
 		$result = mysql_query($sql, $db);
 	}
 	
@@ -43,7 +43,7 @@ $msg = get_message($post_id);  //returns array of poster, date, html-encoded mes
 		if (!$parent_id) { 
 			echo "<li><a href='forum_posts.php?f=$forum_id'><img src='images/arrow_left.png' alt='Back to forum posts' title='Back to forum posts' class='buttonimage' /></a></li>";
 		} else {
-			echo "<li><a href='forum_post_view.php?f=$forum_id&p=$post_id'><img src='images/arrow_left.png' alt='Back to parent post' title='Back to parent post' class='buttonimage' /></a></li>";
+			echo "<li><a href='forum_post_view.php?f=$forum_id&p=$parent_id'><img src='images/arrow_left.png' alt='Back to parent post' title='Back to parent post' class='buttonimage' /></a></li>";
 		}
 		?>		
 		

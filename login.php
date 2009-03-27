@@ -14,9 +14,9 @@ if (isset($_POST['submit'])) {
 }
 
 if (isset($this_login, $this_password)) {
-	if (version_compare(PHP_VERSION, '5.1.0', '>=')) {
+	/*if (version_compare(PHP_VERSION, '5.1.0', '>=')) {
 		session_regenerate_id(TRUE);
-	}
+	}*/
 
 	$this_login    = $addslashes($this_login);
 	$this_password = $addslashes($this_password);

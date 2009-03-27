@@ -16,6 +16,12 @@ if ($_SESSION['member_id'] != get_vlog_owner($vlog_id)) {
 	exit;
 }
 
+$level = '';
+$depth = substr_count(INCLUDE_PATH, '/');
+for ($i=1; $i<$depth; $i++) {
+	$level .= "../";
+}
+
 if ($comment_id) {
 	//just deleting a comment
 	$comment_path = $level.UPLOAD_DIR.'comments/'.$comment_id.'/';
@@ -48,13 +54,7 @@ if ($comment_id) {
 	$sql = "UPDATE vlogs SET num_entries=num_entries-1 WHERE vlog_id=".$vlog_id;
 	$result = mysql_query($sql, $db);			
 	
-	//delete entry files
-	$level = '';
-	$depth = substr_count(INCLUDE_PATH, '/');
-	for ($i=1; $i<$depth; $i++) {
-		$level .= "../";
-	}		
-	
+	//delete entry files		
 	$entry_path = $level.UPLOAD_DIR.'entries/'.$entry_id.'/';
 	if (file_exists($post_path)) {
 		//delete files
