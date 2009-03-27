@@ -87,7 +87,7 @@ if (@mysql_num_rows($result)) {
 					<div style="float:right;">
 						<img src="images/comments.png" style="margin-bottom:-5px;" alt="number of comments" title="number of comments" /> <?php echo $row['num_comments']; ?>
 					</div>
-					<?php echo date('M j Y, h:ia', strtotime($row['date'])); ?>
+					<?php echo date('M j y, h:ia', strtotime($row['date'])); ?>
 				</div>
 			</div>
 		</div>
