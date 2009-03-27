@@ -96,7 +96,7 @@ function get_title($location, $id, $size='reg') {
 				} else {
 					$width='145';
 					$height='113';
-					$style= "style='height:145px;width:113px;'";
+					$style= "style='width:145px;'";
 				}
 
 				if (in_array($ext, $filetypes_video)) {

@@ -3,8 +3,9 @@
 html, body {
 	margin-left:auto;
 	margin-right:auto;
+	margin-top:5px;
 	text-align:center;
-	width:760px;
+	width:100%;
 }
 
 #container {
@@ -12,6 +13,7 @@ html, body {
 	margin-top:-5px;
 	margin-left:auto;
 	margin-right:auto;
+	width:760px;
 }
 
 #header {
