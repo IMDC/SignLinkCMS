@@ -109,6 +109,7 @@ if (isset($_POST['cancel'])) {
 			$sql = "UPDATE vlogs SET last_entry='$now', num_entries=num_entries+1 WHERE vlog_id='$vlog_id'";
 			$result = mysql_query($sql, $db);
 
+
 			//save files			
 			switch ($_POST['subject']) {
 				case 'image':
@@ -128,9 +129,10 @@ if (isset($_POST['cancel'])) {
 					if (is_uploaded_file($_FILES['sl1msg-file']['tmp_name']) && is_uploaded_file($_FILES['sl2msg-file']['tmp_name'])) {
 						save_signlink('entry', 'message', 'sl1msg-file', $entry_id);
 						save_signlink('entry', 'message2', 'sl2msg-file', $entry_id);
-					}
+				}
 					break;
 				case 'video':
+					
 					if (is_uploaded_file($_FILES['vmsg-file']['tmp_name'])) {
 						save_video('entry', 'message', 'vmsg-file', $entry_id);
 					}

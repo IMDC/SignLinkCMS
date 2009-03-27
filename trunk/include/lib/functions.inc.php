@@ -92,11 +92,11 @@ function get_title($location, $id, $size='reg') {
 				if ($size == 'small') {
 					$height='75';
 					$width = '96';
-					$style="style='height:75px;'";
+					$style="style='height:75px;width:96px;'";
 				} else {
 					$width='145';
 					$height='113';
-					$style= '';
+					$style= "style='height:145px;width:113px;'";
 				}
 
 				if (in_array($ext, $filetypes_video)) {
@@ -227,7 +227,6 @@ function save_image($location, $type, $file, $id) {
 	  print "Error Uploading File - check directory permissions.";
 	  exit;
 	} 
-	unset($_FILES);
 }
 
 /* saves uploaded video 
@@ -275,7 +274,7 @@ function save_video($location, $type, $file, $id) {
 			break;	
 		case 'entry':
 			if(!file_exists($level.UPLOAD_DIR.'entries/'.$id.'/')) {
-				mkdir($level.UPLOAD_DIR.'entries/'.$id.'/');
+				echo mkdir($level.UPLOAD_DIR.'entries/'.$id.'/');
 			}
 			$newfile = $level.UPLOAD_DIR.'entries/'.$id.'/'.$type.'.'.$ext;
 			break;	
