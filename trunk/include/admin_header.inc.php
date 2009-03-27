@@ -30,7 +30,7 @@
 			<li><a href="forum_manage.php">forums</a> | </li>
 			<li><a href="vlog_manage.php">vlogs</a> | </li>
 			<li><a href="settings.php">settings</a> | </li>
-			<li><a href="">help</a></li>
+			<li><a href="help.php">help</a></li>
 		</ul>
 	</div>
 	<?php } ?>
