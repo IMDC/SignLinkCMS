@@ -1,0 +1,57 @@
+/* styles for signlink project, IE specific */
+
+html, body {
+	margin-left:auto;
+	margin-right:auto;
+	margin-top:5px;
+	text-align:center;
+	width:100%;
+}
+
+#container {
+	text-align:left;
+	margin-top:-5px;
+	margin-left:auto;
+	margin-right:auto;
+	width:760px;
+}
+
+#header {
+	padding-top:15px;
+	padding-bottom:0px;
+}
+
+table {
+	font-size: 90%;
+}
+
+ul#menu-right {
+	margin-bottom:5px;
+}
+
+#menu ul {
+	margin-left:0px;
+}
+
+#post-title h2 {
+	color: black;
+	font-size: small;
+	font-weight:normal;
+}
+
+
+#post-msg {
+	margin-top:0px;
+	padding-top:0px;
+	margin-left:150px;
+}
+
+#post-msg ul {
+	margin-top:10px;
+	margin-right:-6px;
+	padding:0px;
+}
+
+#post-msg-text {
+	margin-top:-20px;
+}
