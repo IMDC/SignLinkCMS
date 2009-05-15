@@ -1,0 +1,30 @@
+admin
+-member edit
+-vlog: manage entries
+-vlog: manage comments
+
+front
+-index: colours for each section, when <2 of something
+-register: add avatar
+-password reminder
+
+-code for forums.php # posts
+
+-vlogs: add comment
+
+
+-installer
+
+
+
+CONFIG FILE
+	max upload for subject, msg, # posts per page, etc.
+
+
+Help Documentation for Admin
+
+Help Documentation for User
+
+
+
+enforce ALT TEXT limit: 80 chars
