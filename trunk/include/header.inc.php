@@ -9,12 +9,18 @@
 	<link href="iehacks.css" rel="stylesheet" />
 <![endif]-->
 
-	<script type="text/javascript" src="jscripts/jquery-1.2.3.pack.js"></script>          
+	<script type="text/javascript" src="jscripts/jquery-1.2.3.pack.js"></script>
+    <!-- flowplayer is a free flash container used to hold and playback the .mp4 movies
+    using it until a custom flash object that does the same thing can be built for me -->
+   <script type="text/javascript" src="jscripts/flowplayer-3.1.1.min.js"></script>
+   <!-- This file contains some jquery kung-fu to enable things like video/text/image entry
+   highlighting on mouseover and navigation button animation on mouseover -->
+   <script type="text/javascript" src="jscripts/tweaks.js"></script>          
  
 </head>
 			
 <div id="container">
-
+   <div id="topbackground"></div>
 	<div id="login-area">
 		<?php if(isset($_SESSION['member_id']) && $_SESSION['member_id'] && $_SESSION['valid_user']) { ?>
 			<div style="float:left;width:60px; text-align:center;">
