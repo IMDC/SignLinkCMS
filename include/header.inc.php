@@ -28,8 +28,8 @@
 				<?php echo $_SESSION['login']; ?>
 			</div>
 			<div style="float:right; padding-right:5px;">
-				<a href="preferences.php"><img src="images/cog.png" alt="preferences" title="preferences" /></a>&nbsp;
-				<a href="logout.php"><img src="images/door_out.png" alt="log out" title="log out" /></a>
+				<a href="preferences.php"><img src="images/wrenchsmall.png" alt="preferences" title="preferences" /></a>&nbsp;
+				<a href="logout.php"><img src="images/logout_24.png" alt="log out" title="log out" /></a>
 			</div>
 
 		<?php
@@ -40,8 +40,8 @@
 			<input type="hidden" name="f" value="<?php echo intval($_REQUEST['f']); ?>" />
 			<input type="hidden" name="p" value="<?php echo intval($_REQUEST['p']); ?>" />
 			
-			<label for="login"><img src="images/user.png" alt="login" title="login" /></label> <input name="login" type="text" id="login" value="<?php echo $_SERVER['login']; ?>" style="width:55%;font-size:smaller;" /><br />
-			<label for="pswd"><img src="images/key.png" alt="password" title="password" /></label> <input name="password" type="password" id="pswd" value="" style="width:55%; font-size:smaller;" /> &nbsp;<input type="submit" name="submit" value="Login" class="button" style="font-size:smaller;margin-top:5px;" />
+			<label for="login"><img src="images/user_small.png" alt="login" title="login" class="inlineVertMid" /></label> <input name="login" type="text" id="login" value="<?php echo $_SERVER['login']; ?>" class="login-text" /><br />
+			<label for="pswd"><img src="images/key.png" alt="password" title="password" /></label> <input name="password" type="password" id="pswd" value="" class="login-text" /> &nbsp;<input type="submit" name="submit" value="Login" class="button" style="font-size:smaller;margin-top:5px;" />
 
 			<br style="clear:both" /><p style="text-align:center"><a href="register.php">Register</a> | <a href="password_reminder.php">Password Reminder</a></p>
 		</form>
@@ -58,17 +58,17 @@
 		$current_page = $current_page[count($current_page) - 1];
 		
 	?>
-		<ul>					
-			<li id="menu-home"><a href="index.php"><img src="images/house.png" alt="home" title="home" <?php if($current_page == 'index.php') { echo 'class="menu-current"'; } ?> /></a></li>
-			
-			<li id="menu-content"><a href="content.php"><img src="images/picture.png" alt="pages" title="pages" <?php if(in_array($current_page, $content_pages)) { echo 'class="menu-current"'; } ?> /></a></li>
-			
-			<li id="menu-forum"><a href="forums.php"><img src="images/group.png" alt="forums" title="forums" <?php if(in_array($current_page, $forum_pages)) { echo 'class="menu-current"'; } ?> /></a></li>	
-			
-			<li id="menu-vlog"><a href="vlogs.php"><img src="images/cup_edit.png" alt="vlogs" title="vlogs" <?php if(in_array($current_page, $vlog_pages)) { echo 'class="menu-current"'; } ?> /></a></li>	
-			
-			<li id="menu-help"><a href="help.php"><img src="images/help.png" alt="help" title="help" <?php if($current_page == 'help.php') { echo 'class="menu-current"';} ?> /></a></li>	
-		</ul>
+		<ul>               
+         <li id="menu-home"><a href="index.php"><img src="images/house_shadow.png" id="homenavicon" alt="home" title="home" <?php if($current_page == 'index.php') { echo 'class="menu-current"'; } ?> /></a></li>
+         
+         <li id="menu-content"><a href="content.php"><img src="images/book.png" id="pagesnavicon" alt="pages" title="pages" <?php if(in_array($current_page, $content_pages)) { echo 'class="menu-current"'; } ?> /></a></li>
+         
+         <li id="menu-forum"><a href="forums.php"><img src="images/group.png" id="forumnavicon" alt="forums" title="forums" <?php if(in_array($current_page, $forum_pages)) { echo 'class="menu-current"'; } ?> /></a></li>   
+         
+         <li id="menu-vlog"><a href="vlogs.php"><img src="images/vlog.png" id="vlognavicon" alt="vlogs" title="vlogs" <?php if(in_array($current_page, $vlog_pages)) { echo 'class="menu-current"'; } ?> /></a></li>
+         
+         <li id="menu-help"><a href="help.php"><img src="images/help.png" id="helpnavicon" alt="help" title="help" <?php if($current_page == 'help.php') { echo 'class="menu-current"';} ?> /></a></li>  
+      </ul>
 	</div>
 <div id="content">
 	<?php 
