@@ -185,7 +185,19 @@ if ($parent_id) {
 	echo '<h3>New Forum Post</h3>';
 }
 ?>
-<script type="text/javascript" src="jscripts/forum_post.js"></script>
+<script type="text/javascript" src="jscripts/forum_post_new.js"></script>
+<script type="text/javascript" src="jscripts/tiny_mce/jquery.tinymce.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+   $("textarea.tinymce").tinymce({
+      script_url: 'jscripts/tiny_mce/tiny_mce.js',
+      theme : "advanced",
+      theme_advanced_buttons1 : "bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,|,formatselect,fontselect,fontsizeselect",
+      theme_advanced_buttons2 : "cut,copy,paste,pastetext,pasteword,|,image,cleanup,help,code|,forecolor,backcolor"
+   });
+});
+</script>
+
 
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>?processed=1" method="post" name="form" enctype="multipart/form-data">
 	<input type="hidden" name="f" value="<?php echo $forum_id; ?>" />
@@ -235,14 +247,14 @@ if ($parent_id) {
 		<span class="bold">Message</span><br />
 		<?php if(!empty($msg[2])) { echo $msg[2].'<br /><br />'; } ?>
 
-		<p>Choose what kind of message you are posting (signlink object, video, or plain text) then provide the appropriate details.</p>
+		<p>Choose what kind of message you are posting (signed web page, video (.mp4), or plain text) then provide the appropriate details.</p>
 
 		<div class="choice">
-			<label><input type="radio" name="message" value="signlink" <?php if($_POST['message'] == "signlink") { echo 'checked="checked"'; }?> /> Signlink Object</label>
+			<label><input type="radio" name="message" value="signlink" <?php if($_POST['message'] == "signlink") { echo 'checked="checked"'; }?> /> Signed Web Page</label>
 			<div class="choice-info" id="message-sl">
 				<dl class="col-list">
-					<dt>SWF File</dt> <dd><input type="file" id="sl1msg-file" name="sl1msg-file" /></dd>
-					<dt>MP4 File<dt> <dd><input type="file" id="sl2msg-file" name="sl2msg-file" /></dd>
+            	<dt>Video (.mp4) File<dt> <dd><input type="file" id="sl2msg-file" name="sl2msg-file" /></dd>
+					<dt>Flash (.swf) File</dt> <dd><input type="file" id="sl1msg-file" name="sl1msg-file" /></dd>
 				</dl>
 			</div><br />
 
@@ -256,14 +268,13 @@ if ($parent_id) {
 
 			<label><input type="radio" name="message" value="text" <?php if($_POST['message'] == "text") { echo 'checked="checked"'; }?> /> Text</label>
 			<div class="choice-info" id="message-text">
-				<textarea id="msg-text" id="msg-text" name="msg-text" rows="25" cols="90" style="height:20em;"><?php echo $_POST['msg-text']; ?></textarea>
+				<textarea class="tinymce" id="msg-text" id="msg-text" name="msg-text" rows="25" cols="90" style="height:20em;"><?php echo $_POST['msg-text']; ?> </textarea>
 			</div>
 		</div>
-
 	</div>
 
-	<div class="row" style="text-align:right;padding-top:5px;">
-		<input type="button" onclick="<?php if($parent_id) { echo "validateOnSubmit('reply')"; } else { echo "validateOnSubmit('')"; } ?>" name="submit_form" value="Submit"> | <input type="submit" name="cancel" value="Cancel" /> 
+	<div class="row submitrow">
+		<input type="button" class="submitBtn" onclick="<?php if($parent_id) { echo "validateOnSubmit('reply')"; } else { echo "validateOnSubmit('')"; } ?>" name="submit_form" value="Submit"> | <input type="submit" class="cancelBtn" name="cancel" value="Cancel" /> 
 	</div>
 </form>
 

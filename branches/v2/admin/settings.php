@@ -65,6 +65,7 @@ if (isset($_POST['cancel'])) {
 			$_SESSION['feedback'][] = 'Passwords changed.';
 		}		
 	}		
+
 	if ($_POST['site_name'] != $settings['site_name']) {
 		if (empty($_POST['site_name'])) {
 			$_SESSION['errors'][] = 'Site name cannot be empty.';
@@ -76,6 +77,7 @@ if (isset($_POST['cancel'])) {
 			$_SESSION['feedback'][] = 'Site name changed.';
 		}
 	}
+
 	if ($_POST['max_upload_size'] != $settings['max_upload_size']) {
 		$max = intval($_POST['max_upload_size']);
 		if (empty($max) || !is_numeric($_POST['max_upload_size'])) {
@@ -87,7 +89,33 @@ if (isset($_POST['cancel'])) {
 			$_SESSION['feedback'][] = 'Max upload size changed.';
 		}
 	}
-	
+
+   /* processing for members only selection */
+	if ($_POST['mem_only_group'] != $settings['reg_user_only']) {
+      $member_only_val = intval($_POST['mem_only']);
+      if (!is_numeric($_POST['mem_only'])) {
+         $_SESSION['errors'][] = 'Members only must be selected.';
+      }
+      if (!isset($_SESSION['errors'])) {
+         $sql = "UPDATE settings SET value='$member_only_val' WHERE name='reg_user_only'";
+         $result = mysql_query($sql, $db);
+         $_SESSION['feedback'][] = 'Members only selection changed.';
+      }
+   }
+
+   /* processing for disable member registration selection */
+	if ($_POST['disable_reg'] != $settings['registration_closed']) {
+      $disable_reg_val = intval($_POST['disable_reg']);
+      if (!is_numeric($_POST['disable_reg'])) {
+         $_SESSION['errors'][] = 'Registration disabled must be selected.';
+      }
+      if (!isset($_SESSION['errors'])) {
+         $sql = "UPDATE settings SET value='$disable_reg_val' WHERE name='registration_closed'";
+         $result = mysql_query($sql, $db);
+         $_SESSION['feedback'][] = 'Registration disabled selection changed.';
+      }
+   }
+
 	header('Location:settings.php');
 	exit;
 }
@@ -96,15 +124,17 @@ require(INCLUDE_PATH.'admin_header.inc.php'); ?>
 
 <h2>Settings</h2>
 <div class="file-info">
+<script type="text/javascript" src="../jscripts/maxUploadMenu.js">
+</script>
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>?processed=1" method="post" name="form" enctype="multipart/form-data">
 
 	<dl class="admin">
 	
-		<dt>Contact Email
-		<dd><input type="text" name="contact" value="<?php echo $settings['contact']; ?>" />
+		<dt>Contact Email</dt>
+		<dd><input type="text" name="contact" value="<?php echo $settings['contact']; ?>" /></dd>
 	
-		<dt>Admin Password
-		<dd><input type="password" name="password" value="<?php echo $password; ?>" />
+		<dt>Admin Password</dt>
+		<dd><input type="password" name="password" value="<?php echo $password; ?>" /></dd>
 	
 		<dt>Admin Password Again
 		<dd><input type="password" name="password2" value="" />	
@@ -114,9 +144,31 @@ require(INCLUDE_PATH.'admin_header.inc.php'); ?>
 		
 		<!-- dt>Banner Image
 		<dd><input type="file" name="banner" value="<?php echo $settings['banner']; ?>" / -->
-	
-		<dt>Maximum file size (for uploads)
-		<dd><input type="text" name="max_upload_size" value="<?php echo $settings['max_upload_size']; ?>" /> (Default: 5Mb = 5242880b)	
+		
+      <dt>Maximum file size (for uploads)
+      <!--<dd><input type="text" name="max_upload_size" value="<?php echo $settings['max_upload_size']; ?>" /> (Default: 5Mb = 5242880b)-->
+		<dd><select name="max_upload_size" size="7" multiple="no" onChange="menu_change(this)" >
+			<option selected value="<?php echo $settings['max_upload_size']; ?>">Current Value: <?php echo $settings['max_upload_size']; ?></option>
+			<option value="2097152">2 Mb</option>
+         <option value="5242880">5 Mb</option>
+			<option value="10485760">10 Mb</option>
+			<option value="15728640">15 Mb</option>
+			<option value="20971520">20 Mb</option>
+			<option id="custom_name" value="0">Custom</option>
+		</select>
+		<div id="customSizeDiv" style="visibility:hidden;float:left;text-align:right;padding-top:5px;">
+			Enter the size in bits: <input id="custom_size" type="text" value="" onBlur="menu_setCustom(this)" />
+		</div>
+      </dd>
+
+      <dt>Site restricted to members only</dt>
+      <dd><input type="radio" name="mem_only" value="1" <?php if($settings['reg_user_only']==1)echo 'checked'?> /> Yes
+         <br /> <input type="radio" name="mem_only" value="0" <?php if($settings['reg_user_only']==0)echo 'checked'?> /> No </dd>
+
+      <dt>Disable member registration</dt>
+      <dd><input type="radio" name="disable_reg" value="1" <?php if($settings['registration_closed']==1)echo 'checked'?> /> Yes
+         <br /> <input type="radio" name="disable_reg" value="0" <?php if($settings['registration_closed']==0)echo 'checked'?> /> No </dd>
+
 	</dl>
 	<div class="row" style="text-align:right;padding-top:5px;">
 		<input type="submit" name="submit" value="Submit"> | <input type="submit" name="cancel" value="Cancel" /> 

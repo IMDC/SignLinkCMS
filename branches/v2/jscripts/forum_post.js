@@ -2,7 +2,7 @@ $(document).ready(function() {
 
 	if(typeof(subject)=="undefined") {
 	
-		if ($("input[@name='parent']:checked").val() == "1") {
+		if ($("input[name='parent']:checked").val() == "1") {
 			$("#parent-info").show();
 		} else {
 			$("#parent-info").hide();
@@ -11,17 +11,17 @@ $(document).ready(function() {
 	
 	if(typeof(subject)=="undefined") {
 
-		if ($("input[@name='subject']:checked").val() == "image") {
+		if ($("input[name='subject']:checked").val() == "image") {
 			$("#subject-image").show();
 			$("#subject-video").hide();
 			$("#subject-text").hide();
 
-		} else if ($("input[@name='subject']:checked").val() == "video") {
+		} else if ($("input[name='subject']:checked").val() == "video") {
 			$("#subject-image").hide();
 			$("#subject-video").show();
 			$("#subject-text").hide();
 
-		} else if ($("input[@name='subject']:checked").val() == "text") {
+		} else if ($("input[name='subject']:checked").val() == "text") {
 			$("#subject-image").hide();
 			$("#subject-video").hide();
 			$("#subject-text").show();
@@ -32,17 +32,17 @@ $(document).ready(function() {
 		}
 	}
 
-	if ($("input[@name='message']:checked").val() == "signlink") {
+	if ($("input[name='message']:checked").val() == "signlink") {
 		$("#message-sl").show();
 		$("#message-video").hide();
 		$("#message-text").hide();
 
-	} else if ($("input[@name='message']:checked").val() == "video") {
+	} else if ($("input[name='message']:checked").val() == "video") {
 		$("#message-sl").hide();
 		$("#message-video").show();
 		$("#message-text").hide();
 
-	} else if ($("input[@name='message']:checked").val() == "text") {
+	} else if ($("input[name='message']:checked").val() == "text") {
 		$("#message-sl").hide();
 		$("#message-video").hide();
 		$("#message-text").show();
@@ -52,32 +52,32 @@ $(document).ready(function() {
 		$("#message-text").hide();
 	}
 
-	$("input[@name='parent']").click(
+	$("input[name='parent']").click(
 	function() {
 
-		if ($("input[@name='parent']:checked").val() == 0) {
+		if ($("input[name='parent']:checked").val() == 0) {
 			$("#parent-info").hide();
 
-		} else if ($("input[@name='parent']:checked").val() == 1) {
+		} else if ($("input[name='parent']:checked").val() == 1) {
 			$("#parent-info").show();
 		} 
 	});
 
 
-	$("input[@name='subject']").click(
+	$("input[name='subject']").click(
 	function() {
 
-		if ($("input[@name='subject']:checked").val() == "image") {
+		if ($("input[name='subject']:checked").val() == "image") {
 			$("#subject-image").show();
 			$("#subject-video").hide();
 			$("#subject-text").hide();
 
-		} else if ($("input[@name='subject']:checked").val() == "video") {
+		} else if ($("input[name='subject']:checked").val() == "video") {
 			$("#subject-image").hide();
 			$("#subject-video").show();
 			$("#subject-text").hide();
 
-		} else if ($("input[@name='subject']:checked").val() == "text") {
+		} else if ($("input[name='subject']:checked").val() == "text") {
 			$("#subject-image").hide();
 			$("#subject-video").hide();
 			$("#subject-text").show();
@@ -85,20 +85,20 @@ $(document).ready(function() {
 
 	});
 
-	$("input[@name='message']").click(
+	$("input[name='message']").click(
 	function() {
 
-		if ($("input[@name='message']:checked").val() == "signlink") {
+		if ($("input[name='message']:checked").val() == "signlink") {
 			$("#message-sl").show();
 			$("#message-video").hide();
 			$("#message-text").hide();
 
-		} else if ($("input[@name='message']:checked").val() == "video") {
+		} else if ($("input[name='message']:checked").val() == "video") {
 			$("#message-sl").hide();
 			$("#message-video").show();
 			$("#message-text").hide();
 
-		} else if ($("input[@name='message']:checked").val() == "text") {
+		} else if ($("input[name='message']:checked").val() == "text") {
 			$("#message-sl").hide();
 			$("#message-video").hide();
 			$("#message-text").show();
@@ -114,7 +114,7 @@ function validateSubject() {
 	var er_string = "";
 	var count = 0;
 
-	if ($("input[@name='subject']:checked").val() == "image") {
+	if ($("input[name='subject']:checked").val() == "image") {
 		if ($("#isub-file").val()==null || $("#isub-file").val()=="") {
 			er_text[count] = "Image subject file missing.";
 			count++;
@@ -124,7 +124,7 @@ function validateSubject() {
 			count++;
 		}
 
-	} else if ($("input[@name='subject']:checked").val() == "video") {
+	} else if ($("input[name='subject']:checked").val() == "video") {
 		if ($("#vsub-file").val()==null || $("#vsub-file").val()=="") {
 			er_text[count] = "Video subject file missing.";
 			count++;
@@ -134,7 +134,7 @@ function validateSubject() {
 			count++;
 		}
 
-	} else if ($("input[@name='subject']:checked").val() == "text") {
+	} else if ($("input[name='subject']:checked").val() == "text") {
 		if ($("#sub-text").val()==null || $("#sub-text").val()=="") {
 			er_text[count] = "Subject text missing.";
 			count++;
@@ -153,14 +153,14 @@ function validateMessage() {
 	var count = 0;
 
 	//check message
-	if ($("input[@name='message']:checked").val() == "signlink") {
+	if ($("input[name='message']:checked").val() == "signlink") {
 		if ($("#sl1msg-file").val()==null || $("#sl1msg-file").val()=="" ||
 			$("#sl2msg-file").val()==null || $("#sl2msg-file").val()=="" ) {
 			er_text[count] = "Signlink message file missing.";
 			count++;
 		}
 
-	} else if ($("input[@name='message']:checked").val() == "video") {
+	} else if ($("input[name='message']:checked").val() == "video") {
 		if ($("#vmsg-file").val()==null || $("#vmsg-file").val()=="") {
 			er_text[count] = "Video message file missing.";
 			count++;
@@ -170,7 +170,7 @@ function validateMessage() {
 			count++;
 		}
 
-	} else if ($("input[@name='message']:checked").val() == "text") {
+	} else if ($("input[name='message']:checked").val() == "text") {
 		if ($("#msg-text").val()==null || $("#msg-text").val()=="") {
 			er_text[count] = "Message text missing.";
 			count++;

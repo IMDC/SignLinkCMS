@@ -7,7 +7,8 @@
 	<!--[if IE]>
 		<link href="../iehacks.css" rel="stylesheet" />
 	<![endif]-->
-	<script type="text/javascript" src="../jscripts/jquery-1.2.3.pack.js"></script>  
+	<script type="text/javascript" src="../jscripts/jquery/js/jquery-1.3.2.min.js"></script>  
+	<script type="text/javascript" src="../jscripts/jquery/js/jquery-ui-1.7.2.custom.min.js"></script>  
 </head>
 
 <div id="container">
@@ -24,13 +25,13 @@
 	<?php if($_SESSION['is_admin']) { ?>
 	<div id="menu">
 		<ul>
-			<li><a href="index.php">home</a> | </li>
-			<li><a href="member_manage.php">members</a> | </li>
-			<li><a href="page_manage.php">pages</a> | </li>
-			<li><a href="forum_manage.php">forums</a> | </li>
-			<li><a href="vlog_manage.php">vlogs</a> | </li>
-			<li><a href="settings.php">settings</a> | </li>
-			<li><a href="help.php">help</a></li>
+			<li><a href="index.php"><img src="../images/house_shadowsmall.png" alt="home" /></a> | </li>
+			<li><a href="member_manage.php"><img src="../images/members.png" alt="members" /></a> | </li>
+			<li><a href="page_manage.php"><img src="../images/booksmall.png" alt="pages" /></a> | </li>
+			<li><a href="forum_manage.php"><img src="../images/groupsmall.png" alt="forums" /></a> | </li>
+			<li><a href="vlog_manage.php"><img src="../images/vlogsmall.png" alt="vlogs" /></a> | </li>
+			<li><a href="settings.php"><img src="../images/wrenchsmall.png" alt="settings" </a> | </li>
+			<li><a href="help.php"><img src="../images/helpsmall.png" alt="help" /></a></li>
 		</ul>
 	</div>
 	<?php } ?>

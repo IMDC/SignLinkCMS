@@ -203,7 +203,7 @@ $(document).ready(function() {
 
 
 
-	<?php echo $paretn; if (!$parent) { ?>
+	<?php echo $parent; if (!$parent) { ?>
 	<div class="file-info">
 		<span class="bold">Subject</span><br />
 			<p>If you would like to change the subject of your post, choose "Edit Subject", enter the appropriate information, and use the Submit button.</p>
@@ -244,7 +244,7 @@ $(document).ready(function() {
 				</div>
 
 				<div class="row" style="text-align:right;">
-					<input type="button" onclick="validateOnSubmit('subject')" name="submit_form" id="submit_sub_form" value="Submit">
+					<input type="button" onclick="validateOnSubmit('subject')" class="submitBtn" name="submit_form" id="submit_sub_form" value="Submit">
 				</div>
 			</form>
 			</div>
@@ -265,13 +265,13 @@ $(document).ready(function() {
 			<input type="hidden" name="area" value="message" />
 
 		<div class="choice" id="edit-message-form">
-			<p>Choose what kind of message you are posting (signlink object, video, or plain text) then provide the appropriate details.</p>
+			<p>Choose what kind of message you are posting (signed web page, video, or plain text) then provide the appropriate details.</p>
 
 			<label><input type="radio" name="message" value="signlink" <?php if($_POST['message'] == "signlink") { echo 'checked="checked"'; }?> />Signlink Object</label>
 			<div class="choice-info" id="message-sl">
 				<dl class="col-list">
-					<dt>SWF File</dt> <dd><input type="file" id="sl1msg-file" name="sl1msg-file" /></dd>
-					<dt>MP4 File<dt> <dd><input type="file" id="sl2msg-file" name="sl2msg-file" /></dd>
+            	<dt>Video (.mp4) File</dt> <dd><input type="file" id="sl2msg-file" name="sl2msg-file" /></dd>
+					<dt>Flash (.swf) File</dt> <dd><input type="file" id="sl1msg-file" name="sl1msg-file" /></dd>
 				</dl>
 			</div><br />
 
@@ -285,17 +285,17 @@ $(document).ready(function() {
 
 			<label><input type="radio" name="message" value="text" <?php if($_POST['message'] == "text") { echo 'checked="checked"'; }?> /> Text</label>
 			<div class="choice-info" id="message-text">
-				<textarea id="msg-text" id="msg-text" name="msg-text" rows="25" cols="90" style="height:20em;"><?php echo $_POST['msg-text']; ?></textarea>
+				<textarea id="msg-text" name="msg-text" rows="25" cols="90" style="height:20em;"><?php echo $_POST['msg-text']; ?></textarea>
 			</div>
 		
 			<div class="row" style="text-align:right;">
-				<input type="button" onclick="validateOnSubmit('message')" name="submit_form" value="Submit">
+				<input type="button" onclick="validateOnSubmit('message')" name="submit_form" class="submitBtn" value="Submit">
 			</div>
 
 		</div>
 	</div>
 <div class="row" style="padding-top:10px;text-align:right;">
-	<input type="submit" name="cancel" value="Finished" /> 
+	<input type="submit" class="cancelBtn" name="cancel" value="Finished" /> 
 </div>
 </form>
 

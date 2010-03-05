@@ -2,8 +2,8 @@
 define('INCLUDE_PATH', 'include/');
 require(INCLUDE_PATH.'vitals.inc.php');
 
-if (isset($_POST['submit'])) {
-	$this_login		= $_POST['login'];
+if (isset($_POST['submit']) || isset($_POST['submitImg.x'])) {
+	$this_login = $_POST['login'];
 
 	if (strlen($_POST['password_hidden']) < 40) { // <noscript> on client end
 		$this_password = sha1($_POST['password'] . $_SESSION['token']);
@@ -89,7 +89,7 @@ require(INCLUDE_PATH.'header.inc.php'); ?>
 
 <h2>Login</h2>
 
-<p><a href="register.php">Register</a> for a new account or use the <a href="password_reminder.php">Password Reminder</a> if you have forgotten your login information.</p>
+<p><a href="register.php"><img src="images/register_add.png" class="inlineVertMid" />Register</a> for a new account or use the <a href="password_reminder.php"><img src="images/mail_key_small.png" class="inlineVertMid" />Password Reminder</a> if you have forgotten your login information.</p>
 
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
 		<input type="hidden" name="login_action" value="true" />
@@ -108,7 +108,7 @@ require(INCLUDE_PATH.'header.inc.php'); ?>
 	</dl>
 	<div style="text-align:center">
 		<!-- label><input type="checkbox" name="autologin" value="1" /> keep me logged-in</label><br / --><br />
-		<input type="submit" name="submit" value="Submit" class="button" />
+		<input type="submit" name="submit" value="Submit" class="button submitBtn" />
 	</div>
 </form>
 

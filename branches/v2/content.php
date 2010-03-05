@@ -2,21 +2,27 @@
 define('INCLUDE_PATH', 'include/');
 require(INCLUDE_PATH.'vitals.inc.php');
 
-require(INCLUDE_PATH.'header.inc.php'); ?>
+/* Restrict to registered users only */
+if (REG_USER_ONLY == 1){
+   user_authenticate();
+}
+
+require(INCLUDE_PATH.'header.inc.php');
+?>
 
 <?php
 
 $top_pages = get_top_pages();
 
-if (!empty($top_pages)) { 
+if ( !empty($top_pages) ) {
 	echo '<div id="block-container">';
 	foreach ($top_pages as $row) {
 		$title = get_title('page', $row['page_id']);
-		?>
+?>
 
 		<div class="cat">
 			<div class="title">
-				<div style="height:150px;">
+				<div style="height:150px;cursor:pointer;">
 					<?php echo $title; ?>
 				</div>
 							

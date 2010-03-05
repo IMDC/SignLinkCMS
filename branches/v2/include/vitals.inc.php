@@ -46,6 +46,20 @@ function admin_authenticate() {
 	}
 }
 
+
+function user_authenticate() {
+	//check if logged in as registered user 
+	if ($_SESSION['valid_user'] && !empty($_SESSION['member_id'])) {
+		return true;
+	} else {
+		$_SESSION['errors'][] = 'You must <a href="login.php">login</a> to use this site.';
+		header( 'Location: login.php' );
+      //require(INCLUDE_PATH.'footer.inc.php');
+		exit;
+	}
+}
+
+
 /* set administrator preferences for the site */
 $result = @mysql_query( "SELECT * FROM settings WHERE 1", $db);
 while ($row = @mysql_fetch_assoc($result)) {
@@ -57,5 +71,6 @@ $_SESSION['token'] = 'signtokenlink09';
 require(INCLUDE_PATH.'lib/functions.inc.php'); 
 require(INCLUDE_PATH.'lib/forums.inc.php');
 require(INCLUDE_PATH.'lib/pages.inc.php');
+
 
 ?>

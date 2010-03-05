@@ -48,10 +48,11 @@ require(INCLUDE_PATH.'header.inc.php');
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>?processed=1" method="post">
 
 	<p>Enter your email address, and your login details will be mailed to you.</p>
-	
-	Email address: <input type="text" name="email" style="width:20em;" /><br /><br />
-	
-	<input type="submit" name="submit" value="Submit" /> | <input type="submit" name="cancel" value="Cancel" />
+
+   <dt><label for="email"><img src="images/email_small.png" class="inlineVertMid" />Email:</label></dt> 
+			<dd><input type="text" name="email" style="width:20em;" />&nbsp;&nbsp;<img src="images/example3.png" />"carmen_smith@example.com"<br /><br /></dd>
+
+	<input type="submit" class="submitBtn" name="submit" value="Submit" /> | <input type="submit" name="cancel" value="Cancel" class="cancelBtn" />
 
 </form>
 

@@ -1,6 +1,9 @@
 <?php
 /* functions related to pages only */
 
+define('VIDEO_MSG_HEIGHT', '260');
+define('VIDEO_MSG_WIDTH', '320');
+
 function get_content($id) {
 	global $db, $filetypes_video, $filetypes_image;
 	
@@ -40,10 +43,13 @@ function get_content($id) {
 				}
 
 				$ext = end(explode('.',$content_file));
+				
 				if (in_array($ext, $filetypes_video)) {
+				// if a video file
+               /*
 					$content = '<object classid="clsid:02BF25D5-8C17-4B23-BC80-D3488ABDDC6B"
 					id="clip" codebase="http://www.apple.com/qtactivex/qtplugin.cab">
-						<param name="src" va lue="'.$content_path.$content_file.'"/>
+						<param name="src" value="'.$content_path.$content_file.'"/>
 						<param name="autoplay" value="false"/>
 						<param name="controller" value="true"/>
 						<param name="scale" value="tofit"/>
@@ -53,9 +59,53 @@ function get_content($id) {
 						pluginspage="http://www.apple.com/quicktime/download/"
 						style="float:left;" />
 					</object>';
-				} else if (in_array($ext, $filetypes_image)) {
+               */
+               if ( file_exists($content_path . "thumb.jpg") ) {
+                  $thumbjpg = $content_path . "thumb.jpg";
+               }
+               else {
+                  $thumbjpg = "images/default_movie_icon.png";
+               }
+               $content = ' 
+						<a  
+							 href="'.$content_path.$content_file.'"
+							 class = "flash_player_holder" 
+							 style="display:block;width:'.VIDEO_MSG_WIDTH.';height:'.VIDEO_MSG_HEIGHT.'px;margin-left:auto;margin-right:auto;"  
+							 id="'.$content_path.'">
+							 <img src="'.$thumbjpg.'" height="'.VIDEO_MSG_HEIGHT.'" width="'.VIDEO_MSG_WIDTH.'" alt="'.$row[1].'" />
+						</a> 
+						<script>
+							flowplayer("'.$content_path.'", "flash/flowplayer-3.1.5.swf", {
+								clip: {
+										url: \''.$content_path.$content_file.'\',
+										autoPlay: true,
+										autoBuffering: true
+								}, 
+								plugins: {
+									controls: {
+										backgroundColor: \'#000000\',
+										backgroundGradient: \'low\',
+										autoHide: \'always\',
+                              hideDelay: 2000,
+										all: false,
+										scrubber: true,
+										//mute: true,
+										fullscreen: true,
+										height: 14,
+										progressColor: \'#FFFF00\',
+                              progressGradient: \'medium\',
+										bufferColor: \'#333333\'
+									}
+								}
+							});
+						</script>';
+				}
+				else if (in_array($ext, $filetypes_image)) {
+				// if an image file
 					$content = '<img src="'.$content_path.$content_file.'" alt="'.$row[1].'" title="'.$row[1].'" style="vertical-align:middle;" />';
-				} else { //signlink
+				}
+				else { 
+				// its a signlink object
 					$content = '<object width="565" height="425"
 						classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000"
 						codebase="http://fpdownload.macromedia.com/pub/
