@@ -1,6 +1,13 @@
 <?php
 /* functions related to forums only */
 
+define('VIDEO_MSG_HEIGHT', '260');
+define('VIDEO_MSG_WIDTH', '320');
+
+
+/* Experimenting with $msg[4] indicating type of post
+* 1 = text, 2 = image, 3 = video, 4 = signlink
+*/
 function get_message($id) {			
 	global $db, $filetypes_video, $filetypes_image;
 	
@@ -31,6 +38,7 @@ function get_message($id) {
 		if (!empty($row['msg'])) {
 			//the msg is plain text
 			$msg[2] = nl2br($row['msg']);
+         $msg[4] = 1;
 		} else {
 			//the msg is a file
 			
@@ -47,7 +55,10 @@ function get_message($id) {
 
 				$ext = end(explode('.',$msg_file));
 				if (in_array($ext, $filetypes_video)) {
-					$msg[2] = '<object classid="clsid:02BF25D5-8C17-4B23-BC80-D3488ABDDC6B"
+					// message is a VIDEO
+               $msg[4] = 3;
+               /*
+               $msg[2] = '<object classid="clsid:02BF25D5-8C17-4B23-BC80-D3488ABDDC6B"
 					id="clip" codebase="http://www.apple.com/qtactivex/qtplugin.cab" width="320" height="260">
 						<param name="src" value="'.$msg_path.$msg_file.'"/>
 						<param name="autoplay" value="false"/>
@@ -59,8 +70,46 @@ function get_message($id) {
 						pluginspage="http://www.apple.com/quicktime/download/"
 						style="float:left;" />
 					</object>';
+               */
+
+               if ( !file_exists($msg_path . "thumb_play.jpg") ) {
+                  if ($size == 'small') {
+                     $thumbjpg = $msg_path . "thumbsmall.jpg";
+                  }
+                  else {
+                     $thumbjpg = $msg_path . "thumb.jpg";
+                  }
+               }
+               else {
+                  if ($size == 'small') {
+                     $thumbjpg = $msg_path . "thumbsmall_play";
+                  }
+                  else {
+                     $thumbjpg = $msg_path . "thumb_play.jpg";
+                  }
+               }
+
+               $noextfile = substr($msg_file, 0, 7);
+               $msg[2] = '  
+						<a  
+							 href="'.$msg_path.$msg_file.'"
+							 class = "flash_player_holder" 
+							 style="width:'.VIDEO_MSG_WIDTH.';height:'.VIDEO_MSG_HEIGHT.'px;"  
+							 id="'.$msg_path.$noextfile.'">
+							 <img src="'.$thumbjpg.'" height="'.VIDEO_MSG_HEIGHT.'" width="'.VIDEO_MSG_WIDTH.'" alt="'.$msg_file.'" />
+						</a> 
+						<script>
+							flowplayer("'.$msg_path.$noextfile.'", "flash/flowplayer-3.1.5.swf", {
+								clip: conf.yesplay,
+                        plugins: {
+                           controls: conf.big
+                        }
+							});
+						</script>';
+
 				} else if (in_array($ext, $filetypes_image)) {
 					$msg[2] = '<img src="'.$msg_path.$msg_file.'" alt="'.$row[1].'" title="'.$row[1].'" style="vertical-align:middle;" />';
+               $msg[4] = 2;
 				} else { //signlink
 					$msg[2] = '<object width="565" height="455"
 						classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000"
@@ -71,7 +120,8 @@ function get_message($id) {
 						<embed src="'.$msg_path.$msg_file.'" width="565" height="455"
 						type="application/x-shockwave-flash" pluginspage=
 						"http://www.macromedia.com/go/getflashplayer" />
-					</object>';		
+					</object>';
+               $msg[4] = 4;
 				}
 			}
 		}
@@ -82,6 +132,12 @@ function get_message($id) {
 	}
 
 }
+
+function removeUnsafeAttributesAndGivenTags($input, $validTags = '') {
+       $regex = '#\s*<(/?\w+)\s+(?:on\w+\s*=\s*(["\'\s])?.+?
+       \(\1?.+?\1?\);?\1?|style=["\'].+?["\'])\s*>#is';
+       return preg_replace($regex, '<${1}>',strip_tags($input, $validTags));
+} 
 
 function print_reply_link($id) {	
 	global $db, $filetypes_video, $filetypes_image;
@@ -95,9 +151,13 @@ function print_reply_link($id) {
 		}		
 
 		if (!empty($row['msg'])) {
+
 			//the msg is plain text
-			$link = substr($row['msg'],0,30).'...';
-		} else {
+			//$link = substr($row['msg'],0,30).'...';
+			$link = '<textarea class="tinymce">' . $row['msg'] . '</textarea>';
+         
+		} 
+      else {
 			//the msg is a file
 			$level = '';
 			$depth = substr_count(INCLUDE_PATH, '/');
@@ -118,14 +178,18 @@ function print_reply_link($id) {
 				}
 				$ext = end(explode('.',$msg_file));
 				if (in_array($ext, $filetypes_video)) {
-					$link = '<img src="images/film.png" alt="movie content" style="border:0px;" />';
+					//$link = '<img src="images/film.png" alt="movie content" style="border:0px;" />';
+               $ret_vid = get_message($id);
+               $link = $ret_vid[2];
 				} else if ($ext=="swf") {
-					$link = '<img src="images/television.png" alt="signlink content" style="border:0px;" />';
+					//$link = '<img src="images/television.png" alt="signed web page content" style="border:0px;" />';
+               $ret_vid = get_message($id);
+               $link = $ret_vid[2];
 				}
 			}
 		}
-		echo '<td><a href="forum_post_view.php?f='.$row['forum_id'].'&p='.$id.'&parent='.$_GET['p'].'">'.$link.'</a></td>';
 		echo '<td style="text-align:center;">'.$row['login'].'</td>';
+		echo '<td><a href="forum_post_view.php?f='.$row['forum_id'].'&p='.$id.'&parent='.$_GET['p'].'">'.$link.'</a></td>';
 	}
 }
 

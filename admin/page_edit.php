@@ -278,14 +278,14 @@ require(INCLUDE_PATH.'admin_header.inc.php'); ?>
 			<input type="hidden" name="area" value="message" />
 
 			<div class="choice" id="edit-message-form">
-				<p>Choose what kind of content you are posting (signlink object, video, or plain text) then provide the appropriate details.</p>
+				<p>Choose what kind of content you are posting (signed web page, video, or plain text) then provide the appropriate details.</p>
 		
 				<div class="choice">
 					<label><input type="radio" name="message" value="signlink" <?php if($_POST['message'] == "signlink") { echo 'checked="checked"'; }?> />Signlink Object</label>
 					<div class="choice-info" id="message-sl">
 						<dl class="col-list">
-							<dt>Flash File</dt> <dd><input type="file" id="sl1msg-file" name="sl1msg-file" /></dd>
-							<dt>MP4 File<dt> <dd><input type="file" id="sl2msg-file" name="sl2msg-file" /></dd>
+							<dt>Video File (.mp4)<dt> <dd><input type="file" id="sl2msg-file" name="sl2msg-file" /></dd>
+                     <dt>Flash File (.swf)</dt> <dd><input type="file" id="sl1msg-file" name="sl1msg-file" /></dd>
 						</dl>
 					</div><br />
 		

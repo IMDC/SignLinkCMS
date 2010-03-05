@@ -43,18 +43,23 @@ if (isset($_POST['cancel'])) {
 		//error check message 
 		$ext = strtolower(end(explode('.',$_FILES['sl2msg-file']['name'])));
 
-		if (empty($_POST['message']) || ( (empty($_FILES['sl1msg-file']['tmp_name']) && empty($_FILES['sl2msg-file']['tmp_name'])) && empty($_FILES['vmsg-file']['tmp_name']) && empty($_POST['msg-text'])) ) {
+		if ( empty($_POST['message'])
+					|| ( (empty($_FILES['sl1msg-file']['tmp_name']) && empty($_FILES['sl2msg-file']['tmp_name'])) 
+					&& empty($_FILES['vmsg-file']['tmp_name']) && empty($_POST['msg-text'])) ) {
 			$_SESSION['errors'][] = 'Content empty.';
-		} else if ($_POST['message'] == "signlink" && ( empty($_FILES['sl1msg-file']['tmp_name']) || empty($_FILES['sl2msg-file']['tmp_name']) || $ext!="mp4")  )  {
+		}
+		else if ($_POST['message'] == "signlink" && ( empty($_FILES['sl1msg-file']['tmp_name']) || empty($_FILES['sl2msg-file']['tmp_name']) || $ext!="mp4")  )  {
 			$_SESSION['errors'][] = 'You have chosen to post signlink object as content - this requires that you submit two files: a flash file and a .mp4 file.';
+		}
+		else if ($_POST['message'] == "video") {
 			
-		} else if ($_POST['message'] == "video") {
 			$ext = end(explode('.', $_FILES['vmsg-file']['name']));
+			
 			if (!in_array($ext, $filetypes_video)) {
 				$_SESSION['errors'][] = 'You have chosen to post video content - invalid file format.';
-			}
-			
-		} else if ( $_POST['message'] == "text" && empty($_POST['msg-text']) ) {
+			}	
+		}
+		else if ( $_POST['message'] == "text" && empty($_POST['msg-text']) ) {
 			$_SESSION['errors'][] = 'You have chosen to post text content - message cannot be empty.';
 		}		
 	}
@@ -211,8 +216,8 @@ require(INCLUDE_PATH.'admin_header.inc.php'); ?>
 			<label><input type="radio" name="message" value="signlink" <?php if($_POST['message'] == "signlink") { echo 'checked="checked"'; }?> />Signed Web Page</label>
 			<div class="choice-info" id="message-sl">
 				<dl class="col-list">
-					<dt>MP4 File<dt> <dd><input type="file" id="sl2msg-file" name="sl2msg-file" /></dd>
-					<dt>Flash File</dt> <dd><input type="file" id="sl1msg-file" name="sl1msg-file" /></dd>
+            	<dt>Video File (.mp4)<dt> <dd><input type="file" id="sl2msg-file" name="sl2msg-file" /></dd>
+					<dt>Flash File (.swf)</dt> <dd><input type="file" id="sl1msg-file" name="sl1msg-file" /></dd>
 				</dl>
 			</div><br />
 
@@ -229,6 +234,7 @@ require(INCLUDE_PATH.'admin_header.inc.php'); ?>
 				<textarea id="msg-text" id="msg-text" name="msg-text" rows="25" cols="90" style="height:20em;"><?php echo $_POST['msg-text']; ?></textarea>
 			</div>
 		</div>
+
 	</div>
 
 	<!--div class="workbench">

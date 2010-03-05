@@ -43,7 +43,7 @@ $result = mysql_query($sql, $db);
 if ($row = mysql_fetch_assoc($result)) { 
 ?>
 
-<h2><img src="images/cog.png" alt="Preferences" title="Preferences" style="padding:3px;" /></h2>
+<h2><img src="images/wrenchsmall.png" alt="Preferences" title="Preferences" style="padding:3px;" /></h2>
 
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>?processed=1" method="post" name="form" enctype="multipart/form-data" style="clear:both; padding-top:2px;">
 	<input type="hidden" name="MAX_FILE_SIZE" value="<?php echo MAX_UPLOAD_SIZE; ?>" />
@@ -69,7 +69,7 @@ if ($row = mysql_fetch_assoc($result)) {
 		<input type="file" name="avatar" /><br /><br />
 	</div>
 
-	<div class="row" style="text-align:right;">
+	<div class="row" style="float:left;text-align:center;background-color:#CEDFF5;padding: 5px;width:80px;margin-top:40px;">
 		<input type="submit" name="submit" value="Submit" />
 	</div>
 	

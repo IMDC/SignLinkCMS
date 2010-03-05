@@ -2,6 +2,11 @@
 define('INCLUDE_PATH', 'include/');
 require(INCLUDE_PATH.'vitals.inc.php');
 
+/* Restrict to registered users only */
+if (REG_USER_ONLY == 1){
+   user_authenticate();
+}
+
 require(INCLUDE_PATH.'header.inc.php');
 
 $sql = "SELECT * FROM forums WHERE 1 ORDER BY subject ASC";
@@ -40,9 +45,9 @@ if (@mysql_num_rows($result)) {
 				$read = @mysql_num_rows($result2);
 				
 				if ($_SESSION['valid_user'] && $posts>$read) { 
-					echo '<img src="images/email_red.png" alt="new messages" title="new messages" height="16" width="16" /> ';					
+					echo '<img src="images/email_red.png" alt="new messages" title="new messages" height="16" width="16" style="border:none;" /> ';					
 				} else {
-					echo '<img src="images/email.png" alt="no new messages" title="no new messages" height="16" width="16" /> ';
+					echo '<img src="images/email.png" alt="no new messages" title="no new messages" height="16" width="16" style="border:none;" /> ';
 				}
 
 				echo "<span style='font-size: smaller;'> $posts posts in $topics topics</span>";

@@ -72,7 +72,8 @@ function get_title($location, $id, $size='reg') {
 		$row = mysql_fetch_row($result);
 		if (!empty($row[0])) {
 			//the title is plain text
-			$title = $row[0];
+			$text_container = '<div class="text_title">';
+			$title = $text_container . $row[0] . '</div>';
 		} else {
 			//the title is a file
 			
@@ -89,17 +90,22 @@ function get_title($location, $id, $size='reg') {
 				}
 
 				$ext = end(explode('.',$title_file));
+
 				if ($size == 'small') {
 					$height='75';
 					$width = '96';
 					$style="style='height:75px;width:96px;'";
 				} else {
-					$width='145';
 					$height='113';
-					$style= "style='width:145px;'";
+					$width='145';
+					$style= "style='height:145px;width:113px;'";
 				}
-
+				
+				
 				if (in_array($ext, $filetypes_video)) {
+					// file is a video	
+				
+					/*
 					$title = '<object classid="clsid:02BF25D5-8C17-4B23-BC80-D3488ABDDC6B"
 					id="clip" width="'.$width.'" height="'.$height.'" codebase="http://www.apple.com/qtactivex/qtplugin.cab">
 						<param name="src" value="'.$title_path.$title_file.'"/>
@@ -111,7 +117,114 @@ function get_title($location, $id, $size='reg') {
 						alt="Quicktime ASL video"
 						pluginspage="http://www.apple.com/quicktime/download/" />
 					</object>';
-				} else {
+					*/
+					
+					/*   ****** code below loads the full video upon page load
+					$title = '
+						<a  
+							 href="'.$title_path.$title_file.'"
+							 style="display:block;width:'.$width.';height:'.$height.'px"  
+							 id="'.$title_path.'"> 
+						</a> 
+						*/
+						
+						/* the code below uses the flowplayer (www.flowplayer.org) flash player to play the video
+							when you click on the thumbnail .jpg that is initially displayed.
+							loads 'thumb.jpg' in same folder on page load instead of the whole video file
+							previous version of flowplayer line below
+							flowplayer("'.$title_path.'", "flash/flowplayer-3.1.1.swf", {
+						*/
+
+                  if ($size == 'small') {
+                     if (file_exists($title_path . "thumbsmall_play.jpg")) {
+                        $thumbjpg = $title_path . "thumbsmall_play.jpg";
+                     }
+                     else if ( file_exists($title_path . "thumb_small_play.jpg") ) {
+                        $thumbjpg = $title_path . "thumb_small_play.jpg"; 
+                     }
+                     else if ( file_exists($title_path . "thumbsmall.jpg") ) {
+                        $thumbjpg = $title_path . "thumbsmall.jpg"; 
+                     }
+                     else if ( file_exists($title_path . "thumb.jpg") ) {
+                        $thumbjpg = $title_path . "thumb.jpg";
+                     }
+                     else {
+                        $thumbjpg = "images/default_movie_icon_small.png";
+                     }
+                  }
+                  else {
+                     if (file_exists($title_path . "thumb_play.jpg")) {
+                        $thumbjpg = $title_path . "thumb_play.jpg";
+                     }
+                     else if ( file_exists($title_path . "thumb.jpg") ) {
+                        $thumbjpg = $title_path . "thumb.jpg";
+                     }
+                     else {
+                        $thumbjpg = "images/default_movie_icon.png";
+                     }
+
+                  }
+
+                  /*
+						if ( !file_exists($title_path . "thumb_play.jpg") ) {
+							if ($size == 'small') {
+                        $thumbjpg = $title_path . "thumbsmall.jpg";
+                     }
+                     else {
+                        $thumbjpg = $title_path . "thumb.jpg";
+                     }
+						}
+						else {
+                     if ($size == 'small') {
+                        $thumbjpg = $title_path . "thumbsmall_play.jpg";
+                     }
+                     else {
+							   $thumbjpg = $title_path . "thumb_play.jpg";
+                     }
+						}
+                  */
+						
+				   
+        // this is from about 9 lines below, the img src code    
+        // <img src="'.$thumbjpg.'" alt="'.$title_path.'" />
+
+
+					$title = '
+						<a  
+							 href="'.$title_path.$title_file.'"
+							 class = "flash_player_holder" 
+							 style="display:block;width:'.$width.';height:'.$height.'px;margin-left:auto;margin-right:auto;"  
+							 id="'.$title_path.'">
+							 <img src="'.$thumbjpg.'" height="'.$height.'" width="'.$width.'" alt="'.$row[1].'" />
+						</a> 
+						<script>
+							flowplayer("'.$title_path.'", "flash/flowplayer-3.1.5.swf", {
+								clip: {
+										url: \''.$title_path.$title_file.'\',
+										autoPlay: true,
+										autoBuffering: true
+								}, 
+								plugins: {
+									controls: {
+										backgroundColor: \'#000000\',
+										backgroundGradient: \'low\',
+										autoHide: \'always\',
+                              hideDelay: 2000,
+										all: false,
+										scrubber: true,
+										//mute: true,
+										fullscreen: true,
+										height: 14,
+										progressColor: \'#FFFF00\',
+                              progressGradient: \'medium\',
+										bufferColor: \'#333333\'
+									}
+								}
+							});
+						</script>';
+				}
+				// else file is an image
+				else {
 					$title = '<img src="'.$title_path.$title_file.'" alt="'.$row[0].'" title="'.$row[0].'" '.$style.' />';
 				}
 			}
@@ -286,10 +399,45 @@ function save_video($location, $type, $file, $id) {
 			break;					
 	}
 
-	if (!@move_uploaded_file($_FILES[$file]['tmp_name'], $newfile)) {
-	  print "Error Uploading File - check directory permissions.";
-	  exit;
-	} 
+
+   /* disabling this to see if mp4 files will work now */
+   if (!@move_uploaded_file($_FILES[$file]['tmp_name'], $newfile)) {
+      print "Error Uploading File - check directory permissions.";
+      exit;
+   }
+
+   if ( strcmp($ext,  'mp4') != 0 ) { // file is NOT an mp4 file
+      //print $newfile . " is not a mp4 file, attempting to convert<br />";
+      // convert to mp4 using ffmpeg
+	   $extension = end( explode('.', $newfile) );
+      $newfileNoExtension = substr( $newfile, 0, (strlen($newfile) - strlen($extension)) );
+      $newfileMP4Extension = $newfileNoExtension . 'mp4';
+      //echo $newfileMP4Extension . "<br /><br />";
+
+	   // shell_exec("ffmpeg -i " . $videoPath . " -ss 1 -f image2 -vframes 1 -s 144x112 " . $videoDirectoryPath . "/thumb.jpg 2>&1");
+      $convertOutput = shell_exec("include/ffmpeg/ffmpeg -i " . $newfile . " -acodec libfaac -ab 64k -ar 22050 -async 22050 -r 15 -aspect 4:3 -s 320x240 -vcodec libx264 -b 400k -flags +loop -cmp +chroma -partitions +parti4x4+partp8x8+partb8x8 -subq 1 -trellis 0 -refs 1 -bf 16 -b_strategy 1 -coder 1 -me_range 16 -g 3 -keyint_min 25 -sc_threshold 40 -i_qfactor 0.71 -bt 175k -qcomp 0.6 -qmin 10 -qmax 51 -qdiff 4 -y " . $newfileMP4Extension . " 2>&1");
+      
+      //process output of ffmpeg using $convertOutput
+      
+      //echo "<pre>$convertOutput</pre><br /><br />";
+      
+      make_video_thumbnail($newfile, dirname($newfile));
+      overlay_play_btn(dirname($newfile));
+
+      /* assuming everything went okay, we can delete the .avi file that we don't need now */
+      if(file_exists($newfile)) {
+        unlink($newfile);
+      }
+   }
+   else { // file IS a mp4 file, no conversion necessary
+      
+      // creates the 'thumb.jpg' thumbnail from the first second of the video uploaded
+      make_video_thumbnail($newfile, dirname($newfile));
+      
+      // adds the transparent png play button to the thumbnail
+      overlay_play_btn(dirname($newfile));
+	}
+
 
 }
 
@@ -563,6 +711,74 @@ function print_members_dropdown() {
 	} else {
 		echo "No members.";
 	}
+}
+
+// draws a white play button over top of a video thumbnail
+function overlay_play_btn($fullDestImagePath) {
+
+	//make sure destination image full path includes the slash at the end
+	$pathLength = strlen($fullDestImagePath);
+	if ($pathLength == 0) {
+		print 'Error with filename length creating play button overlay';
+	}
+	
+	if ( substr($fullDestImagePath, -1) !== '/' ) {
+		// add the slash because it's missing
+		$fullDestImagePath = $fullDestImagePath . '/';
+		//print 'added slash to dir name';
+		//echo '<br />' . $fullDestImagePath;
+	}
+	
+	$playImagePath = 'images/';
+	
+	// use the thumbnail created during upload
+	$image = imagecreatefromjpeg($fullDestImagePath . 'thumb.jpg');
+	$imagesmall = imagecreatefromjpeg($fullDestImagePath . 'thumbsmall.jpg');
+	
+	if ( !$image ) {
+		print 'Error finding bigger thumbnail';
+	}
+	if ( !$imagesmall ) {
+		print 'Error finding smaller thumbnail';
+	}
+	
+	
+	// for the play button overlay, use 'play_btn.png' in the images/ folder 
+	$watermark = imagecreatefrompng($playImagePath . 'play_btn.png');
+	
+	if ( !$watermark ) {
+		print 'Error finding play button overlay image';
+	}
+	
+	imagealphablending($image, true);
+	imagealphablending($imagesmall, true);
+	imagealphablending($watermark, true); 
+	
+	// render play button .png file on top of thumb.jpg file
+	imagecopy($image, $watermark, imagesx($image)/2-22, imagesy($image)/2-22, 0, 0, imagesx($watermark), imagesy($watermark));
+	imagecopy($imagesmall, $watermark, imagesx($imagesmall)/2-22, imagesy($imagesmall)/2-22, 0, 0, imagesx($watermark), imagesy($watermark)); 
+
+	
+	// create new thumbnail with play button overlayed on top in the same folder
+	if ( !imagejpeg($image, $fullDestImagePath . 'thumb_play.jpg') ) {
+		print "\n**ERROR** - Error creating new thumbnail jpeg file, possibly check directory permissions";
+	}
+	if ( !imagejpeg($imagesmall, $fullDestImagePath . 'thumb_small_play.jpg') ) {
+		print "\n**ERROR** - Error creating new thumbnail jpeg file, possibly check directory permissions";
+	}
+	
+	imagedestroy($image);
+	imagedestroy($imagesmall);
+	imagedestroy($watermark);
+}
+
+// creates smaller jpg thumbnails from video files, used as image placeholders before videos load into flowplayer
+function make_video_thumbnail($videoPath, $videoDirectoryPath) {
+   // create a regular sized thumbnail
+	shell_exec("include/ffmpeg/ffmpeg -i " . $videoPath . " -ss 1 -f image2 -vframes 1 -s 144x112 " . $videoDirectoryPath . "/thumb.jpg 2>&1");
+   // create a small sized thumbnail
+	shell_exec("include/ffmpeg/ffmpeg -i " . $videoPath . " -ss 1 -f image2 -vframes 1 -s 74x96  " . $videoDirectoryPath . "/thumbsmall.jpg 2>&1");
+
 }
 
 ?>

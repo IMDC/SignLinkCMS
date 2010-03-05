@@ -2,6 +2,11 @@
 define('INCLUDE_PATH', 'include/');
 require(INCLUDE_PATH.'vitals.inc.php');
 
+/* Restrict to registered users only */
+if (REG_USER_ONLY == 1){
+   user_authenticate();
+}
+
 require(INCLUDE_PATH.'header.inc.php');
 
 $sql = "SELECT * FROM vlogs WHERE 1 ORDER BY last_entry ASC";
@@ -24,7 +29,7 @@ if (@mysql_num_rows($result)) {
 			</div>
 			
 			<div style="float:left;">
-				<span style='font-size: smaller;'><img src="images/user.png" /> <?php echo get_login($row['member_id']); ?></span>				
+				<span style='font-size: smaller;'><img src="images/user.png" style="border:none;" /> <?php echo get_login($row['member_id']); ?></span>				
 			</div>
 			<span style='float:right; font-size: smaller;'> 
 				<?php echo $row['num_entries']; 
