@@ -61,10 +61,10 @@ if (isset($_POST['cancel'])) {
 		//insert into db
 		$sql = "INSERT INTO forums VALUES (NULL, '$subject', '$subject_alt', 0,0, 0)";
 
-		if (!$result = mysql_query($sql, $db)) {
+		if (!$result = mysqli_query($db, $sql)) {
 			$_SESSION['errors'][] = 'Database error.';
 		} else {
-			$fid = mysql_insert_id();
+			$fid = mysqli_insert_id($db);
 
 			//save files			
 			switch ($_POST['subject']) {

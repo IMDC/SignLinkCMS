@@ -14,16 +14,16 @@ require(INCLUDE_PATH.'admin_header.inc.php'); ?>
 <?php
 //get pages
 $sql = "SELECT * FROM forums WHERE 1";
-$result = mysql_query($sql, $db);
+$result = mysqli_query($db, $sql);
 $r = 1;
-if (mysql_num_rows($result)) { ?>
+if (mysqli_num_rows($result)) { ?>
 	<table class="manage">
 	<tr>
 		<th>Name</th>
 		<th>#Forums</th>>
 	</tr>
 	<?php
-	while ($row = mysql_fetch_assoc($result)) {
+	while ($row = mysqli_fetch_assoc($result)) {
 
 	
 		if (!empty($row['title_file'])) {

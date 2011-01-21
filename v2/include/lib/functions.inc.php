@@ -67,14 +67,16 @@ function get_title($location, $id, $size='reg') {
 			$title_path = $level.'uploads/entries/'.$id.'/';		
 			break;			
 	}
-	$result = mysql_query($sql, $db);
-	if ($result) {
-		$row = mysql_fetch_row($result);
+	$result = mysqli_query($db, $sql);
+	
+  if ($result) {	
+    $row = mysqli_fetch_row($result);
 		if (!empty($row[0])) {
 			//the title is plain text
 			$text_container = '<div class="text_title">';
 			$title = $text_container . $row[0] . '</div>';
-		} else {
+		}  
+    else {
 			//the title is a file
 			
 			//get files
@@ -98,7 +100,7 @@ function get_title($location, $id, $size='reg') {
 				} else {
 					$height='113';
 					$width='145';
-					$style= "style='height:145px;width:113px;'";
+					$style= "style='height:113px;width:145px;'";
 				}
 				
 				
@@ -132,40 +134,40 @@ function get_title($location, $id, $size='reg') {
 							when you click on the thumbnail .jpg that is initially displayed.
 							loads 'thumb.jpg' in same folder on page load instead of the whole video file
 							previous version of flowplayer line below
-							flowplayer("'.$title_path.'", "flash/flowplayer-3.1.1.swf", {
+							//flowplayer("'.$title_path.'", "flash/flowplayer-3.1.1.swf", {
 						*/
+            // check size of video file to use the appropriate thumbnail
+            if ($size == 'small') {
+               if (file_exists($title_path . "thumbsmall_play.jpg")) {
+                  $thumbjpg = $title_path . "thumbsmall_play.jpg";
+               }
+               else if ( file_exists($title_path . "thumb_small_play.jpg") ) {
+                  $thumbjpg = $title_path . "thumb_small_play.jpg"; 
+               }
+               else if ( file_exists($title_path . "thumbsmall.jpg") ) {
+                  $thumbjpg = $title_path . "thumbsmall.jpg"; 
+               }
+               else if ( file_exists($title_path . "thumb.jpg") ) {
+                  $thumbjpg = $title_path . "thumb.jpg";
+               }
+               else {
+                  $thumbjpg = "images/default_movie_icon_small.png";
+               }
+            }
+            else {
+               if (file_exists($title_path . "thumb_play.jpg")) {
+                  $thumbjpg = $title_path . "thumb_play.jpg";
+               }
+               else if ( file_exists($title_path . "thumb.jpg") ) {
+                  $thumbjpg = $title_path . "thumb.jpg";
+               }
+               else {
+                  $thumbjpg = "images/default_movie_icon.png";
+               }
 
-                  if ($size == 'small') {
-                     if (file_exists($title_path . "thumbsmall_play.jpg")) {
-                        $thumbjpg = $title_path . "thumbsmall_play.jpg";
-                     }
-                     else if ( file_exists($title_path . "thumb_small_play.jpg") ) {
-                        $thumbjpg = $title_path . "thumb_small_play.jpg"; 
-                     }
-                     else if ( file_exists($title_path . "thumbsmall.jpg") ) {
-                        $thumbjpg = $title_path . "thumbsmall.jpg"; 
-                     }
-                     else if ( file_exists($title_path . "thumb.jpg") ) {
-                        $thumbjpg = $title_path . "thumb.jpg";
-                     }
-                     else {
-                        $thumbjpg = "images/default_movie_icon_small.png";
-                     }
-                  }
-                  else {
-                     if (file_exists($title_path . "thumb_play.jpg")) {
-                        $thumbjpg = $title_path . "thumb_play.jpg";
-                     }
-                     else if ( file_exists($title_path . "thumb.jpg") ) {
-                        $thumbjpg = $title_path . "thumb.jpg";
-                     }
-                     else {
-                        $thumbjpg = "images/default_movie_icon.png";
-                     }
+            }
 
-                  }
-
-                  /*
+            /*
 						if ( !file_exists($title_path . "thumb_play.jpg") ) {
 							if ($size == 'small') {
                         $thumbjpg = $title_path . "thumbsmall.jpg";
@@ -182,54 +184,61 @@ function get_title($location, $id, $size='reg') {
 							   $thumbjpg = $title_path . "thumb_play.jpg";
                      }
 						}
-                  */
+            */
 						
 				   
         // this is from about 9 lines below, the img src code    
         // <img src="'.$thumbjpg.'" alt="'.$title_path.'" />
 
-
-					$title = '
+          /*
+          * If useragent of browser is detected as a mobile device, serve up a simple link instead of flash
+          * testing on Android phone plays the video just fine using video's native player
+          * NOTE: video encoded with handbrake on iPod settings, m4v file produced
+          */
+          /*
+          if (detectMobile()) {
+            $title = '<video src="' . $title_path . $title_file . '" poster="'.$thumbjpg.'" height="'.$height.'px" width="'.$width.'px" onclick="this.play();" />';
+          }
+          else {
+          */
+            $title = '
 						<a  
 							 href="'.$title_path.$title_file.'"
 							 class = "flash_player_holder" 
-							 style="display:block;width:'.$width.';height:'.$height.'px;margin-left:auto;margin-right:auto;"  
-							 id="'.$title_path.'">
-							 <img src="'.$thumbjpg.'" height="'.$height.'" width="'.$width.'" alt="'.$row[1].'" />
+							 style="display:block;width:'.$width.'px;height:'.$height.'px;margin-left:auto;margin-right:auto;"  
+							 id="'.$title_path.'title">
+							 <img src="'.$thumbjpg.'" height="'.$height.'px" width="'.$width.'px" alt="'.$row[1].'" />
 						</a> 
-						<script>
-							flowplayer("'.$title_path.'", "flash/flowplayer-3.1.5.swf", {
+						<script type="text/javascript">
+							flowplayer("'.$title_path.'title", "flash/flowplayer-3.2.3.swf", {
 								clip: {
 										url: \''.$title_path.$title_file.'\',
 										autoPlay: true,
 										autoBuffering: true
 								}, 
-								plugins: {
-									controls: {
-										backgroundColor: \'#000000\',
-										backgroundGradient: \'low\',
-										autoHide: \'always\',
-                              hideDelay: 2000,
-										all: false,
-										scrubber: true,
-										//mute: true,
-										fullscreen: true,
-										height: 14,
-										progressColor: \'#FFFF00\',
-                              progressGradient: \'medium\',
-										bufferColor: \'#333333\'
-									}
+								plugins: {';
+                  if ($size == 'small'){
+                      $title = $title . "controls: conf.small";
+                  } else {
+                      // originally designed for a diff size title option, not used right now 
+                      $title = $title . "controls: conf.small";
+                  }
+                  $title = $title . '
 								}
 							});
 						</script>';
+          //}
 				}
 				// else file is an image
 				else {
-					$title = '<img src="'.$title_path.$title_file.'" alt="'.$row[0].'" title="'.$row[0].'" '.$style.' />';
+          /* An extra div with class "imgzoom_container" is added to each post with an image title to enable lightbox style img zooming */
+					$title = '<div class="imgzoom_container"><img class="expand" src="'.$title_path.$title_file.'" alt="'.$row[0].'" title="'.$row[0].'" '.$style.' /><a class="quickViewLink" href="'.$title_path.$title_file.'"><img class="quickView" src="images/search_button_green_32.png" /></a></div>';
+					//$title = '<a href="'.$title_path.$title_file.'" class="thickbox"><img src="'.$title_path.$title_file.'" alt="'.$row[0].'" title="'.$row[0].'" '.$style.' /></a>';
 				}
 			}
 		}
 	}
+  @mysqli_free_result($result);
 	return $title;
 }
 
@@ -406,16 +415,21 @@ function save_video($location, $type, $file, $id) {
       exit;
    }
 
+    /**  todo: **/
+    /**   CHANGE THIS TO DETECT THE CODEC USING FFMPEG AS FILE EXTENSION CHECK IS UNSAFE!!! **/
+    /**   ************************************************************************************/
+    /**  this would be a call to shell_exec("ffmpeg -i INPUTFILE") and parsing the output to find the video codec **/
    if ( strcmp($ext,  'mp4') != 0 ) { // file is NOT an mp4 file
       //print $newfile . " is not a mp4 file, attempting to convert<br />";
       // convert to mp4 using ffmpeg
-	   $extension = end( explode('.', $newfile) );
+      $extension = end( explode('.', $newfile) );
       $newfileNoExtension = substr( $newfile, 0, (strlen($newfile) - strlen($extension)) );
       $newfileMP4Extension = $newfileNoExtension . 'mp4';
       //echo $newfileMP4Extension . "<br /><br />";
 
 	   // shell_exec("ffmpeg -i " . $videoPath . " -ss 1 -f image2 -vframes 1 -s 144x112 " . $videoDirectoryPath . "/thumb.jpg 2>&1");
-      $convertOutput = shell_exec("include/ffmpeg/ffmpeg -i " . $newfile . " -acodec libfaac -ab 64k -ar 22050 -async 22050 -r 15 -aspect 4:3 -s 320x240 -vcodec libx264 -b 400k -flags +loop -cmp +chroma -partitions +parti4x4+partp8x8+partb8x8 -subq 1 -trellis 0 -refs 1 -bf 16 -b_strategy 1 -coder 1 -me_range 16 -g 3 -keyint_min 25 -sc_threshold 40 -i_qfactor 0.71 -bt 175k -qcomp 0.6 -qmin 10 -qmax 51 -qdiff 4 -y " . $newfileMP4Extension . " 2>&1");
+     /** todo: consider using escapeshellarg($dirname) for the paths of files?  **/
+      $convertOutput = shell_exec("../include/ffmpeg/ffmpeg -i " . $newfile . " -acodec libfaac -ab 64k -ar 22050 -async 22050 -r 15 -aspect 4:3 -s 320x240 -vcodec libx264 -b 400k -flags +loop -cmp +chroma -partitions +parti4x4+partp8x8+partb8x8 -subq 1 -trellis 0 -refs 1 -bf 16 -b_strategy 1 -coder 1 -me_range 16 -g 3 -keyint_min 25 -sc_threshold 40 -i_qfactor 0.71 -bt 175k -qcomp 0.6 -qmin 10 -qmax 51 -qdiff 4 -y " . $newfileMP4Extension . " 2>&1");
       
       //process output of ffmpeg using $convertOutput
       
@@ -625,6 +639,7 @@ function delete_avatar($id) {
 	}*/	
 }
 
+// using member id, locates avatar file inside uploads/members/ directory and returns path
 function get_avatar($id) {
 	global $db;
 	
@@ -655,6 +670,24 @@ function get_avatar($id) {
 
 	return;
 }
+
+
+/*
+*  Performs an update operation on the 'last_login_ts' field in the members table
+*  Used to update the last time the member successfully logged in to the CMS
+*  Returns true or false
+*  Input - the member id
+*/
+function update_member_last_login($id) {
+    $id = intval($id);
+    
+    // TODO: Should this be implemented as a new DB connections with elevated privileges?
+
+		$sql = "UPDATE membersCopy set last_login_ts = NOW() WHERE member_id = $id";
+    $result = mysqli_query($db, $sql);
+    return $result; 
+}
+
 
 /*
 * location: directory in /uploads - forums, members, pages, or posts
@@ -690,8 +723,8 @@ function get_login($id) {
 	global $db;
 	
 	$sql = "SELECT login FROM members WHERE member_id=".$id;
-	$result = mysql_query($sql, $db);
-	$row = @mysql_fetch_assoc($result);
+	$result = mysqli_query($db, $sql);
+	$row = @mysqli_fetch_assoc($result);
 			
 	return $row['login'];
 }
@@ -700,11 +733,11 @@ function print_members_dropdown() {
 	global $db;
 	
 	$sql = "SELECT member_id, login, name FROM members WHERE login!='admin'";
-	$result = mysql_query($sql, $db);
-	if (@mysql_num_rows($result) != 0) {
+	$result = mysqli_query($db, $sql);
+	if (@mysqli_num_rows($result) != 0) {
 		echo '<select name="member">';
 		echo '<option value="0">---Choose a member---</option>';
-		while($row = mysql_fetch_assoc($result)) {
+		while($row = mysqli_fetch_assoc($result)) {
 			echo '<option value='.$row['member_id'].'>'.$row['name'].' ('.$row['login'].')</option>';
 		}
 		echo '</select>';
@@ -725,11 +758,9 @@ function overlay_play_btn($fullDestImagePath) {
 	if ( substr($fullDestImagePath, -1) !== '/' ) {
 		// add the slash because it's missing
 		$fullDestImagePath = $fullDestImagePath . '/';
-		//print 'added slash to dir name';
-		//echo '<br />' . $fullDestImagePath;
 	}
 	
-	$playImagePath = 'images/';
+	$playImagePath = '../images/';
 	
 	// use the thumbnail created during upload
 	$image = imagecreatefromjpeg($fullDestImagePath . 'thumb.jpg');
@@ -747,7 +778,7 @@ function overlay_play_btn($fullDestImagePath) {
 	$watermark = imagecreatefrompng($playImagePath . 'play_btn.png');
 	
 	if ( !$watermark ) {
-		print 'Error finding play button overlay image';
+		print '<span style="color:#ff0000;size:1.4em;">Error finding play button overlay image</span>';
 	}
 	
 	imagealphablending($image, true);
@@ -775,10 +806,35 @@ function overlay_play_btn($fullDestImagePath) {
 // creates smaller jpg thumbnails from video files, used as image placeholders before videos load into flowplayer
 function make_video_thumbnail($videoPath, $videoDirectoryPath) {
    // create a regular sized thumbnail
-	shell_exec("include/ffmpeg/ffmpeg -i " . $videoPath . " -ss 1 -f image2 -vframes 1 -s 144x112 " . $videoDirectoryPath . "/thumb.jpg 2>&1");
+	shell_exec("../include/ffmpeg/ffmpeg -i " . $videoPath . " -ss 1 -f image2 -vframes 1 -s 144x112 " . $videoDirectoryPath . "/thumb.jpg 2>&1");
    // create a small sized thumbnail
-	shell_exec("include/ffmpeg/ffmpeg -i " . $videoPath . " -ss 1 -f image2 -vframes 1 -s 74x96  " . $videoDirectoryPath . "/thumbsmall.jpg 2>&1");
+	shell_exec("../include/ffmpeg/ffmpeg -i " . $videoPath . " -ss 1 -f image2 -vframes 1 -s 74x96  " . $videoDirectoryPath . "/thumbsmall.jpg 2>&1");
 
+}
+
+
+function generateHash($plainText, $salt = null) {
+  if ($salt === null) {
+    $salt = substr(md5(uniqid(mt_rand(), true)), 0, SALT_LENGTH);
+  }
+  else {
+    $salt = substr($salt, 0, SALT_LENGTH);
+  }
+
+  return $salt . sha1($salt . $plainText);
+
+}
+
+function detectMobile() {
+
+  $useragent=$_SERVER['HTTP_USER_AGENT'];
+  
+  if(preg_match('/android|avantgo|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|symbian|treo|up\.(browser|link)|vodafone|wap|windows (ce|phone)|xda|xiino/i',$useragent)||preg_match('/1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|e\-|e\/|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(di|rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|xda(\-|2|g)|yas\-|your|zeto|zte\-/i',substr($useragent,0,4))) {
+    return true;
+  }
+  else {
+    return false;
+  }
 }
 
 ?>

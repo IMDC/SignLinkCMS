@@ -7,16 +7,19 @@ require('include/header.inc.php');
 
 $vlog_id = intval($_REQUEST['v']);
 ?>
+<div id="inner_nav_wrap">
+  <!--<ul id="submenu" style="margin-top:41px;">-->	
+  <ul id="submenu">	
+    <li><a href="vlogs.php?v=<?php echo intval($_GET['v']); ?>"><img src="images/arrow_left_32.png" alt="Back to vlogs" title="Back to vlogs" /></a></li>	
 
+    <?php if(get_vlog_owner($vlog_id) == $_SESSION['member_id']) { ?>
+    <li><a href="vlog_entry_create.php?v=<?php echo intval($_GET['v']); ?>"><img src="images/user_comment.png" alt="New entry" title="New entry" /></a></li>			
+    <?php } ?>
+  </ul><br />	
+</div>
+<div style="clear:both" /></div>
 <div id="post-title">
 	<h3><?php echo get_title('vlog', intval($_GET['v']), 'small'); ?></h3>
-	<ul id="submenu" style="margin-top:41px;">	
-		<li><a href="vlogs.php?v=<?php echo intval($_GET['v']); ?>"><img src="images/arrow_left.png" alt="Back to vlogs" title="Back to vlogs" /></a></li>	
-
-		<?php if(get_vlog_owner($vlog_id) == $_SESSION['member_id']) { ?>
-		<li><a href="vlog_entry_create.php?v=<?php echo intval($_GET['v']); ?>"><img src="images/user_comment.png" alt="New entry" title="New entry" /></a></li>			
-		<?php } ?>
-	</ul>	
 	<div style="clear:both" /></div>
 </div>
 <?php
@@ -25,8 +28,8 @@ $vlog_id = intval($_REQUEST['v']);
 $perpage = 8;
 
 $sql = "SELECT count(entry_id) as numrows FROM vlogs_entries WHERE vlog_id=".$vlog_id;
-$result = mysql_query($sql, $db);
-$total = mysql_fetch_assoc($result);
+$result = mysqli_query($db, $sql);
+$total = mysqli_fetch_assoc($result);
 $total = $total['numrows'];
 
 $numpages = ceil($total/$perpage);
@@ -64,21 +67,21 @@ if ($total>$perpage) {
 }
 
 $sql = "SELECT * FROM vlogs_entries WHERE vlog_id=".$vlog_id." ORDER BY date DESC LIMIT $offset, $perpage";
-$result = mysql_query($sql, $db);
-if (@mysql_num_rows($result)) { 
+$result = mysqli_query($db, $sql);
+if (@mysqli_num_rows($result)) { 
 	echo '<div>';
 	
-	while ($row = mysql_fetch_assoc($result)) {
+	while ($row = mysqli_fetch_assoc($result)) {
 		$title = get_title('entry', $row['entry_id']); 
 ?>
 		<div class="cat">
-			<div class="title">
+			<div class="title" onclick="location.href='vlog_entry_view.php?v=<?php echo $row['vlog_id']; ?>&e=<?php echo $row['entry_id']; ?>'" style="cursor:pointer">
 				<div style="height:150px">
 					<?php echo $title; ?>
 				</div>							
 
 				<a href="vlog_entry_view.php?v=<?php echo $row['vlog_id']; ?>&e=<?php echo $row['entry_id']; ?>" class="goto">
-					<img src="images/hand.png" style="border:0px;padding:0px;" />
+					<img src="images/hand.png" style="border:0px;padding:0px;" alt="click to view" />
 				</a>
 			</div>
 

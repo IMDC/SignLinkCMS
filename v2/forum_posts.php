@@ -10,7 +10,7 @@ $forum_id = intval($_REQUEST['f']);
 <div id="post-title">
 	<h3><?php echo get_title('forum', intval($_GET['f']), 'small'); ?></h3>
 	<ul id="submenu" style="margin-top:41px;">	
-		<li><a href="forums.php?f=<?php echo intval($_GET['f']); ?>"><img src="images/arrow_left.png" alt="Back to forums" title="Back to forums" /></a></li>	
+		<li><a href="forums.php?f=<?php echo intval($_GET['f']); ?>"><img src="images/arrow_left_32.png" alt="Back to forums" title="Back to forums" /></a></li>	
 		<li><a href="forum_post_create.php?f=<?php echo intval($_GET['f']); ?>"><img src="images/user_comment.png" alt="New post" title="New post" /></a></li>			
 	</ul>	
 	<div style="clear:both" /></div>
@@ -21,8 +21,8 @@ $forum_id = intval($_REQUEST['f']);
 $perpage = 8;
 
 $sql = "SELECT count(post_id) as numrows FROM forums_posts WHERE forum_id=".$forum_id." AND parent_id=0";
-$result = mysql_query($sql, $db);
-$total = mysql_fetch_assoc($result);
+$result = mysqli_query($db, $sql);
+$total = mysqli_fetch_assoc($result);
 $total = $total['numrows'];
 
 $numpages = ceil($total/$perpage);
@@ -60,16 +60,16 @@ if ($total>$perpage) {
 }
 
 $sql = "SELECT * FROM forums_posts WHERE forum_id=".$forum_id." AND parent_id=0 ORDER BY last_comment DESC LIMIT $offset, $perpage";
-$result = mysql_query($sql, $db);
-if (mysql_num_rows($result)) { 
+$result = mysqli_query($db, $sql);
+if (mysqli_num_rows($result)) { 
 	echo '<div id="block-container">';
 	
-	while ($row = mysql_fetch_assoc($result)) {
+	while ($row = mysqli_fetch_assoc($result)) {
 		$title = get_title('post', $row['post_id']); 
 
 		$sql2 = "SELECT views FROM forums_views WHERE post_id=".$row['post_id'];
-		$result2 = mysql_query($sql2, $db);
-		$views = mysql_fetch_assoc($result2);
+		$result2 = mysqli_query($db, $sql2);
+		$views = mysqli_fetch_assoc($result2);
 		$views = intval($views['views']);
 ?>
 		<div class="cat">
@@ -83,13 +83,13 @@ if (mysql_num_rows($result)) {
 				</div>
 			</div -->
 
-			<div class="title">
+			<div class="title" onclick="location.href='forum_post_view.php?f=<?php echo $row['forum_id']; ?>&p=<?php echo $row['post_id']; ?>'" style="cursor:pointer">
 				<div style="height:150px">
 					<?php echo $title; ?>
 				</div>							
 
 				<a href="forum_post_view.php?f=<?php echo $row['forum_id']; ?>&p=<?php echo $row['post_id']; ?>" class="goto">
-					<img src="images/hand.png" style="border:0px;padding:0px;" />
+					<img src="images/hand.png" style="border:0px;padding:0px;" alt="click to view" />
 				</a>
 			</div>
 
@@ -99,8 +99,8 @@ if (mysql_num_rows($result)) {
 						<?php //check for new messages - #comments vs number of read child posts in forum_read. if equal, no unread
 						
 						$sql = "SELECT * FROM forums_read WHERE (post_id=".$row['post_id']." OR parent_id=".$row['post_id'].") AND member_id=".intval($_SESSION['member_id']);
-						$result2 = mysql_query($sql, $db);
-						$read = @mysql_num_rows($result2);
+						$result2 = mysqli_query($db, $sql);
+						$read = @mysqli_num_rows($result2);
 												
 						if ($_SESSION['valid_user'] && $row['num_comments']+1>$read) { 
 							echo '<img src="images/email_red.png" alt="new messages" title="new messages" height="16" width="16" /> ';					

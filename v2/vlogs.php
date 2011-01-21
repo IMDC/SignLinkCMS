@@ -10,21 +10,21 @@ if (REG_USER_ONLY == 1){
 require(INCLUDE_PATH.'header.inc.php');
 
 $sql = "SELECT * FROM vlogs WHERE 1 ORDER BY last_entry ASC";
-$result = mysql_query($sql, $db);
-if (@mysql_num_rows($result)) { 
+$result = mysqli_query($db, $sql);
+if (@mysqli_num_rows($result)) { 
 	echo '<div id="block-container">';
-	while ($row = mysql_fetch_assoc($result)) {
+	while ($row = mysqli_fetch_assoc($result)) {
 		$title = get_title('vlog', $row['vlog_id']);
 		?>
 
 		<div class="cat">
-			<div class="title">
+			<div class="title" onclick="location.href='vlog_entries.php?v=<?php echo $row['vlog_id']; ?>'" style="cursor:pointer">
 				<div style="height:150px;">
 					<?php echo $title; ?>
 				</div>
 							
 				<a href="vlog_entries.php?v=<?php echo $row['vlog_id']; ?>" class="goto">
-					<img src="images/hand.png" style="border:0px;padding:0px;" />
+					<img src="images/hand.png" style="width:20px;margin-top:2px;border:0px;padding:0px;" alt="click to view" />
 				</a>
 			</div>
 			

@@ -111,9 +111,10 @@ if (isset($_POST['cancel'])) {
 			$sql = "UPDATE forums_posts SET msg='$message', msg_alt='$message_alt' WHERE forum_id=$forum_id AND post_id=$post_id";
 		}
 
-		if (!$result = mysql_query($sql, $db)) {
+		if (!$result = mysqli_query($db, $sql)) {
 			$_SESSION['errors'][] = 'Database error.';
-		} else {					
+		} 
+    else {					
 			//delete old files, save new
 			if ($area=="subject") { 				
 				delete_files('posts', $post_id, 'title');

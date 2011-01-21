@@ -9,27 +9,27 @@ $post_id = intval($_GET['p']);
 if ($post_id) {
 	//check if it has children
 	$sql = "SELECT post_id FROM forums_posts WHERE parent_id=".$post_id." AND forum_id=".$forum_id;
-	$result = mysql_query($sql, $db);
-	$row = mysql_fetch_assoc($result);
+	$result = mysqli_query($db, $sql);
+	$row = mysqli_fetch_assoc($result);
 	if (!empty($row)) {
 		$_SESSION['errors'][] = 'Cannot delete post as it has replies. You must delete the replies (child posts) first.';	
 	} else {	
 		//if it's a child, edit num_comments for parent.
 		if ($row['parent_id']) {
 			$sql = "UPDATE forums_posts SET num_comments=num_comments-1 WHERE post_id=".$post_id." AND forum_id=".$forum_id;
-			$result = mysql_query($sql, $db);
+			$result = mysqli_query($sql, $db);
 		}
 		
 		//delete forum post
 		$sql = "DELETE FROM forums_posts WHERE forum_id=".$forum_id." AND post_id=".$post_id;
-		$result = mysql_query($sql, $db);
+		$result = mysqli_query($db, $sql);
 
 		//delete from forums_views & forums_read
 		$sql = "DELETE FROM forums_views WHERE post_id=".$post_id;
-		$result = mysql_query($sql, $db);		
+		$result = mysqli_query($db, $sql);		
 		
 		$sql = "DELETE FROM forums_read WHERE forum_id=".$forum_id." AND post_id=".$post_id;
-		$result = mysql_query($sql, $db);			
+		$result = mysqli_query($db, $sql);			
 		
 		//delete post files
 		$level = '';

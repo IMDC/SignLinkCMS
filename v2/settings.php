@@ -5,15 +5,15 @@ require(INCLUDE_PATH.'vitals.inc.php');
 admin_authenticate();
 
 $sql = "SELECT * FROM settings WHERE 1";
-$result = mysql_query($sql, $db);
+$result = mysqli_query($db, $sql);
 
-while($row = mysql_fetch_assoc($result)) {
+while($row = mysqli_fetch_assoc($result)) {
 	$settings[$row['name']] = $row['value'];
 }
 
 $sql = "SELECT password FROM members WHERE login='admin'";
-$result = mysql_query($sql, $db);
-$row = mysql_fetch_assoc($result);
+$result = mysqli_query($db, $sql);
+$row = mysqli_fetch_assoc($result);
 $password = $stripslashes($row['password']);
 
 if (isset($_POST['cancel'])) {
@@ -30,15 +30,15 @@ if (isset($_POST['cancel'])) {
 			$_SESSION['errors'][] = 'Please enter a valid email.';
 		} 
 		
-		$result = @mysql_query("SELECT * FROM members WHERE email=".addslashes($_POST['email']), $db);
-		if (@mysql_num_rows($result) != 0) {
+		$result = @mysqli_query($db, "SELECT * FROM members WHERE email=".addslashes($_POST['email']));
+		if (@mysqli_num_rows($result) != 0) {
 			$_SESSION['errors'][] = 'Email address already in use.';
 		}
 		if (!isset($_SESSION['errors'])) {
 			//prepare to insert into db
 			$new_email = $addslashes(trim($_POST['contact']));
 			$sql = "UPDATE settings SET value='$new_email' WHERE name='contact'";
-			$result = mysql_query($sql, $db);
+			$result = mysqli_query($db, $sql);
 			$_SESSION['feedback'][] = "Contact email changed.";
 		}		
 	}	
@@ -61,7 +61,7 @@ if (isset($_POST['cancel'])) {
 			//prepare to insert into db
 			$new_password = $addslashes(trim($_POST['password']));
 			$sql = "UPDATE members SET password='$new_password' WHERE login='admin'";
-			$result = mysql_query($sql, $db);
+			$result = mysqli_query($db, $sql);
 			$_SESSION['feedback'][] = 'Passwords changed.';
 		}		
 	}		
@@ -72,7 +72,7 @@ if (isset($_POST['cancel'])) {
 		if (!isset($_SESSION['errors'])) {
 			$new_site_name = $addslashes(trim($_POST['site_name']));
 			$sql = "UPDATE settings SET value='$new_site_name' WHERE name='site_name'";
-			$result = mysql_query($sql, $db);
+			$result = mysqli_query($db, $sql);
 			$_SESSION['feedback'][] = 'Site name changed.';
 		}
 	}
@@ -83,7 +83,7 @@ if (isset($_POST['cancel'])) {
 		}
 		if (!isset($_SESSION['errors'])) {
 			$sql = "UPDATE settings SET value='$max' WHERE name='max_upload_size'";
-			$result = mysql_query($sql, $db);
+			$result = mysqli_query($db, $sql);
 			$_SESSION['feedback'][] = 'Max upload size changed.';
 		}
 	}

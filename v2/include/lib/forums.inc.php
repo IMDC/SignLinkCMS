@@ -20,11 +20,11 @@ function get_message($id) {
 	$msg_path = $level.'uploads/posts/'.$id.'/';
 	$sql = "SELECT member_id, login, date, msg, msg_alt FROM forums_posts WHERE post_id=".$id;
 
-	$result = mysql_query($sql, $db);
+	$result = mysqli_query($db, $sql);
 	if ($result) {
 		$msg = array();
 
-		if (!$row = mysql_fetch_assoc($result)) {
+		if (!$row = mysqli_fetch_assoc($result)) {
 			$msg[0] = '';
 			$msg[1] = '';
 			$msg[2] = "No message.";
@@ -93,17 +93,17 @@ function get_message($id) {
                $msg[2] = '  
 						<a  
 							 href="'.$msg_path.$msg_file.'"
-							 class = "flash_player_holder" 
-							 style="width:'.VIDEO_MSG_WIDTH.';height:'.VIDEO_MSG_HEIGHT.'px;"  
+							 class="flash_player_holder" 
+							 style="width:'.VIDEO_MSG_WIDTH.'px;height:'.VIDEO_MSG_HEIGHT.'px;"  
 							 id="'.$msg_path.$noextfile.'">
-							 <img src="'.$thumbjpg.'" height="'.VIDEO_MSG_HEIGHT.'" width="'.VIDEO_MSG_WIDTH.'" alt="'.$msg_file.'" />
+							 <img src="'.$thumbjpg.'" height="'.VIDEO_MSG_HEIGHT.'px" width="'.VIDEO_MSG_WIDTH.'px" alt="'.$msg_file.'" />
 						</a> 
-						<script>
-							flowplayer("'.$msg_path.$noextfile.'", "flash/flowplayer-3.1.5.swf", {
+						<script type="text/javascript">
+							flowplayer("'.$msg_path.$noextfile.'", "flash/flowplayer-3.2.3.swf", {
 								clip: conf.yesplay,
-                        plugins: {
-                           controls: conf.big
-                        }
+                    plugins: {
+                       controls: conf.big
+                    }
 							});
 						</script>';
 
@@ -142,10 +142,10 @@ function removeUnsafeAttributesAndGivenTags($input, $validTags = '') {
 function print_reply_link($id) {	
 	global $db, $filetypes_video, $filetypes_image;
 
-	$sql = "SELECT forum_id, parent_id, login, date, msg, msg_alt FROM forums_posts WHERE post_id=".$id;
-	$result = mysql_query($sql, $db);
+	$sql = "SELECT forum_id, parent_id, member_id, last_comment, login, date, msg, msg_alt FROM forums_posts WHERE post_id=".$id;
+	$result = mysqli_query($db, $sql);
 	if ($result) {
-		if (!$row = mysql_fetch_assoc($result)) {
+		if (!$row = mysqli_fetch_assoc($result)) {
 			echo 'No message.';
 			return;
 		}		
@@ -154,7 +154,9 @@ function print_reply_link($id) {
 
 			//the msg is plain text
 			//$link = substr($row['msg'],0,30).'...';
-			$link = '<textarea class="tinymce">' . $row['msg'] . '</textarea>';
+			//$link = '<textarea class="tinymce">' . $row['msg'] . '</textarea>';
+         //$link = html_specialchars_decode($row['msg']);
+         $link = html_entity_decode(nl2br($row['msg']));
          
 		} 
       else {
@@ -188,8 +190,16 @@ function print_reply_link($id) {
 				}
 			}
 		}
-		echo '<td style="text-align:center;">'.$row['login'].'</td>';
-		echo '<td><a href="forum_post_view.php?f='.$row['forum_id'].'&p='.$id.'&parent='.$_GET['p'].'">'.$link.'</a></td>';
+		//echo '<td style="text-align:center;">'.$row['login'].'</td>';
+    echo '<td style="background:#dedede;overflow:auto;vertical-align:top;padding-top:30px;">';
+    echo '<div style="height:90%;text-align:center;">';
+    echo '<div style="text-align:center;">'.$row['login'].'</div>';
+    echo '<div style="">'.get_avatar($row['member_id']).'</div>';
+    echo '<div style="text-align:center;font-size:0.8em;">' . date('M j Y, h:ia', strtotime($row['last_comment'])) . '</div>';
+    echo '</div>';
+    echo '</td>';
+		//echo '<td><a href="forum_post_view.php?f='.$row['forum_id'].'&p='.$id.'&parent='.$_GET['p'].'">'.$link.'</a></td>';
+		echo '<td style="border-left: 1px dotted #aaaaaa;">'.$link.'</td>';
 	}
 }
 

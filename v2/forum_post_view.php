@@ -11,15 +11,15 @@ $forum_id = intval($_REQUEST['f']);
 if ($_SESSION['valid_user']) {
 	//update the # thread views and the last accessed date
 	$sql = "INSERT INTO forums_views VALUES ($post_id, $_SESSION[member_id], NOW(), 0)";
-	$result = mysql_query($sql, $db);
+	$result = mysqli_query($db, $sql);
 	if (!$result) {
 		$sql = "UPDATE forums_views SET last_accessed=NOW(), views=views+1 WHERE post_id=$post_id AND member_id=$_SESSION[member_id]";
-		$result = mysql_query($sql, $db);
+		$result = mysqli_query($db, $sql);
 	}
 	
 	//update that this member viewed this post
 	$sql = "REPLACE INTO forums_read VALUES ($post_id, $_SESSION[member_id], $forum_id, $parent_id)";
-	$result = mysql_query($sql, $db);	
+	$result = mysqli_query($db, $sql);	
 }
 
 $msg = get_message($post_id);  //returns array of poster, date, html-encoded message
@@ -27,7 +27,7 @@ $msg = get_message($post_id);  //returns array of poster, date, html-encoded mes
 ?>
 
 
-<script type="text/javascript" src="jscripts/tiny_mce/jquery.tinymce.js"></script>
+<!--<script type="text/javascript" src="jscripts/tiny_mce/jquery.tinymce.js"></script>-->
 
 <div id="post-title">
 	<h3><div style="float:left;height:75px;"><?php echo get_title('forum', $forum_id, 'small'); ?></div>
@@ -45,10 +45,10 @@ $msg = get_message($post_id);  //returns array of poster, date, html-encoded mes
 	<div id="submenu" style="margin-top:41px;">
 		<?php 
 		if (!$parent_id) { 
-			echo "<li><a href='forum_posts.php?f=$forum_id'><img src='images/arrow_left.png' alt='Back to forum posts' title='Back to forum posts' class='buttonimage' /></a></li>";
+			echo "<li><a href='forum_posts.php?f=$forum_id'><img src='images/arrow_left_32.png' alt='Back to forum posts' title='Back to forum posts' class='buttonimage' /></a></li>";
 		} 
 		else {
-			echo "<li><a href='forum_post_view.php?f=$forum_id&p=$parent_id'><img src='images/arrow_left.png' alt='Back to parent post' title='Back to parent post' class='buttonimage' /></a></li>";
+			echo "<li><a href='forum_post_view.php?f=$forum_id&p=$parent_id'><img src='images/arrow_left_32.png' alt='Back to parent post' title='Back to parent post' class='buttonimage' /></a></li>";
 		}
 		?>		
 		
@@ -57,42 +57,36 @@ $msg = get_message($post_id);  //returns array of poster, date, html-encoded mes
 </div>
 
 <div id="post">		
-	<div id="post-info" style="background-color: #FCFCFC; border-right: 1px ridge #E6E6E6; margin-right: 20px;">
+	<div id="post-info">
 		<div style="padding-bottom:5px;"><?php echo $msg[0]; ?></div>
-		<?php get_avatar($msg[3]); ?>
+		<div><?php get_avatar($msg[3]); ?></div>
+    <?php echo '<small>' . $msg[1] . '</small>';?>   
 	</div>
 
 	<div id="post-msg">
 		<div style="text-align:right">
 		<ul>
-		<?php
-		if ($_SESSION['login'] == $msg[0]) {
-			echo "<li style='display:inline;padding:8px;'><a href='forum_post_edit.php?f=$forum_id&p=$post_id&parent=$parent_id'><img src='images/comment_edit.png' alt='Edit' title='Edit' /></a></li>";
-         echo "<li style='display:inline;padding:8xp;'><a href='forum_post_delete.php?f=$forum_id&p=$post_id&parent=$parent_id&m=$_SESSION[member_id]'><img src='images/comment_delete.png' alt='Delete' title='Delete' /></a></li>";
-		}		
-		if (!$parent_id) { 
-			echo "<li style='display:inline;padding:8px;'><a href='forum_post_create.php?f=$forum_id&p=$post_id'><img src='images/comment_add.png' alt='Reply' title='Reply' /></a></li>";
-		} 
-		 ?>
+         <?php
+            if ($_SESSION['login'] == $msg[0]) {
+               echo "<li style='display:inline;padding:8px;'><a href='forum_post_edit.php?f=$forum_id&p=$post_id&parent=$parent_id'><img src='images/comment_edit.png' alt='Edit' title='Edit' /></a></li>";
+               echo "<li style='display:inline;padding:8xp;'><a href='forum_post_delete.php?f=$forum_id&p=$post_id&parent=$parent_id&m=$_SESSION[member_id]'><img src='images/comment_delete.png' alt='Delete' title='Delete' /></a></li>";
+            }		
+            
+            if (!$parent_id) { 
+               echo "<li style='display:inline;padding:8px;'><a href='forum_post_create.php?f=$forum_id&p=$post_id'><img src='images/comment_rev.png' alt='Reply' title='Reply to this post!' /></a></li>";
+            } 
+            
+         ?>
 		</ul>
 		</div>
 		<div id="post-msg-text">
-      <?php echo '<small>' . $msg[1] . '</small><br />';
-			// if the message is a text message, use tinymce
+      <?php //echo '<small>' . $msg[1] . '</small><br />';   
+
          if ($msg[4] == 1) {
-            echo ('<script type="text/javascript">
-               $(document).ready(function() {
-                 $("textarea.tinymce").tinymce({
-                     script_url: \'jscripts/tiny_mce/tiny_mce.js\',
-                     theme : "advanced",
-                     readonly : true
-                  });
-               });
-               </script>
-            ');
-            
-            echo '<textarea class="tinymce" style="height:100%;">' . $msg[2] . '</textarea><br />';
+            echo '<div style="height:100%;width=100%;overflow:auto;clear:right;">'.htmlspecialchars_decode($msg[2]).'</div>';
+            //echo '<div style="height:100%;width=100%;overflow:auto;clear:right;">'.html_entity_decode($msg[2]).'</div>';
          }
+         
          // otherwise the message is a video, signlink or old image type
          else {
             echo $msg[2];
@@ -100,6 +94,7 @@ $msg = get_message($post_id);  //returns array of poster, date, html-encoded mes
 		?>
 		</div>
 		<br style="clear:both" />
+
 	</div>
 	<br style="clear:both" />
 
@@ -110,33 +105,37 @@ $msg = get_message($post_id);  //returns array of poster, date, html-encoded mes
 	if (!$parent_id) { 
 	
 		$sql = "SELECT * FROM forums_posts WHERE forum_id=".$forum_id." AND parent_id=".$post_id." ORDER BY last_comment DESC";
-		$result = mysql_query($sql, $db);
-		if (@mysql_num_rows($result)) { ?>
+		$result = mysqli_query($db, $sql);
+		if (@mysqli_num_rows($result)) { ?>
 			<table class="manage">
 			<tr>
 				<th colspan="4">Replies</th>
 			</tr>
 			<?php 
-				while ($row = mysql_fetch_assoc($result)) {
-				echo '<tr style="border-bottom:1px solid #bbb;" onmouseover="this.style.background=\'#7AD0DA\';this.style.cursor=\'pointer\'" '
-					  			. 'onmouseout="this.style.background=\'none\'" '
-								. 'onclick="location.href=\'forum_post_view.php?f=' . $row['forum_id'] . '&p=' . $row['post_id'] . '&parent=' . $_GET['p'] . '\'">';
+				while ($row = mysqli_fetch_assoc($result)) {
+				//echo '<tr class="reply_tr" onmouseover="this.style.background=\'#7AD0DA\';this.style.cursor=\'pointer\'" '
+					  			//. 'onmouseout="this.style.background=\'none\'" '
+				echo '<tr class="reply_tr" onclick="location.href=\'forum_post_view.php?f=' . $row['forum_id'] . '&p=' . $row['post_id'] . '&parent=' . $_GET['p'] . '\'">';
 					?>
-					<td style="width:20px; text-align:center;">	<?php //check for new messages
+					<td class="forum_reply_mail"> <?php //check for new messages
 						$sql = "SELECT * FROM forums_read WHERE post_id=".$row['post_id']." AND member_id=".intval($_SESSION['member_id']);
-						$result2 = mysql_query($sql, $db);
-						$read = @mysql_num_rows($result2);
+						$result2 = mysqli_query($db, $sql);
+						$read = @mysqli_num_rows($result2);
 						
 						if ($_SESSION['valid_user'] && !$read) { 
-							echo '<img src="images/email_red.png" alt="new message" title="new message" height="16" width="16" /> ';					
+							//echo '<img src="images/email_red.png" alt="new message" title="new message" height="16" width="16" /> ';					
+							echo '<img src="images/forum_unread.png" alt="new message" title="new message" height="32" width="32" style="margin-top:50px;" /> ';					
 						} else {
-							echo '<img src="images/email.png" alt="no new messages" title="no new messages" height="16" width="16" /> ';
+							//echo '<img src="images/email.png" alt="no new messages" title="no new messages" height="16" width="16" /> ';
+							echo '<img src="images/forum_read.png" alt="no new messages" title="no new messages" height="32" width="32" style="margin-top:50px;" /> ';
 						} ?>
 					</td>
-					<td style="text-align:center;width:80px;font-size:0.8em">
+					<!--
+          <td style="text-align:center;width:80px;font-size:0.8em;vertical-align:top">
 						<?php echo date('M j Y, h:ia', strtotime($row['last_comment'])); ?>
 					</td>
-					<?php print_reply_link($row['post_id']); ?>
+          -->
+                  <?php print_reply_link($row['post_id']); ?>
 				</tr>
 			<?php
 			}

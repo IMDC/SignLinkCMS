@@ -110,15 +110,15 @@ if (isset($_POST['cancel'])) {
 		//insert into db
 		$sql = "INSERT INTO forums_posts VALUES (NULL, '$parent_id', '$_SESSION[member_id]', '$forum_id', '$_SESSION[login]', '$now', 0, '$subject', '$subject_alt', '$message', '$message_alt', NOW(),0, 0)";
 
-		if (!$result = mysql_query($sql, $db)) {
+		if (!$result = mysqli_query($db, $sql)) {
 			$_SESSION['errors'][] = 'Database error.';
 		} else {
-			$post_id = mysql_insert_id();
+			$post_id = mysqli_insert_id($db);
 
 			//edit 'last comment' field for parent to be now
 			if ($parent_id) {
 				$sql = "UPDATE forums_posts SET last_comment='$now', num_comments=num_comments+1 WHERE post_id=$parent_id";
-				$result = mysql_query($sql, $db);
+				$result = mysqli_query($db, $sql);
 				$num_topics = '';
 			} else {
 				$num_topics = ", num_topics=num_topics+1";
@@ -126,7 +126,7 @@ if (isset($_POST['cancel'])) {
 			
 			//update info for forum (last post, num posts, num topics)
 			$sql = "UPDATE forums SET last_post='$now', num_posts=num_posts+1 $num_topics WHERE forum_id=$forum_id";
-			$result = mysql_query($sql, $db);
+			$result = mysqli_query($db, $sql);
 
 			//save files			
 			switch ($_POST['subject']) {

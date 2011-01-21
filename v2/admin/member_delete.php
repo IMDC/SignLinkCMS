@@ -11,7 +11,7 @@ delete_avatar($member_id);
 
 //delete forum
 $sql = "DELETE FROM members WHERE member_id=".$member_id;
-$result = mysql_query($sql, $db);
+$result = mysqli_query($db, $sql);
 $_SESSION['feedback'][] = 'Member deleted.';
 
 

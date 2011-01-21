@@ -9,8 +9,8 @@ if (isset($_GET['c']) && !empty($_GET['c'])) {
 
 	//check if it has sub-pages. if so, can't delete
 	$sql = "SELECT page_id FROM pages WHERE parent_id=".$page_id;
-	$result = mysql_query($sql, $db);
-	$numchildren = mysql_num_rows($result);	
+	$result = mysqli_query($db, $sql);
+	$numchildren = mysqli_num_rows($result);	
 	if ($numchildren) {
 		$_SESSION['feedback'][] = 'Page cannot be deleted as it contains sub-pages.';
 	} else {
@@ -35,7 +35,7 @@ if (isset($_GET['c']) && !empty($_GET['c'])) {
 	
 		//delete page
 		$sql = "DELETE FROM pages WHERE page_id=".$page_id;
-		$result = mysql_query($sql, $db);
+		$result = mysqli_query($db, $sql);
 		$_SESSION['feedback'][] = 'Page deleted successfully.';
 	}
 }

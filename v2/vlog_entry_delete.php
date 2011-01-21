@@ -35,11 +35,11 @@ if ($comment_id) {
 	
 	//delete entry comments
 	$sql = "DELETE FROM vlogs_comments WHERE vlog_id=".$vlog_id." AND entry_id=".$entry_id." AND comment_id=".$comment_id;
-	$result = mysql_query($sql, $db);		
+	$result = mysqli_query($db, $sql);		
 		
 	//adjust num comments
 	$sql = "UPDATE vlogs_entries SET num_comments=num_comments-1 WHERE vlog_id=".$vlog_id." AND entry_id=".$entry_id;
-	$result = mysql_query($sql, $db);			
+	$result = mysqli_query($db, $sql);			
 		
 	$_SESSION['feedback'][] = 'Vlog comment deleted.';
 	//redirect
@@ -49,10 +49,10 @@ if ($comment_id) {
 } else if ($entry_id) {
 	//delete vlog entry
 	$sql = "DELETE FROM vlogs_entries WHERE vlog_id=".$vlog_id." AND entry_id=".$entry_id;
-	$result = mysql_query($sql, $db);		
+	$result = mysqli_query($db, $sql);		
 	
 	$sql = "UPDATE vlogs SET num_entries=num_entries-1 WHERE vlog_id=".$vlog_id;
-	$result = mysql_query($sql, $db);			
+	$result = mysqli_query($db, $sql);			
 	
 	//delete entry files		
 	$entry_path = $level.UPLOAD_DIR.'entries/'.$entry_id.'/';
@@ -69,9 +69,9 @@ if ($comment_id) {
 
 	//get all the comment ids for this entry
 	$sql = "SELECT comment_id FROM vlogs_comments WHERE vlog_id=".$vlog_id." AND entry_id=".$entry_id;
-	$result = mysql_query($sql, $db);		
+	$result = mysqli_query($db, $sql);		
 	
-	while ($row = mysql_fetch_assoc($result)) {	
+	while ($row = mysqli_fetch_assoc($result)) {	
 		//delete comment files		
 		$comment_path = $level.UPLOAD_DIR.'comments/'.$row['comment_id'].'/';
 		if (file_exists($comment_path)) {
@@ -85,7 +85,7 @@ if ($comment_id) {
 	
 	//delete entry comments
 	$sql = "DELETE FROM vlogs_comments WHERE vlog_id=".$vlog_id." AND entry_id=".$entry_id;
-	$result = mysql_query($sql, $db);		
+	$result = mysqli_query($db, $sql);		
 		
 	$_SESSION['feedback'][] = 'Vlog entry deleted.';
 	

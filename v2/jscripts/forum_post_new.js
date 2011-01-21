@@ -1,4 +1,3 @@
-
 $(document).ready(function() {
 
 	if(typeof(subject)=="undefined") {

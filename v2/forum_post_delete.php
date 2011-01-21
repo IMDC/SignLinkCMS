@@ -29,22 +29,22 @@ else if ($_GET['processed']) {
   
       // Formulate Query
       // This is the best way to perform a SQL query
-      // For more examples, see mysql_real_escape_string()
+      // For more examples, see mysqli_real_escape_string()
       $sql = sprintf("DELETE FROM forums_posts WHERE forum_id='%s' AND post_id='%s' AND parent_id='%s' AND member_id='%s'",
-          mysql_real_escape_string($forum_id),
-          mysql_real_escape_string($post_id),
-          mysql_real_escape_string($parent),
-          mysql_real_escape_string($member));
+          mysqli_real_escape_string($forum_id),
+          mysqli_real_escape_string($post_id),
+          mysqli_real_escape_string($parent),
+          mysqli_real_escape_string($member));
 
       //echo $sql;
    }
 
    // Perform Query
-   $result = mysql_query($sql);
+   $result = mysqli_query($db, $sql);
 
    // Check result
    if (!$result) {
-          //$message  = 'Invalid query: ' . mysql_error() . "\n";
+          //$message  = 'Invalid query: ' . mysqli_error() . "\n";
           //$message .= 'Whole query: ' . $query;
           $_SESSION['errors'][] = 'Database error.';
           //die($message);
@@ -56,7 +56,7 @@ else if ($_GET['processed']) {
    }
 
    /*
-   if (!$result = mysql_query($sql, $db)) {
+   if (!$result = mysqli_query($db, $sql)) {
       $_SESSION['errors'][] = 'Database error.';
    }
    else {					

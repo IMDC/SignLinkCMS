@@ -17,7 +17,7 @@ echo '</div>';
 
 //get forum posts
 $sql = "SELECT * FROM forums_posts WHERE forum_id=".$forum_id." ORDER BY parent_id, subject";
-$result = mysql_query($sql, $db);
+$result = mysqli_query($db, $sql);
 $r = 1;
 if (mysql_num_rows($result)) { ?> 
 	<table class="manage">

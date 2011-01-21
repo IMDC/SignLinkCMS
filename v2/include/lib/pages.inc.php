@@ -16,10 +16,10 @@ function get_content($id) {
 	$content_path = $level.'uploads/pages/'.$id.'/';
 	$sql = "SELECT content, content_alt FROM pages WHERE page_id=".$id;
 
-	$result = mysql_query($sql, $db);
+	$result = mysqli_query($db, $sql);
 	if ($result) {
 
-		if (!$row = mysql_fetch_assoc($result)) {
+		if (!$row = mysqli_fetch_assoc($result)) {
 			$content = "No message.";
 			return $content;
 		}		
@@ -70,33 +70,20 @@ function get_content($id) {
 						<a  
 							 href="'.$content_path.$content_file.'"
 							 class = "flash_player_holder" 
-							 style="display:block;width:'.VIDEO_MSG_WIDTH.';height:'.VIDEO_MSG_HEIGHT.'px;margin-left:auto;margin-right:auto;"  
-							 id="'.$content_path.'">
-							 <img src="'.$thumbjpg.'" height="'.VIDEO_MSG_HEIGHT.'" width="'.VIDEO_MSG_WIDTH.'" alt="'.$row[1].'" />
+							 style="display:block;width:'.VIDEO_MSG_WIDTH.'px;height:'.VIDEO_MSG_HEIGHT.'px;margin-left:auto;margin-right:auto;"  
+							 id="'.$content_path.'content">
+							 <img src="'.$thumbjpg.'" height="'.VIDEO_MSG_HEIGHT.'px" width="'.VIDEO_MSG_WIDTH.'px" alt="'.$row[1].'" />
 						</a> 
-						<script>
-							flowplayer("'.$content_path.'", "flash/flowplayer-3.1.5.swf", {
+						<script type="text/javascript">
+							flowplayer("'.$content_path.'content", "flash/flowplayer-3.2.3.swf", {
 								clip: {
-										url: \''.$content_path.$content_file.'\',
-										autoPlay: true,
-										autoBuffering: true
-								}, 
-								plugins: {
-									controls: {
-										backgroundColor: \'#000000\',
-										backgroundGradient: \'low\',
-										autoHide: \'always\',
-                              hideDelay: 2000,
-										all: false,
-										scrubber: true,
-										//mute: true,
-										fullscreen: true,
-										height: 14,
-										progressColor: \'#FFFF00\',
-                              progressGradient: \'medium\',
-										bufferColor: \'#333333\'
-									}
-								}
+                  url: \''.$content_path.$content_file.'\',
+                  autoPlay: true,
+                  autoBuffering: true,
+                },
+                plugins: {
+                  controls: conf.big  
+                }
 							});
 						</script>';
 				}
@@ -167,11 +154,11 @@ function print_signlinks_to($id) {
 
 	/*$sql = "SELECT workbench_links_to FROM forums_posts WHERE post_id=".$id;
 
-	$result = mysql_query($sql, $db);
+	$result = mysqli_query($db, $sql);
 	if ($result) {
 		$msg = array();
 
-		if (!$row = mysql_fetch_assoc($result)) {
+		if (!$row = mysqli_fetch_assoc($result)) {
 			$msg[0] = '';	
 	
 	//output list
@@ -191,10 +178,10 @@ function get_top_pages() {
 	$top_pages = array();
 	
 	$sql = "SELECT * FROM pages WHERE parent_id=0 ORDER BY created ASC";
-	$result = mysql_query($sql, $db);
+	$result = mysqli_query($db, $sql);
 	
-	if (@mysql_num_rows($result)) { 
-		while($row = mysql_fetch_assoc($result)) {
+	if (@mysqli_num_rows($result)) { 
+		while($row = mysqli_fetch_assoc($result)) {
 			$top_pages[] = $row;
 		}
 	}

@@ -21,13 +21,14 @@ if ( !empty($top_pages) ) {
 ?>
 
 		<div class="cat">
-			<div class="title">
+			<div class="title" onclick="location.href='page_view.php?c=<?php echo $row['page_id']; ?>'" style="cursor:pointer">
+			<!--<div class="title" style="cursor:pointer">-->
 				<div style="height:150px;cursor:pointer;">
 					<?php echo $title; ?>
 				</div>
 							
 				<a href="page_view.php?c=<?php echo $row['page_id']; ?>" class="goto">
-					<img src="images/hand.png" style="border:0px;padding:0px;" />
+					<img src="images/hand.png" style="width:20px;border:0px;padding:0px;margin-top:2px;" alt="click to view" />
 				</a>
 			</div>
 			
@@ -35,8 +36,8 @@ if ( !empty($top_pages) ) {
 			<?php		
 				//get sub pages
 				$sql = "SELECT page_id FROM pages WHERE parent_id=".$row['page_id'];
-				$result2 = mysql_query($sql, $db);
-				$sub_pages = intval(@mysql_num_rows($result2));
+				$result2 = mysqli_query($db, $sql);
+				$sub_pages = intval(@mysqli_num_rows($result2));
 
 				echo "<span style='font-size: smaller;'> $sub_pages <img src='images/pictures.png' alt='Sub-pages' title='Sub-pages' /></span>";
 			echo '</div>';

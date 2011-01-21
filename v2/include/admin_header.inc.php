@@ -2,13 +2,18 @@
 <body>
 <head>
 	<title><?php echo SITE_NAME; ?> - Administration</title>
-	<link rel="stylesheet" href="../asl.css" type="text/css" media="screen" />
+	<link rel="stylesheet" href="../css/asl.css" type="text/css" media="screen" />
 
 	<!--[if IE]>
-		<link href="../iehacks.css" rel="stylesheet" />
+		<link href="../css/iehacks.css" rel="stylesheet" />
 	<![endif]-->
-	<script type="text/javascript" src="../jscripts/jquery/js/jquery-1.3.2.min.js"></script>  
-	<script type="text/javascript" src="../jscripts/jquery/js/jquery-ui-1.7.2.custom.min.js"></script>  
+	<!--<script type="text/javascript" src="../jscripts/jquery/js/jquery-1.3.2.min.js"></script>--> 
+	<!--<script type="text/javascript" src="../jscripts/jquery/js/jquery-ui-1.7.2.custom.min.js"></script>--> 
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script> 
+  <script type="text/javascript" src="../jscripts/admintweaks.js"></script>
+  <script type="text/javascript" src="../jscripts/fancybox/jquery.fancybox-1.3.1.pack.js"></script>
+  <script type="text/javascript" src="../jscripts/flowplayer-3.2.3.min.js"></script>
+  <script type="text/javascript" src="../jscripts/flowplayer_external_config.js"></script>
 </head>
 
 <div id="container">
@@ -19,19 +24,19 @@
 	
 	<?php 
 	if ($_SESSION['is_admin']) {
-		echo '<div style="float:right">'.$_SESSION['login'].' <a href="logout.php"><img src="../images/door_out.png" alt="logout" title="logout" style="margin-bottom:-3px;" /></a></div>'; 
+		echo '<div style="float:right">'.$_SESSION['login'].' <a href="logout.php"><img src="../images/door-logout.png" alt="logout" title="logout" style="margin-bottom:-3px;" /></a></div>'; 
 	} 		
 	?>
 	<?php if($_SESSION['is_admin']) { ?>
 	<div id="menu">
 		<ul>
-			<li><a href="index.php"><img src="../images/house_shadowsmall.png" alt="home" /></a> | </li>
-			<li><a href="member_manage.php"><img src="../images/members.png" alt="members" /></a> | </li>
-			<li><a href="page_manage.php"><img src="../images/booksmall.png" alt="pages" /></a> | </li>
-			<li><a href="forum_manage.php"><img src="../images/groupsmall.png" alt="forums" /></a> | </li>
-			<li><a href="vlog_manage.php"><img src="../images/vlogsmall.png" alt="vlogs" /></a> | </li>
-			<li><a href="settings.php"><img src="../images/wrenchsmall.png" alt="settings" </a> | </li>
-			<li><a href="help.php"><img src="../images/helpsmall.png" alt="help" /></a></li>
+			<li><a href="index.php"><img src="../images/house_shadow.png" class="homenavicon" alt="home" title="home" /></a> | </li>
+			<li><a href="member_manage.php"><img src="../images/contacts.png" alt="members" /></a> | </li>
+			<li><a href="page_manage.php"><img src="../images/content.png" class="pagesnavicon" alt="pages" /></a> | </li>
+			<li><a href="forum_manage.php"><img src="../images/group.png" class="forumnavicon" alt="forums" /></a> | </li>
+			<li><a href="vlog_manage.php"><img src="../images/vlog.png" class="vlognavicon" alt="vlogs" /></a> | </li>
+			<li><a href="settings.php"><img src="../images/spanner.png" alt="settings" /></a> | </li>
+			<li><a href="help.php"><img src="../images/help.png" class="helpnavicon" alt="help" /></a></li>
 		</ul>
 	</div>
 	<?php } ?>
