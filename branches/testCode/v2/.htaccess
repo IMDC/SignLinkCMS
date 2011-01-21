@@ -1,0 +1,17 @@
+<Files .htaccess>
+order allow,deny
+deny from all
+</Files>
+
+RewriteEngine On
+# Protect Hotlinking
+RewriteCond %{HTTP_REFERER} !^http://(.+\.)?imdc\.ca/ [NC]
+RewriteCond %{HTTP_REFERER} !^$
+RewriteRule .*\.(jpe?g|gif|bmp|png|zip|rar|mp4)$ http://www.imdc.ca/~paul/SignlinkCMS/images/nolink.jpg [L]
+
+# Custom error for 404
+Redirect 404 index.php 
+#/errordocs/error404.php
+
+
+
