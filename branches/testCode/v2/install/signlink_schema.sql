@@ -90,14 +90,18 @@ CREATE TABLE IF NOT EXISTS `forums_views` (
 CREATE TABLE IF NOT EXISTS `members` (
   `member_id` mediumint(9) NOT NULL auto_increment,
   `login` varchar(20) NOT NULL default '',
-  `password` varchar(20) NOT NULL default '',
+  `cl_pass` blob,
   `name` varchar(265) NOT NULL,
   `email` varchar(265) NOT NULL,
+  `created_ts` timestamp not null default CURRENT_TIMESTAMP,
+  `passresetexp_ts` timestamp NULL DEFAULT 0,
+  `last_login_ts` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `post_count` mediumint(8) unsigned NOT NULL default '0',
   PRIMARY KEY  (`member_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 ;
 
-INSERT INTO `members` (`member_id`, `login`, `password`, `name`, `email`) VALUES
-(1, 'admin', 'admin', '', '');
+INSERT INTO `members` (`member_id`, `login`, `password`, `name`, `email`, 'created_ts', 'passresetexp_ts', 'last_login_ts') VALUES
+(1, 'admin', 'admin', '', '', DEFAULT, DEFAULT, 0);
 
 -- --------------------------------------------------------
 
@@ -140,7 +144,9 @@ CREATE TABLE IF NOT EXISTS `settings` (
 INSERT INTO `settings` (`setting_id`, `name`, `value`) VALUES
 (1, 'contact', 'admin@admin.org'),
 (2, 'site_name', 'Signlink CMS'),
-(3, 'max_upload_size', '5242880');
+(3, 'max_upload_size', '5242880'),
+(4, 'reg_user_only', 0),
+(5, 'registration_closed', 0);
 
 -- --------------------------------------------------------
 

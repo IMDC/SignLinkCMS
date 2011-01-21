@@ -61,7 +61,7 @@ if (isset($_POST['cancel'])) {
 		//insert into db
 		$sql = "UPDATE forums SET subject='$subject', subject_alt='$subject_alt' WHERE forum_id=$forum_id";
 
-		if (!$result = mysql_query($sql, $db)) {
+		if (!$result = mysqli_query($db, $sql)) {
 			$_SESSION['errors'][] = 'Database error.';
 		} else {
 			//save files			
@@ -88,9 +88,9 @@ if (isset($_POST['cancel'])) {
 	$title = get_title('forum', $forum_id);
 
 	$sql = "SELECT * FROM forums WHERE forum_id=".$forum_id;
-	$result = mysql_query($sql, $db);
+	$result = mysqli_query($db, $sql);
 
-	if ($row = mysql_fetch_assoc($result)) {
+	if ($row = mysqli_fetch_assoc($result)) {
 		populate_page($row, $title);
 	} else {
 		$_SESSION['error'][] = 'Forum not found.';

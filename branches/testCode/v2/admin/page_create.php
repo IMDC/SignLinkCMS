@@ -33,7 +33,7 @@ if (isset($_POST['cancel'])) {
 			$ext = explode('.', $_FILES['vsub-file']['name']);
 			$ext = $ext[1];
 			if (!in_array($ext, $filetypes_video)) {
-				$_SESSION['errors'][] = 'You have chosen a video file for your title - invalid file format.';
+				$_SESSION['errors'][] = 'You have chosen a video file for your title - however it is in an unsupported file format.';
 			}
 			
 		} else if ( ($_POST['subject'] == "text") && empty($_POST['sub-text']) ) {
@@ -106,10 +106,10 @@ if (isset($_POST['cancel'])) {
 		//insert into db
 		$sql = "INSERT INTO pages VALUES (NULL, '$parent_id', 0, '$subject', '$subject_alt', '$message', '$message_alt', '$outline', NOW(), NOW(),'')";
 
-		if (!$result = mysql_query($sql, $db)) {
+		if (!$result = mysqli_query($db, $sql)) {
 			$_SESSION['errors'][] = 'Database error.';
 		} else {
-			$page_id = mysql_insert_id();
+			$page_id = mysqli_insert_id($db);
 
 			//save files			
 			switch ($_POST['subject']) {
@@ -152,7 +152,22 @@ $title = get_title('page', $row['page_id']);
 require(INCLUDE_PATH.'admin_header.inc.php'); ?>
 
 <h2>Create Page</h2>
-	<script type="text/javascript" src="../jscripts/forum_post.js"></script>
+<!--<script type="text/javascript" src="../jscripts/forum_post.js"></script> -->
+
+<script type="text/javascript" src="../jscripts/forum_post_new.js"></script>
+<script type="text/javascript" src="../jscripts/tiny_mce/jquery.tinymce.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+   $("textarea.tinymce").tinymce({
+      script_url: '../jscripts/tiny_mce/tiny_mce.js',
+      theme : "advanced",
+      theme_advanced_buttons1 : "bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,|,formatselect,fontselect,fontsizeselect",
+      theme_advanced_buttons2 : "cut,copy,paste,pastetext,pasteword,|,image,cleanup,help,code|,forecolor,backcolor"
+   });
+});
+</script>
+
+
 
 <form action ="<?php echo $_SERVER['PHP_SELF']; ?>?processed=1" method="post" name="form" enctype="multipart/form-data">
 	<input type="hidden" name="MAX_FILE_SIZE" value="<?php echo MAX_UPLOAD_SIZE; ?>" />
@@ -231,7 +246,8 @@ require(INCLUDE_PATH.'admin_header.inc.php'); ?>
 
 			<label><input type="radio" name="message" value="text" <?php if($_POST['message'] == "text") { echo 'checked="checked"'; }?> /> Text</label>
 			<div class="choice-info" id="message-text">
-				<textarea id="msg-text" id="msg-text" name="msg-text" rows="25" cols="90" style="height:20em;"><?php echo $_POST['msg-text']; ?></textarea>
+				<!-- <textarea id="msg-text" name="msg-text" rows="25" cols="90" style="height:20em;"><?php echo $_POST['msg-text']; ?></textarea> -->
+				<textarea class="tinymce" id="msg-text" name="msg-text" rows="25" cols="90" style="height:20em;width:100%;"><?php echo $_POST['msg-text']; ?> </textarea>
 			</div>
 		</div>
 

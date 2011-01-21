@@ -6,9 +6,9 @@ admin_authenticate();
 $member_id = intval($_REQUEST['m']);
 
 $sql = "SELECT * FROM members WHERE member_id=".$member_id;
-$result = mysql_query($sql, $db);
+$result = mysqli_query($db, $sql);
 
-if (!$row = mysql_fetch_assoc($result)) {
+if (!$row = mysqli_fetch_assoc($result)) {
 	$_SESSION['errors'][] = "Member not found";
 	require(INCLUDE_PATH.'admin_header.inc.php');
 	require(INCLUDE_PATH.'footer.inc.php');
@@ -37,7 +37,7 @@ if (isset($_POST['cancel'])) {
 			//prepare to insert into db
 			$new_password = $addslashes(trim($_POST['password']));
 			$sql = "UPDATE members SET password='$new_password' WHERE member_id=".intval($_POST['m']);
-			$result = mysql_query($sql, $db);
+			$result = mysqli_query($db, $sql);
 		}
 	}
 	if ($_POST['email'] != $row['email']) {
@@ -48,15 +48,15 @@ if (isset($_POST['cancel'])) {
 			$_SESSION['errors'][] = 'Please enter a valid email.';
 		} 
 		
-		$result = @mysql_query("SELECT * FROM members WHERE email=".addslashes($_POST['email']), $db);
-		if (@mysql_num_rows($result) != 0) {
+		$result = @mysqli_query($db, "SELECT * FROM members WHERE email=".addslashes($_POST['email']));
+		if (@mysqli_num_rows($result) != 0) {
 			$_SESSION['errors'][] = 'Email address already in use. Try the Password Reminder.';
 		}
 		if (!isset($_SESSION['errors'])) {
 			//prepare to insert into db
 			$new_email = $addslashes(trim($_POST['email']));
 			$sql = "UPDATE members SET email='$new_email' WHERE member_id=".intval($_POST['m']);
-			$result = mysql_query($sql, $db);
+			$result = mysqli_query($db, $sql);
 		}		
 	}	
 	if (!isset($_SESSION['errors'])) {

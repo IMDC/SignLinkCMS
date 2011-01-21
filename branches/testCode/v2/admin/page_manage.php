@@ -14,10 +14,10 @@ require(INCLUDE_PATH.'admin_header.inc.php'); ?>
 <?php
 //get pages
 $sql = "SELECT * FROM pages WHERE 1 ORDER BY title, title_alt, parent_id";
-$result = mysql_query($sql, $db);
+$result = mysqli_query($db, $sql);
 $r = 1;
 
-if ($row = mysql_fetch_assoc($result)) {
+if ($row = mysqli_fetch_assoc($result)) {
 
 //add author to table
 ?>
@@ -33,6 +33,9 @@ if ($row = mysql_fetch_assoc($result)) {
 	do {
 
 		$title = get_title('page', $row['page_id'], "small");
+    // necessary to change path to flowplayer swf file as admin files are in different location
+    //$titlenew = preg_replace('/flash\/flowplayer/', '../flash/flowplayer', $title); 
+    $titlenew = $title;
 
 		if (empty($row['sl_file']) && $row['type']=='sl') {
 			//sl file missing
@@ -44,7 +47,7 @@ if ($row = mysql_fetch_assoc($result)) {
 		//print page row info
 		echo '<tr class="row'.$r.'">';
 		echo '<td style="text-align:center;">'.$row['page_id'].'</td>'; 		
-		echo '<td>'.$title.'</td>'; 
+		echo '<td>'.$titlenew.'</td>'; 
 		echo '<td style="text-align:center;">'.$row['parent_id'].'</td>';  //get parent id title
 		echo '<td style="text-align:center;">'.$row['created'].'</td>';
 		echo '<td style="text-align:center;">';
@@ -57,7 +60,7 @@ if ($row = mysql_fetch_assoc($result)) {
 		} else {
 			$r = 1;
 		}
-	} while ($row = mysql_fetch_assoc($result));
+	} while ($row = mysqli_fetch_assoc($result));
 	?>
 
 </table>

@@ -2,7 +2,7 @@
 $ffmpeg_path = "ffmpeg/ffmpeg";
 
 $filetypes_image = array("jpg", "jpeg", "gif", "png");
-$filetypes_video = array("avi", "mpeg", "mpg", "wma", "mov", "mp4");  //flv?
+$filetypes_video = array("avi", "mpeg", "mpg", "wma", "mov", "mp4", "m4v", "wmv");  //flv?
 
 $content_pages = array("content.php", "page_view.php");
 $forum_pages = array("forum_post_create.php", "forum_post_edit.php", "forum_post_view.php", "forum_posts.php", "forums.php");

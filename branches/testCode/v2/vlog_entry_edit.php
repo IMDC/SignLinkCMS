@@ -111,7 +111,7 @@ if (isset($_POST['cancel'])) {
 			$sql = "UPDATE vlogs_entries SET content='$message', content_alt='$message_alt' WHERE vlog_id=$vlog_id AND entry_id=$entry_id";
 		}
 
-		if (!$result = mysql_query($sql, $db)) {
+		if (!$result = mysqli_query($db, $sql)) {
 			$_SESSION['errors'][] = 'Database error.';
 		} else {					
 			//delete old files, save new
@@ -156,10 +156,10 @@ if (isset($_POST['cancel'])) {
 $title = get_title('entry', $entry_id);
 
 $sql = "SELECT * FROM vlogs_entries WHERE vlog_id=$vlog_id AND entry_id=$entry_id";
-if (!$result = mysql_query($sql, $db)) {
+if (!$result = mysqli_query($db, $sql)) {
 	$_SESSION['errors'][] = 'Database error.';
 } else {
-	$row = mysql_fetch_assoc($result);
+	$row = mysqli_fetch_assoc($result);
 }
 
 //check if user has logged in and can post

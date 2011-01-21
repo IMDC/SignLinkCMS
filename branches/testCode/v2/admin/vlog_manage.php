@@ -13,9 +13,9 @@ require(INCLUDE_PATH.'admin_header.inc.php'); ?>
 <?php
 //get forums
 $sql = "SELECT * FROM vlogs WHERE 1";
-$result = mysql_query($sql, $db);
+$result = mysqli_query($db, $sql);
 $r = 1;
-if (mysql_num_rows($result)) { ?>
+if (mysqli_num_rows($result)) { ?>
 	<table class="manage">
 	<tr>
 		<th>Member</th>
@@ -25,7 +25,7 @@ if (mysql_num_rows($result)) { ?>
 		<th style="text-align:center;">Manage</th>
 	</tr>
 	<?php
-	while ($row = mysql_fetch_assoc($result)) {
+	while ($row = mysqli_fetch_assoc($result)) {
 
 		$title = get_title('vlog', $row['vlog_id'],'small');
 

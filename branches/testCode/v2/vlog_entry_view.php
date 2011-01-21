@@ -9,8 +9,8 @@ $entry_id = intval($_REQUEST['e']);
 $vlog_id = intval($_REQUEST['v']);
 
 $sql = "SELECT * FROM vlogs_entries WHERE vlog_id=".$vlog_id." AND entry_id=".$entry_id." ORDER BY date DESC";
-$result = @mysql_query($sql, $db);
-if (!$row = @mysql_fetch_assoc($result)) {
+$result = @mysqli_query($db, $sql);
+if (!$row = @mysqli_fetch_assoc($result)) {
 	echo "Entry not found.";
 	require(INCLUDE_PATH.'footer.inc.php'); 
 	exit;
@@ -43,7 +43,7 @@ if (!$row = @mysql_fetch_assoc($result)) {
 	<?php echo get_title('entry', $entry_id, 'small'); ?>
 	</div>
 	<div id="submenu" style="margin-top:41px;">
-		<li><a href='vlog_entries.php?v=<?php echo $vlog_id; ?>'><img src='images/arrow_left.png' alt='Back to vlog entries' title='Back to vlog entries' class='buttonimage' /></a></li>	
+		<li><a href='vlog_entries.php?v=<?php echo $vlog_id; ?>'><img src='images/arrow_left_32.png' alt='Back to vlog entries' title='Back to vlog entries' class='buttonimage' /></a></li>	
 	</div>	
 	<div style="clear:both" /></div>
 </div>
@@ -67,15 +67,15 @@ if (!$row = @mysql_fetch_assoc($result)) {
 	
 	<?php	
 	$sql = "SELECT * FROM vlogs_comments WHERE vlog_id=".$vlog_id." AND entry_id=".$entry_id." ORDER BY date DESC";
-	$result = mysql_query($sql, $db); ?>
+	$result = mysqli_query($db, $sql); ?>
 
 	<table class="manage">
 	<tr>
 		<th colspan="4"><a style="float:right;padding-right:10px;" href="vlog_comment_create.php?v=<?php echo $vlog_id.'&e='.$entry_id; ?>"><img src='images/comment_add.png' alt='Add comment' title='Add comment' /></a> Comments</th>
 	</tr>	
-	<?php if (@mysql_num_rows($result)) { ?>
+	<?php if (@mysqli_num_rows($result)) { ?>
 		<?php 
-			while ($row = mysql_fetch_assoc($result)) { 
+			while ($row = mysqli_fetch_assoc($result)) { 
 				echo '<tr>';
 				if (!empty($row['comment'])) {
 					//the msg is plain text

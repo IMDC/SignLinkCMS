@@ -10,9 +10,9 @@ if (isset($_POST['cancel'])) {
 
 } else if ($_POST['email'] || $_GET['processed']) {
 		$sql = "SELECT login, password FROM members WHERE email='".addslashes($_POST['email'])."'";
-		$result = mysql_query($sql, $db);		
+		$result = mysqli_query($db, $sql);		
 		
-		if ($row = @mysql_fetch_assoc($result)) {		
+		if ($row = @mysqli_fetch_assoc($result)) {		
 			$body = "The following are your login details for the Signlink forum website:"."\n\n";
 			$body .= "Login: ". $row['login']."\n";
 			$body .= "Password: ". $row['password']."\n";

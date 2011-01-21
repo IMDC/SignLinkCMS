@@ -5,41 +5,48 @@ require(INCLUDE_PATH.'vitals.inc.php');
 //if (isset($_POST['submit'])) {
 if ($_POST) {
 
-	$chk_email = $addslashes($_POST['email']);
-	$chk_login = $addslashes($_POST['login']);
+	//$chk_email = $addslashes($_POST['email']);
+	$chk_email = mysqli_real_escape_string($db, $_POST['email']);
+	//$chk_login = $addslashes($_POST['login']);
+	$chk_login= mysqli_real_escape_string($db, $_POST['login']);
 
 	//error check
 	if (empty($_POST['name'])) {
 		$_SESSION['errors'][] = 'Please enter your name.';
-	} 
+	}
+   
 	if (empty($_POST['email'])) {
 		$_SESSION['errors'][] = 'Please enter your email.';
-	} else if (!eregi("^[a-z0-9\._-]+@+[a-z0-9\._-]+\.+[a-z]{2,6}$", $_POST['email'])) {
+	}
+  else if (!eregi("^[a-z0-9\._-]+@+[a-z0-9\._-]+\.+[a-z]{2,6}$", $_POST['email'])) {
 		$_SESSION['errors'][] = 'Please enter a valid email.';
 	} 
 	
-	$result = mysql_query("SELECT * FROM members WHERE email='$chk_email'",$db);
-	if (mysql_num_rows($result) != 0) {
-		$_SESSION['errors'][] = 'Email address already in use. Try the Password Reminder.';
+	$result = mysqli_query($db, "SELECT * FROM membersCopy WHERE email='$chk_email'");
+	if (mysqli_num_rows($result) != 0) {
+		$_SESSION['errors'][] = 'Email address already in use. Try the <a href="password_reset.php">Password Reset.</a>';
 	}
 
 	if (empty($_POST['login'])) {
 		$_SESSION['errors'][] = 'Please enter a login name.';
-	} else {
+	} 
+  else {
 		// check for special characters 
 		if (!(eregi("^[a-zA-Z0-9_.-]([a-zA-Z0-9_.-])*$", $_POST['login']))) {
 			$_SESSION['errors'][] = 'Login name taken. Please try another.';
-		} else {
-			$result = mysql_query("SELECT * FROM members WHERE login='$chk_login'",$db);
-			if (mysql_num_rows($result) != 0) {
-				$_SESSION['errors'][] = 'Login name already exists.';
-			} /*else {
-				$result = mysql_query("SELECT * FROM admins WHERE login='$chk_login'",$db);
-				if (mysql_num_rows($result) != 0) {
-					$msg->addError('LOGIN_EXISTS');
-				}
-			}*/
 		}
+    else {
+      $result = mysqli_query($db, "SELECT * FROM membersCopy WHERE login='$chk_login'");
+      if (mysqli_num_rows($result) != 0) {
+        $_SESSION['errors'][] = 'Login name already exists.';
+      }
+      /*else {
+        $result = mysqli_query($db, "SELECT * FROM admins WHERE login='$chk_login'");
+        if (mysqli_num_rows($result) != 0) {
+          $msg->addError('LOGIN_EXISTS');
+        }
+      }*/
+    }
 	}	
 
 	if ($_POST['password'] == '') { 
@@ -57,24 +64,27 @@ if ($_POST) {
 	}
 
 	if (!isset($_SESSION['errors'])) {
-		$name       = $addslashes(trim($_POST['name']));
-		$email      = $addslashes(trim($_POST['email']));
-		$login      = $addslashes(trim($_POST['login']));
-		$password   = $addslashes(trim($_POST['password']));
+		//$name       = $addslashes(trim($_POST['name']));
+		//$email      = $addslashes(trim($_POST['email']));
+		//$login      = $addslashes(trim($_POST['login']));
 
-		/* MD5 encryption for the password for added security */
-		//$password = md5($password);
+		$name       = mysqli_real_escape_string($db, trim($_POST['name']));
+		$email      = mysqli_real_escape_string($db, trim($_POST['email']));
+		$login      = mysqli_real_escape_string($db, trim($_POST['login']));
 
+		$password   = mysqli_real_escape_string($db, trim($_POST['password']));
 
-		$sql = "INSERT INTO members VALUES (NULL, '$login', '$password', '$name', '$email')";
-		$result = mysql_query($sql, $db);
+    $sql = "INSERT INTO membersCopy VALUES (NULL, '$login', '$password', '$name', '$email', AES_ENCRYPT(concat('$login','signlinkcms'), SHA1('$password')), DEFAULT, DEFAULT, 0)";
+		$result = mysqli_query($db, $sql);
 
 		if (!$result) {
-			$_SESSION['errors'][] = 'Database error - user not added.';
+      // enable the line below to get the sql error as feedback when you are unable to register
+      //$_SESSION['errors'][] = mysqli_error($db);
+			$_SESSION['errors'][] = 'Database error - user not added. Please register again.';
 			exit;
 		}
 
-		//send email to registrant
+		//send email to registrant, not currently implemented
 
 		$_SESSION['feedback'][] = 'Registration successful. Please login.';
 		header('Location: login.php');
@@ -89,7 +99,7 @@ if (REGISTRATION_CLOSED) {
 
 ?>
 
-<h2>Register</h2>
+<h2><img src="images/user_add_48.png" />Register</h2>
 <p>Create a new account.</p>
 <p><em>Contact information - this will be used to contact you and retrieve a forgotten password, never for spam</em></p>
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="registerform" class="expose">

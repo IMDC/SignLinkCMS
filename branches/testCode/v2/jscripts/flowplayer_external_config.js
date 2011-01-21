@@ -2,14 +2,16 @@
  * Flowplayer Configuration File
  */  
 var conf = { 
-     
+
     // default clip configurations 
+    defaults: {
+        autoPlay: false,
+        autoBuffering: true,
+    },
+
     noplay: { 
          
         autoPlay: false, 
-        autoBuffering: true, 
-		
-        //baseUrl: 'http://blip.tv/file/get', 
      
         onBegin: function() { 
             this.getControls().fadeIn(4000); 
@@ -19,9 +21,6 @@ var conf = {
     yesplay: { 
          
         autoPlay: true, 
-        autoBuffering: true, 
-		
-        //baseUrl: 'http://blip.tv/file/get', 
      
         onBegin: function() { 
             this.getControls().fadeIn(4000); 
@@ -30,32 +29,50 @@ var conf = {
 
 
     small: {
-        backgroundColor: '#000000',
-        backgroundGradient: 'low',
-        autoHide: 'always',
-        hideDelay: 2000,
-        all: false,
-        scrubber: true,
-        //mute: true,
-        fullscreen: true,
         height: 14,
-        progressColor: '#FFFF00',
-        progressGradient: 'medium',
-        bufferColor: '#333333'
-    },
-
-    big: {
-        backgroundColor: '#000000',
-        backgroundGradient: 'low',
-        autoHide: 'always',
-        hideDelay: 2000,
+        scaling: 'fit',
+        backgroundColor: 'transparent',
+        backgroundGradient: "low",
+        autoHide: {
+          fullscreenOnly: false, 
+          hideDelay: 2000
+        },
         all: false,
         scrubber: true,
         mute: true,
         fullscreen: true,
-        height: 25,
         progressColor: '#FFFF00',
         progressGradient: 'medium',
-        bufferColor: '#333333'
+        bufferColor: '#333333',
+        tooltips: {
+          buttons: true,
+          fullscreen: 'Show in fullscreen'
+        }
+    },
+
+    big: {
+        height: 25,
+        scaling: 'fit',
+        backgroundColor: 'transparent',
+        backgroundGradient: "low",
+        autoHide: {
+          fullscreenOnly: false, 
+          hideDelay: 2000
+        },
+        all: false,
+        play: true,
+        volume: true,
+        mute: true,
+        timeFontSize: 9,
+        slowForward: true,
+        scrubber: true,
+        fullscreen: true,
+        progressColor: '#FFFF00',
+        progressGradient: 'medium',
+        bufferColor: '#333333',
+        tooltips: {
+          buttons: true,
+          fullscreen: 'Show in fullscreen'
+        }
     }
 }

@@ -69,9 +69,9 @@ function get_vlog_owner($id) {
 	global $db;
 		
 	$sql = "SELECT member_id FROM vlogs WHERE vlog_id=".$id;
-	$result = mysql_query($sql, $db);
+	$result = mysqli_query($db, $sql);
 	
-	$row = @mysql_fetch_assoc($result);
+	$row = @mysqli_fetch_assoc($result);
 			
 	return $row['member_id'];
 }

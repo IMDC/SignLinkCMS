@@ -10,7 +10,7 @@ $entry_id = intval($_REQUEST['e']);
 $vlog_id = intval($_REQUEST['v']);
 
 $sql = "SELECT * FROM vlogs_comments WHERE vlog_id=".$vlog_id." AND entry_id=".$entry_id." AND comment_id=".$comment_id." ORDER BY date DESC";
-$result = mysql_query($sql, $db);
+$result = mysqli_query($db, $sql);
 ?>
 
 <div id="post-title">
@@ -21,13 +21,13 @@ $result = mysql_query($sql, $db);
 		<?php echo get_title('entry', $entry_id, 'small'); ?>
 	</div>
 	<div id="submenu" style="margin-top:41px;">
-		<?php echo "<li><a href='vlog_entry_view.php?v=$vlog_id&e=$entry_id'><img src='images/arrow_left.png' alt='Back to entry' title='Back to entry' class='buttonimage' /></a></li>"; ?>				
+		<?php echo "<li><a href='vlog_entry_view.php?v=$vlog_id&e=$entry_id'><img src='images/arrow_left_32.png' alt='Back to entry' title='Back to entry' class='buttonimage' /></a></li>"; ?>				
 	</div>	
 	<div style="clear:both" /></div>
 </div>
 
 <div id="post">	
-	<?php if ($row = mysql_fetch_assoc($result)) {  ?>
+	<?php if ($row = mysqli_fetch_assoc($result)) {  ?>
 
 		<div id="post-info">
 			<div style="padding-bottom:5px;"><?php echo get_login($row['member_id']); ?></div>

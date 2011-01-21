@@ -2,15 +2,19 @@
 define('INCLUDE_PATH', 'include/');
 require(INCLUDE_PATH.'vitals.inc.php');
 
-if (isset($_POST['submit']) || isset($_POST['submitImg.x'])) {
+if (isset($_POST['loginSubmit']) || isset($_POST['password']) || isset($_POST['submitImg.x'])) {
 	$this_login = $_POST['login'];
-
+ 
+  /*
 	if (strlen($_POST['password_hidden']) < 40) { // <noscript> on client end
 		$this_password = sha1($_POST['password'] . $_SESSION['token']);
 	} else { // sha1 ok
-		$this_password = $_POST['password_hidden'];
+    $this_password = $_POST['password_hidden'];
 	}
+  */
+  $this_password = mysqli_real_escape_string($db, $_POST['password']);
 	$used_cookie	= false;
+  // login/pass good to here
 }
 
 if (isset($this_login, $this_password)) {
@@ -18,19 +22,32 @@ if (isset($this_login, $this_password)) {
 		session_regenerate_id(TRUE);
 	}*/
 
+  /*
 	$this_login    = $addslashes($this_login);
 	$this_password = $addslashes($this_password);
+  */
+
+  /* addslashes as of Jan 2011 is not working (after server migration)
+  ** have replaced it with mysqli_real_escape_string for now **/
+  $this_login = mysqli_real_escape_string($db, $this_login);
+  $this_password = mysqli_real_escape_string($db, $this_password);
 
 	if ($used_cookie) {
 		// check if that cookie is valid
 		$sql = "SELECT member_id, login, SHA1(CONCAT(password, '-', '".DB_PASSWORD."')) AS pass FROM members WHERE login='$this_login' AND SHA1(CONCAT(password, '-', '".DB_PASSWORD."'))='$this_password'";
 
 	} else {
-		$sql = "SELECT member_id, login, SHA1(CONCAT(password, '-', '".DB_PASSWORD."')) AS pass FROM members WHERE login='$this_login' AND SHA1(CONCAT(password, '$_SESSION[token]'))='$this_password'";
-	}
-	$result = mysql_query($sql, $db);
-
-	if ($row = mysql_fetch_assoc($result)) {
+		//$sql = "SELECT member_id, login, SHA1(CONCAT(password, '-', '".DB_PASSWORD."')) AS pass FROM members WHERE login='$this_login' AND SHA1(CONCAT(password, '$_SESSION[token]'))='$this_password'";
+    //$sql = "SELECT member_id, login, sh_pass from members where login='$this_login'";
+    $sql = "SELECT member_id, login, name, last_login_ts FROM membersCopy where login = '$this_login' and bl_pass = AES_ENCRYPT(concat('$this_login','signlinkcms'), SHA1('$this_password'))";
+    print $sql;
+  }
+	$result = mysqli_query($db, $sql);
+  
+  if (!$result) { 
+    echo 'Could not successfully run query($sql) from DB: ' . mysqli_error();exit;
+  }
+	if ($row = mysqli_fetch_assoc($result)) {
 		$_SESSION['valid_user'] = true;
 		$_SESSION['member_id']	= intval($row['member_id']);
 		$_SESSION['login']		= $row['login'];
@@ -45,9 +62,14 @@ if (isset($this_login, $this_password)) {
 		}
 
 		//$sql = "UPDATE ".TABLE_PREFIX."members SET creation_date=creation_date, last_login=NOW() WHERE member_id=$_SESSION[member_id]";
-		//mysql_query($sql, $db);
+		
+    //$sql = "UPDATE membersCopy set last_login_ts = NOW() WHERE member_id = $_SESSION[member_id]";
+    //$_SESSION['feedback'][] = mysqli_query($db, $sql);
+    $_SESSION['feedback'][] = update_member_last_login($_SESSION['member_id']);  //updates the last time the member logged in to right now for future logins
 
 		$_SESSION['feedback'][] = 'Successfully logged in.';
+    $_SESSION['feedback'][] = 'Welcome back ' . $row['name'] . '!';
+    $_SESSION['feedback'][] = 'Your last login was: ' . $row['last_login_ts'];
 
 		if (isset($_POST['f']) && !empty($_POST['f'])) {
 			header('Location:forum_post_create.php?f='.$_POST['f'].'&p='.$_POST['p']);
@@ -57,7 +79,8 @@ if (isset($this_login, $this_password)) {
 			header('Location:index.php');
 		}
 		exit;	
-	} else {
+	} 
+   else {
 		$_SESSION['errors'][] = 'Invalid login.';
 	}
 
@@ -89,9 +112,9 @@ require(INCLUDE_PATH.'header.inc.php'); ?>
 
 <h2>Login</h2>
 
-<p><a href="register.php"><img src="images/register_add.png" class="inlineVertMid" />Register</a> for a new account or use the <a href="password_reminder.php"><img src="images/mail_key_small.png" class="inlineVertMid" />Password Reminder</a> if you have forgotten your login information.</p>
+<p><a href="register.php"><img src="images/user_add.png" class="inlineVertMid" />Register</a> for a new account or use the <a href="password_reset.php"><img src="images/mail_key_small.png" class="inlineVertMid" />Password Reminder</a> if you have forgotten your login information.</p>
 
-<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
+<form action="login.php" method="post" name="form">
 		<input type="hidden" name="login_action" value="true" />
 		<input type="hidden" name="password_hidden" value="" />
 

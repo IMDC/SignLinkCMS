@@ -23,8 +23,8 @@ if ($_POST) {
 		$_SESSION['errors'][] = 'Please enter a valid email.';
 	} 
 	
-	$result = mysql_query("SELECT * FROM members WHERE email='$chk_email'",$db);
-	if (mysql_num_rows($result) != 0) {
+	$result = mysqli_query($db, "SELECT * FROM members WHERE email='$chk_email'");
+	if (mysqli_num_rows($result) != 0) {
 		$_SESSION['errors'][] = 'Email address already in use. Try the Password Reminder.';
 	}
 
@@ -35,12 +35,12 @@ if ($_POST) {
 		if (!(eregi("^[a-zA-Z0-9_.-]([a-zA-Z0-9_.-])*$", $_POST['login']))) {
 			$_SESSION['errors'][] = 'Login name taken. Please try another.';
 		} else {
-			$result = mysql_query("SELECT * FROM members WHERE login='$chk_login'",$db);
-			if (mysql_num_rows($result) != 0) {
+			$result = mysqli_query($db, "SELECT * FROM members WHERE login='$chk_login'");
+			if (mysqli_num_rows($result) != 0) {
 				$_SESSION['errors'][] = 'Login name already exists.';
 			} /*else {
-				$result = mysql_query("SELECT * FROM admins WHERE login='$chk_login'",$db);
-				if (mysql_num_rows($result) != 0) {
+				$result = mysqli_query($db, "SELECT * FROM admins WHERE login='$chk_login'");
+				if (mysqli_num_rows($result) != 0) {
 					$msg->addError('LOGIN_EXISTS');
 				}
 			}*/
@@ -72,7 +72,7 @@ if ($_POST) {
 
 
 		$sql = "INSERT INTO members VALUES (NULL, '$login', '$password', '$name', '$email')";
-		$result = mysql_query($sql, $db);
+		$result = mysqli_query($db, $sql);
 
 		if (!$result) {
 			$_SESSION['errors'][] = 'Database error - user not added.';
@@ -130,9 +130,9 @@ if ($_POST) {
 <?php
 //get members
 $sql = "SELECT * FROM members WHERE login!='admin'";
-$result = mysql_query($sql, $db);
+$result = mysqli_query($db, $sql);
 $r = 1;
-if (mysql_num_rows($result)) { ?>
+if (mysqli_num_rows($result)) { ?>
 	<table class="manage">
 	<tr>
 		<th>ID</th>
@@ -142,7 +142,7 @@ if (mysql_num_rows($result)) { ?>
 		<th style="text-align:center;">Manage</th>
 	</tr>
 	<?php
-	while ($row = mysql_fetch_assoc($result)) {
+	while ($row = mysqli_fetch_assoc($result)) {
 		//print forum row info
 		echo '<tr class="row'.$r.'">';
 		echo '<td>'.$row['member_id'].'</td>'; 

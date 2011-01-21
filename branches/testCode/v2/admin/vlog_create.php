@@ -67,10 +67,10 @@ if (isset($_POST['cancel'])) {
 		//insert into db
 		$sql = "INSERT INTO vlogs VALUES (0, '$member', '$subject', '$subject_alt', 0, NOW())";
 
-		if (!$result = mysql_query($sql, $db)) {
+		if (!$result = mysqli_query($db, $sql)) {
 			$_SESSION['errors'][] = 'Database error.';
 		} else {
-			$vlog_id = mysql_insert_id();
+			$vlog_id = mysqli_insert_id($db);
 
 			//save files			
 			switch ($_POST['subject']) {

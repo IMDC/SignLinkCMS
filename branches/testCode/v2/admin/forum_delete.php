@@ -9,16 +9,16 @@ $forum_id = intval($_GET['f']);
 if (isset($_GET['t']) && !empty($_GET['t'])) {
 	//delete title file
 	$sql = "UPDATE forums SET title_file='' WHERE forum_id=".$forum_id;
-	$result = mysql_query($sql, $db);
+	$result = mysqli_query($db, $sql);
 	$_SESSION['feedback'][] = 'Forum title deleted.';
 
 } else {
 
 	//delete all forum post files
 	$sql = "SELECT * FROM forums_posts WHERE forum_id=".$forum_id;
-	$result = mysql_query($sql, $db);
-	if (@mysql_num_rows($result)) { 
-		while ($row = mysql_fetch_assoc($result)) {
+	$result = mysqli_query($db, $sql);
+	if (@mysqli_num_rows($result)) { 
+		while ($row = mysqli_fetch_assoc($result)) {
 			$post_path = '../'.UPLOAD_DIR.'posts/'.$row['post_id'].'/';
 			if (file_exists($post_path)) {
 				$dir_files = @scandir($post_path);			
@@ -32,7 +32,7 @@ if (isset($_GET['t']) && !empty($_GET['t'])) {
 
 	//delete threads
 	$sql = "DELETE FROM forums_posts WHERE forum_id=".$forum_id;
-	$result = mysql_query($sql, $db);
+	$result = mysql_query($db, $sql);
 	
 	//delete forum files
 	$forum_path = '../'.UPLOAD_DIR.'forums/'.$forum_id.'/';
@@ -46,7 +46,7 @@ if (isset($_GET['t']) && !empty($_GET['t'])) {
 
 	//delete forum
 	$sql = "DELETE FROM forums WHERE forum_id=".$forum_id;
-	$result = mysql_query($sql, $db);
+	$result = mysqli_query($db, $sql);
 
 	$_SESSION['feedback'][] = 'Forum deleted.';
 }

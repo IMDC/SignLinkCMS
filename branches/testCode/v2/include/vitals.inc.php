@@ -9,7 +9,8 @@ require('constants.inc.php');
 session_start();
 
 if (INCLUDE_PATH !== 'NULL') {
-	$db = @mysql_connect(DB_HOST . ':' . DB_PORT, DB_USER, DB_PASSWORD);
+	/*
+  $db = @mysql_connect(DB_HOST . ':' . DB_PORT, DB_USER, DB_PASSWORD);
 	if (!$db) {
 		die('Could not connect: ' . mysql_error());
 	}
@@ -17,10 +18,24 @@ if (INCLUDE_PATH !== 'NULL') {
 		echo 'DB connection established, but database "'.DB_HOST.'" cannot be selected.';
 		exit;
 	}
+  */
+
+  /*  Change to mysqli PHP db interface for improved security */
+  $db = @mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME, DB_PORT);
+  if (!$db) {
+    //printf("Connect failed: %s\n", mysqli_connect_error());
+    //exit();
+    die('Could not connect: ' . mysqli_connect_error());
+  }
+  if (mysqli_connect_errno()) {
+    die('Connect failed: ' . mysqli_connect_error());
+  } 
+  /***** if here, connect successful   *****/
 }
 
 function my_add_null_slashes( $string ) {
-    return mysql_real_escape_string(stripslashes($string));
+    global $db;
+    return mysqli_real_escape_string($db, stripslashes($string));
 }
 function my_null_slashes($string) {
 	return $string;
@@ -29,7 +44,7 @@ if ( get_magic_quotes_gpc() == 1 ) {
 	$addslashes   = 'my_add_null_slashes';
 	$stripslashes = 'stripslashes';
 } else {
-	$addslashes   = 'mysql_real_escape_string';
+	$addslashes   = 'mysqli_real_escape_string';
 	$stripslashes = 'my_null_slashes';
 }
 
@@ -61,8 +76,8 @@ function user_authenticate() {
 
 
 /* set administrator preferences for the site */
-$result = @mysql_query( "SELECT * FROM settings WHERE 1", $db);
-while ($row = @mysql_fetch_assoc($result)) {
+$result = @mysqli_query($db, "SELECT * FROM settings WHERE 1");
+while ($row = @mysqli_fetch_assoc($result)) {
 	define(strtoupper($row['name']), $row['value']);
 }
 

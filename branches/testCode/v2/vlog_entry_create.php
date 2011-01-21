@@ -100,14 +100,14 @@ if (isset($_POST['cancel'])) {
 		//insert into db
 		$now = date('Y-m-d G:i:s');
 		$sql = "INSERT INTO vlogs_entries VALUES (NULL, '$vlog_id', '$subject', '$subject_alt', '$message', '$message_alt', '$now', 0)";
-		if (!$result = mysql_query($sql, $db)) {
+		if (!$result = mysqli_query($db, $sql)) {
 			$_SESSION['errors'][] = 'Database error.';
 		} else {
-			$entry_id = mysql_insert_id();
+			$entry_id = mysqli_insert_id($db);
 			
 			//update info for vlog
 			$sql = "UPDATE vlogs SET last_entry='$now', num_entries=num_entries+1 WHERE vlog_id='$vlog_id'";
-			$result = mysql_query($sql, $db);
+			$result = mysqli_query($db, $sql);
 
 
 			//save files			

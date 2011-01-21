@@ -61,10 +61,10 @@ if (isset($_POST['cancel'])) {
 
 		//insert into db
 		$sql = "INSERT INTO vlogs_comments VALUES (NULL, $_SESSION[member_id], $vlog_id, $entry_id, '$message', '$message_alt', NOW())";
-		if (!$result = mysql_query($sql, $db)) {
+		if (!$result = mysqli_query($db, $sql)) {
 			$_SESSION['errors'][] = 'Database error.';
 		} else {
-			$comment_id = mysql_insert_id();
+			$comment_id = mysqli_insert_id($db);
 			switch ($_POST['message']) {
 				case 'signlink':
 					if (is_uploaded_file($_FILES['sl1msg-file']['tmp_name']) && is_uploaded_file($_FILES['sl2msg-file']['tmp_name'])) {
@@ -80,7 +80,7 @@ if (isset($_POST['cancel'])) {
 			}
 
 			$sql = "UPDATE vlogs_entries SET num_comments=num_comments+1";
-			$result = mysql_query($sql, $db);
+			$result = mysqli_query($db, $sql);
 
 			//redirect	
 			$_SESSION['feedback'][] = 'Comment posted successfully.';
