@@ -3,16 +3,16 @@
 	</div>
 	<div id="footer">
 		&nbsp;
+        <?php echo '<p class="timezone-footer">All times in ' . date("T") . '</p>'; ?>
 	</div>
 </div>
 <?php //debug($_SESSION)
-  if (detectMobile()) {
-    echo '<p><h1>mobile browser was detected in the footer</h1></p>';
-  }
-  else {
-    echo '<p><h1>no mobile browser was detected in the footer</h1></p>';
-  }
+  // if (detectMobile()) {
+    // echo '<p><h1>mobile browser was detected in the footer</h1></p>';
+  // }
+  // else {
+    // echo '<p><h1>no mobile browser was detected in the footer</h1></p>';
+  // }
 ?>
-
 </body>
 </html>

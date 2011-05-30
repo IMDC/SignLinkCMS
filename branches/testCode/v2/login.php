@@ -12,8 +12,8 @@ if (isset($_POST['loginSubmit']) || isset($_POST['password']) || isset($_POST['s
     $this_password = $_POST['password_hidden'];
 	}
   */
-  $this_password = mysqli_real_escape_string($db, $_POST['password']);
-	$used_cookie	= false;
+   $this_password = mysqli_real_escape_string($db, $_POST['password']);
+   $used_cookie	= false;
   // login/pass good to here
 }
 
@@ -29,25 +29,26 @@ if (isset($this_login, $this_password)) {
 
   /* addslashes as of Jan 2011 is not working (after server migration)
   ** have replaced it with mysqli_real_escape_string for now **/
-  $this_login = mysqli_real_escape_string($db, $this_login);
-  $this_password = mysqli_real_escape_string($db, $this_password);
+   $this_login    = mysqli_real_escape_string($db, $this_login);
+   $this_password = mysqli_real_escape_string($db, $this_password);
 
-	if ($used_cookie) {
-		// check if that cookie is valid
-		$sql = "SELECT member_id, login, SHA1(CONCAT(password, '-', '".DB_PASSWORD."')) AS pass FROM members WHERE login='$this_login' AND SHA1(CONCAT(password, '-', '".DB_PASSWORD."'))='$this_password'";
+   if ($used_cookie) {
+      // check if that cookie is valid
+      $sql = "SELECT member_id, login, SHA1(CONCAT(password, '-', '".DB_PASSWORD."')) AS pass FROM members WHERE login='$this_login' AND SHA1(CONCAT(password, '-', '".DB_PASSWORD."'))='$this_password'";
 
-	} else {
+   } else {
 		//$sql = "SELECT member_id, login, SHA1(CONCAT(password, '-', '".DB_PASSWORD."')) AS pass FROM members WHERE login='$this_login' AND SHA1(CONCAT(password, '$_SESSION[token]'))='$this_password'";
     //$sql = "SELECT member_id, login, sh_pass from members where login='$this_login'";
     $sql = "SELECT member_id, login, name, last_login_ts FROM membersCopy where login = '$this_login' and bl_pass = AES_ENCRYPT(concat('$this_login','signlinkcms'), SHA1('$this_password'))";
-    print $sql;
-  }
-	$result = mysqli_query($db, $sql);
+    //print $sql;
+   }
+   
+   $result = mysqli_query($db, $sql);
   
-  if (!$result) { 
-    echo 'Could not successfully run query($sql) from DB: ' . mysqli_error();exit;
-  }
-	if ($row = mysqli_fetch_assoc($result)) {
+   if (!$result) { 
+      echo 'Could not successfully run query($sql) from DB: ' . mysqli_error();exit;
+   }
+   if ($row = mysqli_fetch_assoc($result)) {
 		$_SESSION['valid_user'] = true;
 		$_SESSION['member_id']	= intval($row['member_id']);
 		$_SESSION['login']		= $row['login'];
@@ -61,30 +62,41 @@ if (isset($this_login, $this_password)) {
 			setcookie('SLPass',  $row['pass'],  $cookie_expire, $parts['path'], $parts['host'], 0);
 		}
 
-		//$sql = "UPDATE ".TABLE_PREFIX."members SET creation_date=creation_date, last_login=NOW() WHERE member_id=$_SESSION[member_id]";
-		
-    //$sql = "UPDATE membersCopy set last_login_ts = NOW() WHERE member_id = $_SESSION[member_id]";
-    //$_SESSION['feedback'][] = mysqli_query($db, $sql);
-    $_SESSION['feedback'][] = update_member_last_login($_SESSION['member_id']);  //updates the last time the member logged in to right now for future logins
+         //$sql = "UPDATE ".TABLE_PREFIX."members SET creation_date=creation_date, last_login=NOW() WHERE member_id=$_SESSION[member_id]";
 
-		$_SESSION['feedback'][] = 'Successfully logged in.';
-    $_SESSION['feedback'][] = 'Welcome back ' . $row['name'] . '!';
-    $_SESSION['feedback'][] = 'Your last login was: ' . $row['last_login_ts'];
+         //$sql = "UPDATE membersCopy set last_login_ts = NOW() WHERE member_id = $_SESSION[member_id]";
+         //$_SESSION['feedback'][] = mysqli_query($db, $sql);
 
-		if (isset($_POST['f']) && !empty($_POST['f'])) {
-			header('Location:forum_post_create.php?f='.$_POST['f'].'&p='.$_POST['p']);
-		} else if (isset($_POST['v']) && !empty($_POST['v']) && isset($_POST['e']) && !empty($_POST['e'])) {
-			header('Location:vlog_comment_create.php?v='.$_POST['v'].'&e='.$_POST['e']);
-		} else {
-			header('Location:index.php');
-		}
-		exit;	
-	} 
-   else {
-		$_SESSION['errors'][] = 'Invalid login.';
-	}
+         //update_member_last_login($_SESSION['member_id']);  //updates the last time the member logged in to right now for future logins
 
-}
+         $_SESSION['feedback'][] = 'Successfully logged in.';
+         $_SESSION['feedback'][] = 'Welcome back ' . $row['name'] . '!';
+         if (update_member_last_login($_SESSION['member_id'])) {
+            // last user login successfully updated
+            if ( substr($row['last_login_ts'], 0, 3) == "0000") {
+               $_SESSION['feedback'][] = 'Welcome to our site! Why not <a href="preferences.php">make a custom avatar?</a>';
+            }
+            else {
+               $_SESSION['feedback'][] = 'Your last login was: ' . $row['last_login_ts'];
+            }
+         }
+
+         if (isset($_POST['f']) && !empty($_POST['f'])) {
+            header('Location:forum_post_create.php?f='.$_POST['f'].'&p='.$_POST['p']);
+         }
+         else if (isset($_POST['v']) && !empty($_POST['v']) && isset($_POST['e']) && !empty($_POST['e'])) {
+            header('Location:vlog_comment_create.php?v='.$_POST['v'].'&e='.$_POST['e']);
+         }
+         else {
+            header('Location:index.php');
+         }
+         exit;
+      }
+      else {
+           $_SESSION['errors'][] = 'Invalid login.';
+      }
+
+   }
 
 $_SESSION['session_test'] = TRUE;
 
@@ -99,7 +111,7 @@ require(INCLUDE_PATH.'header.inc.php'); ?>
 
 
 <script language="JavaScript" src="jscripts/sha-1factory.js" type="text/javascript"></script>
-
+<script language="JavaScript" src="jscripts/login.js" type="text/javascript"></script>
 <script language="JavaScript" type="text/javascript">
 //<!--
   function crypt_sha1() {
@@ -124,15 +136,16 @@ require(INCLUDE_PATH.'header.inc.php'); ?>
 		<input type="hidden" name="e" value="<?php echo intval($_REQUEST['e']); ?>" />
 
 	<dl class="col-list" style="width:33%; margin-left:auto; margin-right:auto;">
-		<dt><img src="images/user.png" alt="login" title="login" /> <label for="login">Login:</label></dt> 
-			<dd><input name="login" type="text" id="login" value="<?php echo $_SERVER['login']; ?>" /></dd>
-		<dt><img src="images/key.png" alt="password" title="password" /> <label for="pswd">Password:</label></dt> 
+		<dt><label for="login"><img src="images/user_med.png" alt="login" title="login" />Login:</label></dt>
+			<dd><input name="login" type="text" id="login" class="loginfocus" value="<?php echo $_SERVER['login']; ?>" /></dd>
+		<dt><label for="pswd"><img src="images/key3.png" alt="password" title="password" />Password:</label></dt>
 			<dd><input name="password" type="password" id="pswd" value="" /></dd>
 	</dl>
-	<div style="text-align:center">
+	<div class="centeralign" style="width:33%;">
 		<!-- label><input type="checkbox" name="autologin" value="1" /> keep me logged-in</label><br / --><br />
-		<input type="submit" name="submit" value="Submit" class="button submitBtn" />
-	</div>
+<!--		<input type="submit" name="submit" value="Submit" class="button submitBtn" />-->
+      <button type="button" id="testbutton" name="testbtn" value="Monkeys" class="submitIconBtn" style="margin-right:48px;padding:5px 10px;"> Submit <img src="images/yescheck.png" alt="" class="inlineVertMid" /></button>
+   </div>
 </form>
 
 <?php require(INCLUDE_PATH.'footer.inc.php'); ?>

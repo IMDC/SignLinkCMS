@@ -1,7 +1,7 @@
 <?php
 if (!defined('INCLUDE_PATH')) { exit; }
-
 require('config.inc.php');
+
 require('constants.inc.php');
 
 //define('AT_BASE_HREF', 'http://142.150.154.124/asl/');
@@ -21,6 +21,7 @@ if (INCLUDE_PATH !== 'NULL') {
   */
 
   /*  Change to mysqli PHP db interface for improved security */
+  /* TODO: replace whole database interaction with a DBO or similar */
   $db = @mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME, DB_PORT);
   if (!$db) {
     //printf("Connect failed: %s\n", mysqli_connect_error());

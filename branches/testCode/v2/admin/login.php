@@ -1,6 +1,6 @@
 <?php 
 define('INCLUDE_PATH', '../include/');
-require(INCLUDE_PATH.'vitals.inc.php');
+require_once(INCLUDE_PATH.'vitals.inc.php');
 
 if (isset($_POST['submit'])) {
 	
@@ -17,8 +17,6 @@ if (isset($_POST['submit'])) {
     header('Location:login.php');
     exit;
   }
-
-
 }
 
 if (isset($this_login, $this_password) && !isset($_SESSION['session_test'])) {

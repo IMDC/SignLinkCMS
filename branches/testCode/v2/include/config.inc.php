@@ -1,11 +1,11 @@
 <?php
 
 /* database connection */
-define('DB_USER', 'paulTest');
+define('DB_USER', 'mayfest');
 define('DB_PASSWORD', 'cltu53R');
-define('DB_PORT', '3306');		// 3306
-define('DB_HOST', 'localhost');		//localhost
-define('DB_NAME', 'signlinkcms_paulTest');
+define('DB_PORT', '3306');              // 3306
+define('DB_HOST', 'localhost');         //localhost
+define('DB_NAME', 'signlinkcms_mayfest');
 
 /* uploads directory */
 define('UPLOAD_DIR', 'uploads/');

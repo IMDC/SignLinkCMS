@@ -11,7 +11,7 @@ $forum_id = intval($_REQUEST['f']);
 	<h3><?php echo get_title('forum', intval($_GET['f']), 'small'); ?></h3>
 	<ul id="submenu" style="margin-top:41px;">	
 		<li><a href="forums.php?f=<?php echo intval($_GET['f']); ?>"><img src="images/arrow_left_32.png" alt="Back to forums" title="Back to forums" /></a></li>	
-		<li><a href="forum_post_create.php?f=<?php echo intval($_GET['f']); ?>"><img src="images/user_comment.png" alt="New post" title="New post" /></a></li>			
+		<li><a href="forum_post_create.php?f=<?php echo intval($_GET['f']); ?>"><img src="images/slscms-reply-icon-idea-small.png" alt="New post" title="New post" /></a></li>			
 	</ul>	
 	<div style="clear:both" /></div>
 </div>

@@ -9,7 +9,7 @@
 	<![endif]-->
 	<!--<script type="text/javascript" src="../jscripts/jquery/js/jquery-1.3.2.min.js"></script>--> 
 	<!--<script type="text/javascript" src="../jscripts/jquery/js/jquery-ui-1.7.2.custom.min.js"></script>--> 
-  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script> 
+  <script type="text/javascript" src="../jscripts/jquery-1.4.4.min.js"></script>
   <script type="text/javascript" src="../jscripts/admintweaks.js"></script>
   <script type="text/javascript" src="../jscripts/fancybox/jquery.fancybox-1.3.1.pack.js"></script>
   <script type="text/javascript" src="../jscripts/flowplayer-3.2.3.min.js"></script>

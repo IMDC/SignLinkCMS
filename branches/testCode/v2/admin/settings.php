@@ -131,7 +131,8 @@ require(INCLUDE_PATH.'admin_header.inc.php'); ?>
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>?processed=1" method="post" name="form" enctype="multipart/form-data">
 
 	<dl class="admin">
-	
+
+      <h3>Admin password is required to make any changes on this page!</h3>
 		<dt>Contact Email</dt>
 		<dd><input type="text" name="contact" value="<?php echo $settings['contact']; ?>" /></dd>
 	

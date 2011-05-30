@@ -12,9 +12,10 @@
   <![endif]-->
 
   <!--<script type="text/javascript" src="jscripts/jquery/js/jquery-1.3.2.min.js"></script>-->
-  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script> 
+  <script type="text/javascript" src="jscripts/jquery-1.4.4.min.js"></script> 
   <script type="text/javascript" src="jscripts/fancybox/jquery.fancybox-1.3.1.pack.js"></script>
-  <script type="text/javascript" src="jscripts/flowplayer-3.2.3.min.js"></script>
+  <script type="text/javascrtip" src="jscripts/fancybox/jquery.easing-1.3.pack.js"></script>
+  <script type="text/javascript" src="jscripts/flowplayer-3.2.6.min.js"></script>
   <script type="text/javascript" src="jscripts/flowplayer_external_config.js"></script>
   <script type="text/javascript" src="jscripts/tweaks.js"></script>
   <!--<script type="text/javascript" src="http://cdn.jquerytools.org/1.1.2/jquery.tools.min.js"></script>-->
@@ -51,7 +52,8 @@
          <input type="submit" name="loginSubmit" id="submitLogin" value="Login" class="button" />
          </div>
 
-			<br style="clear:both" /><hr style="margin-top: 8px; width: 80%; height:2px; color: #0066FF;" />
+			<br style="clear:both" />
+<!--            <hr style="margin-top: 8px; width: 80%; height:2px; color: #0066FF;" />-->
       <div id="login-footer-container">
         <ul>
           <li><a href="register.php"><img src="images/user_add_32.png" class="inlineVertMid" alt="" /></a><a href="register.php">Register</a></li>
@@ -85,7 +87,9 @@
 			<li id="menu-vlog"><a href="vlogs.php"><img src="images/vlog.png" class="vlognavicon<?php if(in_array($current_page, $vlog_pages)) { echo ' menu-current';}?>" alt="vlogs" title="vlogs"  /></a></li>
 			
 			<li id="menu-help"><a href="help.php"><img src="images/help.png" class="helpnavicon<?php if($current_page == 'help.php'){echo ' menu-current';}?>" alt="help" title="help"  /></a></li>	
-		</ul>
+<!--         <li><a href="#"><img src="images/about-edit-2.png" alt="deleteme" /></a></li>-->
+<!--         <li><a class="findmehere" href="images/default_movie_icon.png"><img src="images/lvlog2.png" alt="" /></a></li>-->
+      </ul>
 	</div>
 <div id="content">
 	<?php 
@@ -118,7 +122,7 @@
          
          echo $fbmsg;
          if (strcmp($fbmsg, $goodlogin) == 0) {
-            echo '<img src="images/accepted_48.png" alt="" title="correct login" class="inlineVertMid" style="margin:5 10;" />';
+            echo '<img src="images/accepted_48.png" alt="" title="correct login" class="inlineVertMid" style="float:right;margin:5 10;" />';
          }
 
          echo '<br />';
