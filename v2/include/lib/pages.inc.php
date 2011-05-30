@@ -60,22 +60,34 @@ function get_content($id) {
 						style="float:left;" />
 					</object>';
                */
-               if ( file_exists($content_path . "thumb.jpg") ) {
-                  $thumbjpg = $content_path . "thumb.jpg";
-               }
-               else {
-                  $thumbjpg = "images/default_movie_icon.png";
-               }
-               $content = ' 
+         if ( file_exists($content_path . "thumb.jpg") ) {
+            $thumbjpg = $content_path . "thumb.jpg";
+           }
+           else {
+              $thumbjpg = "images/default_movie_icon.png";
+           }
+           
+						/*
+            <a  
+							 href="'.$content_path.$content_file.'"
+							 class = "flash_player_holder" 
+							 style="background-image:url(\''.$thumbjpg.'\');display:block;width:'.VIDEO_MSG_WIDTH.'px;height:'.VIDEO_MSG_HEIGHT.'px;margin-left:auto;margin-right:auto;text-align:center;"
+							 id="'.$content_path.'content">
+							 <img src="images/play_large.png" style="border:0 none;margin-top:'.((VIDEO_MSG_HEIGHT/2)-30).'px;width:60px;height:60px;margin-left:auto;margin-right:auto;" alt="'.$row[1].'" />
+						</a> 
+           */
+           
+           $content = ' 
 						<a  
 							 href="'.$content_path.$content_file.'"
 							 class = "flash_player_holder" 
-							 style="display:block;width:'.VIDEO_MSG_WIDTH.'px;height:'.VIDEO_MSG_HEIGHT.'px;margin-left:auto;margin-right:auto;"  
+               alt="'.$row[1].'" 
+							 style="width:'.VIDEO_MSG_WIDTH.'px;height:'.VIDEO_MSG_HEIGHT.'px;margin-left:auto;margin-right:auto;"  
 							 id="'.$content_path.'content">
-							 <img src="'.$thumbjpg.'" height="'.VIDEO_MSG_HEIGHT.'px" width="'.VIDEO_MSG_WIDTH.'px" alt="'.$row[1].'" />
-						</a> 
+							 <img style="margin-left:-3px;" src="'.$thumbjpg.'" height="'.VIDEO_MSG_HEIGHT.'px" width="'.VIDEO_MSG_WIDTH.'px" alt="'.$row[1].'" />
+						</a>
 						<script type="text/javascript">
-							flowplayer("'.$content_path.'content", "flash/flowplayer-3.2.3.swf", {
+							flowplayer("'.$content_path.'content", "flash/flowplayer-3.2.7.swf", {
 								clip: {
                   url: \''.$content_path.$content_file.'\',
                   autoPlay: true,

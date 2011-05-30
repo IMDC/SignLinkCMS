@@ -1,6 +1,8 @@
 <?php 
 define('INCLUDE_PATH', '../include/');
-require(INCLUDE_PATH.'vitals.inc.php');
+define('FROM_ADMIN', '1');
+
+require_once(INCLUDE_PATH.'vitals.inc.php');
 
 admin_authenticate();
 

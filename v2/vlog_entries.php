@@ -13,7 +13,7 @@ $vlog_id = intval($_REQUEST['v']);
     <li><a href="vlogs.php?v=<?php echo intval($_GET['v']); ?>"><img src="images/arrow_left_32.png" alt="Back to vlogs" title="Back to vlogs" /></a></li>	
 
     <?php if(get_vlog_owner($vlog_id) == $_SESSION['member_id']) { ?>
-    <li><a href="vlog_entry_create.php?v=<?php echo intval($_GET['v']); ?>"><img src="images/user_comment.png" alt="New entry" title="New entry" /></a></li>			
+    <li><a href="vlog_entry_create.php?v=<?php echo intval($_GET['v']); ?>"><img src="images/slscms-reply-icon-idea-small.png" alt="New entry" title="New entry" /></a></li>			
     <?php } ?>
   </ul><br />	
 </div>

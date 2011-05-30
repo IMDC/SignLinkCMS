@@ -1,12 +1,24 @@
 $(document).ready(function() {
 	// this enables highlighting on mouse over of posts (image, video or text)
-	$("div.title").children().each(function() {
+	$("div.title").hover(
+         function () { $(this).addClass("highlight"); },
+         function () { $(this).removeClass("highlight"); }
+    );
+    $("div.title").children().each(function() {
 		  $(this).hover(
-							 function () { $(this).addClass("highlight"); },
-							 function () { $(this).removeClass("highlight"); }
-				);
+              function () { $(this).addClass("highlight"); },
+              function () { $(this).removeClass("highlight"); }
+          );
 	});
    
+   // On focus of any text input field, the background is highlighted
+   $("input[type=text]").focus(function() {
+      $(this).css("background", "#66ff99");
+   });
+   $("input[type=text]").blur(function() {
+      $(this).css("background", "#ffffff");
+   })
+
 	// this animates the home icon in the navigation menu
 	$(".homenavicon").hover(
 			  function () { $(this).attr("src", "images/homeicon3.gif"); },
@@ -46,15 +58,17 @@ $(document).ready(function() {
     $(this).toggleClass("reply_tr_highlight");
   });
 
-	$("#testbutton").click(
-			  function () { $("form:last").submit();
-		});
+  // this javascript
+  $("#testbutton").click(
+     function () { $("form:last").submit();
+  });
 
   $("a.findmehere").fancybox();
 
   $("a.quickViewLink").fancybox();
 
   $("img.quickView").hide();
+
 
   // assign 2 functions to mousein/mouseout events on the 'imgzoom_container' div of any post title
   $(".imgzoom_container")
@@ -63,15 +77,19 @@ $(document).ready(function() {
       $results = $(this).children("a.quickViewLink");
       // check to see if the title of the post is an image with class 'expand'
       if ($results.length != 0) {
-        $results.children("img.quickView").show();
-        $results.show();
+        //$results.children("img.quickView").show();
+        $results.children("img.quickView").css("display", "inline").css("visibility", "visible");
+        //$results.show();
+        $results.css("display", "inline").css("visibility", "visible");
       }
     })
     .mouseleave(function() {
       $results = $(this).children("a.quickViewLink");
       if ($results.length != 0) {
-        $results.children("img.quickView").hide();
-        $results.hide();
+        //$results.children("img.quickView").hide();
+        $results.children("img.quickView").css("visibility", "hidden").css("display", "none");
+        //$results.hide();
+        $results.css("visibility", "hidden").css("display", "none");
       }
     });
 });

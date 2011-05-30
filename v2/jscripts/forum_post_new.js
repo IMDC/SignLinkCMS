@@ -1,7 +1,7 @@
 $(document).ready(function() {
 
 	if(typeof(subject)=="undefined") {
-	
+         
 		if ($("input[name='parent']:checked").val() == "1") {
 			$("#parent-info").show();
 		} else {
@@ -16,37 +16,44 @@ $(document).ready(function() {
 			$("#subject-video").hide();
 			$("#subject-text").hide();
 
-		} else if ($("input[name='subject']:checked").val() == "video") {
+		}
+        else if ($("input[name='subject']:checked").val() == "video") {
 			$("#subject-image").hide();
 			$("#subject-video").show();
 			$("#subject-text").hide();
 
-		} else if ($("input[name='subject']:checked").val() == "text") {
+		}
+        else if ($("input[name='subject']:checked").val() == "text") {
 			$("#subject-image").hide();
 			$("#subject-video").hide();
 			$("#subject-text").show();
-		} else {
+		}
+        else {
 			$("#subject-image").hide();
 			$("#subject-video").hide();
 			$("#subject-text").hide();
 		}
 	}
 
-	if ($("input[name='message']:checked").val() == "signlink") {
+//	if ($('input[name="message"]:checked').val() == "signlink") {
+   if ($('input:radio[name=message]:checked').val() == "signlink") {
 		$("#message-sl").show();
 		$("#message-video").hide();
 		$("#message-text").hide();
-
-	} else if ($("input[name='message']:checked").val() == "video") {
+	}
+    else if ($("input[name='message']:checked").val() == "video") {
+       $("div.important-info").css("background", "#000");
 		$("#message-sl").hide();
 		$("#message-video").show();
 		$("#message-text").hide();
 
-	} else if ($("input[name='message']:checked").val() == "text") {
+	}
+    else if ($("input[name='message']:checked").val() == "text") {
 		$("#message-sl").hide();
 		$("#message-video").hide();
 		$("#message-text").show();
-	} else {
+	} 
+    else {
 		$("#message-sl").hide();
 		$("#message-video").hide();
 		$("#message-text").hide();

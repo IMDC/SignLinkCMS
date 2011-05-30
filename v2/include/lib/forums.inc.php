@@ -99,7 +99,7 @@ function get_message($id) {
 							 <img src="'.$thumbjpg.'" height="'.VIDEO_MSG_HEIGHT.'px" width="'.VIDEO_MSG_WIDTH.'px" alt="'.$msg_file.'" />
 						</a> 
 						<script type="text/javascript">
-							flowplayer("'.$msg_path.$noextfile.'", "flash/flowplayer-3.2.3.swf", {
+							flowplayer("'.$msg_path.$noextfile.'", "flash/flowplayer-3.2.7.swf", {
 								clip: conf.yesplay,
                     plugins: {
                        controls: conf.big
@@ -191,15 +191,18 @@ function print_reply_link($id) {
 			}
 		}
 		//echo '<td style="text-align:center;">'.$row['login'].'</td>';
-    echo '<td style="background:#dedede;overflow:auto;vertical-align:top;padding-top:30px;">';
+//    echo '<td style="background:#dedede;overflow:auto;vertical-align:top;padding-top:30px;">';
+    echo '<div class="reply-avatar-container">';
     echo '<div style="height:90%;text-align:center;">';
     echo '<div style="text-align:center;">'.$row['login'].'</div>';
     echo '<div style="">'.get_avatar($row['member_id']).'</div>';
     echo '<div style="text-align:center;font-size:0.8em;">' . date('M j Y, h:ia', strtotime($row['last_comment'])) . '</div>';
     echo '</div>';
-    echo '</td>';
+//    echo '</td>';
+    echo '</div>';
 		//echo '<td><a href="forum_post_view.php?f='.$row['forum_id'].'&p='.$id.'&parent='.$_GET['p'].'">'.$link.'</a></td>';
-		echo '<td style="border-left: 1px dotted #aaaaaa;">'.$link.'</td>';
+//		echo '<td class="post-reply-content">'.$link.'</td>';
+        echo '<div class="post-reply-content">'.$link.'</div>';
 	}
 }
 

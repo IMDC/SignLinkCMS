@@ -30,7 +30,7 @@ if (mysqli_num_rows($result)) {
 		$title = get_title('page', $row['page_id']);
 ?>
 	<div class="cat">
-		<div class="title" onclick="location.href='page_view.php?c=<?php echo $row['page_id']; ?>';" style="cursor:pointer">
+		<div class="title" onclick="location.href='page_view.php?c=<?php echo $row['page_id']; ?>';" style="cursor:pointer;text-align:center;">
 			<div style="height:150px;">
 				<?php echo $title; ?>
 			</div>

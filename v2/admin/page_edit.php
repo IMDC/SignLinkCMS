@@ -73,14 +73,17 @@ if (isset($_POST['cancel'])) {
 			switch ($_POST['subject']) {
 				case 'image':
 					$subject = '';
-					$subject_alt = $addslashes(htmlspecialchars($_POST['isub-alt']));
+					//$subject_alt = $addslashes(htmlspecialchars($_POST['isub-alt']));
+					$subject_alt = mysqli_real_escape_string($db, htmlspecialchars($_POST['isub-alt']));
 					break;
 				case 'video':
 					$subject = '';
-					$subject_alt = $addslashes(htmlspecialchars($_POST['vsub-alt']));
+					//$subject_alt = $addslashes(htmlspecialchars($_POST['vsub-alt']));
+					$subject_alt = mysqli_real_escape_string($db, htmlspecialchars($_POST['vsub-alt']));
 					break;
 				case 'text':
-					$subject = $addslashes(htmlspecialchars($_POST['sub-text']));
+					//$subject = $addslashes(htmlspecialchars($_POST['sub-text']));
+					$subject = mysqli_real_escape_string($db, htmlspecialchars($_POST['sub-text']));
 					$subject_alt = '';
 					break;
 			}
@@ -94,10 +97,12 @@ if (isset($_POST['cancel'])) {
 					break;
 				case 'video':
 					$message = '';
-					$message_alt = $addslashes(htmlspecialchars($_POST['vmsg-alt']));
+					//$message_alt = $addslashes(htmlspecialchars($_POST['vmsg-alt']));
+					$message_alt = mysqli_real_escape_string($db, htmlspecialchars($_POST['vmsg-alt']));
 					break;
 				case 'text':
-					$message = $addslashes(htmlspecialchars($_POST['msg-text']));
+					//$message = $addslashes(htmlspecialchars($_POST['msg-text']));
+					$message = mysqli_real_escape_string($db, htmlspecialchars($_POST['msg-text']));
 					$message_alt = '';
 					break;
 			}

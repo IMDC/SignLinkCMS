@@ -22,7 +22,7 @@ if (isset($_POST['cancel'])) {
 			
 		} else if ($_POST['subject'] == "image") {
 			$ext = explode('.', $_FILES['isub-file']['name']);
-			$ext = $ext[1];
+			$ext = strtolower($ext[1]);
 			if (!in_array($ext, $filetypes_image)) {
 				$_SESSION['errors'][] = 'You have chosen to use an image file for your subject - invalid file format.'. $ext;
 			}
@@ -43,14 +43,17 @@ if (isset($_POST['cancel'])) {
 		switch ($_POST['subject']) {
 			case 'image':
 				$subject = '';
-				$subject_alt = $addslashes(htmlspecialchars($_POST['isub-alt']));
+				//$subject_alt = $addslashes(htmlspecialchars($_POST['isub-alt']));
+				$subject_alt = mysqli_real_escape_string($db,htmlspecialchars($_POST['isub-alt']));
 				break;
 			case 'video':
 				$subject = '';
-				$subject_alt = $addslashes(htmlspecialchars($_POST['vsub-alt']));
+				//$subject_alt = $addslashes(htmlspecialchars($_POST['vsub-alt']));
+				$subject_alt = mysqli_real_escape_string($db, htmlspecialchars($_POST['vsub-alt']));
 				break;
 			case 'text':
-				$subject = $addslashes(htmlspecialchars($_POST['sub-text']));
+				//$subject = $addslashes(htmlspecialchars($_POST['sub-text']));
+				$subject = mysqli_real_escape_string($db, htmlspecialchars($_POST['sub-text']));
 				$subject_alt = '';
 				break;
 		}

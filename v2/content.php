@@ -23,12 +23,12 @@ if ( !empty($top_pages) ) {
 		<div class="cat">
 			<div class="title" onclick="location.href='page_view.php?c=<?php echo $row['page_id']; ?>'" style="cursor:pointer">
 			<!--<div class="title" style="cursor:pointer">-->
-				<div style="height:150px;cursor:pointer;">
+				<div style="height:150px;cursor:pointer;text-align:center;">
 					<?php echo $title; ?>
 				</div>
 							
 				<a href="page_view.php?c=<?php echo $row['page_id']; ?>" class="goto">
-					<img src="images/hand.png" style="width:20px;border:0px;padding:0px;margin-top:2px;" alt="click to view" />
+					<img src="images/hand.png" style="border:none;padding:5px;" class="hand_icon" alt="click to view" />
 				</a>
 			</div>
 			

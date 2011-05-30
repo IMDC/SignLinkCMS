@@ -73,7 +73,8 @@ $msg = get_message($post_id);  //returns array of poster, date, html-encoded mes
             }		
             
             if (!$parent_id) { 
-               echo "<li style='display:inline;padding:8px;'><a href='forum_post_create.php?f=$forum_id&p=$post_id'><img src='images/comment_rev.png' alt='Reply' title='Reply to this post!' /></a></li>";
+//               echo "<li style='display:inline;padding:8px;'><a href='forum_post_create.php?f=$forum_id&p=$post_id'><img src='images/comment_rev.png' alt='Reply' title='Reply to this post!' /></a></li>";
+                 echo "<li style='display:inline;padding:8px;'><a href='forum_post_create.php?f=$forum_id&p=$post_id'><img src='images/slscms-reply-icon-idea-small.png' alt='Reply' title='Reply to this post!' /></a></li>";
             } 
             
          ?>
@@ -107,17 +108,23 @@ $msg = get_message($post_id);  //returns array of poster, date, html-encoded mes
 		$sql = "SELECT * FROM forums_posts WHERE forum_id=".$forum_id." AND parent_id=".$post_id." ORDER BY last_comment DESC";
 		$result = mysqli_query($db, $sql);
 		if (@mysqli_num_rows($result)) { ?>
-			<table class="manage">
+        <div class="reply-table-container">
+<!--            <table class="manage" />
 			<tr>
 				<th colspan="4">Replies</th>
-			</tr>
+			</tr>-->
+            <h3> Replies </h3>
 			<?php 
 				while ($row = mysqli_fetch_assoc($result)) {
 				//echo '<tr class="reply_tr" onmouseover="this.style.background=\'#7AD0DA\';this.style.cursor=\'pointer\'" '
 					  			//. 'onmouseout="this.style.background=\'none\'" '
-				echo '<tr class="reply_tr" onclick="location.href=\'forum_post_view.php?f=' . $row['forum_id'] . '&p=' . $row['post_id'] . '&parent=' . $_GET['p'] . '\'">';
+//				echo '<tr class="reply_tr" onclick="location.href=\'forum_post_view.php?f=' . $row['forum_id'] . '&p=' . $row['post_id'] . '&parent=' . $_GET['p'] . '\'">';
+                echo '<div class="reply-row" onclick="location.href=\'forum_post_view.php?f=' . $row['forum_id'] . '&p=' . $row['post_id'] . '&parent=' . $_GET['p'] . '\'">';
+
 					?>
-					<td class="forum_reply_mail"> <?php //check for new messages
+<!--					<td class="forum_reply_mail"> -->
+            <div class="reply-mail">
+                    <?php //check for new messages
 						$sql = "SELECT * FROM forums_read WHERE post_id=".$row['post_id']." AND member_id=".intval($_SESSION['member_id']);
 						$result2 = mysqli_query($db, $sql);
 						$read = @mysqli_num_rows($result2);
@@ -129,17 +136,20 @@ $msg = get_message($post_id);  //returns array of poster, date, html-encoded mes
 							//echo '<img src="images/email.png" alt="no new messages" title="no new messages" height="16" width="16" /> ';
 							echo '<img src="images/forum_read.png" alt="no new messages" title="no new messages" height="32" width="32" style="margin-top:50px;" /> ';
 						} ?>
-					</td>
+            </div>
+<!--                    </td>-->
 					<!--
           <td style="text-align:center;width:80px;font-size:0.8em;vertical-align:top">
 						<?php echo date('M j Y, h:ia', strtotime($row['last_comment'])); ?>
 					</td>
           -->
                   <?php print_reply_link($row['post_id']); ?>
-				</tr>
+<!--				</tr>-->
+               </div>
 			<?php
 			}
-			echo '</table>';
+//			echo '</table></div>';
+            echo '</div>';
 		} /*else {
 			echo "<p>No replies yet.</p>";
 		}*/

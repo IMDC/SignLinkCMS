@@ -19,13 +19,12 @@ if (@mysqli_num_rows($result)) {
 
 		<div class="cat">
 			<div class="title" onclick="location.href='vlog_entries.php?v=<?php echo $row['vlog_id']; ?>'" style="cursor:pointer">
-				<div style="height:150px;">
-					<?php echo $title; ?>
-				</div>
-							
-				<a href="vlog_entries.php?v=<?php echo $row['vlog_id']; ?>" class="goto">
-					<img src="images/hand.png" style="width:20px;margin-top:2px;border:0px;padding:0px;" alt="click to view" />
-				</a>
+               <div style="height:150px;">
+                  <?php echo $title; ?>
+               </div>
+               <a href="vlog_entries.php?v=<?php echo $row['vlog_id']; ?>" class="goto">
+                  <img src="images/hand.png" style="width:20px;margin-top:2px;border:0px;padding:0px;" alt="click to view" />
+               </a>
 			</div>
 			
 			<div style="float:left;">

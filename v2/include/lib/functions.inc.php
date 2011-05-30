@@ -47,23 +47,23 @@ function get_title($location, $id, $size='reg') {
 
 	switch ($location) {
 		case 'forum':
-			$sql = "SELECT subject, subject_alt FROM forums WHERE forum_id=".$id;
+			$sql = "SELECT subject, subject_alt, last_post FROM forums WHERE forum_id=".$id;
 			$title_path = $level.'uploads/forums/'.$id.'/';
 			break;
 		case 'post':
-			$sql = "SELECT subject, subject_alt FROM forums_posts WHERE post_id=".$id;
+			$sql = "SELECT subject, subject_alt, date FROM forums_posts WHERE post_id=".$id;
 			$title_path = $level.'uploads/posts/'.$id.'/';
 			break;
 		case 'page':
-			$sql = "SELECT title, title_alt FROM pages WHERE page_id=".$id;
+			$sql = "SELECT title, title_alt, last_modified FROM pages WHERE page_id=".$id;
 			$title_path = $level.'uploads/pages/'.$id.'/';		
 			break;
 		case 'vlog':
-			$sql = "SELECT title, title_alt FROM vlogs WHERE vlog_id=".$id;
+			$sql = "SELECT title, title_alt, last_entry FROM vlogs WHERE vlog_id=".$id;
 			$title_path = $level.'uploads/vlogs/'.$id.'/';		
 			break;
 		case 'entry':
-			$sql = "SELECT title, title_alt FROM vlogs_entries WHERE entry_id=".$id;
+			$sql = "SELECT title, title_alt, date FROM vlogs_entries WHERE entry_id=".$id;
 			$title_path = $level.'uploads/entries/'.$id.'/';		
 			break;			
 	}
@@ -105,36 +105,10 @@ function get_title($location, $id, $size='reg') {
 				
 				
 				if (in_array($ext, $filetypes_video)) {
-					// file is a video	
-				
-					/*
-					$title = '<object classid="clsid:02BF25D5-8C17-4B23-BC80-D3488ABDDC6B"
-					id="clip" width="'.$width.'" height="'.$height.'" codebase="http://www.apple.com/qtactivex/qtplugin.cab">
-						<param name="src" value="'.$title_path.$title_file.'"/>
-						<param name="autoplay" value="false"/>
-						<param name="controller" value="true"/>
-						<param name="scale" value="tofit"/>
-						<embed src="'.$title_path.$title_file.'" width="'.$width.'" height="'.$height.'" name="clip"
-						autoplay="false" controller="true" enablejavascript="true" scale="tofit"
-						alt="Quicktime ASL video"
-						pluginspage="http://www.apple.com/quicktime/download/" />
-					</object>';
-					*/
-					
-					/*   ****** code below loads the full video upon page load
-					$title = '
-						<a  
-							 href="'.$title_path.$title_file.'"
-							 style="display:block;width:'.$width.';height:'.$height.'px"  
-							 id="'.$title_path.'"> 
-						</a> 
-						*/
-						
+					// file is a video						
 						/* the code below uses the flowplayer (www.flowplayer.org) flash player to play the video
 							when you click on the thumbnail .jpg that is initially displayed.
 							loads 'thumb.jpg' in same folder on page load instead of the whole video file
-							previous version of flowplayer line below
-							//flowplayer("'.$title_path.'", "flash/flowplayer-3.1.1.swf", {
 						*/
             // check size of video file to use the appropriate thumbnail
             if ($size == 'small') {
@@ -167,29 +141,6 @@ function get_title($location, $id, $size='reg') {
 
             }
 
-            /*
-						if ( !file_exists($title_path . "thumb_play.jpg") ) {
-							if ($size == 'small') {
-                        $thumbjpg = $title_path . "thumbsmall.jpg";
-                     }
-                     else {
-                        $thumbjpg = $title_path . "thumb.jpg";
-                     }
-						}
-						else {
-                     if ($size == 'small') {
-                        $thumbjpg = $title_path . "thumbsmall_play.jpg";
-                     }
-                     else {
-							   $thumbjpg = $title_path . "thumb_play.jpg";
-                     }
-						}
-            */
-						
-				   
-        // this is from about 9 lines below, the img src code    
-        // <img src="'.$thumbjpg.'" alt="'.$title_path.'" />
-
           /*
           * If useragent of browser is detected as a mobile device, serve up a simple link instead of flash
           * testing on Android phone plays the video just fine using video's native player
@@ -201,28 +152,42 @@ function get_title($location, $id, $size='reg') {
           }
           else {
           */
-            $title = '
+          /*
 						<a  
 							 href="'.$title_path.$title_file.'"
-							 class = "flash_player_holder" 
-							 style="display:block;width:'.$width.'px;height:'.$height.'px;margin-left:auto;margin-right:auto;"  
+							 class = "flash_player_holder"
+                      alt="'.$row[1].'"
+							 style="border:1px solid #cdcdcd;background-image:url(\''.$thumbjpg.'\');width:'.$width.'px;height:'.$height.'px;margin-left:5px;text-align:center;"
 							 id="'.$title_path.'title">
-							 <img src="'.$thumbjpg.'" height="'.$height.'px" width="'.$width.'px" alt="'.$row[1].'" />
+							 <img src="images/play_large.png" style="border:0 none;margin-top:30px;width:40px;height:40px;" />
 						</a> 
-						<script type="text/javascript">
-							flowplayer("'.$title_path.'title", "flash/flowplayer-3.2.3.swf", {
+          */
+
+
+
+            $title = '  
+            <a
+							 href="'.$title_path.$title_file.'"
+						   class = "flash_player_holder"
+							 style="width:'.$width.'px;height:'.$height.'px;margin-left:auto;margin-right:auto;"
+							 id="'.$title_path.'title">
+						   <img style="margin-left:-3px;" src="'.$thumbjpg.'" height="'.$height.'px" width="'.$width.'px" alt="'.$row[1].'" />
+						</a>
+            <script type="text/javascript">
+							flowplayer("'.$title_path.'title", "flash/flowplayer-3.2.7.swf", {
 								clip: {
 										url: \''.$title_path.$title_file.'\',
 										autoPlay: true,
 										autoBuffering: true
 								}, 
-								plugins: {';
-                  if ($size == 'small'){
-                      $title = $title . "controls: conf.small";
-                  } else {
-                      // originally designed for a diff size title option, not used right now 
-                      $title = $title . "controls: conf.small";
-                  }
+								plugins: {controls: conf.small
+                        ';
+//                  if ($size == 'small'){
+//                      $title = $title . "controls: conf.small";
+//                  } else {
+//                      // originally designed for a diff size title option, not used right now
+//                      $title = $title . "controls: conf.small";
+//                  }
                   $title = $title . '
 								}
 							});
@@ -231,12 +196,19 @@ function get_title($location, $id, $size='reg') {
 				}
 				// else file is an image
 				else {
-          /* An extra div with class "imgzoom_container" is added to each post with an image title to enable lightbox style img zooming */
-					$title = '<div class="imgzoom_container"><img class="expand" src="'.$title_path.$title_file.'" alt="'.$row[0].'" title="'.$row[0].'" '.$style.' /><a class="quickViewLink" href="'.$title_path.$title_file.'"><img class="quickView" src="images/search_button_green_32.png" /></a></div>';
-					//$title = '<a href="'.$title_path.$title_file.'" class="thickbox"><img src="'.$title_path.$title_file.'" alt="'.$row[0].'" title="'.$row[0].'" '.$style.' /></a>';
+                     /* An extra div with class "imgzoom_container" is added to each post with an image title to enable lightbox style img zooming */
+					 $title = '<div class="imgzoom_container">
+                             <img class="expand" src="'.$title_path.$title_file.'" alt="'.$row[0].'" title="'.$row[0].'" '.$style.' />
+                                <a class="quickViewLink" href="'.$title_path.$title_file.'">
+                                   <img class="quickView" src="images/search_button_green_32.png" />
+                                </a>
+                          </div>';
+					 //$title = '<a href="'.$title_path.$title_file.'" class="thickbox"><img src="'.$title_path.$title_file.'" alt="'.$row[0].'" title="'.$row[0].'" '.$style.' /></a>';
 				}
 			}
 		}
+        /* This div creates displays the time and date of the post at the bottom of each title */
+        $title = $title . '<div class="cont-date">' . date("H:s M j Y", $row[2]) . '</div>';
 	}
   @mysqli_free_result($result);
 	return $title;
@@ -255,7 +227,7 @@ function save_image($location, $type, $file, $id) {
 	global $db;
 	
 	$tmp_file = $_FILES[$file]['tmp_name'];
-	$ext = end(explode('.',$_FILES[$file]['name']));
+	$ext = strtolower(end(explode('.',$_FILES[$file]['name'])));
 
 	$level = '';
 	$depth = substr_count(INCLUDE_PATH, '/');
@@ -430,12 +402,17 @@ function save_video($location, $type, $file, $id) {
 	   // shell_exec("ffmpeg -i " . $videoPath . " -ss 1 -f image2 -vframes 1 -s 144x112 " . $videoDirectoryPath . "/thumb.jpg 2>&1");
      /** todo: consider using escapeshellarg($dirname) for the paths of files?  **/
       $convertOutput = shell_exec("../include/ffmpeg/ffmpeg -i " . $newfile . " -acodec libfaac -ab 64k -ar 22050 -async 22050 -r 15 -aspect 4:3 -s 320x240 -vcodec libx264 -b 400k -flags +loop -cmp +chroma -partitions +parti4x4+partp8x8+partb8x8 -subq 1 -trellis 0 -refs 1 -bf 16 -b_strategy 1 -coder 1 -me_range 16 -g 3 -keyint_min 25 -sc_threshold 40 -i_qfactor 0.71 -bt 175k -qcomp 0.6 -qmin 10 -qmax 51 -qdiff 4 -y " . $newfileMP4Extension . " 2>&1");
-      
+	//$_SESSION['feedback'][] = shell_exec("pwd");
+      //$_SESSION['feedback'][] = $convertOutput; 
       //process output of ffmpeg using $convertOutput
       
       //echo "<pre>$convertOutput</pre><br /><br />";
       
       make_video_thumbnail($newfile, dirname($newfile));
+      /** replacing this overlay call with some 'background-image' css on the
+       * <a> element in the 'get_title' method. Should be less work server-side
+       * and less prone to failing
+       */
       overlay_play_btn(dirname($newfile));
 
       /* assuming everything went okay, we can delete the .avi file that we don't need now */
@@ -679,13 +656,14 @@ function get_avatar($id) {
 *  Input - the member id
 */
 function update_member_last_login($id) {
+    global $db;
     $id = intval($id);
-    
-    // TODO: Should this be implemented as a new DB connections with elevated privileges?
+    $id = mysqli_real_escape_string($db, $id);
+   // TODO: Should this be implemented as a new DB connection with de-elevated privileges?
 
-		$sql = "UPDATE membersCopy set last_login_ts = NOW() WHERE member_id = $id";
-    $result = mysqli_query($db, $sql);
-    return $result; 
+   $sql = "UPDATE membersCopy set last_login_ts = NOW() WHERE member_id = $id";
+   $result = mysqli_query($db, $sql);
+   return $result;
 }
 
 
@@ -752,7 +730,7 @@ function overlay_play_btn($fullDestImagePath) {
 	//make sure destination image full path includes the slash at the end
 	$pathLength = strlen($fullDestImagePath);
 	if ($pathLength == 0) {
-		print 'Error with filename length creating play button overlay';
+		$_SESSION['errors'][] = 'Error with filename length creating play button overlay';
 	}
 	
 	if ( substr($fullDestImagePath, -1) !== '/' ) {
@@ -767,10 +745,10 @@ function overlay_play_btn($fullDestImagePath) {
 	$imagesmall = imagecreatefromjpeg($fullDestImagePath . 'thumbsmall.jpg');
 	
 	if ( !$image ) {
-		print 'Error finding bigger thumbnail';
+		$_SESSION['errors'][] = 'Error finding bigger thumbnail';
 	}
 	if ( !$imagesmall ) {
-		print 'Error finding smaller thumbnail';
+		$_SESSION['errors'][] = 'Error finding smaller thumbnail';
 	}
 	
 	
@@ -778,7 +756,7 @@ function overlay_play_btn($fullDestImagePath) {
 	$watermark = imagecreatefrompng($playImagePath . 'play_btn.png');
 	
 	if ( !$watermark ) {
-		print '<span style="color:#ff0000;size:1.4em;">Error finding play button overlay image</span>';
+		$_SESSION['errors'][] = '<span style="color:#ff0000;size:1.4em;">Error finding play button overlay image</span>';
 	}
 	
 	imagealphablending($image, true);
@@ -792,9 +770,11 @@ function overlay_play_btn($fullDestImagePath) {
 	
 	// create new thumbnail with play button overlayed on top in the same folder
 	if ( !imagejpeg($image, $fullDestImagePath . 'thumb_play.jpg') ) {
-		print "\n**ERROR** - Error creating new thumbnail jpeg file, possibly check directory permissions";
+		$_SESSION['errors'][] = 'Error creating new thumbnail, check dir permissions';
+      print "\n**ERROR** - Error creating new thumbnail jpeg file, possibly check directory permissions";
 	}
 	if ( !imagejpeg($imagesmall, $fullDestImagePath . 'thumb_small_play.jpg') ) {
+      $_SESSION['errors'][] = 'Error creating new thumbnail, check dir permissions';
 		print "\n**ERROR** - Error creating new thumbnail jpeg file, possibly check directory permissions";
 	}
 	
@@ -806,9 +786,11 @@ function overlay_play_btn($fullDestImagePath) {
 // creates smaller jpg thumbnails from video files, used as image placeholders before videos load into flowplayer
 function make_video_thumbnail($videoPath, $videoDirectoryPath) {
    // create a regular sized thumbnail
+	//$_SESSION['feedback'][] = shell_exec("include/ffmpeg/ffmpeg -i " . $videoPath . " -ss 1 -f image2 -vframes 1 -s 144x112 " . $videoDirectoryPath . "/thumb.jpg 2>&1");
 	shell_exec("../include/ffmpeg/ffmpeg -i " . $videoPath . " -ss 1 -f image2 -vframes 1 -s 144x112 " . $videoDirectoryPath . "/thumb.jpg 2>&1");
    // create a small sized thumbnail
-	shell_exec("../include/ffmpeg/ffmpeg -i " . $videoPath . " -ss 1 -f image2 -vframes 1 -s 74x96  " . $videoDirectoryPath . "/thumbsmall.jpg 2>&1");
+	//$_SESSION['feedback'][] = shell_exec("include/ffmpeg/ffmpeg -i " . $videoPath . " -ss 1 -f image2 -vframes 1 -s 96x74  " . $videoDirectoryPath . "/thumbsmall.jpg 2>&1");
+	shell_exec("../include/ffmpeg/ffmpeg -i " . $videoPath . " -ss 1 -f image2 -vframes 1 -s 96x74  " . $videoDirectoryPath . "/thumbsmall.jpg 2>&1");
 
 }
 
