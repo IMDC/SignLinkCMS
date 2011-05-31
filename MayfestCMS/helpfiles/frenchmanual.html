@@ -1,0 +1,450 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>SignlinkCMS: Manuel Français</title>
+<link rel="stylesheet" type="text/css" href="frenchmanual.css" />
+</head>
+
+<body>
+<a name="top"></a>
+<div id="layout">
+   <a href="frenchmanual.html"><img src="Images/French/frenchmanualtitle.png" border="0" alt="SignlinkCMS: Manuel Français" /></a>
+</div>
+<div id="navigation">
+   <ul class="nobullets">
+      <li><a href="http://www.signlinkstudio.com/" target="_blank">http://www.signlinkstudio.com/</a></li>
+      <li><a href="http://www.signlinkstudio.com/Canadian_Deaf_Academics_SignlinkCMS/" target="_blank">http://www.signlinkstudio.com/Canadian_Deaf_Academics_SignlinkCMS/</a></li>
+      <li><a href="http://www.signlinkstudio.com/Canadian_Deaf_Academics_SignlinkCMS/admin" target="_blank">http://www.signlinkstudio.com/Canadian_Deaf_Academics_SignlinkCMS/admin</a></li>
+   </ul>
+   <ul class="nobullets">
+      <li><h4><i>Version 1.0 - Please note this file is currently undergoing revisions as of May 29th, 2009<br />Signed Web Page Content will be available shortly</i></h4></li>
+   </ul>
+   <img src="Images/French/frenchmanualcon.png" alt="Contents" />
+   <ol>
+      <li><a href="#intro">Introduction</a></li>
+      <li class="lispace"><a href="#install">Installation de SignlinkCMS</a>
+      <ul class="nobullets">
+         <li class="lispace">2.1 <a href="#exigences">Exigences système</a></li>
+         <li>2.2 <a href="#ins">Installation</a></li>
+      </ul>
+	  </li>
+      <li class="lispace"><a href="#admin">Administration de SignlinkCMS</a>
+      <ul class="nobullets">
+         <li class="lispace">3.1 <a href="#session">Ouverture et fermeture de session</a></li>
+         <li>3.2 <a href="#members">Members</a></li>
+         <li>3.3 <a href="#pages">Pages</a></li>
+         <li>3.4 <a href="#discussion">Groupes de discussion</a></li>
+         <li>3.5 <a href="#vid">Vidéoblogues</a></li>
+         <li>3.6 <a href="#para">Paramètres</a></li>
+         <!--<br />3.7 <a href="#help">Help</a>-->
+      </ul>
+      </li>
+      <li class="lispace"><a href="#utilisation">Utilisation de SignlinkCMS</a>
+       <ul class="nobullets">
+         <li class="lispace">4.1 <a href="#syst">Exigences système</a></li>
+         <li>4.2 <a href="#commencer">Avant de commencer</a></li>
+         <li>4.3 <a href="#barre">Barre de navigation</a></li>
+         <li>4.4 <a href="#zone">Zone d’ouverture de session</a></li>
+         <li>4.5 <a href="#contenu">Zone de contenu</a></li>
+      </ul>
+       <li class="lispace"><a href="#sign">Pages Web signées</a>
+      <li class="lispace"><a href="#rem">Remerciements</a></li>
+   </ol>
+<img src="Images/linebreak.png" alt="Line break" border="0" />
+</div>
+<div id="contents">
+<a name="intro"><img src="Images/Admin/adminmanualintro.png" alt="Introduction" border="0"/></a>
+<p>
+SignlinkCMS est un système de gestion de contenu en ligne développé spécialement pour les utilisateurs de langues des signes (p. ex., American Sign Language – ASL, Langue des signes québécoise – LSQ, British Sign Language – BSL).
+</p>
+<p>
+SignlinkCMS est compatible avec les pages Web signées produites par Signlink Studio v2.0 (un outil d’auteur gratuit que vous pouvez télécharger depuis www.signlinkstudio.com), avec des vidéoclips, des images et du texte.
+</p>
+<p>
+Dans SignlinkCMS, des icônes et d’autres indices visuels, plutôt que du texte, servent à transmettre l’information aux membres du site Web. Cela crée une expérience immersive fondée sur la langue des signes pour les membres du site Web.
+</p>
+<p>
+SignlinkCMS offre la fonctionnalité de créer et de gérer des pages, des groupes de discussion et des vidéoblogues.
+</p>
+<a href="#top"><img src="Images/top.png" align="right" border="0" alt="Back to top" /></a><br />
+<br /><br /><br /><img src="Images/linebreak.png" alt="Line break" border="0" />
+<br />
+<br /><a name="install"><img src="Images/French/frenchmanualinstall.png" alt="Installation de SignlinkCMS" /></a>
+<br /><h2>2.1. <a name="server"></a>Exigences système</h2>
+<ul>
+		  <li>MySQL 5.0+</li>
+		  <li>PHP 5 doté d’une bibliothèque GD</li>
+		  <li>Serveur de courriel</li>
+</ul>
+<h2>2.2. <a name="ins"></a>Installation</h2>
+<ol>
+<li>Téléchargez « signlinkcms.zip » du site Web (<a href="http://www.signlinkstudio.com" target="_blank">www.signlinkstudio.com</a>).</li>
+<li class="lispace">Dézippez ce fichier en un répertoire doté d’accessibilité Web sur le serveur.</li>
+</ol>
+<ul>
+<li>Créez une base de données MySQL pour le site et prenez note du nom de votre base de données pour l’entrer dans le fichier de configuration à <b>l’étape 4</b>. Exécutez le script « /install/signlink_schema.sql » dans la base de données pour régler les tables nécessaires.</li>
+<li class="lispace">Créez le fichier de configuration en copiant « /install/config_template.php » vers « /include/config.inc.php ». Ouvrez config.inc.php dans un éditeur et saisissez les valeurs pour les détails de connexion du MySQL de votre serveur et le nom de la base de données (<b>de l’étape 3</b>).</li>
+<li class="lispace">Entrez en session dans la zone d’administration de votre site (ajoutez « /admin » à l’URL de votre site pour parvenir à la page d’ouverture de session). CHANGEZ LE MOT DE PASSE DE L’ADMINISTRATEUR immédiatement en accédant à la commande de menu des paramètres.
+You should also set the administrator email address and maximum upload file size on this page.</li>
+<li class="lispace">Réglez les permissions pour le répertoire de téléchargements « /downloads » et pour ses sous-répertoires, à 777 (lisibles, inscriptibles et exécutables par tous).</li>
+<li class="lispace">Faites l’essai du serveur de courriel pour vérifier s’il fonctionne avec votre installation en inscrivant un membre fictif dans votre site et en utilisant le « rappel de mot de passe » (que vous trouverez dans la page d’accueil du site).</li>
+</ul>
+<a href="#top"><img src="Images/top.png" align="right" border="0" alt="Back to top" /></a><br />
+<br />
+<br /><br /><img src="Images/linebreak.png" alt="Line break" border="0" />
+<br />
+<br /><a name="admin"><img src="Images/French/frenchmanualadmin.png" alt="Administration de SignlinkCMS" /></a>
+<br /><h2><a name="session"></a>3.1. Ouverture et fermeture de session</h2>
+Vous pouvez trouver la page d’ouverture de session pour l’administration de SignlinkCMS en ajoutant « /admin » à votre URL d’installation. Par exemple, si votre CMS est installé à “<a href="http://www.signlinkstudio.com" target="_blank">www.signlinkstudio.com</a>”, vous pouvez entrer en session dans la zone d’administration en navigant vers “<a href="http://www.signlinkstudio.com/Canadian_Deaf_Academics_SignlinkCMS/admin" target="_blank">www.signlinkstudio.com/Canadian_Deaf_Academics_SignlinkCMS/admin</a>”.  
+<p>
+Le nom d’utilisateur et le mot de passe pour la zone d’administration sont réglés durant l’installation. Une fois que vous entrez en ligne un menu s’affiche, tel que l’indique la <b>Figure 1</b>. Vous pouvez fermer la session en cliquant sur l’icône de fermeture de session située complètement à droite.
+</p>
+<br />
+<h3>Figure 1: Zone d’administration de SignlinkCMS</h3>
+<a href="Images/Screenshots/French/Fig1.png" target="_blank"><img src="Images/Screenshots/French/Fig1.png" width="550" height="85" class="imgBordered" alt="Figure 1: Zone d’administration de SignlinkCMS" /></a>
+<br />
+<a href="#top"><img src="Images/top.png" align="right" border="0" alt="Back to top" /></a><br />
+<br /><h2><a name="members"></a>3.2. Membres</h2>
+Le volet des « membres » vous permet d’éditer les renseignements du compte de tous les membres. Vous ne pouvez changer que le mot de passe ou l’adresse de courriel d’un membre. Les mots de passe doivent comporter plus de huit caractères alphanumériques. Les noms d’utilisateur et les adresses de courriel doivent être uniques.
+<p>
+Vous pouvez également supprimer des membres. Prenez note que la suppression d’un membre n’empêche pas ce membre de s’inscrire à l’aide d’un autre nom d’utilisateur et ne supprime pas les messages existants du membre.
+</p>
+<a href="#top"><img src="Images/top.png" align="right" border="0" alt="Back to top" /></a><br />
+<br /><h2><a name="pages"></a>3.3. Pages</h2>
+L’onglet « pages » (<b>Figure 2</b>) est l’espace que peut utiliser l’administrateur du site Web pour créer des pages Web que pourront visualiser les membres du site. Par exemple, vous pouvez vouloir créer une page pour souhaiter la bienvenue aux membres dans votre site ou pour expliquer la politique de votre site en ce qui concerne la création de vidéoblogues.
+<p>
+Cliquez sur « Nouvelle page » pour créer une nouvelle page. La création d’une nouvelle page ressemble beaucoup à la création d’un sujet de discussion ou à la réponse à un message, tel que le décrit la documentation de l’utilisateur (reportez-vous à <b>4.5.2</b>). Premièrement, déterminez si votre page doit être une page racine (parent) ou une page fille (choisissez la page parent). Ensuite, choisissez le format du titre (image, vidéoclip ou texte) et le format du contenu (objet de lien vidéo signé, vidéoclip ou texte) pour soumettre. Cliquez sur « Soumettre » lorsque vous avez terminé.
+</p>
+<p>
+Sous « Nouvelle page », une liste des pages dans votre site s’affiche. La liste de chaque page montre l’identification de la page, le titre, l’identification de sa page parent (un parent 0 indique une page racine), la date et l’heure où la page a été créée, ainsi que les liens pour « Visualiser », « Éditer » et « Supprimer » la page. 
+</p>
+<br />
+<h3>Figure 2: Administration des pages</h3>
+<a href="Images/Screenshots/French/Fig2.png" target="_blank"><img src="Images/Screenshots/French/Fig2.png" width="542" height="334" class="imgBordered" alt="Figure 2: Administration des pages" /></a>
+<br />
+<a href="#top"><img src="Images/top.png" align="right" border="0" alt="Back to top" /></a><br />
+<br /><h2><a name="discussion"></a>3.4. Groupes de discussion</h2>
+Dans « Groupes de discussion » vous pouvez créer, éditer et supprimer des groupes de discussion de votre site Web, ainsi que visualiser, éditer et supprimer des articles dans chaque groupe de discussion (<b>Figure 3</b>).
+<p>
+Pour créer un groupe de discussion, cliquez sur « Nouveau groupe de discussion. Spécifiez un titre de groupe de discussion (image, vidéoclip ou texte) et cliquez sur Soumettre pour créer le groupe de discussion.
+</p>
+<p>
+Sous le lien « Nouveau groupe de discussion », se trouve une liste des groupes de discussion dans votre site. Chaque liste de groupes de discussion indique le titre du groupe de discussion, le nombre de sujets dans le groupe de discussion, le nombre d’articles dans le groupe de discussion, la date et l’heure du dernier article et les liens vers « Articles », « Éditer » et « supprimer ».
+</p>
+<p>
+« Articles » vous permet de trouver et de supprimer des articles. Prenez note que vous devez supprimer toutes les réponses à un article avant de pouvoir supprimer l’article d’origine.
+</p>
+<br /><h3>Figure 3: Administration des groupes de discussion</h3>
+<a href="Images/Screenshots/French/Fig3.png" target="_blank"><img src="Images/Screenshots/French/Fig3.png" width="542" height="283" class="imgBordered" alt="Figure 3: Administration des groupes de discussion" /></a>
+<br />
+<a href="#top"><img src="Images/top.png" align="right" border="0" alt="Back to top" /></a><br />
+<br /><h2><a name="vid"></a>3.5. Vidéoblogues</h2>
+Dans « Vidéoblogues », vous pouvez créer et supprimer des vidéoblogues (<b>Figure 4</b>). Vous devez créer un vidéoblogue pour un membre du site Web avant que celui-ci puisse commencer à « vidéobloguer ». Vous ne pouvez pas supprimer d’entrées ou de commentaires de vidéoblogues individuels, mais le « propriétaire » du « vidéoblogue » peut éditer et supprimer ses propres entrées et les commentaires de tiers.
+<br /><h3>Figure 4: Administration des vidéoblogues</h3>
+<a href="Images/Screenshots/French/Fig4.png" target="_blank"><img src="Images/Screenshots/French/Fig4.png" width="539" height="333" class="imgBordered" alt="Figure 4: Administration des vidéoblogues" /></a>
+<br />
+<a href="#top"><img src="Images/top.png" align="right" border="0" alt="Back to top" /></a><br />
+<br /><h2><a name="para"></a>3.6. Paramètres</h2>
+La page des paramètres vous permet de changer votre adresse de courriel, votre mot de passe pour l’entrée en session, le nom du site et la taille maximum des fichiers pour le téléchargement (<b>Figure 5</b>). Pour changer un ou plusieurs de ces éléments, modifiez les paramètres dans la page, puis cliquez sur le bouton « Soumettre ». Cliquez sur le bouton « Annuler » si vous amorcez une modification, puis que vous changez d’idée.
+<p>
+<b>Adresse de courriel</b>: Vous devez soumettre une adresse de courriel valide sous le format « adressedecourriel@endroit.com » ("emailaddress@place.com") pour que ce changement soit accepté.
+</p>
+<p>
+<b>Mot de passe de l’administrateur </b>: Pour être valides, les mots de passe doivent comporter plus de huit caractères alphanumériques.
+</p>
+<p><b>Nom du site </b>: Un nom de texte pour le site. Celui-ci s’affiche dans la barre de titre du navigateur.
+</p>
+<p><b>Taille maximum des fichiers pour le téléchargement</b>: Il est important pour vous ou pour l’administrateur de votre système de déterminer la limite à imposer sur la taille des fichiers pour le téléchargement. Les vidéoclips et pages Web signées ont souvent des exigences d’espace importantes. Si vous imposez une limite trop faible, vos membres ne pourront pas créer de messages fidèles et significatifs. Cependant, sans limites, vos membres ne seront pas incités à comprimer leurs vidéoclips de manière appropriée et le serveur pourrait rapidement devenir surchargé. Également, il faudra beaucoup de temps aux membres de votre site pour télécharger de très gros fichiers, ce qui compromettra l’utilisabilité de votre site. La taille de fichier maximum recommandée pour SignlinkCMS est de 5 Mo, ce qui prévoit une page Web signée comportant un vidéoclip d’environ une minute aux taux de compression typiques.
+</p>
+<br /><h3>Figure 5: Administration des paramètres</h3>
+<a href="Images/Screenshots/French/Fig5.png" target="_blank"><img src="Images/Screenshots/French/Fig5.png" width="526" height="307" class="imgBordered" alt="Figure 5: Administration des paramètres" /></a>
+<br />
+<a href="#top"><img src="Images/top.png" align="right" border="0" alt="Back to top" /></a><br />
+<br /><br /><br /><img src="Images/linebreak.png" alt="Line break" border="0" />
+<br />
+<br /><a name="using"><img src="Images/French/frenchmanualutil.png" alt="Utilisation de SignlinkCMS" /></a>
+<br /><h1>4.1. <a name="syst"></a>Exigences système</h1>
+<br /><b>Navigateur Web:</b>
+<ul>
+<li>Internet Explorer, version 6.0+</li>
+<li>FireFox, version 3.0+</li>
+</ul>
+<br /><b>Lecteur Quicktime:</b>
+<ul>
+<li>Plugiciel Quicktime</li>
+</ul>
+<br /><b>Lecteur Flash</b>
+<ul>
+<li>Plugiciel Flash</li>
+</ul>
+<br />
+<a href="#top"><img src="Images/top.png" align="right" border="0" alt="Back to top" /></a>
+<h1>4.2. <a name="commencer"></a>Avant de commencer</h1>
+SignlinkCMS est une application Web qui permet aux utilisateurs de la langue des signes de participer aux pages, discussions et blogues Web en utilisant la langue des signes au lieu de texte et à les visualiser en ligne. 
+<p>
+Vous pouvez utiliser SignlinkCMS en saisissant une adresse Web (p. ex. <a href="http://www.signlinkstudio.com/Canadian_Deaf_Academics_SignlinkCMS/" target="_blank">http://www.signlinkstudio.com/Canadian_Deaf_Academics_SignlinkCMS/</a>) dans votre navigateur. Si vous n’êtes pas certain de l’adresse Web, veuillez communiquer avec votre administrateur de SignlinkCMS. 
+</p>
+<p>
+Lorsque vous allez à la page d’accueil SignlinkCMS, un écran probablement semblable à la page Web illustrée à la <b>Figure 6</b> s’affiche. La page d’accueil comporte plusieurs parties : une barre de navigation, une zone d’ouverture de session et une zone de contenu. La zone de contenu comprend normalement trois sections : des pages, des groupes de discussion et des vidéoblogues.
+</p>
+<h3>Figure 6: Page d’accueil de SignlinkCMS</h3>
+<a href="Images/Screenshots/French/Fig6.png" target="_blank"><img src="Images/Screenshots/French/Fig6.png" width="469" height="504" class="imgBordered" alt="Figure 6: Page d’accueil de SignlinkCMS" /></a>
+<br /><h2>4.2.1. Visualisation des pages Web dans SignlinkCMS</h2>
+Vous pouvez visualiser des pages Web dans SignlinkCMS en cliquant sur les barres bleues. Par exemple, pour visualiser un groupe de discussion, cliquez sur la barre bleue sous le titre du groupe de discussion (<b>Figure 7</b>). Prenez note que, contrairement au site Web de texte traditionnel, les titres peuvent être des vidéoclips, des images ou du texte. 
+<p>
+Lorsque vous cliquez sur la barre bleue, vous êtes amené à une autre page Web où vous pouvez visualiser plus de pages en cliquant sur d’autres barres bleues. Certaines pages contiennent seulement des images et du texte, mais beaucoup contiennent des vidéoclips ou des pages Web signées. Prenez le temps de vous familiariser avec SignlinkCMS en cliquant sur certaines barres bleues et en visualisant certaines pages Web. Vous pouvez revenir à la page d’accueil en cliquant sur l’icône de la page d’accueil (reportez-vous à <b>4.3.1</b>).
+</p>
+<h3>Figure 7: Visualisation des pages Web à l’aide d’un clic sur la barre bleue</h3>
+<a href="Images/Screenshots/French/Fig7.png" target="_blank"><img src="Images/Screenshots/French/Fig7.png" width="188" height="217" class="imgBordered" alt="Figure 7: Visualisation des pages Web à l’aide d’un clic sur la barre bleue" /></a>
+<p>
+Tel que susmentionné, SignlinkCMS vous permet de visualiser des pages Web signées. Ces pages Web sont créées à l’aide d’un éditeur de pages Web du nom de Signlink Studio (available at <a href="http://www.signlinkstudio/" target="_blank">www.signlinkstudio.com/</a>). Vous pouvez en apprendre davantage sur la visualisation des pages Web signées à la <a href="#signed">section 5</a> de ce guide.
+</p>
+<br /><h1><a name="barre"></a>4.3. Barre de navigation</h1>
+La page d’accueil de SignlinkCMS comporte une barre de navigation (<b>Figure 8</b>) qui vous permet d’accéder rapidement aux diverses zones du site. 
+<h3>Figure 8: Barre de navigation</h3>
+<a href="Images/Screenshots/French/Fignavbar.png" target="_blank"><img src="Images/Screenshots/French/Fignavbar.png" width="492" height="51" class="imgBordered" alt="Figure 8: Barre de navigation" /></a>
+<br /><h2>4.3.1. Accueil</h2>
+<p>
+<img src="Images/Screenshots/French/Fignavbarhome.png" border="0" alt="Figure 8: Barre de navigation - Accueil" />
+<br />Voici la première page qui s’affiche lorsque vous arrivez dans un site de SignlinkCMS (reportez-vous à <b>Figure 6</b>). La page d’accueil comporte des liens à des pages, à des groupes de discussion et à des vidéoblogues, ainsi qu’à une zone d’entrée en session. La page d’accueil inclut également un volet de contenu qui offre un choix de pages, de groupes de discussion et de vidéoblogues pour indiquer ce qui est accessible dans le site.
+</p>
+<br /><h2>4.3.2. Pages</h2>
+<p>
+<img src="Images/Screenshots/French/Fignavbarcontent.png" border="0" alt="Figure 8: Barre de navigation - Pages" />
+<br />Le volet des « pages » du site Web contient des pages Web qui ont été ajoutées par l’administrateur du site Web. Ces pages peuvent renfermer des renseignements comme une page d’accueil, des directives à l’intention des nouveaux membres, etc. Pour plus d’information, reportez-vous à la <b>section 4.5.1</b>.
+</p>
+<br /><h2>4.3.3. Groupes de discussion</h2>
+<p>
+<img src="Images/Screenshots/French/Fignavbarforums.png" border="0" alt="Figure 8: Barre de navigation - Groupes de discussion" />
+<br />Le volet des groupes de discussion du site Web vous permet de visiter les divers groupes de discussion dans le système et d’y participer. Pour plus d’information, reportez-vous à la <b>section 4.5.2</b>.
+</p>
+<br /><h2>4.3.4. Vidéoblogues</h2>
+<p>
+<img src="Images/Screenshots/French/Fignavbarvlogs.png" border="0" alt="Figure 8: Barre de navigation - Vidéoblogues" />
+<br />Le volet des vidéoblogues vous permet de visiter les divers vidéoblogues dans le site Web. Pour plus d’information, reportez-vous à la <b>section 4.5.3.</b>.
+</p>
+<br /><h2>4.3.5. Aide</h2>
+<p>
+<img src="Images/Screenshots/French/Fignavbarhelp.png" border="0" alt="Figure 8: Barre de navigation - Aide" />
+<br />Cliquez sur l’aide pour que s’affiche ce guide virtuel (offert dans la langue des signes et en texte). 
+<a href="#top"><img src="Images/top.png" align="right" border="0" alt="Back to top" /></a>
+</p>
+<br />
+<h1>4.4. <a name="zone"></a>Zone d’ouverture de session</h1>
+<p>
+La <b>Figure 9</b> illustre la zone d’ouverture de session. Il n’est pas nécessaire d’entrer en session pour visualiser le site Web, mais vous devez entrer en session si vous voulez afficher des articles dans les groupes de discussion, répondre aux messages ou passer des commentaires et lancer votre propre vidéoblogue.
+</p>
+<br /><h2>4.4.1. Inscription</h2>
+<p>
+Vous devez vous inscrire auprès du site pour entrer en session. Pour vous inscrire, sélectionnez « Inscription » dans la zone d’ouverture de session (<b>Figure 9</b>).
+</p>
+<h3>Figure 9: Zone d’ouverture de session</h3>
+<p>
+<a href="Images/Screenshots/French/Fig9.png" target="_blank"><img src="Images/Screenshots/French/Fig9.png" width="249" height="102" class="imgBordered" alt="Figure 9: Zone d’ouverture de session" /></a>
+</p>
+<p>
+La page d’inscription (<b>Figure 10</b>) vous demande votre nom et votre adresse de courriel (ce qui est nécessaire dans l’éventualité où vous oublieriez votre mot de passe) et vous permet de créer votre nom d’utilisateur et votre mot de passe. Le mot de passe que vous choisissez doit comporter plus de huit caractères alphanumériques. Vous devez également choisir un nom d’utilisateur unique et une adresse de courriel.
+</p>
+<h3>Figure 10: Page d’inscription</h3>
+<a href="Images/Screenshots/French/Fig10.png" target="_blank"><img src="Images/Screenshots/French/Fig10.png" width="241" height="395" class="imgBordered" alt="Figure 10: Page d’inscription" /></a>
+<p>
+Créez un nouveau compte
+<br />Nom :
+<br />Courriel :
+<br />Nom d’utilisateur :
+<br />Mot de passe :
+<br />Répétez le mot de passe :
+<br /><br />
+Une fois que vous vous êtes inscrit et que vous entrez en session, la zone d’ouverture de session change pour montrer votre nom d’utilisateur et l’image d’un avatar en blanc (<b>Figure 11</b>). Deux icônes s’affichent aussi : une icône des « Préférences » et une icône de « Fermeture de session ».
+</p>
+<h3>Figure 11: Zone d’ouverture de session après l’entrée en session</h3>
+<a href="Images/Screenshots/French/Fig11.png" target="_blank"><img src="Images/Screenshots/French/Fig11.png" width="239" height="87" class="imgBordered" alt="Figure 11: Zone d’ouverture de session après l’entrée en session" /></a>
+<br /><h2>4.4.2. Préférences</h2>
+<p>
+<img src="Images/Screenshots/French/Fignavbarpref.png" border="0" alt="Figure 8: Barre de navigation - Préférences" />
+<br />Pour éditer votre compte, sélectionnez l’icône des « Préférences » dans la zone d’ouverture de session.
+</p>
+<p>Cette sélection affiche un écran qui vous permet de changer votre nom, votre courriel et l’image de votre avatar (<b>Figure 12</b>). Cliquez sur « Soumettre » pour enregistrer vos changements. 
+</p>
+<h3>Figure 12: Préférences</h3>
+<a href="Images/Screenshots/French/Fig12.png" target="_blank"><img src="Images/Screenshots/French/Fig12.png" width="459" height="379" class="imgBordered" alt="Figure 12: Préférences" /></a>
+<p>
+Une fois que vous avez créé votre image d’avatar, la zone d’ouverture de session inclut cette image (<b>Figure 13</b>).
+</p>
+<h3>Figure 13: Zone d’ouverture de session avec image d’avatar</h3>
+<a href="Images/Screenshots/French/Fig13.png" target="_blank"><img src="Images/Screenshots/French/Fig13.png" width="240" height="86" class="imgBordered" alt="Figure 8: The login area with an avatar" /></a>
+<br />
+<br /><h2>4.4.3. Fermeture de session</h2>
+<p>
+<img src="Images/Screenshots/French/Fignavbarlogout.png" border="0" alt="Figure 8: Barre de navigation - Fermeture de session" />
+<br />Cliquez sur l’icône de fermeture de session pour sortir du site Web.
+</p>
+<br /><h2>4.4.4. Rappel de mot de passe</h2>
+<p>
+Entrez votre adresse de courriel et les détails pour votre entrée en session vous seront acheminés par courriel. 
+<a href="#top"><img src="Images/top.png" align="right" border="0" alt="Back to top" /></a>
+</p>
+<br /><h1><a name="content"></a>4.5. Zone de contenu</h1>
+Vous trouverez une brève description de la navigation dans les pages Web du site, des groupes de discussion et des vidéoblogues à la <b>section 4.2</b> et une description plus détaillée à la <b>section 4.5.2.</b> Avant de procéder, vous voudrez peut-être également vous renseigner sur la façon d’utiliser les pages Web signées à la <b>section 5</b>.
+<br />
+<h2>2.5.1. Pages</h2>
+<p>
+<img src="Images/Screenshots/French/Fignavbarcontent.png" border="0" alt="Figure 8: Barre de navigation - Pages" />
+<br />L’administrateur du site Web crée des pages à l’intention des membres. Par exemple, l’administrateur peut utiliser une page pour souhaiter la bienvenue aux gens dans SignlinkCMS ou pour expliquer les modalités de demande d’un compte de vidéoblogues. 
+</p>
+<h2>2.5.2. Groupes de discussion</h2>
+<p>
+<img src="Images/Screenshots/French/Fignavbarforums.png" border="0" alt="Figure 8: Barre de navigation - Groupes de discussion" />
+<br />Un groupe de discussion est une discussion en ligne. L’administrateur du site Web de SignlinkCMS est le seul qui peut créer des groupes de discussion, mais n’importe qui peut visualiser un groupe de discussion. Si vous entrez en session, vous pouvez également créer de nouveaux sujets de discussion et soumettre de nouveaux articles. 
+</p>
+<p>
+Lorsque vous cliquez sur l’icône du groupe de discussion dans la barre de navigation, une ou plusieurs boîtes de discussion s’affichent. Chaque boîte de discussion (<b>Figure 14</b>) indique un titre (c.-à-d., vidéoclip, image ou texte). Au bas à gauche de la boîte de discussion, une icône d’enveloppe indique les nouveaux messages  (<img src="Images/Screenshots/French/Figred.png" border="0" alt="Red icon" />icône rouge) et les messages déjà lus (<img src="Images/Screenshots/French/Figblue.png" border="0" alt="Blue icon" /> icône bleue). En outre, vous pouvez voir combien d’articles et de sujets figurent dans le groupe de discussion.
+</p>
+<h3>Figure 14: Boîte de groupe de discussion</h3>
+<a href="Images/Screenshots/French/Fig14.png" target="_blank"><img src="Images/Screenshots/French/Fig14.png" width="181" height="225" class="imgBordered" alt="Figure 14: Boîte de groupe de discussion" /></a>
+<br />
+<p>
+<u><b>Entrée dans un groupe de discussion</b></u>
+<br /><br />Pour entrer dans un groupe de discussion, cliquez sur la barre bleue qui s’affiche sous le titre du groupe de discussion (c.-à-d., vidéoclip, image ou texte). Lorsque vous entrez dans le groupe de discussion, vous voyez le titre du groupe de discussion dans le haut, et, sous celui-sous, une série de boîtes de sujets, indiquant les sujets dans le groupe de discussion (<b>Figure 15</b>).
+</p> 
+<h3>Figure 15: Liste des sujets dans un groupe de discussion</h3>
+<a href="Images/Screenshots/French/Fig15.png" target="_blank"><img src="Images/Screenshots/French/Fig15.png" width="545" height="473" class="imgBordered" alt="Figure 15: Liste des sujets dans un groupe de discussion" /></a>
+<br />
+<p>
+<u><b>Visualisation d’un sujet et d’un message</b></u>
+<br /><br />Chaque boîte de sujets (<b>Figure 16</b>) indique le titre du sujet. Sous la barre bleue, plusieurs autres informations s’affichent:
+</p>
+<ul>
+<li>1: Une icône d’enveloppe indiquant s’il y a de nouveaux messages (icône rouge) ou des messages déjà lus (icône bleue).</li>
+<li>2: Le nombre de réponses <img src="Images/Screenshots/French/Fignavreplies.png" border="0" alt="Navigation - Réponses" /></li>
+<li>3: Le nombre de visites <img src="Images/Screenshots/French/Fignavviews.png" border="0" alt="Navigation - Views" /></li>
+<li>4: Le temps et la date du dernier message.</li>
+</ul> 
+<h3>Figure 16: Boîte de sujets</h3>
+<a href="Images/Screenshots/French/Fig16.png" target="_blank"><img src="Images/Screenshots/French/Fig16.png" width="205" height="284" class="imgBordered" alt="Figure 16: Boîte de sujets" /></a>
+<br />
+<p>
+Pour visualiser un sujet, cliquez sur la barre bleue. La page Web pour le sujet (<b>Figure 17</b>) indique le titre du groupe de discussion. Complètement à droite du titre du groupe de discussion une icône de flèche vous permet de retourner à la page du groupe de discussion <img src="Images/Screenshots/French/Fignavbarback.png" border="0" alt="Figure 8: Barre de navigation - Back" />
+</p>
+<br />
+<p>
+Sous le titre du groupe de discussion se trouvent le titre du sujet et l’article. Prenez note que tout comme les titres, un article de discussion peut être une page Web signée, un message vidéo ou un message texte. Sous l’article du sujet se trouve une liste des réponses à l’article.
+</p>
+<h3>Figure 17: Un groupe de discussion et réponses</h3>
+<a href="Images/Screenshots/French/Fig17.png" target="_blank"><img src="Images/Screenshots/French/Fig17.png" width="519" height="409" class="imgBordered" alt="Figure 17: Un groupe de discussion et réponses" /></a>
+<p>
+<u><b>Visualisation d’une réponse</b></u>
+<br />Chaque réponse comporte quatre éléments:
+</p>
+<ul>
+<li>1: L’icône de l’enveloppe indiquant un nouveau message (icône rouge) ou un message déjà lu (icône bleue).</li>
+<li>2: L’icône de la réponse sur laquelle vous pouvez cliquer pour visualiser la réponse. Cette icône indique si la réponse est une page Web signée <img src="Images/Screenshots/French/Fignavweb.png" border="0" alt="Navigation - Web Page" />, un vidéoclip <img src="Images/Screenshots/French/Fignavvideo.png" border="0" alt="Navigation - Video" />, ou du texte ordinaire.</li>
+<li>3: Le nom d’utilisateur de l’auteur.</li>
+<li>4: La date et l’heure de la réponse. </li>
+</ul> 
+<p>
+<u><b>Lancement d’un nouveau sujet</b></u>
+Pour lancer un nouveau sujet, sélectionnez le bouton « nouveau sujet » <img src="Images/Screenshots/French/Fignavnew.png" border="0" alt="Navigation - Video" /> situé complètement à droite de la page du groupe de discussion principal (<b>Figure 18</b>).
+</p>
+<h3>Figure 18: Icône de nouveau sujet situé complètement à droite</h3>
+<a href="Images/Screenshots/French/Fig18.png" target="_blank"><img src="Images/Screenshots/French/Fig18.png" width="503" height="124" class="imgBordered" alt="Figure 18: Icône de nouveau sujet situé complètement à droite" /></a>
+<p>
+Cette sélection vous amène à une nouvelle page où vous pouvez spécifier un sujet et un message pour lancer un nouveau sujet (<b>Figure 18</b>). 
+</p>
+<h3>Figure 19: Création d’un nouveau sujet de discussion</h3>
+<a href="Images/Screenshots/French/Fig19.png" target="_blank"><img src="Images/Screenshots/French/Fig19.png" width="536" height="268" class="imgBordered" alt="Figure 19: Création d’un nouveau sujet de discussion" /></a>
+<p>
+Pour le sujet, choisissez une image, un vidéoclip ou du texte. Pour le message, choisissez entre une page Web signée (requiert un fichier swf et un fichier mp4), un vidéoclip ou du texte. Une fois que vous avez choisi quel type de contenu vous voulez utiliser, vous devez en indiquer l’emplacement dans votre ordinateur. Saisissez « alt text » pour que le texte s’affiche lorsque les membres promènent leur souris sur votre image ou vidéoclip. Cliquez sur Soumettre pour finir la création de la page de sujet (<b>Figure 20</b>).
+</p>
+<h3>Figure 20: Choix de types de contenu</h3>
+<a href="Images/Screenshots/French/Fig20.png" target="_blank"><img src="Images/Screenshots/French/Fig20.png" width="575" height="400" class="imgBordered" alt="Figure 20: Choix de types de contenu" /></a>
+<p>
+Pour plus de renseignements sur la création de pages Web signées, reportez-vous à <a href="http://www.signlinkstudio.com" target="_blank">www.signlinkstudio.com</a>.
+</p>
+<p>
+<u><b>Réponse à un article</b></u>
+<br /><br />Répondre à un article ressemble beaucoup à la création d’un nouveau sujet, sauf qu’un sujet n’est pas requis. Il vous suffit de sélectionner le bouton de réponse <img src="Images/Screenshots/French/Fignavreply.png" border="0" alt="Navigation - Réponse à un article" />, ainsi que le type de contenu de la réponse, tel qu’indiqué plus haut (<b>Figure 21</b>). Une fois que vous avez spécifié votre réponse, cliquez sur « Soumettre ».
+</p>
+<h3>Figure 21: Bouton de réponse</h3>
+<a href="Images/Screenshots/French/Fig21.png" target="_blank"><img src="Images/Screenshots/French/Fig21.png" width="566" height="62" class="imgBordered" alt="Figure 21: Bouton de réponse" /></a>
+<br /><br />
+<h3>Figure 22: Réponse à un message</h3>
+<a href="Images/Screenshots/French/Fig22.png" target="_blank"><img src="Images/Screenshots/French/Fig22.png" width="584" height="378" class="imgBordered" alt="Figure 22: Réponse à un message" /></a>
+<p>
+<u><b>Édition d’un article</b></u>
+<br /><br />L’édition d’un article ressemble à la création d’un article et à la réponse à un article. Lorsque vous êtes entré en session et que vous visualisez un article que vous avez soumis, vous pouvez voir un bouton d’édition <img src="Images/Screenshots/French/Fignavedit.png" border="0" alt="Navigation - Edit" /> situé complètement à droite. En cliquant sur ce bouton, vous pouvez changer votre article.
+</p>
+<h3>Figure 23: Clic sur le bouton d’édition situé complètement à droite pour éditer un article</h3>
+<a href="Images/Screenshots/French/Fig23.png" target="_blank"><img src="Images/Screenshots/French/Fig23.png" width="511" height="403" class="imgBordered" alt="Figure 23: Clic sur le bouton d’édition situé complètement à droite pour éditer un article" /></a>
+<h2>2.5.3. Vidéoblogues</h2>
+<p>
+Les vidéoblogues sont une zone dans laquelle seuls les membres auxquels l’administrateur a spécifiquement fourni un vidéoblogue peuvent afficher des entrées. Les autres membres peuvent passer des commentaires sur ces entrées.
+</p>
+<p>
+À tous les autres aspects, les vidéoblogues fonctionnent de la même façon que les groupes de discussion.
+<a href="#top"><img src="Images/top.png" align="right" border="0" alt="Back to top" /></a><br />
+</p>
+<br /><br /><img src="Images/linebreak.png" alt="Line break" border="0" />
+<br /><a name="sign"><img src="Images/French/frenchmanualpages.png" alt="Pages Web signées" /></a>
+<p>
+Les pages Web signées sont des pages Web spécialement conçues pour les utilisateurs de la langue des signes. Elles vous permettent d’afficher et de visualiser du matériel dans l’Internet entièrement en langue des signes ou en langue des signes avec sous-titres ou texte. Pour créer une page Web signée, vous devez utiliser Signlink Studio, un éditeur de pages Web que vous pouvez télécharger à <a href="http://www.signlinkstudio.com" target="_blank">www.signlinkstudio.com</a>.
+</p>
+<p>
+À l’aide de la technique Signlink, des vidéoclips de signeurs peuvent être liés à toute autre information dans le web. Vous pouvez voir un exemple à la <b>Figure 24</b>.
+</p>
+<h3>Figure 24: Page Web signée</h3>
+<a href="Images/Screenshots/French/Fig24.png" target="_blank"><img src="Images/Screenshots/French/Fig24.png" class="imgBordered" alt="Figure 24: Page Web signée" /></a>
+<p>
+Une page Web signée est construite autour d’un vidéoclip d’un signeur. Lorsque le signeur identifie un concept que l’auteur de la page Web a lié à une autre page Web, un lien vidé signé s’affiche. Les liens vidéo signés ressemblent à des hyperliens de texte sur une page Web de texte – vous pouvez cliquer sur un lien pour aller ailleurs dans le Web. Un lien vidéo signé est identifié par un contour rouge autour du vidéoclip. Sur une page Web signée, plusieurs fonctionnalités complètent le vidéoclip :
+</p>
+<h3>Figure 24b: Ligne de temps du lien</h3>
+<a href="Images/Screenshots/French/Fig24b.png" target="_blank"><img src="Images/Screenshots/French/Fig24b.png" class="imgBordered" alt="Figure 24b: Ligne de temps du lien" /></a>
+<p>
+La ligne de temps du lien vous permet de voir le nombre et l’emplacement des liens signés dans le vidéoclip. Un lien est surligné lorsque son lien vidéo signé joue dans le vidéoclip. Un clic sur l’un des liens bleus fait jouer le vidéoclip du début de ce lien vidéo signé.
+</p>
+<h3>Figure 24c: Vignettes</h3>
+<a href="Images/Screenshots/French/Fig24c.png" target="_blank"><img src="Images/Screenshots/French/Fig24c.png" class="imgBordered" alt="Figure 24c: Vignettes" /></a>
+<p>
+Chaque vignette est une image saisie d’un lien vidéo signé différent. Une vignette est surlignée lorsque son lien vidéo signé joue dans le vidéoclip. Un clic sur la vignette fait jouer le vidéoclip du début du lien vidéo signé. Lorsque vous voulez suivre un lien vidéo signé, sélectionnez la barre bleue sur laquelle figure l’icône de la main sous la vignette.
+</p>
+<h3>Figure 24d: Boutons liens suivant et précédent</h3>
+<a href="Images/Screenshots/French/Fig24d.png" target="_blank"><img src="Images/Screenshots/French/Fig24d.png" class="imgBordered" alt="Figure 24d: Boutons liens suivant et précédent" /></a>
+<p>
+Ces buttons font passer au lien suivant ou précédent dans un vidéoclip.
+</p>
+<h3>Figure 24e: Bouton de ralenti</h3>
+<a href="Images/Screenshots/French/Fig24e.png" target="_blank"><img src="Images/Screenshots/French/Fig24e.png" class="imgBordered" alt="Figure 24e: Bouton de ralenti" /></a>
+<p>
+Ce bouton fait basculer au mode de ralenti. Ce bouton peut s’avérer très utile lorsqu’un signeur épelle rapidement avec les doigts.
+</p>
+<p>
+Après avoir utilisé Signlink Studio en vue de créer une page Web signée pour son utilisation dans SignlinkCMS, vous devez « exporter » votre page Web. Cela crée un répertoire d’exportation renfermant les deux fichiers de pages Web signées, un fichier vidéo (mp4) et un fichier Flash (swf) que vous pouvez télécharger vers SignlinkCMS.
+</p>
+<a href="#top"><img src="Images/top.png" align="right" border="0" alt="Back to top" /></a><br />
+<br /><br /><img src="Images/linebreak.png" alt="Line break" border="0" />
+<br />
+<br /><a name="rem"><img src="Images/French/frenchmanualrem.png" alt="Remerciements" /></a>
+<br />
+<br />La programmatrice en chef pour SignlinkCMS est:
+<ul>
+<li>Heidi Hazelton</li>
+</ul>
+Les autres membres de l’équipe de Signlink sont:
+<ul>
+<li>Deb Fels</li>
+<li>Martin Gerdzhev</li>
+<li>James Hardman</li>
+<li>Ellen Hibbard</li>
+<li>Jan Richards</li>
+<li>Laurel Williams</li>
+</ul>
+Le développement de SignlinkCMS a été généreusement subventionné par le programme de contenu canadien en ligne de Canadian Heritage (<a href="http://www.pch.gc.ca">www.pch.gc.ca</a>).
+<a href="#top"><img src="Images/top.png" align="right" border="0" alt="Back to top" /></a><br />
+<br /><br /><br /><img src="Images/linebreak.png" alt="Line break" border="0" />
+<br />
+<br />
+<br />
+</div>
+</body>
+</html>
