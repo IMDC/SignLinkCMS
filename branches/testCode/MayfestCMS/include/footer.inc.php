@@ -3,7 +3,7 @@
 	</div>
 	<div id="footer">
 		&nbsp;
-        <?php echo '<p class="timezone-footer">All times in ' . date("T") . '</p>'; ?>
+        <?php echo '<p class="timezone-footer">All times in ' . date("T") . '. Server time is ' . date(DATE_RFC822) . '</p>'; ?>
 	</div>
 </div>
 <?php //debug($_SESSION)
