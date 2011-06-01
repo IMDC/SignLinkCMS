@@ -22,7 +22,7 @@ if ($_POST) {
 		$_SESSION['errors'][] = 'Please enter a valid email.';
 	} 
 	
-	$result = mysqli_query($db, "SELECT * FROM membersCopy WHERE email='$chk_email'");
+	$result = mysqli_query($db, "SELECT * FROM members WHERE email='$chk_email'");
 	if (mysqli_num_rows($result) != 0) {
 		$_SESSION['errors'][] = 'Email address already in use. Try the <a href="password_reset.php">Password Reset.</a>';
 	}
@@ -36,7 +36,7 @@ if ($_POST) {
 			$_SESSION['errors'][] = 'Login name taken. Please try another.';
 		}
     else {
-      $result = mysqli_query($db, "SELECT * FROM membersCopy WHERE login='$chk_login'");
+      $result = mysqli_query($db, "SELECT * FROM members WHERE login='$chk_login'");
       if (mysqli_num_rows($result) != 0) {
         $_SESSION['errors'][] = 'Login name already exists.';
       }
@@ -74,7 +74,7 @@ if ($_POST) {
 
 		$password   = mysqli_real_escape_string($db, trim($_POST['password']));
 
-    $sql = "INSERT INTO membersCopy VALUES (NULL, '$login', '$password', '$name', '$email', AES_ENCRYPT(concat('$login','signlinkcms'), SHA1('$password')), DEFAULT, DEFAULT, 0)";
+    $sql = "INSERT INTO members VALUES (NULL, '$login', '$password', '$name', '$email', AES_ENCRYPT(concat('$login','signlinkcms'), SHA1('$password')), DEFAULT, DEFAULT, 0)";
 		$result = mysqli_query($db, $sql);
 
 		if (!$result) {
