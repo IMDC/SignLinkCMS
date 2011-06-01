@@ -31,8 +31,8 @@ else if (isset($this_login, $this_password)) {
 
   //$sql = "SELECT member_id, login, SHA1(CONCAT(password, '-', '".DB_PASSWORD."')) AS pass FROM members WHERE login='$this_login' AND SHA1(CONCAT(password, '$_SESSION[token]'))='$this_password'";	
 
-  $sql = "SELECT member_id, login, name, last_login_ts FROM membersCopy where login = '$this_login' and bl_pass = AES_ENCRYPT(concat('$this_login','signlinkcms'), SHA1('$this_password'))";
-  print "\n$sql\n";
+  $sql = "SELECT member_id, login, name, last_login_ts FROM members where login = '$this_login' and bl_pass = AES_ENCRYPT(concat('$this_login','signlinkcms'), SHA1('$this_password'))";
+  //print "\n$sql\n";
 
   //$sql = "SELECT member_id, login, password FROM members WHERE login='$this_login' AND password='$this_password'";	
   $result = mysqli_query($db, $sql);
