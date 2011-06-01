@@ -47,9 +47,9 @@ else if (isset($this_login, $this_password)) {
 		//mysqli_query($db, $sql);
 
 		$_SESSION['feedback'][] = 'Successfully logged in.';
-    $_SESSION['feedback'][] = 'Your last successful login was ' . $row['last_login_ts'];
+      $_SESSION['feedback'][] = 'Your last successful login was ' . $row['last_login_ts'];
 
-    print update_member_last_login($_SESSION['member_id']);   //update last login date/time 
+      update_member_last_login($_SESSION['member_id']);   //update last login date/time 
 		header('Location:index.php');
 		exit;	
 	} else {
