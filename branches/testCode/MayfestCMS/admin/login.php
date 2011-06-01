@@ -46,6 +46,7 @@ else if (isset($this_login, $this_password)) {
 		//$sql = "UPDATE ".TABLE_PREFIX."members SET creation_date=creation_date, last_login=NOW() WHERE member_id=$_SESSION[member_id]";
 		//mysqli_query($db, $sql);
 
+      $_SESSION['feedback'][] = '<img src="../images/accepted_48.png" class="inlineVertMid" /><img src="../images/login_32.png" class="inlineVertMid" />';
 		$_SESSION['feedback'][] = 'Successfully logged in.';
       $_SESSION['feedback'][] = 'Your last successful login was ' . $row['last_login_ts'];
 
@@ -64,7 +65,7 @@ unset($_SESSION['valid_user']);
 unset($_SESSION['member_id']);
 unset($_SESSION['is_admin']);
 
-require(INCLUDE_PATH.'admin_header.inc.php'); 
+require(INCLUDE_PATH.'admin_header.inc.php');
 ?>
 
 <script language="JavaScript" src="../jscripts/sha-1factory.js" type="text/javascript"></script>
