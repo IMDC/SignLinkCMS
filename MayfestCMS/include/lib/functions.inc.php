@@ -661,7 +661,7 @@ function update_member_last_login($id) {
     $id = mysqli_real_escape_string($db, $id);
    // TODO: Should this be implemented as a new DB connection with de-elevated privileges?
 
-   $sql = "UPDATE membersCopy set last_login_ts = NOW() WHERE member_id = $id";
+   $sql = "UPDATE members set last_login_ts = NOW() WHERE member_id = $id";
    $result = mysqli_query($db, $sql);
    return $result;
 }
