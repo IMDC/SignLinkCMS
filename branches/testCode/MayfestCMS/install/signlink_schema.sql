@@ -95,7 +95,7 @@ CREATE TABLE IF NOT EXISTS `members` (
   `email` varchar(265) NOT NULL,
   `created_ts` timestamp not null default CURRENT_TIMESTAMP,
   `passresetexp_ts` timestamp NULL DEFAULT 0,
-  `last_login_ts` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `last_login_ts` timestamp NULL DEFAULT 0,
   `post_count` mediumint(8) unsigned NOT NULL default '0',
   PRIMARY KEY  (`member_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 ;
