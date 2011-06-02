@@ -100,7 +100,7 @@ CREATE TABLE IF NOT EXISTS `members` (
   PRIMARY KEY  (`member_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 ;
 
-INSERT INTO `members` (`member_id`, `login`, `bl_pass`, `name`, `email`, 'created_ts', 'passresetexp_ts', 'last_login_ts') VALUES
+INSERT INTO `members` (`member_id`, `login`, `bl_pass`, `name`, `email`, `created_ts`, `passresetexp_ts`, `last_login_ts`) VALUES
 (1, 'admin', 0x82aea95cb77f3c2eee4731302359a5a33ff1877f378dfba966e83d0a7fdcc83c, 'admin', 'admin@admin.org', DEFAULT, DEFAULT, 0);
 
 -- --------------------------------------------------------
