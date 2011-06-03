@@ -20,9 +20,9 @@ else if ($_POST['submit'] || $_GET['processed']) {
 	}
 	check_uploads();
 
-   //$member_id = mysqli_real_escape_string($db, $_SESSION['member_id']);
+   $member_id = mysqli_real_escape_string($db, $_SESSION['member_id']);
    //$sql = "select bl_pass, name from membersCopy where member_id=".$_SESSION['member_id']." and bl_pass = AES_ENCRYPT(concat('".$_SESSION['login'] . "','signlinkcms'), SHA1('".$_POST['oldpass'] . "'))";
-   $sql = "SELECT name,email FROM membersCopy WHERE member_id=".$_SESSION['member_id'];
+   $sql = "SELECT name,email FROM members WHERE member_id=".$_SESSION['member_id'];
    $result = mysqli_query($db, $sql);
    
    /*** Retrieve users name and password for future checks ***/
@@ -108,7 +108,7 @@ else if ($_POST['submit'] || $_GET['processed']) {
 		$member_id = intval($_SESSION['member_id']);
       
       if ($name_change_requested || $email_change_requested) {
-         $sql = "UPDATE membersCopy ";
+         $sql = "UPDATE members ";
          
          if ($name_change_requested) {
             $newname = mysqli_real_escape_string($db, htmlspecialchars($_POST['name']));
@@ -146,7 +146,7 @@ else if ($_POST['submit'] || $_GET['processed']) {
 
 require(INCLUDE_PATH.'header.inc.php');
 
-$sql = "SELECT login,name,email FROM membersCopy WHERE login='".$_SESSION['login']."' AND member_id=".intval($_SESSION['member_id']);
+$sql = "SELECT login,name,email FROM members WHERE login='".$_SESSION['login']."' AND member_id=".intval($_SESSION['member_id']);
 $result = mysqli_query($db, $sql);
 $row = mysqli_fetch_assoc($result);
 if ($row) {

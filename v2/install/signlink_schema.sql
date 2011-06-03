@@ -90,7 +90,7 @@ CREATE TABLE IF NOT EXISTS `forums_views` (
 CREATE TABLE IF NOT EXISTS `members` (
   `member_id` mediumint(9) NOT NULL auto_increment,
   `login` varchar(20) NOT NULL default '',
-  `cl_pass` blob,
+  `bl_pass` blob,
   `name` varchar(265) NOT NULL,
   `email` varchar(265) NOT NULL,
   `created_ts` timestamp not null default CURRENT_TIMESTAMP,
@@ -100,8 +100,8 @@ CREATE TABLE IF NOT EXISTS `members` (
   PRIMARY KEY  (`member_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 ;
 
-INSERT INTO `members` (`member_id`, `login`, `password`, `name`, `email`, 'created_ts', 'passresetexp_ts', 'last_login_ts') VALUES
-(1, 'admin', 'admin', '', '', DEFAULT, DEFAULT, 0);
+INSERT INTO `members` (`member_id`, `login`, `bl_pass`, `name`, `email`, 'created_ts', 'passresetexp_ts', 'last_login_ts') VALUES
+(1, 'admin', 0x82aea95cb77f3c2eee4731302359a5a33ff1877f378dfba966e83d0a7fdcc83c, 'admin', 'admin@admin.org', DEFAULT, DEFAULT, 0);
 
 -- --------------------------------------------------------
 

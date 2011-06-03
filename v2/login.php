@@ -32,35 +32,39 @@ if (isset($this_login, $this_password)) {
    $this_login    = mysqli_real_escape_string($db, $this_login);
    $this_password = mysqli_real_escape_string($db, $this_password);
 
-   if ($used_cookie) {
+   /*if ($used_cookie) {
       // check if that cookie is valid
       $sql = "SELECT member_id, login, SHA1(CONCAT(password, '-', '".DB_PASSWORD."')) AS pass FROM members WHERE login='$this_login' AND SHA1(CONCAT(password, '-', '".DB_PASSWORD."'))='$this_password'";
 
-   } else {
+   } 
+   else {*/
 		//$sql = "SELECT member_id, login, SHA1(CONCAT(password, '-', '".DB_PASSWORD."')) AS pass FROM members WHERE login='$this_login' AND SHA1(CONCAT(password, '$_SESSION[token]'))='$this_password'";
     //$sql = "SELECT member_id, login, sh_pass from members where login='$this_login'";
-    $sql = "SELECT member_id, login, name, last_login_ts FROM membersCopy where login = '$this_login' and bl_pass = AES_ENCRYPT(concat('$this_login','signlinkcms'), SHA1('$this_password'))";
+    $sql = "SELECT member_id, login, name, last_login_ts FROM members where login = '$this_login' and bl_pass = AES_ENCRYPT(concat('$this_login','signlinkcms'), SHA1('$this_password'))";
     //print $sql;
-   }
+   //}
    
    $result = mysqli_query($db, $sql);
   
    if (!$result) { 
-      echo 'Could not successfully run query($sql) from DB: ' . mysqli_error();exit;
+      $_SESSion['errors'][] = 'Could not successfully run query($sql) from DB: ' . mysqli_error();
+      exit;
    }
-   if ($row = mysqli_fetch_assoc($result)) {
+   $row = mysqli_fetch_assoc($result);
+   if ($row) {
 		$_SESSION['valid_user'] = true;
 		$_SESSION['member_id']	= intval($row['member_id']);
 		$_SESSION['login']		= $row['login'];
 		$_SESSION['is_guest']	= 0;
 
-		if ($auto_login == 1) {
+		/*
+      if ($auto_login == 1) {
 			$parts = parse_url($_SERVER['PHP_SELF']);
 			// update the cookie.. increment to another 2 days
 			$cookie_expire = time()+172800;
 			setcookie('SLLogin', $this_login, $cookie_expire, $parts['path'], $parts['host'], 0);
 			setcookie('SLPass',  $row['pass'],  $cookie_expire, $parts['path'], $parts['host'], 0);
-		}
+		}*/
 
          //$sql = "UPDATE ".TABLE_PREFIX."members SET creation_date=creation_date, last_login=NOW() WHERE member_id=$_SESSION[member_id]";
 
@@ -108,7 +112,6 @@ unset($_SESSION['is_super_admin']);
 
 
 require(INCLUDE_PATH.'header.inc.php'); ?>
-
 
 <script language="JavaScript" src="jscripts/sha-1factory.js" type="text/javascript"></script>
 <script language="JavaScript" src="jscripts/login.js" type="text/javascript"></script>

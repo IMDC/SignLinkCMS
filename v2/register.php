@@ -74,12 +74,12 @@ if ($_POST) {
 
 		$password   = mysqli_real_escape_string($db, trim($_POST['password']));
 
-    $sql = "INSERT INTO members VALUES (NULL, '$login', '$password', '$name', '$email', AES_ENCRYPT(concat('$login','signlinkcms'), SHA1('$password')), DEFAULT, DEFAULT, 0)";
+    $sql = "INSERT INTO members (member_id, login, name, email, bl_pass, created_ts) VALUES (NULL, '$login', '$name', '$email', AES_ENCRYPT(concat('$login','signlinkcms'), SHA1('$password')), DEFAULT)";
 		$result = mysqli_query($db, $sql);
 
 		if (!$result) {
-      // enable the line below to get the sql error as feedback when you are unable to register
-      //$_SESSION['errors'][] = mysqli_error($db);
+         // enable the line below to get the sql error as feedback when you are unable to register
+         //$_SESSION['errors'][] = mysqli_error($db);
 			$_SESSION['errors'][] = 'Database error - user not added. Please register again.';
 			exit;
 		}
