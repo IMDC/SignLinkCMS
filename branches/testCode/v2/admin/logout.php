@@ -11,6 +11,7 @@ unset($_SESSION['is_admin']);
 unset($_SESSION['errors']);
 unset($_SESSION['notices']);
 
+$_SESSION['feedback'][] = '<img src="../images/accepted_48.png" class="inlineVertMid" /><img src="../images/door-logout2.png" class="inlineVertMid" />';
 $_SESSION['feedback'][] = 'Successfully logged out.';
 
 header('Location: login.php');

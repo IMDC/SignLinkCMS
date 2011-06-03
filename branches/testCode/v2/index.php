@@ -43,6 +43,7 @@ if (mysqli_num_rows($result)) {
 <?php
 	}
 	echo '<br style="clear:both;" /></div>	';
+   // delete this later
 }
 
 /* top forums, most recent post activity from the FORUMS section */
