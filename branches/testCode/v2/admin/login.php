@@ -83,18 +83,20 @@ require(INCLUDE_PATH.'admin_header.inc.php');
 
 <p>Please login below.</p>
 
+<div class="centeralign">
 <form action="login.php" method="post" name="form" >
 	<input type="hidden" name="password_hidden" value="" />
 
-	<dl class="col-list" style="width:33%; margin-left:auto; margin-right:auto;">
+	<dl class="centeralign" style="width:50%; margin-left:auto; margin-right:auto;">
 		<dt><label for="login"><img src="../images/user_med.png" alt="" title="login" class="inlineVertMid" />Login:</label></dt> 
-			<dd><input name="login" type="text" id="login" value="<?php echo $_SERVER['login']; ?>" /></dd>
+			<dd style="margin:0;"><input name="login" type="text" id="login" value="<?php echo $_SERVER['login']; ?>" /></dd>
 		<dt><label for="pswd"><img src="../images/key3.png" alt="" title="password" class="inlineVertMid" />Password:</label></dt> 
-			<dd><input name="password" type="password" id="pswd" value="" /></dd>
+			<dd style="margin:0;"><input name="password" type="password" id="pswd" value="" /></dd>
 	</dl>
 	<div style="text-align:center; padding-top:1em;">
 		<input type="submit" name="submit" value="Submit" class="button" />
 	</div>
 </form>
+</div>
 
 <?php require('../include/footer.inc.php'); ?>
