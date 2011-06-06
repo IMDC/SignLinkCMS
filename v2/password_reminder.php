@@ -9,13 +9,13 @@ if (isset($_POST['cancel'])) {
 	exit;
 
 } else if ($_POST['email'] || $_GET['processed']) {
-		$sql = "SELECT login, password FROM members WHERE email='".addslashes($_POST['email'])."'";
+		$sql = "SELECT login FROM members WHERE email='".mysqli_real_escape_string($db, $_POST['email'])."'";
 		$result = mysqli_query($db, $sql);		
 		
 		if ($row = @mysqli_fetch_assoc($result)) {		
 			$body = "The following are your login details for the Signlink forum website:"."\n\n";
 			$body .= "Login: ". $row['login']."\n";
-			$body .= "Password: ". $row['password']."\n";
+			$body .= "Password: ". "RANDOMLY GENERATED HASH" ."\n";
 			
 			//send email
 			require(INCLUDE_PATH . 'phpmailer/class.phpmailer.php');

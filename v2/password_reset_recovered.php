@@ -10,11 +10,11 @@ if (isset($_POST['cancel'])) {
 
 } else if ($_POST['submit'] || $_GET['processed']) {
 		//$sql = "SELECT login, password FROM members WHERE email='".addslashes($_POST['email'])."'";
-		$sql = "UPDATE members SET password = (SELECT SUBSTRING(md5(mt_rand()) FROM 1 TO 12) WHERE email='".addslashes($_POST['email'])."'";
+		$sql = "UPDATE members SET password = (SELECT SUBSTRING(md5(mt_rand()) FROM 1 TO 12) WHERE email='".mysqli_real_escape_string($db, $_POST['email'])."'";
 		$result = mysql_query($sql, $db);		
 		
 		if ($row = @mysql_fetch_assoc($result)) {		
-      $body = "SignlinkCMS\n\nYou have requested that we reset your password on $SITE_NAME 
+			$body = "SignlinkCMS\n\nYou have requested that we reset your password on " . $SITE_NAME;
 			$body .= "The following are your login details for the Signlink forum website:"."\n\n";
 			$body .= "Login: ". $row['login']."\n";
 			$body .= "Password: ". $row['password']."\n";
