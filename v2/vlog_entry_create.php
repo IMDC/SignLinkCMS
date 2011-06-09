@@ -99,7 +99,9 @@ if (isset($_POST['cancel'])) {
 
 		//insert into db
 		$now = date('Y-m-d G:i:s');
-		$sql = "INSERT INTO vlogs_entries VALUES (NULL, '$vlog_id', '$subject', '$subject_alt', '$message', '$message_alt', '$now', 0)";
+		$sql = "INSERT INTO vlogs_entries ('entry_id', 'vlog_id', 'title', 'title_alt', 'content', 'content_alt', 'date', 'num_comments') 
+                        VALUES (NULL, '$vlog_id', '$subject', '$subject_alt', '$message', '$message_alt', '$now', 0)";
+                
 		if (!$result = mysqli_query($db, $sql)) {
 			$_SESSION['errors'][] = 'Database error.';
 		} else {

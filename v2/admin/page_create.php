@@ -104,7 +104,7 @@ if (isset($_POST['cancel'])) {
 		$outline = $addslashes(htmlspecialchars($_POST['outline']));
 
 		//insert into db
-		$sql = "INSERT INTO pages VALUES (NULL, '$parent_id', 0, '$subject', '$subject_alt', '$message', '$message_alt', '$outline', NOW(), NOW(),'')";
+		$sql = "INSERT INTO pages ('page_id', 'parent_id', 'member_id', 'title', 'title_alt', 'content', 'content_alt', 'outline', 'created', 'last_modified', 'links_to') VALUES (NULL, '$parent_id', 0, '$subject', '$subject_alt', '$message', '$message_alt', '$outline', NOW(), NOW(),'')";
 
 		if (!$result = mysqli_query($db, $sql)) {
 			$_SESSION['errors'][] = 'Database error.';

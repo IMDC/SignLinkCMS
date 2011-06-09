@@ -74,7 +74,8 @@ if ($_POST) {
 
 		$password   = mysqli_real_escape_string($db, trim($_POST['password']));
 
-    $sql = "INSERT INTO members (member_id, login, name, email, bl_pass, created_ts) VALUES (NULL, '$login', '$name', '$email', AES_ENCRYPT(concat('$login','signlinkcms'), SHA1('$password')), DEFAULT)";
+                $sql = "INSERT INTO members (member_id, login, name, email, bl_pass, created_ts) 
+                        VALUES (NULL, '$login', '$name', '$email', AES_ENCRYPT(concat('$login','signlinkcms'), SHA1('$password')), DEFAULT)";
 		$result = mysqli_query($db, $sql);
 
 		if (!$result) {

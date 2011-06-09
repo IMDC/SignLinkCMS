@@ -70,8 +70,7 @@ if ($_POST) {
 		/* MD5 encryption for the password for added security */
 		//$password = md5($password);
 
-
-		$sql = "INSERT INTO members VALUES (NULL, '$login', '$password', '$name', '$email')";
+                $sql = "INSERT INTO members (member_id, login, name, email, bl_pass, created_ts) VALUES (NULL, '$login', '$name', '$email', AES_ENCRYPT(concat('$login','signlinkcms'), SHA1('$password')), DEFAULT)";
 		$result = mysqli_query($db, $sql);
 
 		if (!$result) {
