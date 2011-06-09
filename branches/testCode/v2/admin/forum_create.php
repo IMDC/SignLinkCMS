@@ -62,7 +62,7 @@ if (isset($_POST['cancel'])) {
 		$now = date('Y-m-d G:i:s');
 
 		//insert into db
-		$sql = "INSERT INTO forums VALUES (NULL, '$subject', '$subject_alt', 0,0, 0)";
+		$sql = "INSERT INTO forums ('forum_id', 'subject', 'subject_alt') VALUES (NULL, '$subject', '$subject_alt')";
 
 		if (!$result = mysqli_query($db, $sql)) {
 			$_SESSION['errors'][] = 'Database error.';
