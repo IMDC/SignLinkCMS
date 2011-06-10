@@ -96,7 +96,7 @@ else if ($_POST['submit'] || $_GET['processed']) {
          $result = mysqli_query($db, $sql);
 
          if (mysqli_num_rows($result)==0) {
-            $_SESSION['errors'][] = "The old password you entered does not match, use the <a href='password_reminder.php'>password reminder</a> feature if you forgot your password.";  
+            $_SESSION['errors'][] = "The old password you entered does not match, use the <a href='password_reset_request.php'>password reset</a> feature if you forgot your password.";  
             break;
          }
       }

@@ -57,7 +57,7 @@
       <div id="login-footer-container">
         <ul>
           <li><a href="register.php"><img src="images/user_add_32.png" class="inlineVertMid" alt="" /></a><a href="register.php">Register</a></li>
-          <li><a href="password_reminder.php"><img src="images/mail_key_32.png" class="inlineVertMid" alt="" /></a><a href="password_reminder.php">Password Reminder</a></li>
+          <li><a href="password_reset_request.php"><img src="images/mail_key_32.png" class="inlineVertMid" alt="" /></a><a href="password_reset_request.php">Reset Password</a></li>
         </ul>
       </div>
 		</form>
