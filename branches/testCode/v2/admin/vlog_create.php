@@ -98,7 +98,7 @@ require(INCLUDE_PATH.'admin_header.inc.php'); ?>
 
 <h2>Create Vlog</h2>
 <script type="text/javascript" src="../jscripts/forum_post.js"></script>
-<form action ="<?php echo $_SERVER['PHP_SELF']; ?>?processed=1" method="post" name="form" enctype="multipart/form-data">
+<form action ="<?php echo htmlentities($_SERVER['PHP_SELF'], ENT_QUOTES); ?>?processed=1" method="post" name="form" enctype="multipart/form-data">
 		
 	<div class="file-info">
 		<span class="bold">Owner</span><br />

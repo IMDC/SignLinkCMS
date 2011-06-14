@@ -1,6 +1,6 @@
 <script type="text/javascript" src="../jscripts/forum_post.js"></script>
 
-<form action ="<?php echo $_SERVER['PHP_SELF']; ?>?processed=1" method="post" name="form" enctype="multipart/form-data">
+<form action ="<?php echo htmlentities($_SERVER['PHP_SELF'], ENT_QUOTES); ?>?processed=1" method="post" name="form" enctype="multipart/form-data">
 <input type="hidden" name="f" value="<?php echo $forum_id; ?>" />
 
 <input type="hidden" name="MAX_FILE_SIZE" value="<?php echo MAX_UPLOAD_SIZE; ?>" />

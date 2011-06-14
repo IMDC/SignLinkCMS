@@ -200,7 +200,7 @@ require(INCLUDE_PATH.'admin_header.inc.php'); ?>
 			echo 'Sub page under:'. get_title('page', $row['parent_id'], 'small');
 		} ?>  <br />(<span id="edit-hier" style="color:#11568B;cursor:pointer;">Edit Hierarchy</span>)<br />		
 			
-		<form action="<?php echo $_SERVER['PHP_SELF']; ?>?processed=1" method="post" name="form_hier" id="form_hier" enctype="multipart/form-data" style="clear:both; padding-top:2px;">
+		<form action="<?php echo htmlentities($_SERVER['PHP_SELF'], ENT_QUOTES); ?>?processed=1" method="post" name="form_hier" id="form_hier" enctype="multipart/form-data" style="clear:both; padding-top:2px;">
 			<input type="hidden" name="c" value="<?php echo $page_id; ?>" />
 			<input type="hidden" name="area" value="parent" />
 		
@@ -235,7 +235,7 @@ require(INCLUDE_PATH.'admin_header.inc.php'); ?>
 		
 		<?php if (!empty($title)) { echo $title.'<br /><br />'; } ?>  (<span id="edit-subject" style="color:#11568B;cursor:pointer;">Edit Title</span>)
 	
-		<form action="<?php echo $_SERVER['PHP_SELF']; ?>?processed=1" method="post" name="form_sub" id="form_sub" enctype="multipart/form-data" style="clear:both; padding-top:2px;">
+		<form action="<?php echo htmlentities($_SERVER['PHP_SELF'], ENT_QUOTES); ?>?processed=1" method="post" name="form_sub" id="form_sub" enctype="multipart/form-data" style="clear:both; padding-top:2px;">
 			<input type="hidden" name="c" value="<?php echo $page_id; ?>" />
 			<input type="hidden" name="MAX_FILE_SIZE" value="<?php echo MAX_UPLOAD_SIZE; ?>" />
 			<input type="hidden" name="area" value="subject" />
@@ -277,7 +277,7 @@ require(INCLUDE_PATH.'admin_header.inc.php'); ?>
 		<span class="bold">Content</span><br />
 		<?php echo get_content($row['page_id']); ?><br style="clear:both;" /> (<span id="edit-message" style="color:#11568B;cursor:pointer;">Edit Content</span>)
 
-		<form action="<?php echo $_SERVER['PHP_SELF']; ?>?processed=1" method="post" name="form_sub" id="form_sub" enctype="multipart/form-data" style="clear:both; padding-top:2px;">
+		<form action="<?php echo htmlentities($_SERVER['PHP_SELF'], ENT_QUOTES); ?>?processed=1" method="post" name="form_sub" id="form_sub" enctype="multipart/form-data" style="clear:both; padding-top:2px;">
 			<input type="hidden" name="c" value="<?php echo $page_id; ?>" />
 			<input type="hidden" name="MAX_FILE_SIZE" value="<?php echo MAX_UPLOAD_SIZE; ?>" />
 			<input type="hidden" name="area" value="message" />

@@ -73,7 +73,7 @@
 
 	<div id="menu" style="clear:both">
 	<?php		
-		$current_page = explode('/', $_SERVER['PHP_SELF']); 
+		$current_page = explode('/',htmlentities($_SERVER['PHP_SELF'], ENT_QUOTES)); 
 		$current_page = $current_page[count($current_page) - 1];
 		
 	?>

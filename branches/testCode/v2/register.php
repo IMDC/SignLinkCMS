@@ -103,7 +103,7 @@ if (REGISTRATION_CLOSED) {
 <h2><img src="images/user_add_48.png" />Register</h2>
 <p>Create a new account.</p>
 <p><em>Contact information - this will be used to contact you and retrieve a forgotten password, never for spam</em></p>
-<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="registerform" class="expose">
+<form action="<?php echo htmlentities($_SERVER['PHP_SELF'], ENT_QUOTES); ?>" method="post" name="registerform" class="expose">
 	<dl class="col-list">
 		<dt><label for="name"><img src="images/user_small.png" class="inlineVertMid" />Name:</label></dt> 
 			<dd><input name="name" type="text" id="name" value="<?php echo $_POST['name']; ?>" />&nbsp;&nbsp;<img src="images/example3.png" />"Carmen Smith"</dd><br />

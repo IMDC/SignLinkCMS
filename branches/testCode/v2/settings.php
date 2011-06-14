@@ -98,7 +98,7 @@ require(INCLUDE_PATH.'admin_header.inc.php'); ?>
 <div class="file-info">
 <script type="text/javascript" src="../jscripts/maxUploadMenu.js">
 </script>
-<form action="<?php echo $_SERVER['PHP_SELF']; ?>?processed=1" method="post" name="form" enctype="multipart/form-data">
+<form action="<?php echo htmlentities($_SERVER['PHP_SELF'], ENT_QUOTES); ?>?processed=1" method="post" name="form" enctype="multipart/form-data">
 
 	<dl class="admin">
 	

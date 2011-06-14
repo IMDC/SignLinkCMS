@@ -211,7 +211,7 @@ $(document).ready(function() {
 
 			<?php echo $title; ?> (<span id="edit-subject" style="color:#11568B;cursor:pointer;">Edit Subject</span>)
 
-		<form action="<?php echo $_SERVER['PHP_SELF']; ?>?processed=1" method="post" name="form_sub" id="form_sub" enctype="multipart/form-data" style="clear:both; padding-top:2px;">
+		<form action="<?php echo htmlentities($_SERVER['PHP_SELF'], ENT_QUOTES); ?>?processed=1" method="post" name="form_sub" id="form_sub" enctype="multipart/form-data" style="clear:both; padding-top:2px;">
 			<input type="hidden" name="f" value="<?php echo $forum_id; ?>" />
 			<input type="hidden" name="p" value="<?php echo $post_id; ?>" />
 			<input type="hidden" name="parent" value="<?php echo $parent; ?>" />
@@ -258,7 +258,7 @@ $(document).ready(function() {
 
 		<?php echo $msg[2]; ?> (<span id="edit-message" style="color:#11568B;cursor:pointer;">Edit Message</span>)
 
-		<form action="<?php echo $_SERVER['PHP_SELF']; ?>?processed=1" method="post" name="form_msg" id="form_msg" enctype="multipart/form-data" style="clear:both; padding-top:2px;">
+		<form action="<?php echo htmlentities($_SERVER['PHP_SELF'], ENT_QUOTES); ?>?processed=1" method="post" name="form_msg" id="form_msg" enctype="multipart/form-data" style="clear:both; padding-top:2px;">
 			<input type="hidden" name="f" value="<?php echo $forum_id; ?>" />
 			<input type="hidden" name="p" value="<?php echo $post_id; ?>" />
 			<input type="hidden" name="parent" value="<?php echo $parent; ?>" />
