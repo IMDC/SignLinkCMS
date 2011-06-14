@@ -1,4 +1,4 @@
-<form action ="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form" enctype="multipart/form-data">
+<form action ="<?php echo htmlentities($_SERVER['PHP_SELF'], ENT_QUOTES); ?>" method="post" name="form" enctype="multipart/form-data">
 	<h3>Page Info</h3>
 
 	<div class="row url-info">

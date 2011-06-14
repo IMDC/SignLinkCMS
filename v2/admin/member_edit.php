@@ -71,7 +71,7 @@ require(INCLUDE_PATH.'admin_header.inc.php'); ?>
 <h2>Member Edit</h2>
 
 
-<form action="<?php echo $_SERVER['PHP_SELF']; ?>?processed=1" method="post" name="form" enctype="multipart/form-data">
+<form action="<?php echo htmlentities($_SERVER['PHP_SELF'], ENT_QUOTES); ?>?processed=1" method="post" name="form" enctype="multipart/form-data">
 	<input type="hidden" name="m" value="<?php echo $member_id; ?>" />
 	<dl>
 		<dt>Login

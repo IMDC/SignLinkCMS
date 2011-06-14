@@ -104,7 +104,7 @@ require(INCLUDE_PATH.'header.inc.php');
 
 <script type="text/javascript" src="jscripts/forum_post.js"></script>
 
-<form action="<?php echo $_SERVER['PHP_SELF']; ?>?processed=1" method="post" name="form_msg" id="form_msg" enctype="multipart/form-data">
+<form action="<?php echo htmlentities($_SERVER['PHP_SELF'], ENT_QUOTES); ?>?processed=1" method="post" name="form_msg" id="form_msg" enctype="multipart/form-data">
 	<input type="hidden" name="e" value="<?php echo $entry_id; ?>" />
 	<input type="hidden" name="v" value="<?php echo $vlog_id; ?>" />
 	<input type="hidden" name="MAX_FILE_SIZE" value="<?php echo MAX_UPLOAD_SIZE; ?>" />

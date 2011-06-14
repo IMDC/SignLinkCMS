@@ -65,7 +65,7 @@ require(INCLUDE_PATH.'header.inc.php');
 
 <h3>Password Reset Request</h3>
 
-<form action="<?php echo $_SERVER['PHP_SELF']; ?>?processed=1" method="post">
+<form action="<?php echo htmlentities($_SERVER['PHP_SELF'], ENT_QUOTES); ?>?processed=1" method="post">
 
 	<p>Enter your email address, and password reset instructions will be mailed to you.</p>
 

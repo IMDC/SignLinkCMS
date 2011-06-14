@@ -45,7 +45,7 @@ if (isset($this_login, $this_password)) {
 		$_SESSION['is_guest']	= 0;
 
 		if ($auto_login == 1) {
-			$parts = parse_url($_SERVER['PHP_SELF']);
+			$parts = parse_url(htmlentities($_SERVER['PHP_SELF'], ENT_QUOTES));
 			// update the cookie.. increment to another 2 days
 			$cookie_expire = time()+172800;
 			setcookie('SLLogin', $this_login, $cookie_expire, $parts['path'], $parts['host'], 0);

@@ -208,7 +208,7 @@ $(document).ready(function() {
 
 			<?php echo $title; ?> (<span id="edit-subject" style="color:#11568B;cursor:pointer;">Edit Title</span>)
 
-		<form action="<?php echo $_SERVER['PHP_SELF']; ?>?processed=1" method="post" name="form_sub" id="form_sub" enctype="multipart/form-data" style="clear:both; padding-top:2px;">
+		<form action="<?php echo htmlentities($_SERVER['PHP_SELF'], ENT_QUOTES); ?>?processed=1" method="post" name="form_sub" id="form_sub" enctype="multipart/form-data" style="clear:both; padding-top:2px;">
 			<input type="hidden" name="v" value="<?php echo $vlog_id; ?>" />
 			<input type="hidden" name="e" value="<?php echo $entry_id; ?>" />
 			<input type="hidden" name="MAX_FILE_SIZE" value="<?php echo MAX_UPLOAD_SIZE; ?>" />
@@ -253,7 +253,7 @@ $(document).ready(function() {
 
 		<?php  echo get_vlog_message($row['content'], $row['content_alt'], 'entries', $entry_id); ?> (<span id="edit-message" style="color:#11568B;cursor:pointer;">Edit Content</span>)
 
-		<form action="<?php echo $_SERVER['PHP_SELF']; ?>?processed=1" method="post" name="form_msg" id="form_msg" enctype="multipart/form-data" style="clear:both; padding-top:2px;">
+		<form action="<?php echo htmlentities($_SERVER['PHP_SELF'], ENT_QUOTES); ?>?processed=1" method="post" name="form_msg" id="form_msg" enctype="multipart/form-data" style="clear:both; padding-top:2px;">
 			<input type="hidden" name="v" value="<?php echo $vlog_id; ?>" />
 			<input type="hidden" name="e" value="<?php echo $entry_id; ?>" />
 			<input type="hidden" name="MAX_FILE_SIZE" value="<?php echo MAX_UPLOAD_SIZE; ?>" />

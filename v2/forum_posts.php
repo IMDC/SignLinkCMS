@@ -39,18 +39,18 @@ for ($page=1; $page<=$numpages; $page++) {
 	if ($page == $curpage) {
 	  $nav .= $page.'&nbsp;';
 	} else {
-	  $nav .= '<a href="'.$_SERVER['PHP_SELF'].'?f='.$forum_id.'&page='.$page.'">'.$page.'</a>&nbsp;';
+	  $nav .= '<a href="'.htmlentities($_SERVER['PHP_SELF'], ENT_QUOTES).'?f='.$forum_id.'&page='.$page.'">'.$page.'</a>&nbsp;';
 	}
 }	
 
 if ($curpage > 1) {
    $page  = $curpage-1;
-   $prev = '<a href="'.$_SERVER['PHP_SELF'].'?f='.$forum_id.'&page='.$page.'"><</a>&nbsp;';
+   $prev = '<a href="'.htmlentities($_SERVER['PHP_SELF'], ENT_QUOTES).'?f='.$forum_id.'&page='.$page.'"><</a>&nbsp;';
 } 
 
 if ($curpage < $numpages) {
 	$page = $curpage + 1;
-	$next = '<a href="'.$_SERVER['PHP_SELF'].'?f='.$forum_id.'&page='.$page.'">></a>';
+	$next = '<a href="'.htmlentities($_SERVER['PHP_SELF'], ENT_QUOTES).'?f='.$forum_id.'&page='.$page.'">></a>';
 } else {
 	$next = '&nbsp;&nbsp;';
 }

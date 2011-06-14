@@ -102,7 +102,7 @@ if ($_POST) {
 
 <h3><a href="#" id="memberclick">Create new member</a></h3>
 <div id="memberpane">
-   <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="registerform" class="expose">
+   <form action="<?php echo htmlentities($_SERVER['PHP_SELF'], ENT_QUOTES); ?>" method="post" name="registerform" class="expose">
       <dl class="col-list">
          <dt><label for="name"><img src="../images/user_small.png" class="inlineVertMid" />Name:</label></dt> 
             <dd><input name="name" type="text" id="name" value="<?php echo $_POST['name']; ?>" />&nbsp;&nbsp;<img src="../images/example3.png" />"Carmen Smith"</dd><br />
