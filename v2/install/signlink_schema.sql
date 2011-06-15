@@ -94,6 +94,7 @@ CREATE TABLE IF NOT EXISTS `members` (
   `name` varchar(265) NOT NULL,
   `email` varchar(265) NOT NULL,
   `created_ts` timestamp not null default CURRENT_TIMESTAMP,
+  `passresethash` varchar(32) NOT NULL default '0',
   `passresetexp_ts` timestamp NULL DEFAULT 0,
   `last_login_ts` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `post_count` mediumint(8) unsigned NOT NULL default '0',
