@@ -9,14 +9,15 @@ if (isset($_POST['cancel'])) {
 	exit;
 
 } else if ($_POST['email'] || $_GET['processed']) {
-		$sql = "SELECT name, login, bl_pass FROM members WHERE email='".mysqli_real_escape_string($db, $_POST['email'])."'";
+		$sql = "SELECT member_id, name, bl_pass FROM members WHERE email='".mysqli_real_escape_string($db, $_POST['email'])."'";
 		$result = mysqli_query($db, $sql);
 		
-		if ($row = @mysqli_fetch_assoc($result)) {
+		if ($row = @mysqli_fetch_assoc($result))
+                {
                     
                         //generate hash and url
                         do{
-                            $hash = md5($row['bl_pass'] . time());
+                            $hash = sha1($row['bl_pass'] . time());
                             $result = mysqli_query($db, "SELECT * FROM members WHERE passresethash=$hash");
                         }while(mysqli_num_rows($result) != 0);
                         
@@ -24,7 +25,7 @@ if (isset($_POST['cancel'])) {
                         
                         //add hash and time to database
                         $now = date('Y-m-d G:i:s', strtotime('+1 day'));
-                        $sql = "UPDATE members SET passresethash='$hash', passresetexp_ts='$now' WHERE login='" . $row['login']."'";
+                        $sql = "UPDATE members SET passresethash='$hash', passresetexp_ts='$now' WHERE member_id='" . $row['member_id']."'";
                         $result = mysqli_query($db, $sql);
 
                         //email body
