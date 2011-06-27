@@ -18,11 +18,12 @@ if ($_POST) {
 	if (empty($_POST['email'])) {
 		$_SESSION['errors'][] = 'Please enter your email.';
 	}
-  else if (!eregi("^[a-z0-9\._-]+@+[a-z0-9\._-]+\.+[a-z]{2,6}$", $_POST['email'])) {
+        else if (!eregi("^[a-z0-9\._-]+@+[a-z0-9\._-]+\.+[a-z]{2,6}$", $_POST['email'])) {
 		$_SESSION['errors'][] = 'Please enter a valid email.';
 	} 
 	
 	$result = mysqli_query($db, "SELECT * FROM members WHERE email='$chk_email'");
+        
 	if (mysqli_num_rows($result) != 0) {
 		$_SESSION['errors'][] = 'Email address already in use. Try the <a href="password_reset.php">Password Reset.</a>';
 	}
@@ -30,23 +31,25 @@ if ($_POST) {
 	if (empty($_POST['login'])) {
 		$_SESSION['errors'][] = 'Please enter a login name.';
 	} 
-  else {
+        else 
+        {
 		// check for special characters 
 		if (!(eregi("^[a-zA-Z0-9_.-]([a-zA-Z0-9_.-])*$", $_POST['login']))) {
-			$_SESSION['errors'][] = 'Login name taken. Please try another.';
+                    $_SESSION['errors'][] = 'Login name taken. Please try another.';
 		}
-    else {
-      $result = mysqli_query($db, "SELECT * FROM members WHERE login='$chk_login'");
-      if (mysqli_num_rows($result) != 0) {
-        $_SESSION['errors'][] = 'Login name already exists.';
-      }
-      /*else {
-        $result = mysqli_query($db, "SELECT * FROM admins WHERE login='$chk_login'");
-        if (mysqli_num_rows($result) != 0) {
-          $msg->addError('LOGIN_EXISTS');
-        }
-      }*/
-    }
+                else {
+                    $result = mysqli_query($db, "SELECT * FROM members WHERE login='$chk_login'");
+                        
+                    if (mysqli_num_rows($result) != 0) {
+                        $_SESSION['errors'][] = 'Login name already exists.';
+                    }
+                  /*else {
+                    $result = mysqli_query($db, "SELECT * FROM admins WHERE login='$chk_login'");
+                    if (mysqli_num_rows($result) != 0) {
+                      $msg->addError('LOGIN_EXISTS');
+                    }
+                  }*/
+                }
 	}	
 
 	if ($_POST['password'] == '') { 

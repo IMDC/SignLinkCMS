@@ -10,7 +10,7 @@ $forum_id = intval($_REQUEST['f']);
 
 if ($_SESSION['valid_user']) {
 	//update the # thread views and the last accessed date
-	$sql = "INSERT INTO forums_views ('post_id', 'member_id', 'last_accessed', 'views') VALUES ($post_id, $_SESSION[member_id], NOW(), 0)";
+	$sql = "INSERT INTO forums_views (post_id, member_id, last_accessed, views) VALUES ('$post_id', '$_SESSION[member_id]', NOW(), 0)";
 	$result = mysqli_query($db, $sql);
 	if (!$result) {
 		$sql = "UPDATE forums_views SET last_accessed=NOW(), views=views+1 WHERE post_id=$post_id AND member_id=$_SESSION[member_id]";

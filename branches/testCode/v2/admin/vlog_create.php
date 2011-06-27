@@ -65,7 +65,7 @@ if (isset($_POST['cancel'])) {
 		}
 
 		//insert into db
-		$sql = "INSERT INTO vlogs ('vlog_id', 'member_id', 'title', 'title_alt', 'num_entries', 'last_entry') VALUES (0, '$member', '$subject', '$subject_alt', 0, NOW())";
+		$sql = "INSERT INTO vlogs (vlog_id, member_id, title, title_alt, num_entries, last_entry) VALUES (0, '$member', '$subject', '$subject_alt', 0, NOW())";
 
 		if (!$result = mysqli_query($db, $sql)) {
 			$_SESSION['errors'][] = 'Database error.';
