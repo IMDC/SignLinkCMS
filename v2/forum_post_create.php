@@ -113,7 +113,7 @@ if (isset($_POST['cancel'])) {
 		$now = date('Y-m-d G:i:s');
 
 		//insert into db
-		$sql = "INSERT INTO forums_posts ('post_id', 'parent_id', 'member_id', 'forum_id', 'login', 'last_comment', 'subject', 'subject_alt', 'msg', 'msg_alt', 'date')
+		$sql = "INSERT INTO forums_posts (post_id, parent_id, member_id, forum_id, login, last_comment, subject, subject_alt, msg, msg_alt, date)
                         VALUES (NULL, '$parent_id', '$_SESSION[member_id]', '$forum_id', '$_SESSION[login]', '$now', '$subject', '$subject_alt', '$message', '$message_alt', NOW())";
 
 		if (!$result = mysqli_query($db, $sql)) {

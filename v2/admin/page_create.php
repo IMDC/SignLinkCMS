@@ -69,14 +69,17 @@ if (isset($_POST['cancel'])) {
 		switch ($_POST['subject']) {
 			case 'image':
 				$subject = '';
-				$subject_alt = $addslashes(htmlspecialchars($_POST['isub-alt']));
+				//$subject_alt = $addslashes(htmlspecialchars($_POST['isub-alt']));
+            $subject_alt = mysqli_real_escape_string($db,strip_tags($_POST['isub-alt']));
 				break;
 			case 'video':
 				$subject = '';
-				$subject_alt = $addslashes(htmlspecialchars($_POST['vsub-alt']));
+				//$subject_alt = $addslashes(htmlspecialchars($_POST['vsub-alt']));
+            $subject_alt = mysqli_real_escape_string($db,strip_tags($_POST['vsub-alt']));
 				break;
 			case 'text':
-				$subject = $addslashes(htmlspecialchars($_POST['sub-text']));
+				//$subject = $addslashes(htmlspecialchars($_POST['sub-text']));
+            $subject = mysqli_real_escape_string($db,strip_tags($_POST['sub-text']));
 				$subject_alt = '';
 				break;
 		}
@@ -88,10 +91,12 @@ if (isset($_POST['cancel'])) {
 				break;
 			case 'video':
 				$message = '';
-				$message_alt = $addslashes(htmlspecialchars($_POST['vmsg-alt']));
+				//$message_alt = $addslashes(htmlspecialchars($_POST['vmsg-alt']));
+            $message_alt = mysqli_real_escape_string($db, strip_tags($_POST['vmsg-alt']));
 				break;
 			case 'text':
-				$message = $addslashes(htmlspecialchars($_POST['msg-text']));
+				//$message = $addslashes(htmlspecialchars($_POST['msg-text']));
+            $message = mysqli_real_escape_string($db, htmlspecialchars($_POST['msg-text']));
 				$message_alt = '';
 				break;
 		}
@@ -101,12 +106,15 @@ if (isset($_POST['cancel'])) {
 		} else {
 			$parent_id = 0;
 		}
-		$outline = $addslashes(htmlspecialchars($_POST['outline']));
-
+		//$outline = $addslashes(htmlspecialchars($_POST['outline']));
+      $outline = mysqli_real_escape_string($db, htmlspecialchars($_POST['outline']));
+      
 		//insert into db
-		$sql = "INSERT INTO pages ('page_id', 'parent_id', 'member_id', 'title', 'title_alt', 'content', 'content_alt', 'outline', 'created', 'last_modified', 'links_to') VALUES (NULL, '$parent_id', 0, '$subject', '$subject_alt', '$message', '$message_alt', '$outline', NOW(), NOW(),'')";
+		$sql = "INSERT INTO pages (page_id, parent_id, member_id, title, title_alt, content, content_alt, outline, created, last_modified, links_to) VALUES (NULL, '$parent_id', 0, '$subject', '$subject_alt', '$message', '$message_alt', '$outline', NOW(), NOW(),'')";
 
 		if (!$result = mysqli_query($db, $sql)) {
+         //$_SESSION['errors'][] = $sql;
+         //$_SESSION['errors'][] = mysqli_error($db);
 			$_SESSION['errors'][] = 'Database error.';
 		} else {
 			$page_id = mysqli_insert_id($db);
@@ -161,8 +169,8 @@ $(document).ready(function() {
    $("textarea.tinymce").tinymce({
       script_url: '../jscripts/tiny_mce/tiny_mce.js',
       theme : "advanced",
-      theme_advanced_buttons1 : "bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,|,formatselect,fontselect,fontsizeselect",
-      theme_advanced_buttons2 : "cut,copy,paste,pastetext,pasteword,|,image,cleanup,help,code|,forecolor,backcolor"
+      theme_advanced_buttons1 : "bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,|,fontselect,fontsizeselect",
+      theme_advanced_buttons2 : "cut,copy,paste,pastetext,pasteword,|,image,cleanup,help,|,forecolor,backcolor"
    });
 });
 </script>
@@ -221,7 +229,7 @@ $(document).ready(function() {
 			</div>
 	</div>
 
-	<div class="important-info">
+	<div class="file-info">
 		<span class="bold">Content</span><br />
 		<?php if(!empty($msg[2])) { echo $msg[2].'<br /><br />'; } ?>
 
@@ -281,7 +289,8 @@ $(document).ready(function() {
 	  <br style="clear:both;" />
 	</div -->	  
 	  
-	<div class="row" style="text-align:right;">
+	<div class="row" style="text-align:right;margin-top:20px;">
+      <!-- TODO: replace these buttons with styled green/red visual cue buttons */ -->
 		<input type="submit" name="submit" value="Submit" /> | <input type="submit" name="cancel" value="Cancel" /> 
 	</div>
 </form>
