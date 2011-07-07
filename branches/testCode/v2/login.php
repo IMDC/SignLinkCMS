@@ -40,7 +40,7 @@ if (isset($this_login, $this_password)) {
    else {*/
 		//$sql = "SELECT member_id, login, SHA1(CONCAT(password, '-', '".DB_PASSWORD."')) AS pass FROM members WHERE login='$this_login' AND SHA1(CONCAT(password, '$_SESSION[token]'))='$this_password'";
     //$sql = "SELECT member_id, login, sh_pass from members where login='$this_login'";
-    $sql = "SELECT member_id, login, name, last_login_ts FROM members where login = '$this_login' and bl_pass = AES_ENCRYPT(concat('$this_login','signlinkcms'), SHA1('$this_password'))";
+    $sql = "SELECT member_id, login, name, status, last_login_ts FROM members where login = '$this_login' and bl_pass = AES_ENCRYPT(concat('$this_login','signlinkcms'), SHA1('$this_password'))";
     //print $sql;
    //}
    
@@ -48,15 +48,27 @@ if (isset($this_login, $this_password)) {
   
    if (!$result) { 
       $_SESSion['errors'][] = 'Could not successfully run query($sql) from DB: ' . mysqli_error();
+      require(INCLUDE_PATH.'header.inc.php');
+      require(INCLUDE_PATH.'footer.inc.php');
       exit;
    }
    $row = mysqli_fetch_assoc($result);
    if ($row) {
-		$_SESSION['valid_user'] = true;
-		$_SESSION['member_id']	= intval($row['member_id']);
-		$_SESSION['login']		= $row['login'];
-		$_SESSION['is_guest']	= 0;
+       
+        if (intval($row['status']) == 0)
+        {
+            $_SESSION['errors'][] = 'This account has not been activated. <br />You must activate your account before you are able to log in.';
+            require(INCLUDE_PATH.'header.inc.php');
+            require(INCLUDE_PATH.'footer.inc.php');
+            exit;
+        }
+       
+        $_SESSION['valid_user'] = true;
+        $_SESSION['member_id']	= intval($row['member_id']);
+        $_SESSION['login']		= $row['login'];
+        $_SESSION['is_guest']	= 0;
 
+                
 		/*
       if ($auto_login == 1) {
 			$parts = parse_url(htmlentities($_SERVER['PHP_SELF'], ENT_QUOTES));

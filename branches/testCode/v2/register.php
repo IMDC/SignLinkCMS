@@ -76,23 +76,57 @@ if ($_POST) {
 		$login      = mysqli_real_escape_string($db, trim($_POST['login']));
 
 		$password   = mysqli_real_escape_string($db, trim($_POST['password']));
+                
+                //generate hash and url to be used for account confirmation
+                do {
+                    $hash = sha1($row['bl_pass'] . time());
+                    $result = mysqli_query($db, "SELECT * FROM members WHERE passresethash=$hash");
+                } while (mysqli_num_rows($result) != 0);
 
-                $sql = "INSERT INTO members (member_id, login, name, email, bl_pass, created_ts) 
-                        VALUES (NULL, '$login', '$name', '$email', AES_ENCRYPT(concat('$login','signlinkcms'), SHA1('$password')), DEFAULT)";
+                $url = str_replace("/register.php", "/registration_confirm.php?" . $hash, "http://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+                $exp = date('Y-m-d G:i:s', strtotime('+1 week'));
+                
+                //add user to database
+                $sql = "INSERT INTO members (member_id, login, name, email, bl_pass, created_ts, status, passresethash, passresetexp_ts) 
+                        VALUES (NULL, '$login', '$name', '$email', AES_ENCRYPT(concat('$login','signlinkcms'), SHA1('$password')), DEFAULT, 0, '$hash', '$exp')";
 		$result = mysqli_query($db, $sql);
 
 		if (!$result) {
-         // enable the line below to get the sql error as feedback when you are unable to register
-         //$_SESSION['errors'][] = mysqli_error($db);
+                 // enable the line below to get the sql error as feedback when you are unable to register
+                 //$_SESSION['errors'][] = mysqli_error($db);
 			$_SESSION['errors'][] = 'Database error - user not added. Please register again.';
 			exit;
 		}
 
-		//send email to registrant, not currently implemented
+		//email to be sent to the registrant
+                $body = "Hello " . $name . ",\n\n";
+                $body .= "Thanks for signing up for a SignLink account. \n";
+                $body .= "To start using your account, you must first verify it by visiting the following link: \n\n";
+                $body .= $url . "\n\n";
+                $body .= "If you did not create this account, you do not need to take any action.\n";
+                $body .= "The account will be canceled after a few days without activation.\n\n";
+                $body .= "Thank you,\n";
+                $body .= "SignLink Team";
 
-		$_SESSION['feedback'][] = 'Registration successful. Please login.';
-		header('Location: login.php');
-		exit;
+                //send email
+                require(INCLUDE_PATH . 'phpmailer/class.phpmailer.php');
+                $mail = new PHPMailer();
+                $mail->From = 'noreply@signlinkstudio.ca';
+                $mail->AddAddress($_POST['email']);
+                $mail->Subject = "Signlink Account Confirmation";
+                $mail->Body = $body;
+
+                if (!$mail->Send()) {
+                    $_SESSION['errors'][] = "Sending error.";
+                } else {
+                    $_SESSION['feedback'][] = 'Registration successful. <br />
+                                            An email has been sent to your account with an activation link. <br />
+                                            You must activate your account before you are able to log in.';
+                    unset($mail);
+                    require(INCLUDE_PATH . 'header.inc.php');
+                    require(INCLUDE_PATH . 'footer.inc.php');
+                    exit;
+                }
 	}
 }
 
