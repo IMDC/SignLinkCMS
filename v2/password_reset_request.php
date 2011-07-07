@@ -12,9 +12,18 @@ if (isset($_POST['cancel'])) {
 		$sql = "SELECT member_id, name, bl_pass FROM members WHERE email='".mysqli_real_escape_string($db, $_POST['email'])."'";
 		$result = mysqli_query($db, $sql);
 		
-		if ($row = @mysqli_fetch_assoc($result))
+                $row = @mysqli_fetch_assoc($result);
+                
+		if ($row)
                 {
-                    
+                        if(intval($row['status']) == 0)
+                        {
+                            $_SESSION['errors'][] = 'This account has not been activated. <br />You must activate your account before you are able to reset your passsword.';
+                            require(INCLUDE_PATH.'header.inc.php');
+                            require(INCLUDE_PATH.'footer.inc.php');
+                            exit;
+                        }
+                            
                         //generate hash and url
                         do{
                             $hash = sha1($row['bl_pass'] . time());

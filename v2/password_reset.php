@@ -5,7 +5,7 @@
     
     $hash = mysqli_real_escape_string($db, $_SERVER['QUERY_STRING']);
     
-    $sql = "SELECT member_id, name, login, email, passresetexp_ts FROM members WHERE passresethash='$hash'";
+    $sql = "SELECT member_id, name, login, email, status, passresetexp_ts FROM members WHERE passresethash='$hash'";
     $result = mysqli_query($db, $sql);
     $row = @mysqli_fetch_assoc($result);
     
@@ -47,7 +47,7 @@
     }
     
     // if hash is found and it is not expired
-    if(mysqli_num_rows($result) && strtotime($row['passresetexp_ts']) > strtotime("now") && $hash != "0")
+    if(mysqli_num_rows($result) && strtotime($row['passresetexp_ts']) > strtotime("now") && $hash != "0" && intval($row['status']) != 0)
     {    
             require(INCLUDE_PATH.'header.inc.php');
         
