@@ -51,10 +51,12 @@ if (isset($_POST['cancel'])) {
 				break;
 			case 'video':
 				$message = '';
-				$message_alt = $addslashes(htmlspecialchars($_POST['vmsg-alt']));
+				//$message_alt = $addslashes(htmlspecialchars($_POST['vmsg-alt']));
+				$message_alt = mysqli_real_escape_string($db,htmlspecialchars($_POST['vmsg-alt']));
 				break;
 			case 'text':
-				$message = $addslashes(htmlspecialchars($_POST['msg-text']));
+				//$message = $addslashes(htmlspecialchars($_POST['msg-text']));
+				$message = mysqli_real_escape_string($db,htmlspecialchars($_POST['msg-text']));
 				$message_alt = '';
 				break;
 		}

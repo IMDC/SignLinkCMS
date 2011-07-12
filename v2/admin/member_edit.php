@@ -35,7 +35,8 @@ if (isset($_POST['cancel'])) {
 		}
 		if (!isset($_SESSION['errors'])) {
 			//prepare to insert into db
-			$new_password = $addslashes(trim($_POST['password']));
+			//$new_password = $addslashes(trim($_POST['password']));
+			$new_password = mysqli_real_escape_string($db,trim($_POST['password']));
 			$sql = "UPDATE members SET password='$new_password' WHERE member_id=".intval($_POST['m']);
 			$result = mysqli_query($db, $sql);
 		}
@@ -48,13 +49,16 @@ if (isset($_POST['cancel'])) {
 			$_SESSION['errors'][] = 'Please enter a valid email.';
 		} 
 		
-		$result = @mysqli_query($db, "SELECT * FROM members WHERE email=".addslashes($_POST['email']));
+		//$result = @mysqli_query($db, "SELECT * FROM members WHERE email=".addslashes($_POST['email']));
+		$result = @mysqli_query($db, "SELECT * FROM members WHERE email=".mysqli_real_escape_string($db,$_POST['email']));
+                
 		if (@mysqli_num_rows($result) != 0) {
 			$_SESSION['errors'][] = 'Email address already in use. Try the Password Reminder.';
 		}
 		if (!isset($_SESSION['errors'])) {
 			//prepare to insert into db
-			$new_email = $addslashes(trim($_POST['email']));
+			//$new_email = $addslashes(trim($_POST['email']));
+			$new_email = mysqli_real_escape_string($db,trim($_POST['email']));
 			$sql = "UPDATE members SET email='$new_email' WHERE member_id=".intval($_POST['m']);
 			$result = mysqli_query($db, $sql);
 		}		
