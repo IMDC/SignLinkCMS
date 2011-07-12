@@ -10,8 +10,10 @@ require(INCLUDE_PATH.'admin_header.inc.php');
 //if (isset($_POST['submit'])) {
 if ($_POST) {
 
-	$chk_email = $addslashes($_POST['email']);
-	$chk_login = $addslashes($_POST['login']);
+	//$chk_email = $addslashes($_POST['email']);
+	//$chk_login = $addslashes($_POST['login']);
+	$chk_email = mysqli_real_escape_string($db,$_POST['email']);
+	$chk_login = mysqli_real_escape_string($db,$_POST['login']);
 
 	//error check
 	if (empty($_POST['name'])) {
@@ -62,10 +64,14 @@ if ($_POST) {
 	}
 
    if (!isset($_SESSION['errors'])) {
-		$name       = $addslashes(trim($_POST['name']));
-		$email      = $addslashes(trim($_POST['email']));
-		$login      = $addslashes(trim($_POST['login']));
-		$password   = $addslashes(trim($_POST['password']));
+		//$name       = $addslashes(trim($_POST['name']));
+		//$email      = $addslashes(trim($_POST['email']));
+		//$login      = $addslashes(trim($_POST['login']));
+		//$password   = $addslashes(trim($_POST['password']));
+		$name       = mysqli_real_escape_string($db,trim($_POST['name']));
+		$email      = mysqli_real_escape_string($db,trim($_POST['email']));
+		$login      = mysqli_real_escape_string($db,trim($_POST['login']));
+		$password   = mysqli_real_escape_string($db,trim($_POST['password']));
 
 		/* MD5 encryption for the password for added security */
 		//$password = md5($password);

@@ -30,13 +30,16 @@ if (isset($_POST['cancel'])) {
 			$_SESSION['errors'][] = 'Please enter a valid email.';
 		} 
 		
-		$result = @mysqli_query($db, "SELECT * FROM members WHERE email=".addslashes($_POST['email']));
+		//$result = @mysqli_query($db, "SELECT * FROM members WHERE email=".addslashes($_POST['email']));
+		$result = @mysqli_query($db, "SELECT * FROM members WHERE email=".mysqli_real_escape_string($db,$_POST['email']));
+                
 		if (@mysqli_num_rows($result) != 0) {
 			$_SESSION['errors'][] = 'Email address already in use.';
 		}
 		if (!isset($_SESSION['errors'])) {
 			//prepare to insert into db
-			$new_email = $addslashes(trim($_POST['contact']));
+			//$new_email = $addslashes(trim($_POST['contact']));
+			$new_email = mysqli_real_escape_string($db,trim($_POST['contact']));
 			$sql = "UPDATE settings SET value='$new_email' WHERE name='contact'";
 			$result = mysqli_query($db, $sql);
 			$_SESSION['feedback'][] = "Contact email changed.";
@@ -59,7 +62,8 @@ if (isset($_POST['cancel'])) {
 		}
 		if (!isset($_SESSION['errors'])) {
 			//prepare to insert into db
-			$new_password = $addslashes(trim($_POST['password']));
+			//$new_password = $addslashes(trim($_POST['password']));
+			$new_password = mysqli_real_escape_string($db,trim($_POST['password']));
 			$sql = "UPDATE members SET password='$new_password' WHERE login='admin'";
 			$result = mysqli_query($db, $sql);
 			$_SESSION['feedback'][] = 'Passwords changed.';
@@ -70,7 +74,8 @@ if (isset($_POST['cancel'])) {
 			$_SESSION['errors'][] = 'Site name cannot be empty.';
 		}
 		if (!isset($_SESSION['errors'])) {
-			$new_site_name = $addslashes(trim($_POST['site_name']));
+			//$new_site_name = $addslashes(trim($_POST['site_name']));
+			$new_site_name = mysqli_real_escape_string($db,trim($_POST['site_name']));
 			$sql = "UPDATE settings SET value='$new_site_name' WHERE name='site_name'";
 			$result = mysqli_query($db, $sql);
 			$_SESSION['feedback'][] = 'Site name changed.';
