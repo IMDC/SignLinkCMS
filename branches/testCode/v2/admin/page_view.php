@@ -13,20 +13,36 @@ $sql = "SELECT * FROM pages WHERE page_id=".$page_id;
 $result = mysqli_query($db, $sql);	
 $row = mysqli_fetch_assoc($result);
 if ($row) {
-  $pagetitle = get_title('page', $row['page_id']);
-  // replace the source path to the flowplayer plugin with the correct path one dir level back
-  $pagetitle = preg_replace('/flash\/flowplayer/', '../flash/flowplayer', $pagetitle);
-  // replace the source path of the zoom image of pictures with the correct path one dir level back
-  $pagetitle = preg_replace('/img class="quickView" src="images/', 'img class="quickView" src="../images', $pagetitle);
-  echo '<h3>'.$pagetitle.'</h3>';
-	//echo '<h3>'.get_title('page', $row['page_id']).'</h3>'; 
+   /*** Page Title ***/
+   $page_title = get_title('page', $row['page_id']);
+   // replace the source path to the flowplayer plugin with the correct path one dir level back
+   $page_title = preg_replace('/flash\/flowplayer/', '../flash/flowplayer', $page_title);
+   // replace the source path of the zoom image of pictures with the correct path one dir level back
+   $page_title = preg_replace('/img class="quickView" src="images/', 'img class="quickView" src="../images', $page_title);
+   
+// replace the id of the title as flowplayer doesn't like id's with "../" in them
+   $page_title = preg_replace('/id="..\/uploads\/pages/', 'id="uploads/pages', $page_title);
+   $page_title = preg_replace('/flowplayer\("..\/uploads\/pages/', 'flowplayer("uploads/pages', $page_title);
 
-	$page_content = preg_replace('/flash\/flowplayer/', '../flash/flowplayer', get_content($row['page_id']));
-  echo htmlspecialchars_decode(preg_replace('/<br\\s*?\/??>/i', '', $page_content));
+   echo '<h3>'.$page_title.'</h3>';
+   //echo '<h3>'.get_title('page', $row['page_id']).'</h3>'; 
+   /*** End outputting Page Title ***/
+   
+   /*** Page Content ***/
+   // replace the source path to the flowplayer plugin with the correct path one dir level back
+   $page_content = preg_replace('/flash\/flowplayer/', '../flash/flowplayer', get_content($row['page_id']));
+   // replace the id of the content as flowplayer doesn't like id's with "../" in them
+   $page_content = preg_replace('/id="..\/uploads\/pages/', 'id="uploads/pages', $page_content);
+   $page_content = preg_replace('/flowplayer\("..\/uploads\/pages/', 'flowplayer("uploads/pages', $page_content);
+   
+   echo htmlspecialchars_decode(preg_replace('/<br\\s*?\/??>/i', '', $page_content));
+   
+   /*** End outputting Page Content ***/
 
-} else {
- echo "No such page";
 }
+else {
+   echo "No such page";
+ }
 
 echo '<br style="clear:both;" /><br />';
 

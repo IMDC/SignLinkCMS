@@ -37,14 +37,14 @@ if (isset($_POST['cancel'])) {
 			
 		} else if ($_POST['subject'] == "image") {
 			$ext = explode('.', $_FILES['isub-file']['name']);
-			$ext = $ext[1];
+			$ext = strtolower($ext[1]);
 			if (!in_array($ext, $filetypes_image)) {
 				$_SESSION['errors'][] = 'You have chosen to use an image file for your subject - invalid file format.'. $ext;
 			}
 			
 		} else if ($_POST['subject'] == "video") {
 			$ext = explode('.', $_FILES['vsub-file']['name']);
-			$ext = $ext[1];
+			$ext = strtolower($ext[1]);
 			if (!in_array($ext, $filetypes_video)) {
 				$_SESSION['errors'][] = 'You have chosen a video file for your subject - invalid file format.';
 			}
@@ -249,7 +249,7 @@ $(document).ready(function() {
 	</div>
 	<?php } ?>
 
-	<div class="important-info">
+	<div class="file-info">
 		<span class="bold">Message</span><br />
 		<?php if(!empty($msg[2])) { echo $msg[2].'<br /><br />'; } ?>
 

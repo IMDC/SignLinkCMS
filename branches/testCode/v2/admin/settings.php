@@ -11,10 +11,48 @@ while($row = mysqli_fetch_assoc($result)) {
 	$settings[$row['name']] = $row['value'];
 }
 
+/*
 $sql = "SELECT password FROM members WHERE login='admin'";
 $result = mysqli_query($db, $sql);
 $row = mysqli_fetch_assoc($result);
 $password = $stripslashes($row['password']);
+*/
+
+// *********** site status stuff ***********
+$errspanintro = '<span class="status-error"><img src="../images/cancelx.png" class="inlineVertMid" alt="" /> ';
+$sucspanintro = '<span class="status-success"><img src="../images/yescheck.png" class="inlineVertMid" alt="" /> ';
+$spanout = '</span>';
+
+// ffmpeg access
+
+if (ffmpeg_access_enabled())
+   $ffmpegstatus = $sucspanintro . "FFmpeg with x264 support appears to be working" . $spanout;
+else
+   $ffmpegstatus = $errspanintro . "FFmpeg error, check path in config file and executable permissions" . $spanout;
+
+// GD image library present
+
+if (gd_library_present())
+   $gdsupport = $sucspanintro . 'GD image libary loaded successfully' . $spanout;
+else
+   $gdsupport = $errspanintro . 'GD image library not loaded, check that GD is installed with PHP' . $spanout;
+
+// directory write access
+
+if (directory_write_permission_enabled())
+   $dirwriteaccess = $sucspanintro . "Directory write access by PHP username permitted" . $spanout;
+else
+   $dirwriteaccess = $errspanintro . "Uploads directory write access not permitted, check Uploads directory permissions" . $spanout;
+
+// play button overlay image
+
+if (playbutton_overlay_config_successful())
+   $playoverlayimageaccess = $sucspanintro . 'Overlay image found and image libraries loaded successfully' . $spanout;
+else
+   $playoverlayimageaccess = $errspanintro . 'Overlay image not found or image libraries not loaded' . $spanout;
+
+// ********** end site status stuff *********
+
 
 if (isset($_POST['cancel'])) {
 	header('Location: settings.php');
@@ -30,13 +68,15 @@ if (isset($_POST['cancel'])) {
 			$_SESSION['errors'][] = 'Please enter a valid email.';
 		} 
 		
-		$result = @mysqli_query($db, "SELECT * FROM members WHERE email=".addslashes($_POST['email']));
+		//$result = @mysqli_query($db, "SELECT * FROM members WHERE email=".addslashes($_POST['email']));
+      $result = @mysqli_query($db, "SELECT * FROM members WHERE email=".mysqli_real_escape_string($db,$_POST['email']));
 		if (@mysqli_num_rows($result) != 0) {
 			$_SESSION['errors'][] = 'Email address already in use.';
 		}
 		if (!isset($_SESSION['errors'])) {
 			//prepare to insert into db
-			$new_email = $addslashes(trim($_POST['contact']));
+//			$new_email = $addslashes(trim($_POST['contact']));
+			$new_email = mysqli_real_escape_string($db,trim($_POST['contact']));
 			$sql = "UPDATE settings SET value='$new_email' WHERE name='contact'";
 			$result = mysqli_query($db, $sql);
 			$_SESSION['feedback'][] = "Contact email changed.";
@@ -60,9 +100,10 @@ if (isset($_POST['cancel'])) {
 		}
 		if (!isset($_SESSION['errors'])) {
 			//prepare to insert into db
-			$new_password = $addslashes(trim($_POST['password']));
+//			$new_password = $addslashes(trim($_POST['password']));
+			$new_password = mysqli_real_escape_string($db,trim($_POST['password']));
 			
-      $sql = "UPDATE members_copy SET oldpass='$new_password', bl_pass=AES_ENCRYPT('adminsignlinkcms', SHA1('$new_password')) WHERE login='admin' AND member_id=1";
+      $sql = "UPDATE members SET bl_pass=AES_ENCRYPT('adminsignlinkcms', SHA1('$new_password')) WHERE login='admin' AND member_id=1";
 			$result = mysqli_query($db, $sql);
 			$_SESSION['feedback'][] = 'Passwords changed.';
 		}		
@@ -73,7 +114,8 @@ if (isset($_POST['cancel'])) {
 			$_SESSION['errors'][] = 'Site name cannot be empty.';
 		}
 		if (!isset($_SESSION['errors'])) {
-			$new_site_name = $addslashes(trim($_POST['site_name']));
+			//$new_site_name = $addslashes(trim($_POST['site_name']));
+			$new_site_name = mysqli_real_escape_string($db,trim($_POST['site_name']));
 			$sql = "UPDATE settings SET value='$new_site_name' WHERE name='site_name'";
 			$result = mysqli_query($db, $sql);
 			$_SESSION['feedback'][] = 'Site name changed.';
@@ -136,32 +178,36 @@ require(INCLUDE_PATH.'admin_header.inc.php'); ?>
 		<dt>Contact Email</dt>
 		<dd><input type="text" name="contact" value="<?php echo $settings['contact']; ?>" /></dd>
 	
-		<dt>Admin Password</dt>
+      <dt>Admin Password</dt>
+      <dd><input type="password" name="origpass" value="" /></dd>
+      
+		<dt>New Admin Password</dt>
 		<dd><input type="password" name="password" value="" /></dd>
 	
-		<dt>Admin Password Again</dt>
+		<dt>New Admin Password Again</dt>
 		<dd><input type="password" name="password2" value="" /></dd>	
 	
 		<dt>Site Name</dt>
 		<dd><input type="text" name="site_name" value="<?php echo $settings['site_name']; ?>" /></dd>
 		
 		<!-- dt>Banner Image</dt>
-		<dd><input type="file" name="banner" value="<?php echo $settings['banner']; ?>" / --></dd>
+		<dd><input type="file" name="banner" value="<?php echo $settings['banner']; ?>" / </dd>-->
 		
       <dt>Maximum file size (for uploads)</dt>
       <!--<dd><input type="text" name="max_upload_size" value="<?php echo $settings['max_upload_size']; ?>" /> (Default: 5Mb = 5242880b)-->
-		<dd><select name="max_upload_size" size="7" multiple="no" onChange="menu_change(this)" >
-			<option selected value="<?php echo $settings['max_upload_size']; ?>">Current Value: <?php echo $settings['max_upload_size']; ?></option>
-			<option value="2097152">2 Mb</option>
-         <option value="5242880">5 Mb</option>
-			<option value="10485760">10 Mb</option>
-			<option value="15728640">15 Mb</option>
-			<option value="20971520">20 Mb</option>
-			<option id="custom_name" value="0">Custom</option>
-		</select>
-		<div id="customSizeDiv" style="visibility:hidden;float:left;text-align:right;padding-top:5px;">
-			Enter the size in bits: <input id="custom_size" type="text" value="" onBlur="menu_setCustom(this)" />
-		</div>
+		<dd>
+         <select class="prefselect" name="max_upload_size" size="7" multiple="no" onChange="menu_change(this)" >
+            <option selected value="<?php echo $settings['max_upload_size']; ?>">Current Value: <?php echo $settings['max_upload_size']; ?></option>
+            <option value="2097152">2 Mb</option>
+            <option value="5242880">5 Mb</option>
+            <option value="10485760">10 Mb</option>
+            <option value="15728640">15 Mb</option>
+            <option value="20971520">20 Mb</option>
+            <option id="custom_name" value="0">Custom</option>
+         </select>
+         <div id="customSizeDiv" style="visibility:hidden;float:left;text-align:right;padding-top:5px;">
+            Enter the size in bits: <input id="custom_size" type="text" value="" onBlur="menu_setCustom(this)" />
+         </div>
       </dd>
 
       <dt>Site restricted to members only</dt>
@@ -171,7 +217,21 @@ require(INCLUDE_PATH.'admin_header.inc.php'); ?>
       <dt>Disable member registration</dt>
       <dd><input type="radio" name="disable_reg" value="1" <?php if($settings['registration_closed']==1)echo 'checked'?> /> Yes
          <br /> <input type="radio" name="disable_reg" value="0" <?php if($settings['registration_closed']==0)echo 'checked'?> /> No </dd>
-
+      <dt>Site status</dt>
+      <ul>
+         <li>FFmpeg access: <?php echo $ffmpegstatus ?> </li>
+         <li>GD Image library present: <?php echo $gdsupport ?> </li>
+         <li>Directory write access: <?php echo $dirwriteaccess ?> </li>
+         <li>Play button overlay image: <?php echo $playoverlayimageaccess ?> </li>
+      </ul>
+      <dt>Video Thumbnails</dt>
+      <dd>
+         <p>There are approximately <?php echo count(searchUploadedFiles(array('mp4'))); ?> video thumbnails to re-generate<br />
+            Generating new ones for every video could take some time<br />
+            To re-generate thumbnails for specific videos/posts/comments/vlogs, please use the section specific menu choice at the top of the page<br />
+            <a href="regenThumbs.php">Regenerate ALL thumbnails</a>
+      </dd>
+    
 	</dl>
 	<div class="row" style="text-align:right;padding-top:5px;">
 		<input type="submit" name="submit" value="Submit"> | <input type="submit" name="cancel" value="Cancel" /> 

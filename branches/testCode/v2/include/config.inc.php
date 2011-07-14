@@ -18,4 +18,10 @@ define('CMSSALT','8d%18:7dao#".]109a0djf1l86<14');
 
 /* salt length */
 define('SALT_LENGTH', 9);
+
+/* define the set file paths to ffmpeg and the playbutton overlay image */
+//define('FFMPEG_PATH', 'include/ffmpeg/ffmpeg');
+define('FFMPEG_PATH', '../include/ffmpeg/ffmpeg');
+define('PLAYOVERLAY_PATH', '../images/play_btn.png');
+        
 ?>
