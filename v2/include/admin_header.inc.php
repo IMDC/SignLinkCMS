@@ -12,7 +12,7 @@
   <script type="text/javascript" src="../jscripts/jquery-1.4.4.min.js"></script>
   <script type="text/javascript" src="../jscripts/admintweaks.js"></script>
   <script type="text/javascript" src="../jscripts/fancybox/jquery.fancybox-1.3.1.pack.js"></script>
-  <script type="text/javascript" src="../jscripts/flowplayer-3.2.3.min.js"></script>
+  <script type="text/javascript" src="../jscripts/flowplayer-3.2.6.min.js"></script>
   <script type="text/javascript" src="../jscripts/flowplayer_external_config.js"></script>
 </head>
 

@@ -60,8 +60,11 @@ function get_content($id) {
 						style="float:left;" />
 					</object>';
                */
-         if ( file_exists($content_path . "thumb.jpg") ) {
-            $thumbjpg = $content_path . "thumb.jpg";
+         if ( file_exists($content_path . "thumb_play.jpg") ) {
+            $thumbjpg = $content_path . "thumb_play.jpg";
+           }
+           else if ( file_exists($content_path . "thumb.jpg") ) {
+              $thumbjpg = $content_path . "thumb.jpg";
            }
            else {
               $thumbjpg = "images/default_movie_icon.png";
@@ -81,7 +84,7 @@ function get_content($id) {
 						<a  
 							 href="'.$content_path.$content_file.'"
 							 class = "flash_player_holder" 
-               alt="'.$row[1].'" 
+                      alt="'.$row[1].'" 
 							 style="width:'.VIDEO_MSG_WIDTH.'px;height:'.VIDEO_MSG_HEIGHT.'px;margin-left:auto;margin-right:auto;"  
 							 id="'.$content_path.'content">
 							 <img style="margin-left:-3px;" src="'.$thumbjpg.'" height="'.VIDEO_MSG_HEIGHT.'px" width="'.VIDEO_MSG_WIDTH.'px" alt="'.$row[1].'" />

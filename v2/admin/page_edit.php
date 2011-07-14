@@ -8,7 +8,8 @@ $page_id = intval($_REQUEST['c']);
 if (isset($_POST['cancel'])) {
 	header('Location: page_manage.php');
 	exit;
-} else if (isset($_POST['submit']) || $_GET['processed']) {
+}
+else if (isset($_POST['submit']) || $_GET['processed']) {
 
 	//check if there are any upload errors
 	if(empty($_POST)) {
@@ -69,7 +70,9 @@ if (isset($_POST['cancel'])) {
 				$parent_id=0;
 				
 			$sql = "UPDATE pages SET parent_id=".$parent_id. " WHERE page_id=".$page_id;
-		} if ($area=="subject") {
+		}
+      
+      if ($area=="subject") {
 			switch ($_POST['subject']) {
 				case 'image':
 					$subject = '';
@@ -89,7 +92,8 @@ if (isset($_POST['cancel'])) {
 			}
 			$sql = "UPDATE pages SET title='$subject', title_alt='$subject_alt' WHERE page_id=".$page_id;
 			
-		} else if ($area=="message") {
+		} 
+      else if ($area=="message") {
 			switch ($_POST['message']) {
 				case 'signlink':
 					$message = '';
@@ -112,7 +116,8 @@ if (isset($_POST['cancel'])) {
 		//insert into db
 		if (!$result = mysqli_query($db, $sql)) {
 			$_SESSION['errors'][] = 'Database error.';
-		} else {
+		} 
+      else {
 			//save files	
 			if ($area=="subject") {
 				switch ($_POST['subject']) {
@@ -128,7 +133,8 @@ if (isset($_POST['cancel'])) {
 						break;
 				}
 	
-			} else if ($area=="message") {
+			}
+         else if ($area=="message") {
 				switch ($_POST['message']) {
 					case 'signlink':
 						if (is_uploaded_file($_FILES['sl1msg-file']['tmp_name']) && is_uploaded_file($_FILES['sl2msg-file']['tmp_name'])) {
@@ -150,7 +156,8 @@ if (isset($_POST['cancel'])) {
 			exit;
 		}
 	}
-} else if ($page_id) {
+}
+else if ($page_id) {
 	$title = get_title('page', $page_id);
 
 	$sql = "SELECT * FROM pages WHERE page_id=".$page_id;
@@ -196,7 +203,8 @@ require(INCLUDE_PATH.'admin_header.inc.php'); ?>
 		
 		<?php if (empty($row['parent_id'])) { 
 			echo 'Top page'; 
-		} else {	
+		} 
+      else {	
 			echo 'Sub page under:'. get_title('page', $row['parent_id'], 'small');
 		} ?>  <br />(<span id="edit-hier" style="color:#11568B;cursor:pointer;">Edit Hierarchy</span>)<br />		
 			
@@ -222,8 +230,8 @@ require(INCLUDE_PATH.'admin_header.inc.php'); ?>
 					}
 					?>
 					</div>
-				<div class="row" style="text-align:right;">
-					<input type="submit" name="submit" value="Submit" /> | <input type="submit" name="cancel" value="Cancel" /> 
+				<div class="submitrow" style="text-align:right;">
+					<input type="submit" name="submit" class="submitBtn" value="Submit" />&nbsp;<input type="submit" name="cancel" class="cancelBtn" value="Cancel" /> 
 				</div>
 	
 			</div>
@@ -266,8 +274,8 @@ require(INCLUDE_PATH.'admin_header.inc.php'); ?>
 						<input type="text" id="sub-text" name="sub-text" size="85" value="<?php echo $_POST['sub-text']; ?>" />
 					</div>
 				</div>
-				<div class="row" style="text-align:right;">
-					<input type="submit" name="submit" value="Submit" /> | <input type="submit" name="cancel" value="Cancel" /> 
+				<div class="submitrow" style="text-align:right;">
+					<input type="submit" class="submitBtn" name="submit" value="Submit" />&nbsp;<input type="submit" class="cancelBtn" name="cancel" value="Cancel" /> 
 				</div>
 			</div>
 		</form>
@@ -307,15 +315,15 @@ require(INCLUDE_PATH.'admin_header.inc.php'); ?>
 						<textarea id="msg-text" id="msg-text" name="msg-text" rows="25" cols="90" style="height:20em;"><?php echo $_POST['msg-text']; ?></textarea>
 					</div>
 				</div>
-				<div class="row" style="text-align:right;">
-					<input type="submit" name="submit" value="Submit" /> | <input type="submit" name="cancel" value="Cancel" /> 
+				<div class="submitrow" style="text-align:right;">
+					<input type="submit" name="submit" value="Submit" />&nbsp;<input type="submit" name="cancel" value="Cancel" /> 
 				</div>
 			</div>
 		</form>		
 		
 	</div>
-			<div class="row" style="padding-top:10px;text-align:right;">
-				<input type="button" name="cancel" onclick="javascript:location.href='page_manage.php'" value="Finished" /> 
+			<div class="submitrow" style="padding-top:10px;text-align:right;">
+				<input type="button" name="cancel" class="submitBtn" onclick="javascript:location.href='page_manage.php'" value="Finished" /> 
 			</div>
 
 <?php require(INCLUDE_PATH.'footer.inc.php'); ?>

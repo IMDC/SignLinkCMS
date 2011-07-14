@@ -107,15 +107,16 @@ if (isset($_POST['cancel'])) {
 			$parent_id = 0;
 		}
 		//$outline = $addslashes(htmlspecialchars($_POST['outline']));
-      $outline = mysqli_real_escape_string($db, htmlspecialchars($_POST['outline']));
+      $outline = mysqli_real_escape_string($db, strip_tags($_POST['outline']));
       
 		//insert into db
 		$sql = "INSERT INTO pages (page_id, parent_id, member_id, title, title_alt, content, content_alt, outline, created, last_modified, links_to) VALUES (NULL, '$parent_id', 0, '$subject', '$subject_alt', '$message', '$message_alt', '$outline', NOW(), NOW(),'')";
 
 		if (!$result = mysqli_query($db, $sql)) {
-         //$_SESSION['errors'][] = $sql;
-         //$_SESSION['errors'][] = mysqli_error($db);
-			$_SESSION['errors'][] = 'Database error.';
+         trigger_error('****Error with admin page create sql: ' . mysqli_error($db) . '==SQL statement: ' . $sql, E_USER_ERROR);
+			$_SESSION['errors'][] = 'Database error, please try again later';
+         header('Location: page_manage.php');
+			exit;
 		} else {
 			$page_id = mysqli_insert_id($db);
 
@@ -174,7 +175,6 @@ $(document).ready(function() {
    });
 });
 </script>
-
 
 
 <form action ="<?php echo htmlentities($_SERVER['PHP_SELF'], ENT_QUOTES); ?>?processed=1" method="post" name="form" enctype="multipart/form-data">

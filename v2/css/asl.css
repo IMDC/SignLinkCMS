@@ -618,9 +618,10 @@ div.submitrow {
 
 .pref_form div input {
   background: #fff;
-  border-style: 1px solid #BBBBBB;
+  border: 1px solid #BBBBBB;
   margin: 25px 25px;
   text-align: center;
+  height: 1.5em;
 }
 
 .pref_form label {
@@ -628,6 +629,17 @@ div.submitrow {
   font-weight: bold;
   color:#444444 !important;
   text-shadow:0 1px 2px grey !important;
+}
+
+.pref_form label.error {
+   font: bold 14px Verdana, "MS Trebuchet", sans-serif;
+   color: red;
+   background: url("../images/cancelx.png") no-repeat 0px 0px;
+   padding-left: 25px;
+}
+
+.pref_form label.success {
+   background: url("../images/yescheck.png") no-repeat 0px 0px;
 }
 
 .pref_form .row .subrow {
@@ -671,6 +683,15 @@ div.submitrow {
 
 .prefsubmit input {
   font-size: 2em;
+}
+
+.prefsubmit input:hover {
+   color: #fff;
+   background: #85de6a;
+}
+
+.prefselect {
+   margin-left: 15px;
 }
 
 #content .centerImage a {
@@ -1068,36 +1089,40 @@ a.flash_player_holder:hover {
 
 
 .submitBtn {
-   background: #4c9137;
-/*	background: #85De6a;
-	background-color: #85de6a;*/
-	color: #555555;
-	font-weight: bold;
 	border: 1px solid gray;
-   font-size: 1.25em;
    padding: 5px;
+   background: #BFFFBF url('../images/yescheck.png') 5px 6px no-repeat;
+   border: 1px solid gray;
+   color: #444444;
+   font-size: 1.25em;
+   font-weight: bold;
+   width: 100px;
+   min-width: 100px;
+   padding-left: 20px;
 }
 
 .submitBtn:hover {
-/*	background-color: #33FF66;*/
-   background: #85de6a;
+   background: #85de6a url('../images/yescheck.png') 5px 6px no-repeat;
 	border: 1px solid #009900;
 	font-weight: bold;
 /*	color: #FFFFFF;*/
-   color: #69786f;
+   color: #fff;
 }
 
 .cancelBtn {
-	background: #FF7979;
+	background: #FF7979 url('../images/cancelx.png') 5px 6px no-repeat;
 	color: #000000;
 	font-weight: bold;
    font-size: 1.25em;
 	border: 1px solid gray;
    padding: 5px;
+   min-width: 100px;
+   width: 100px;
+   padding-left: 20px;
 }
 
 .cancelBtn:hover {
-	background-color: #FF4F4F;
+	background: #FF4F4F url('../images/cancelx.png') 5px 6px no-repeat;
 	border: 1px solid #FF0000;
 	font-weight: bold;
 	color: #fff;
@@ -1193,4 +1218,17 @@ p.timezone-footer {
    margin-left: auto;
    margin-right: auto;
    text-align: center;
+}
+
+span.status-error {
+   color: #ff0000;
+   font-weight: bold;
+   font-style: italic;
+   padding: 0 5px;
+}
+
+span.status-success {
+   color: #00dd00;
+   font-weight: bold;
+   padding: 0 5px;
 }

@@ -1,5 +1,4 @@
 <?php
-$ffmpeg_path = "ffmpeg/ffmpeg";
 
 $filetypes_image = array("jpg", "jpeg", "gif", "png");
 $filetypes_video = array("avi", "mpeg", "mpg", "wma", "mov", "mp4", "m4v", "wmv");  //flv?

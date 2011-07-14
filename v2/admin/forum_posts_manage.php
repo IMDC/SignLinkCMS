@@ -16,10 +16,10 @@ echo get_title('forum', $forum_id, "small");
 echo '</div>';
 
 //get forum posts
-$sql = "SELECT * FROM forums_posts WHERE forum_id=".$forum_id." ORDER BY parent_id, subject";
+$sql = "SELECT * FROM forums_posts WHERE forum_id=".$forum_id." AND parent_id='0' ORDER BY subject";
 $result = mysqli_query($db, $sql);
 $r = 1;
-if (mysql_num_rows($result)) { ?> 
+if (mysqli_num_rows($result)) { ?> 
 	<table class="manage">
 	<tr>	
 		<th>ID</th>
@@ -29,7 +29,7 @@ if (mysql_num_rows($result)) { ?>
 		<th style="text-align:center;">Manage</th>
 	</tr>
 	<?php
-	while ($row = mysql_fetch_assoc($result)) {
+	while ($row = mysqli_fetch_assoc($result)) {
 	
 		$title = get_title('post', $row['post_id'], 'small');
 

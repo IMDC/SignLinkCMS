@@ -35,7 +35,16 @@ if(!function_exists('scandir')) {
     }
 }
 
-/* returns html-encoded title (image or video or text) - things that have titles: forum, thread, page.  */
+/**
+ *  Returns html-encoded title (image or video or text) - things that have titles: forum, thread, page.
+ *
+ * @global type $db
+ * @global type $filetypes_video
+ * @param type $location forum, post, page, vlog, or entry
+ * @param type $id the id inside the location, ex) forum id or post id
+ * @param type $size size of the title to return, default value is 'reg' and currently only used for video thumbnail sizes
+ * @return string 
+ */
 function get_title($location, $id, $size='reg') {				
 	global $db, $filetypes_video;
 	
@@ -46,8 +55,8 @@ function get_title($location, $id, $size='reg') {
 	}
 
 	switch ($location) {
-		case 'forum':
-			$sql = "SELECT subject, subject_alt, last_post FROM forums WHERE forum_id=".$id;
+      case 'forum':
+         $sql = "SELECT subject, subject_alt, last_post FROM forums WHERE forum_id=".$id;
 			$title_path = $level.'uploads/forums/'.$id.'/';
 			break;
 		case 'post':
@@ -69,24 +78,24 @@ function get_title($location, $id, $size='reg') {
 	}
 	$result = mysqli_query($db, $sql);
 	
-  if ($result) {	
-    $row = mysqli_fetch_row($result);
+   if ($result) {	
+      $row = mysqli_fetch_row($result);
 		if (!empty($row[0])) {
 			//the title is plain text
 			$text_container = '<div class="text_title">';
 			$title = $text_container . $row[0] . '</div>';
 		}  
-    else {
-			//the title is a file
+      else {
+         //the title is a file
 			
 			//get files
 			$dir_files = @scandir($title_path);
 
 			if(!empty($dir_files)) {
 			
-				foreach ($dir_files as $dir_file) {
-					if (substr($dir_file,0, 5) == "title") {
-						$title_file = $dir_file;
+            foreach ($dir_files as $dir_file) {
+               if (substr($dir_file,0, 5) == "title") {
+                  $title_file = $dir_file;
 						break;
 					}
 				}
@@ -106,123 +115,123 @@ function get_title($location, $id, $size='reg') {
 				
 				if (in_array($ext, $filetypes_video)) {
 					// file is a video						
-						/* the code below uses the flowplayer (www.flowplayer.org) flash player to play the video
-							when you click on the thumbnail .jpg that is initially displayed.
-							loads 'thumb.jpg' in same folder on page load instead of the whole video file
-						*/
-            // check size of video file to use the appropriate thumbnail
-            if ($size == 'small') {
-               if (file_exists($title_path . "thumbsmall_play.jpg")) {
-                  $thumbjpg = $title_path . "thumbsmall_play.jpg";
-               }
-               else if ( file_exists($title_path . "thumb_small_play.jpg") ) {
-                  $thumbjpg = $title_path . "thumb_small_play.jpg"; 
-               }
-               else if ( file_exists($title_path . "thumbsmall.jpg") ) {
-                  $thumbjpg = $title_path . "thumbsmall.jpg"; 
-               }
-               else if ( file_exists($title_path . "thumb.jpg") ) {
-                  $thumbjpg = $title_path . "thumb.jpg";
-               }
-               else {
-                  $thumbjpg = "images/default_movie_icon_small.png";
-               }
-            }
-            else {
-               if (file_exists($title_path . "thumb_play.jpg")) {
-                  $thumbjpg = $title_path . "thumb_play.jpg";
-               }
-               else if ( file_exists($title_path . "thumb.jpg") ) {
-                  $thumbjpg = $title_path . "thumb.jpg";
+               /* the code below uses the flowplayer (www.flowplayer.org) flash player to play the video
+                  when you click on the thumbnail .jpg that is initially displayed.
+                  loads 'thumb.jpg' in same folder on page load instead of the whole video file
+               */
+               // check size of video file to use the appropriate thumbnail
+               if ($size == 'small') {
+                  if (file_exists($title_path . "thumbsmall_play.jpg")) {
+                     $thumbjpg = $title_path . "thumbsmall_play.jpg";
+                  }
+                  else if ( file_exists($title_path . "thumb_small_play.jpg") ) {
+                     $thumbjpg = $title_path . "thumb_small_play.jpg"; 
+                  }
+                  else if ( file_exists($title_path . "thumbsmall.jpg") ) {
+                     $thumbjpg = $title_path . "thumbsmall.jpg"; 
+                  }
+                  else if ( file_exists($title_path . "thumb.jpg") ) {
+                     $thumbjpg = $title_path . "thumb.jpg";
+                  }
+                  else {
+                     $thumbjpg = "images/default_movie_icon_small.png";
+                  }
                }
                else {
-                  $thumbjpg = "images/default_movie_icon.png";
+                  if (file_exists($title_path . "thumb_play.jpg")) {
+                     $thumbjpg = $title_path . "thumb_play.jpg";
+                  }
+                  else if ( file_exists($title_path . "thumb.jpg") ) {
+                     $thumbjpg = $title_path . "thumb.jpg";
+                  }
+                  else {
+                     $thumbjpg = "images/default_movie_icon.png";
+                  }
+
                }
 
-            }
-
-          /*
-          * If useragent of browser is detected as a mobile device, serve up a simple link instead of flash
-          * testing on Android phone plays the video just fine using video's native player
-          * NOTE: video encoded with handbrake on iPod settings, m4v file produced
-          */
-          /*
-          if (detectMobile()) {
-            $title = '<video src="' . $title_path . $title_file . '" poster="'.$thumbjpg.'" height="'.$height.'px" width="'.$width.'px" onclick="this.play();" />';
-          }
-          else {
-          */
-          /*
-						<a  
-							 href="'.$title_path.$title_file.'"
-							 class = "flash_player_holder"
+            
+               /*  May not be needed now as flowplayer supposedly detects iOS or android devices and serves content accordingly
+               *  (original notes below)
+               * -----
+               * If useragent of browser is detected as a mobile device, serve up a simple link instead of flash
+               * testing on Android phone plays the video just fine using video's native player
+               * NOTE: video encoded with handbrake on iPod settings, m4v file produced
+               * 
+               if (detectMobile()) {
+                  $title = '<video src="' . $title_path . $title_file . '" poster="'.$thumbjpg.'" height="'.$height.'px" width="'.$width.'px" onclick="this.play();" />';
+               }
+               else {
+                  <a  
+                      href="'.$title_path.$title_file.'"
+                      class = "flash_player_holder"
                       alt="'.$row[1].'"
-							 style="border:1px solid #cdcdcd;background-image:url(\''.$thumbjpg.'\');width:'.$width.'px;height:'.$height.'px;margin-left:5px;text-align:center;"
-							 id="'.$title_path.'title">
-							 <img src="images/play_large.png" style="border:0 none;margin-top:30px;width:40px;height:40px;" />
-						</a> 
-          */
+                      style="border:1px solid #cdcdcd;background-image:url(\''.$thumbjpg.'\');width:'.$width.'px;height:'.$height.'px;margin-left:5px;text-align:center;"
+                      id="'.$title_path.'title">
+                      <img src="images/play_large.png" style="border:0 none;margin-top:30px;width:40px;height:40px;" />
+                  </a>
+               }
+               */
 
+               $title = '  
+               <a href="'.$title_path.$title_file.'"
+                  class = "flash_player_holder"
+                  style="width:'.$width.'px;height:'.$height.'px;margin-left:auto;margin-right:auto;"
+                  id="'.$title_path.'title">
+                  <img style="margin-left:-3px;" src="'.$thumbjpg.'" height="'.$height.'px" width="'.$width.'px" alt="'.$row[1].'" />
+               </a>
+               <script type="text/javascript">
+                  flowplayer("'.$title_path.'title", "flash/flowplayer-3.2.7.swf", {
+                     clip: {
+                        url: \''.$title_path.$title_file.'\',
+                        autoPlay: true,
+                        autoBuffering: true
+                     }, 
+                     plugins: {controls: conf.small
+               ';
+                        
+                        /*  This was originally used to show a smaller sized control bar for
+                         * video playback on small sized titles, but is not used right now
+                         * if ($size == 'small'){
+                         *    $title = $title . "controls: conf.small";
+                         * } 
+                         * else {
+                         *    $title = $title . "controls: conf.big";
+                         * }
+                         */
+               $title = $title . '}});</script>';
 
+				} // end of code if ext is in filetypes_video array
 
-            $title = '  
-            <a
-							 href="'.$title_path.$title_file.'"
-						   class = "flash_player_holder"
-							 style="width:'.$width.'px;height:'.$height.'px;margin-left:auto;margin-right:auto;"
-							 id="'.$title_path.'title">
-						   <img style="margin-left:-3px;" src="'.$thumbjpg.'" height="'.$height.'px" width="'.$width.'px" alt="'.$row[1].'" />
-						</a>
-            <script type="text/javascript">
-							flowplayer("'.$title_path.'title", "flash/flowplayer-3.2.7.swf", {
-								clip: {
-										url: \''.$title_path.$title_file.'\',
-										autoPlay: true,
-										autoBuffering: true
-								}, 
-								plugins: {controls: conf.small
-                        ';
-//                  if ($size == 'small'){
-//                      $title = $title . "controls: conf.small";
-//                  } else {
-//                      // originally designed for a diff size title option, not used right now
-//                      $title = $title . "controls: conf.small";
-//                  }
-                  $title = $title . '
-								}
-							});
-						</script>';
-          //}
-				}
-				// else file is an image
-				else {
-                     /* An extra div with class "imgzoom_container" is added to each post with an image title to enable lightbox style img zooming */
-					 $title = '<div class="imgzoom_container">
-                             <img class="expand" src="'.$title_path.$title_file.'" alt="'.$row[0].'" title="'.$row[0].'" '.$style.' />
-                                <a class="quickViewLink" href="'.$title_path.$title_file.'">
-                                   <img class="quickView" src="images/search_button_green_32.png" />
-                                </a>
-                          </div>';
-					 //$title = '<a href="'.$title_path.$title_file.'" class="thickbox"><img src="'.$title_path.$title_file.'" alt="'.$row[0].'" title="'.$row[0].'" '.$style.' /></a>';
-				}
-			}
-		}
-        /* This div creates displays the time and date of the post at the bottom of each title */
-        $title = $title . '<div class="cont-date">' . date("H:s M j Y", $row[2]) . '</div>';
-	}
-  @mysqli_free_result($result);
+            else { // else file is an image
+               // An extra div with class "imgzoom_container" is added to each post with an image title to enable lightbox style img zooming
+               $title = '<div class="imgzoom_container">
+                           <img class="expand" src="'.$title_path.$title_file.'" alt="'.$row[0].'" title="'.$row[0].'" '.$style.' />
+                           <a class="quickViewLink" href="'.$title_path.$title_file.'">
+                              <img class="quickView" src="images/search_button_green_32.png" />
+                           </a>
+                         </div>';
+               //$title = '<a href="'.$title_path.$title_file.'" class="thickbox"><img src="'.$title_path.$title_file.'" alt="'.$row[0].'" title="'.$row[0].'" '.$style.' /></a>';
+            }
+         }
+      }
+      /* This div displays the time and date of the post at the bottom of each title */
+      $title = $title . '<div class="cont-date">' . date("H:s M j Y", $row[2]) . '</div>';
+   }
+   @mysqli_free_result($result);
 	return $title;
 }
 
 
-/* saves uploaded image 
-
-location - forum, post or page
-type - title, description, subject, message, content, etc. - this will be the name of the file when saved
-tmp_file - the file sent through the form
-id - id of the forum, post, or page
-
-*/
+/**
+ *  Saves uploaded image 
+ * 
+ * @global type $db
+ * @param type $location forum, post or page
+ * @param type $type title, drescription, subject, message, contect, etc. - this will be the name of the file when saved
+ * @param type $file the file sent through the form
+ * @param type $id the id of the forum, post, or page 
+ */
 function save_image($location, $type, $file, $id) {
 	global $db;
 	
@@ -323,18 +332,22 @@ function save_image($location, $type, $file, $id) {
 	} 
 }
 
-/* saves uploaded video 
-
-location - forum, post or page
-type - title, description, subject, message, content, etc. - this will be the name of the file when saved
-tmp_file - the file sent through the form
-id - id of the forum, post, or page
-
-*/
-function save_video($location, $type, $file, $id) {
+/**
+ * Saves uploaded video
+ * 
+ * @global type $db
+ * @param string $location heading denoting where the file should be saved - ex) forum, post or page
+ * @param string $type title, description, subject, message, content, etc. - this will be the name of the file when saved
+ * @param string $file the file sent through the form
+ * @param type $id id of the forum, post, or page
+ * @param string $vidaspect desired aspect ratio (specified as W:H) of the converted video, default value is "4:3"
+ * @param string $vidsize desired size (specified as WxH) of the converted video, default value is "320x240"
+ */
+function save_video($location, $type, $file, $id, $vidaspect="4:3", $vidsize="320x240") {
 	global $db;
+   $id = intval($id);
 
-	$ext = end(explode('.',$_FILES[$file]['name']));
+	$ext = strtolower(end(explode('.',$_FILES[$file]['name'])));
 	$level = '';
 	$depth = substr_count(INCLUDE_PATH, '/');
 	for ($i=1; $i<$depth; $i++) {
@@ -387,37 +400,52 @@ function save_video($location, $type, $file, $id) {
       exit;
    }
 
-    /**  todo: **/
+    /**  TODO: change this to detect the video codec using ffmpeg as file extension check is simply unsafe if this is the only check
     /**   CHANGE THIS TO DETECT THE CODEC USING FFMPEG AS FILE EXTENSION CHECK IS UNSAFE!!! **/
     /**   ************************************************************************************/
     /**  this would be a call to shell_exec("ffmpeg -i INPUTFILE") and parsing the output to find the video codec **/
-   if ( strcmp($ext,  'mp4') != 0 ) { // file is NOT an mp4 file
-      //print $newfile . " is not a mp4 file, attempting to convert<br />";
+   if ( strcmp(strtolower($ext),  'mp4') != 0 ) { // file is NOT an mp4 file
+
       // convert to mp4 using ffmpeg
       $extension = end( explode('.', $newfile) );
       $newfileNoExtension = substr( $newfile, 0, (strlen($newfile) - strlen($extension)) );
       $newfileMP4Extension = $newfileNoExtension . 'mp4';
-      //echo $newfileMP4Extension . "<br /><br />";
 
-	   // shell_exec("ffmpeg -i " . $videoPath . " -ss 1 -f image2 -vframes 1 -s 144x112 " . $videoDirectoryPath . "/thumb.jpg 2>&1");
+
      /** todo: consider using escapeshellarg($dirname) for the paths of files?  **/
-      $convertOutput = shell_exec("../include/ffmpeg/ffmpeg -i " . $newfile . " -acodec libfaac -ab 64k -ar 22050 -async 22050 -r 15 -aspect 4:3 -s 320x240 -vcodec libx264 -b 400k -flags +loop -cmp +chroma -partitions +parti4x4+partp8x8+partb8x8 -subq 1 -trellis 0 -refs 1 -bf 16 -b_strategy 1 -coder 1 -me_range 16 -g 3 -keyint_min 25 -sc_threshold 40 -i_qfactor 0.71 -bt 175k -qcomp 0.6 -qmin 10 -qmax 51 -qdiff 4 -y " . $newfileMP4Extension . " 2>&1");
-	//$_SESSION['feedback'][] = shell_exec("pwd");
-      //$_SESSION['feedback'][] = $convertOutput; 
-      //process output of ffmpeg using $convertOutput
       
-      //echo "<pre>$convertOutput</pre><br /><br />";
-      
+      //$convertOutput = shell_exec(FFMPEG_PATH . " -i " . $newfile . " -acodec libfaac -ab 64k -ar 22050 -async 22050 -r 15 -aspect 4:3 -s 320x240 -vcodec libx264 -b 400k -flags +loop -cmp +chroma -partitions +parti4x4+partp8x8+partb8x8 -subq 1 -trellis 0 -refs 1 -bf 16 -b_strategy 1 -coder 1 -me_range 16 -g 3 -keyint_min 25 -sc_threshold 40 -i_qfactor 0.71 -bt 175k -qcomp 0.6 -qmin 10 -qmax 51 -qdiff 4 -y " . $newfileMP4Extension . " 2>&1");
+      $convertOutput = shell_exec(FFMPEG_PATH . " -i " . $newfile . " -acodec libfaac -ab 64k -ar 22050 -async 22050 -r 15 -aspect " . escapeshellarg($vidaspect) . " -s " . escapeshellarg($vidsize) . " -vcodec libx264 -b 400k -flags +loop -cmp +chroma -partitions +parti4x4+partp8x8+partb8x8 -subq 1 -trellis 0 -refs 1 -bf 16 -b_strategy 1 -coder 1 -me_range 16 -g 3 -keyint_min 25 -sc_threshold 40 -i_qfactor 0.71 -bt 175k -qcomp 0.6 -qmin 10 -qmax 51 -qdiff 4 -y " . $newfileMP4Extension . " 2>&1");
+	
+      // use ffmpeg to make 2 differently sized jpg thumbnails from the uploaded video
       make_video_thumbnail($newfile, dirname($newfile));
-      /** replacing this overlay call with some 'background-image' css on the
-       * <a> element in the 'get_title' method. Should be less work server-side
-       * and less prone to failing
+      
+      /** 
+       * TODO: we could replace this overlay_play_btn call with some 'background-image' css on the
+       * <a> element in the 'get_title' method. Could be less work server-side
+       * and less prone to errors/failing due to incorrectly setup gd extensions
+       * Looks like this, code taken from get_title method and flowplayer website
+       *          <a  
+                      href="'.$title_path.$title_file.'"
+                      class = "flash_player_holder"
+                      alt="'.$row[1].'"
+                      style="border:1px solid #cdcdcd;background-image:url(\''.$thumbjpg.'\');width:'.$width.'px;height:'.$height.'px;margin-left:5px;text-align:center;"
+                      id="'.$title_path.'title">
+                      <img src="images/play_large.png" style="border:0 none;margin-top:30px;width:40px;height:40px;" />
+                  </a>
+       * 
+       * The problem with using this method is that when we display the full
+       * sized video thumbnail (when the video is the main content of the post)
+       * the background-image thumbnail technique will tile the small sized
+       * thumbnail and the play button will not be centered. This could be 
+       * worked out with more work on the code for the play button style
+       *  but for now we default by calling overlay_play_btn
        */
       overlay_play_btn(dirname($newfile));
 
       /* assuming everything went okay, we can delete the .avi file that we don't need now */
       if(file_exists($newfile)) {
-        unlink($newfile);
+         unlink($newfile);
       }
    }
    else { // file IS a mp4 file, no conversion necessary
@@ -498,6 +526,7 @@ function save_signlink ($location, $type, $file, $id) {
 
 	if (!move_uploaded_file($_FILES[$file]['tmp_name'], $newfile)) {
 	  print "Error Uploading File.";
+     trigger_error("Error in the save_signlink function call, check directory permissions", E_USER_WARNING);
 	  exit;
 	} 
 }
@@ -529,7 +558,7 @@ function save_avatar($id) {
 	global $db;
 		
 	$tmp_file = $_FILES['avatar']['tmp_name'];
-	$ext = end(explode('.',$_FILES['avatar']['name']));
+	$ext = strtolower(end(explode('.',$_FILES['avatar']['name'])));
 
 	$level = '';
 	$depth = substr_count(INCLUDE_PATH, '/');
@@ -541,6 +570,8 @@ function save_avatar($id) {
 		mkdir($level.UPLOAD_DIR.'members/'.$id.'/');
 	} else { 
 		delete_avatar($id);
+      clearstatcache();
+      mkdir($level.UPLOAD_DIR.'members/'.$id.'/');
 	}
 	
 	$newfile = $level.UPLOAD_DIR.'members/'.$id.'/avatar.'.$ext;
@@ -559,20 +590,23 @@ function save_avatar($id) {
 		$newwidth = round($width * $percent);
 		$newheight = round($height * $percent);
 
-		if ($ext == "jpg" || $ext=='jpeg') { 
-			$smaller = imagecreatetruecolor($newwidth, $newheight);	
+		if ($ext=='jpg' || $ext=='jpeg') { 
+			$smaller = imagecreatetruecolor($newwidth, $newheight) or die('Cannot Initialize new GD image sream');	
 			$source = imagecreatefromjpeg($tmp_file); 
-		} elseif ($ext == "gif") {
+		}
+      elseif ($ext == "gif") {
 			$smaller = imagecreate($newwidth, $newheight);
 			$source = imagecreatefromgif($tmp_file);
-		} elseif ($ext == 'png') {
+		}
+      elseif ($ext == 'png') {
 			$smaller = imagecreatetruecolor($newwidth, $newheight);
 			$source = imagecreatefrompng($tmp_file);
 		}
 
 		if (!imagecopyresized($smaller, $source, 0, 0, 0, 0, $newwidth, $newheight, $width, $height)) {
-			print "Error Uploading File.";
-			exit();
+			$_SESSION['errors'][] = "Error performing file conversion, please try again later.";
+         trigger_error("Problem creating user avatar after upload, check directory permissions or picture file size", E_USER_WARNING);
+			//exit();
 		}
 
 		if ($ext == "jpg" or $ext=='jpeg') {
@@ -587,8 +621,9 @@ function save_avatar($id) {
 	unset($_FILES);
 
 	if (!copy($newfile, $tmp_file)) {
-	  print "Error Uploading File.";
-	  exit;
+	  $_SESSION['errors'][] = "Error Uploading File. Please try again later";
+     trigger_error("Error in copying user avatar to uploads directory, check permissions", E_USER_WARNING);
+	  //exit;
 	} 
 }
 
@@ -724,13 +759,20 @@ function print_members_dropdown() {
 	}
 }
 
-// draws a white play button over top of a video thumbnail
+/**
+ *  Uses the gd image library to overlay a play button image defined by PLAYOVERLAY_PATH
+ * onto the jpg thumbnail files generated by the make_video_thumbnail function
+ *
+ * @param string $fullDestImagePath  the full path to the video thumbnail image
+ * including the trailing '/'
+ */
 function overlay_play_btn($fullDestImagePath) {
 
 	//make sure destination image full path includes the slash at the end
 	$pathLength = strlen($fullDestImagePath);
 	if ($pathLength == 0) {
-		$_SESSION['errors'][] = 'Error with filename length creating play button overlay';
+		$_SESSION['errors'][] = 'Error with filename passed to overlay_play_btn method while creating play button overlay';
+      trigger_error("Error with filename passed to overlay_play_btn method while creating play button overlay. Filename: " . $fullDestImagePath, E_USER_WARNING);
 	}
 	
 	if ( substr($fullDestImagePath, -1) !== '/' ) {
@@ -738,25 +780,28 @@ function overlay_play_btn($fullDestImagePath) {
 		$fullDestImagePath = $fullDestImagePath . '/';
 	}
 	
-	$playImagePath = '../images/';
+   // set this value to be a defined variable inside the 'config.inc.php' file
+	//$playImagePath = '../images/';
 	
 	// use the thumbnail created during upload
 	$image = imagecreatefromjpeg($fullDestImagePath . 'thumb.jpg');
 	$imagesmall = imagecreatefromjpeg($fullDestImagePath . 'thumbsmall.jpg');
 	
 	if ( !$image ) {
-		$_SESSION['errors'][] = 'Error finding bigger thumbnail';
+		$_SESSION['errors'][] = 'Video thumbnail (regular size) image not found, please ' . printAdminMailToLink("notify", "error") . ' your administrator';
+      trigger_error("User video thumbnail image not found while creating play button overlay. File path: " . $fullDestImagePath . "thumb.jpg", E_USER_WARNING);
 	}
 	if ( !$imagesmall ) {
-		$_SESSION['errors'][] = 'Error finding smaller thumbnail';
+		$_SESSION['errors'][] = 'Video thumbnail (small size) image not found, please ' . printAdminMailToLink("notify", "error") . ' your administrator';
+      trigger_error("User video thumbnail image not found while creating play button overlay. File path: " . $fullDestImagePath . "thumbsmall.jpg", E_USER_WARNING);
 	}
 	
 	
-	// for the play button overlay, use 'play_btn.png' in the images/ folder 
-	$watermark = imagecreatefrompng($playImagePath . 'play_btn.png');
+	// to change the play button overlay image, change this value (PLAYOVERLAY_PATH) in the config.inc.php file
+   $watermark = imagecreatefrompng(PLAYOVERLAY_PATH);
 	
 	if ( !$watermark ) {
-		$_SESSION['errors'][] = '<span style="color:#ff0000;size:1.4em;">Error finding play button overlay image</span>';
+		$_SESSION['errors'][] = '<span style="color:#ff0000;size:1.4em;">Default play button overlay image not found, please notify your administrator</span>';
 	}
 	
 	imagealphablending($image, true);
@@ -771,11 +816,11 @@ function overlay_play_btn($fullDestImagePath) {
 	// create new thumbnail with play button overlayed on top in the same folder
 	if ( !imagejpeg($image, $fullDestImagePath . 'thumb_play.jpg') ) {
 		$_SESSION['errors'][] = 'Error creating new thumbnail, check dir permissions';
-      print "\n**ERROR** - Error creating new thumbnail jpeg file, possibly check directory permissions";
+      //print "\n**ERROR** - Error creating new thumbnail jpeg file, possibly check directory permissions";
 	}
 	if ( !imagejpeg($imagesmall, $fullDestImagePath . 'thumb_small_play.jpg') ) {
       $_SESSION['errors'][] = 'Error creating new thumbnail, check dir permissions';
-		print "\n**ERROR** - Error creating new thumbnail jpeg file, possibly check directory permissions";
+		//print "\n**ERROR** - Error creating new thumbnail jpeg file, possibly check directory permissions";
 	}
 	
 	imagedestroy($image);
@@ -783,18 +828,40 @@ function overlay_play_btn($fullDestImagePath) {
 	imagedestroy($watermark);
 }
 
-// creates smaller jpg thumbnails from video files, used as image placeholders before videos load into flowplayer
-function make_video_thumbnail($videoPath, $videoDirectoryPath) {
-   // create a regular sized thumbnail
-	//$_SESSION['feedback'][] = shell_exec("include/ffmpeg/ffmpeg -i " . $videoPath . " -ss 1 -f image2 -vframes 1 -s 144x112 " . $videoDirectoryPath . "/thumb.jpg 2>&1");
-	shell_exec("../include/ffmpeg/ffmpeg -i " . $videoPath . " -ss 1 -f image2 -vframes 1 -s 144x112 " . $videoDirectoryPath . "/thumb.jpg 2>&1");
-   // create a small sized thumbnail
-	//$_SESSION['feedback'][] = shell_exec("include/ffmpeg/ffmpeg -i " . $videoPath . " -ss 1 -f image2 -vframes 1 -s 96x74  " . $videoDirectoryPath . "/thumbsmall.jpg 2>&1");
-	shell_exec("../include/ffmpeg/ffmpeg -i " . $videoPath . " -ss 1 -f image2 -vframes 1 -s 96x74  " . $videoDirectoryPath . "/thumbsmall.jpg 2>&1");
+/**
+ * Uses the ffmpeg binary and a call to shell_exec to create a video thumbnail
+ * for a supplied movie file. Creates a large sized thumbnail named 'thumb.jpg'
+ * and a smaller thumbnail named 'thumbsmall.jpg' from the image in the video
+ * specified by the timecode paramater
+ *
+ * @param string $videoPath  the direct and complete path to a video file
+ * @param string $videoDirectoryPath  the directory where you want the thumbnails created
+ * @param string $largesize  the size of the large thumbnail desired, specified as "WxH" ex) "144x112", defaults to 144x112
+ * @param string $smallsize  the size of the small thumbnail desired, specified as "WxH" ex) "96x74", defaults to 96x74
+ * @param int $timecode  the time in seconds that the thumbnail image should be taken from the video, default value is 1 (second)
+ */
+function make_video_thumbnail($videoPath, $videoDirectoryPath, $largesize="144x112", $smallsize="96x74", $timecode=1) {
 
+   /* TODO: perform a check to ensure the movie duration is longer or the same length as the timecode value supplied so no errors occur from ffmpeg */
+   
+   // create a regular sized thumbnail
+	//shell_exec(FFMPEG_PATH . " -i " . $videoPath . " -ss 1 -f image2 -vframes 1 -s 144x112 " . $videoDirectoryPath . "/thumb.jpg 2>&1");
+   shell_exec(FFMPEG_PATH . " -i " . escapeshellarg($videoPath) . " -ss " . escapeshellarg(intval($timecode)) . " -f image2 -vframes 1 -s " . escapeshellarg($largesize) . " " . escapeshellarg($videoDirectoryPath) . "/thumb.jpg 2>&1");
+   
+   // create a small sized thumbnail 
+	//shell_exec(FFMPEG_PATH . " -i " . $videoPath . " -ss 1 -f image2 -vframes 1 -s 96x74  " . $videoDirectoryPath . "/thumbsmall.jpg 2>&1");
+   shell_exec(FFMPEG_PATH . " -i " . escapeshellarg($videoPath) . " -ss " . escapeshellarg(intval($timecode)) . " -f image2 -vframes 1 -s " . escapeshellarg($smallsize) . " " . escapeshellarg($videoDirectoryPath) . "/thumbsmall.jpg 2>&1");
+
+   
 }
 
-
+/**
+ * Currently un-used
+ *
+ * @param type $plainText
+ * @param type $salt
+ * @return type 
+ */
 function generateHash($plainText, $salt = null) {
   if ($salt === null) {
     $salt = substr(md5(uniqid(mt_rand(), true)), 0, SALT_LENGTH);
@@ -807,6 +874,12 @@ function generateHash($plainText, $salt = null) {
 
 }
 
+/**
+ * Tries to match the user agent of a browser to common mobile ones
+ *
+ * @return boolean returns true if user agent of browser matches commonly
+ * used and known mobile browser user agents
+ */
 function detectMobile() {
 
   $useragent=$_SERVER['HTTP_USER_AGENT'];
@@ -818,5 +891,216 @@ function detectMobile() {
     return false;
   }
 }
+
+/**
+ * Performs a regular expression validation on an email address type string.
+ * By default the function will return false.
+ * NOTE: This will return false even if email is valid according to regular expression
+ * if unique parameter is set to 1 and the email already exists in the members 
+ * table in the database
+ * 
+ * @param type $email The complete email address in a string format
+ * @param type $unique Set to 0 if duplicate emails are allowed, 1 to enforce unique email in the members table in the database, default value is 1
+ * @return false if email is not correctly formatted or duplicated in table
+ * @return true if email is correctly formatted and unique in members table
+ */
+function validateEmail($email, $unique=1) {
+   global $db;
+   $reg_ok = 0;
+   
+   // enforce integer only for this parameter
+   $unique = intval($unique);
+   
+   // remove whitespace and escape nasty chars
+   $email = trim(mysqli_real_escape_string($db,$email));
+   // check length make sure it is valid, set flag if valid
+   if (eregi("^[a-z0-9\._-]+@+[a-z0-9\._-]+\.+[a-z]{2,6}$", $email)) {
+      $reg_ok = 1;
+   }
+   else {
+      return false;
+   }
+   
+   // do we need to check if email is unique?
+   if ($unique > 0) {
+      // check that email is unique in database
+      $query = "SELECT * FROM members WHERE email='" . $email . "'";
+      $result = mysqli_query($db, $query);
+      if (mysqli_num_rows($result) == 0) {
+         mysqli_free_result($result);
+         return true;
+      }
+      else {
+         mysqli_free_result();
+         return false;
+      }
+   }
+   else {
+      if ($reg_ok == 1) return true;
+      else return false;
+   }
+}
+
+
+/**
+ * Performs a regular expression match on the supplied string to enforce
+ * conformity to the 'login' field from the members table in the database
+ *
+ * @global type $db
+ * @param type $username  the desired user's login
+ * @return boolean true if user login conforms to regex, false if not
+ */
+function validateUserLogin($username) {
+   global $db;
+   
+   $username = mysqli_real_escape_string($db, trim($username));
+   
+   if (preg_match("/^[a-zA-Z]{3,}[a-zA-Z_1234567890]*[a-zA-Z1234567890]{1,}$", $username) > 0) {
+      return true;
+   }
+   else {
+      return false;
+   }
+}
+
+/**
+ * Tests whether it is possible to access the FFmpeg binary using the
+ * predefined path in the 'config.inc.php' file using a regular expression
+ * match against the output of just calling ffmpeg with no parameters, looks
+ * specifically for the libx264 codec to be compiled with ffmpeg
+ * @return true if access and libx264 library present
+ * @return false if no access or no libx264 library present
+ */
+function ffmpeg_access_enabled() {
+   $output = shell_exec(FFMPEG_PATH . " -version");
+   if (preg_match("/libavutil/i", $output) > 0)
+      return true;
+   else
+      return false;
+}
+
+
+/**
+ * Test function to determine if write permissions are granted for the userid
+ * that runs PHP. Tries to create a new hidden directory in the members folder
+ * and removes it upon success
+ * @return true if directory is created successfully
+ * @return false if directory creation is not permitted or unsuccessful
+ */
+function directory_write_permission_enabled() {
+   // directory write access
+   $level = '';
+   $depth = substr_count(INCLUDE_PATH, '/');
+   for ($i=1; $i<$depth; $i++) {
+      $level .= "../";
+   }
+   $testdir = $level.UPLOAD_DIR.'members/.accesstestfolder/';
+
+   if (mkdir($testdir)) {
+      @rmdir($testdir);
+      return true;
+   }
+   else 
+      return false;
+}
+
+/**
+ * Test function to determine if the GD image library has been loaded as an
+ * extension to PHP. The GD library is used to manipulate images such as user
+ * avatars
+ * @return true if the GD library is present
+ * @return false if PHP does not have the GD library installed as an extension
+ */
+function gd_library_present() {
+   if (extension_loaded('gd') && function_exists('gd_info'))
+      return true;
+   else
+      return false;
+}
+
+
+/**
+ * Test function to determine if the creation of a new image GD object is 
+ * possible using the admin determined PLAYOVERLAY_PATH variable. If the
+ * variable truly points to a valid image and GD is present than this tests 
+ * will be successfuly
+ * @return true if GD is working and PLAYOVERLAY_PATH points to an image
+ * @return false if GD is not working or the PLAYOVERLAY_PATH does not point to an image
+ */
+function playbutton_overlay_config_successful() {
+   $watermark = imagecreatefrompng(PLAYOVERLAY_PATH);
+   if ($watermark)
+      return true;
+   else
+      return false;
+}
+
+
+/**
+ * Method to recursively traverse the directory specified by the UPLOAD_DIR
+ * define filtered by file extensions specified in the extensions array 
+ * 
+ * @param array $extensions array of file extension strings, ex array('mp4','mov')
+ * @param string $function Optional - the name of an optional function to be called on each image
+ * file. The function is called using the image pathname string as the first parameter, default value is NULL
+ * @param array $functionparams Optional - an array of parameters to pass to the optional $function as the second parameter
+ * @return array An array of file paths, array(0=>filepath1,1=>filepath2...)
+ */
+function searchUploadedFiles($extensions, $function=NULL, $functionparams=NULL) {
+   $vidfilesfound = array();
+   
+   $level = '';
+   $depth = substr_count(INCLUDE_PATH, '/');
+   for ($i=1; $i<$depth; $i++) {
+      $level .= "../";
+   }
+   
+   $updir = $level.UPLOAD_DIR;
+   
+   $dir = new RecursiveIteratorIterator(new RecursiveDirectoryIterator(($updir), true));
+   
+   foreach ( $dir as $file ) {
+      if ($file->isFile()) {
+         $ext = strtolower(array_pop(explode('.', $file)));
+         foreach ($extensions as $ext_str) {
+            $ext_str = strtolower($ext_str);
+            if ($ext == $ext_str) {
+               array_push($vidfilesfound, $file->getPathname());
+               //print "Video file found: " . $file->getPathname() . "<br />";
+               if ($function) {
+                  $function($file->getPathname(), $functionparams);
+               }
+               break;
+            }
+         }
+      }
+   }
+   return $vidfilesfound;
+}
+
+
+/**
+ * Creates a mailto link with supplied text and css class by pulling the 
+ * admin's contact info from the settings table in the database
+ *
+ * @global type $db
+ * @param string $linktext The desired text to display for the mail to link
+ * @param string $cssclass The desired class to be applied to the link
+ */
+function printAdminMailToLink($linktext, $cssclass) {
+   global $db;
+   $linktext = mysqli_real_escape_string($db, $linktext);
+   $cssclass = mysqli_real_escape_string($db, $cssclass);
+   
+   $sql = "SELECT value FROM settings where name='contact' LIMIT 1";
+   $result = mysqli_query($db, $sql);
+   
+   $row = mysqli_fetch_row($result);
+   if (!empty($row[0])) {
+      print "<a href='mailto:" . $row[0] . "' class='" . $cssclass . "'>" . $linktext . "</a>";
+   }
+}
+
+
 
 ?>

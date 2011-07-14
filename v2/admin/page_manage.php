@@ -32,10 +32,14 @@ if ($row = mysqli_fetch_assoc($result)) {
 	<?php
 	do {
 
-		$title = get_title('page', $row['page_id'], "small");
-    // necessary to change path to flowplayer swf file as admin files are in different location
-    //$titlenew = preg_replace('/flash\/flowplayer/', '../flash/flowplayer', $title); 
-    $titlenew = $title;
+      $title = get_title('page', $row['page_id'], "small");
+      // necessary to change path to flowplayer swf file as admin files are in different location
+      $title = preg_replace('/flash\/flowplayer/', '../flash/flowplayer', $title);
+      // replace the id of the title as flowplayer doesn't like id's with "../" in them
+      $title = preg_replace('/id="..\/uploads\/pages/', 'id="uploads/pages', $title);
+      $title = preg_replace('/flowplayer\("..\/uploads\/pages/', 'flowplayer("uploads/pages', $title);
+      
+      //$titlenew = $title;
 
 		if (empty($row['sl_file']) && $row['type']=='sl') {
 			//sl file missing
@@ -47,7 +51,7 @@ if ($row = mysqli_fetch_assoc($result)) {
 		//print page row info
 		echo '<tr class="row'.$r.'">';
 		echo '<td style="text-align:center;">'.$row['page_id'].'</td>'; 		
-		echo '<td>'.$titlenew.'</td>'; 
+		echo '<td>'.$title.'</td>'; 
 		echo '<td style="text-align:center;">'.$row['parent_id'].'</td>';  //get parent id title
 		echo '<td style="text-align:center;">'.$row['created'].'</td>';
 		echo '<td style="text-align:center;">';
