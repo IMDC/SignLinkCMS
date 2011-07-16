@@ -17,6 +17,8 @@ if ($row) {
    $page_title = get_title('page', $row['page_id']);
    // replace the source path to the flowplayer plugin with the correct path one dir level back
    $page_title = preg_replace('/flash\/flowplayer/', '../flash/flowplayer', $page_title);
+   
+   // for images: 
    // replace the source path of the zoom image of pictures with the correct path one dir level back
    $page_title = preg_replace('/img class="quickView" src="images/', 'img class="quickView" src="../images', $page_title);
    
@@ -29,8 +31,10 @@ if ($row) {
    /*** End outputting Page Title ***/
    
    /*** Page Content ***/
+   $page_content = get_content($row['page_id']);
    // replace the source path to the flowplayer plugin with the correct path one dir level back
-   $page_content = preg_replace('/flash\/flowplayer/', '../flash/flowplayer', get_content($row['page_id']));
+   $page_content = preg_replace('/flash\/flowplayer/', '../flash/flowplayer', $page_content);
+   
    // replace the id of the content as flowplayer doesn't like id's with "../" in them
    $page_content = preg_replace('/id="..\/uploads\/pages/', 'id="uploads/pages', $page_content);
    $page_content = preg_replace('/flowplayer\("..\/uploads\/pages/', 'flowplayer("uploads/pages', $page_content);
