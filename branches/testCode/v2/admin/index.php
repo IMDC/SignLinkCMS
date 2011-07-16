@@ -1,6 +1,7 @@
 <?php 
 define('INCLUDE_PATH', '../include/');
 define('FROM_ADMIN', '1');
+define('IMAGE_FOLDER', '../images/');
 
 require_once(INCLUDE_PATH.'vitals.inc.php');
 
