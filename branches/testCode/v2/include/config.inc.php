@@ -19,9 +19,10 @@ define('CMSSALT','8d%18:7dao#".]109a0djf1l86<14');
 /* salt length */
 define('SALT_LENGTH', 9);
 
-/* define the set file paths to ffmpeg and the playbutton overlay image */
-//define('FFMPEG_PATH', 'include/ffmpeg/ffmpeg');
-define('FFMPEG_PATH', '../include/ffmpeg/ffmpeg');
-define('PLAYOVERLAY_PATH', '../images/play_btn.png');
-        
+/* define the set file paths to ffmpeg
+   probably best to define the path from the site's root directory */
+define('FFMPEG_PATH', 'ffmpeg/ffmpeg');
+// define the name of the image file to overlay on top of video thumbnails
+// needs to be located inside the IMAGE_FOLDER define, set in the index.php file
+define('PLAYOVERLAY_IMAGE', 'play_btn.png');
 ?>
