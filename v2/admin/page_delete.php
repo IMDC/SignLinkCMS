@@ -13,7 +13,8 @@ if (isset($_GET['c']) && !empty($_GET['c'])) {
 	$numchildren = mysqli_num_rows($result);	
 	if ($numchildren) {
 		$_SESSION['feedback'][] = 'Page cannot be deleted as it contains sub-pages.';
-	} else {
+	}
+   else {
 		//delete page files & directory
 		$level = '';
 		$depth = substr_count(INCLUDE_PATH, '/');
