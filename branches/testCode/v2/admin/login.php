@@ -89,7 +89,7 @@ require(INCLUDE_PATH.'admin_header.inc.php');
 
 	<dl class="centeralign" style="width:50%; margin-left:auto; margin-right:auto;">
 		<dt><label for="login"><img src="../images/user_med.png" alt="" title="login" class="inlineVertMid" />Login:</label></dt> 
-			<dd style="margin:0;"><input name="login" type="text" id="login" value="<?php echo $_SERVER['login']; ?>" /></dd>
+			<dd style="margin:0;"><input name="login" type="text" id="login" value=""></dd>
 		<dt><label for="pswd"><img src="../images/key3.png" alt="" title="password" class="inlineVertMid" />Password:</label></dt> 
 			<dd style="margin:0;"><input name="password" type="password" id="pswd" value="" /></dd>
 	</dl>
