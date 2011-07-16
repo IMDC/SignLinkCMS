@@ -47,7 +47,7 @@ if (isset($this_login, $this_password)) {
    $result = mysqli_query($db, $sql);
   
    if (!$result) { 
-      $_SESSion['errors'][] = 'Could not successfully run query($sql) from DB: ' . mysqli_error();
+      $_SESSION['errors'][] = 'Could not successfully run query($sql) from DB: ' . mysqli_error();
       require(INCLUDE_PATH.'header.inc.php');
       require(INCLUDE_PATH.'footer.inc.php');
       exit;
