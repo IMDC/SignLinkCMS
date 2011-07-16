@@ -158,8 +158,8 @@ require(INCLUDE_PATH.'header.inc.php'); ?>
 	</dl>
 	<div class="centeralign" style="width:33%;">
 		<!-- label><input type="checkbox" name="autologin" value="1" /> keep me logged-in</label><br / --><br />
-<!--		<input type="submit" name="submit" value="Submit" class="button submitBtn" />-->
-      <button type="button" id="testbutton" name="testbtn" value="Monkeys" class="submitIconBtn" style="margin-right:48px;padding:5px 10px;"> Submit <img src="images/yescheck.png" alt="" class="inlineVertMid" /></button>
+		<input type="submit" name="submit" value="Submit" class="submitBtn" />
+<!--      <button type="button" id="testbutton" name="testbtn" value="Monkeys" class="submitIconBtn" style="margin-right:48px;padding:5px 10px;"> Submit <img src="images/yescheck.png" alt="" class="inlineVertMid" /></button>-->
    </div>
 </form>
 
