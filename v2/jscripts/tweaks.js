@@ -18,7 +18,7 @@ $(document).ready(function() {
    $("input[type=text]").blur(function() {
       $(this).css("background", "#ffffff");
    })
-
+   
 	// this animates the home icon in the navigation menu
 	$(".homenavicon").hover(
 			  function () { $(this).attr("src", "images/homeicon3.gif"); },
@@ -103,3 +103,9 @@ function expThis(text) {
   }
   return false;
 }
+
+function checkVideoFileType(filename) {
+   
+   
+}
+
