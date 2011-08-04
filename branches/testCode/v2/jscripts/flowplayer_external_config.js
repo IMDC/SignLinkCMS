@@ -1,12 +1,14 @@
 /** 
  * Flowplayer Configuration File
  */  
+
 var conf = { 
 
     // default clip configurations 
     defaults: {
+
         autoPlay: false,
-        autoBuffering: true,
+        autoBuffering: true
     },
 
     noplay: { 
@@ -15,7 +17,7 @@ var conf = {
      
         onBegin: function() { 
             this.getControls().fadeIn(4000); 
-        }, 
+        } 
     },    
 
     yesplay: { 
@@ -24,11 +26,12 @@ var conf = {
      
         onBegin: function() { 
             this.getControls().fadeIn(4000); 
-        }, 
+        } 
     },    
 
 
     small: {
+
         height: 14,
         scaling: 'fit',
         backgroundColor: 'transparent',
