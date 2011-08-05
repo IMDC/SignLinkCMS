@@ -60,8 +60,10 @@ $(document).ready(function() {
 
   // this javascript
   $("#testbutton").click(
-     function () { $("form:last").submit();
-  });
+     function () {
+        $("form:last").submit();
+     }
+  );
 
   $("a.findmehere").fancybox();
 
@@ -71,7 +73,7 @@ $(document).ready(function() {
 
 
   // assign 2 functions to mousein/mouseout events on the 'imgzoom_container' div of any post title
-  $(".imgzoom_container")
+  $("div.imgzoom_container")
     .mouseenter(function() {
       // find the title image inside the div container
       $results = $(this).children("a.quickViewLink");

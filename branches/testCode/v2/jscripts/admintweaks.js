@@ -42,31 +42,41 @@ $(document).ready(function() {
     $(this).toggleClass("reply_tr_highlight");
   });
 
-	$("#testbutton").click(
-			  function () { $("form:last").submit();
-		});
-
-  $("a.quickViewLink").fancybox();
-
+   $("#testbutton").click(
+      function () { 
+         $("form:last").submit();
+      }
+   );
+  
   $("img.quickView").hide();
 
-  // assign 2 functions to mousein/mouseout events on the title_container div of any post title
-  $(".imgzoom_container")
+   
+     // assign 2 functions to mousein/mouseout events on the 'imgzoom_container' div of any post title
+  $("div.imgzoom_container")
     .mouseenter(function() {
+      // this line is required on the admin side as the image title's are displayed smaller and the magnifying glass shows up on the bottom right of the image
+      $(this).find("a.quickViewLink").css("top", "-25 px").css("left","-70 px");
+      
       // find the title image inside the div container
       $results = $(this).children("a.quickViewLink");
       // check to see if the title of the post is an image with class 'expand'
       if ($results.length != 0) {
-        $results.children("img.quickView").show();
-        $results.show();
+        //$results.children("img.quickView").show();
+        $results.children("img.quickView").css("display", "inline").css("visibility", "visible");
+        //$results.show();
+        $results.css("display", "inline").css("visibility", "visible");
       }
     })
     .mouseleave(function() {
-      //$(".quickViewLink").replaceWith('');
       $results = $(this).children("a.quickViewLink");
       if ($results.length != 0) {
-        $results.children("img.quickView").hide();
-        $results.hide();
+        //$results.children("img.quickView").hide();
+        $results.children("img.quickView").css("visibility", "hidden").css("display", "none");
+        //$results.hide();
+        $results.css("visibility", "hidden").css("display", "none");
       }
     });
+    
+      $(".quickViewLink").fancybox();
+    
 });
