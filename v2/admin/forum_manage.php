@@ -4,7 +4,13 @@ require(INCLUDE_PATH.'vitals.inc.php');
 admin_authenticate();
 
 require(INCLUDE_PATH.'admin_header.inc.php'); ?>
-
+<!-- css adjustment for fancybox image zoom -->
+<style>
+   .quickViewLink {
+      left: -65px;
+      top: -30px;
+   }
+</style>
 <h2>Forums</h2>
 <ul id="page-menu">
 	<li><a href="forum_create.php">New Forum</a></li> 
@@ -28,6 +34,8 @@ if (mysqli_num_rows($result)) { ?>
 	while ($row = mysqli_fetch_assoc($result)) {
 
 		$title = get_title('forum', $row['forum_id'],'small');
+      // fix for image path in fancybox link
+      $title = preg_replace('/img class="quickView" src="images/', 'img class="quickView" src="../images', $title);
 
 		//print forum row info
 		echo '<tr class="row'.$r.'">';

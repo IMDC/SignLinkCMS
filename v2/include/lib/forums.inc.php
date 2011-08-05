@@ -39,7 +39,8 @@ function get_message($id) {
 			//the msg is plain text
 			$msg[2] = nl2br($row['msg']);
          $msg[4] = 1;
-		} else {
+		} 
+      else {
 			//the msg is a file
 			
 			//get files
@@ -53,7 +54,7 @@ function get_message($id) {
 					}
 				}
 
-				$ext = end(explode('.',$msg_file));
+				$ext = strtolower(end(explode('.',$msg_file)));
 				if (in_array($ext, $filetypes_video)) {
 					// message is a VIDEO
                $msg[4] = 3;
@@ -107,10 +108,12 @@ function get_message($id) {
 							});
 						</script>';
 
-				} else if (in_array($ext, $filetypes_image)) {
+				} 
+            else if (in_array($ext, $filetypes_image)) {
 					$msg[2] = '<img src="'.$msg_path.$msg_file.'" alt="'.$row[1].'" title="'.$row[1].'" style="vertical-align:middle;" />';
                $msg[4] = 2;
-				} else { //signlink
+				} 
+            else { //signlink
 					$msg[2] = '<object width="565" height="455"
 						classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000"
 						codebase="http://fpdownload.macromedia.com/pub/
@@ -124,6 +127,9 @@ function get_message($id) {
                $msg[4] = 4;
 				}
 			}
+         else {
+            $msg[2] = "No file found";
+         }
 		}
 		return $msg;
 	} else {

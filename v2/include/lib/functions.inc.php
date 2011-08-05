@@ -561,6 +561,23 @@ function save_avatar($id) {
 	$tmp_file = $_FILES['avatar']['tmp_name'];
 	$ext = strtolower(end(explode('.',$_FILES['avatar']['name'])));
 
+   $allowable=0;
+   // add this code to check if filetype of image uploaded is allowed
+   // by the $filetypes_image variable defined in constants.inc.php
+   foreach($filetypes_image as $goodimgext) {
+      $goodimgext = strtolower($goodimgext);
+      if($goodimgext==$ext) {
+         // filetype is allowed, continue processing
+         $allowable=1;
+         break;
+      }
+   }
+   
+   if ($allowable != 1) {
+      trigger_error("Extension of file uploaded for user avatar is not permitted", E_USER_WARNING);
+      return;
+   }
+   
 	$level = '';
 	$depth = substr_count(INCLUDE_PATH, '/');
 	for ($i=1; $i<$depth; $i++) {
@@ -861,7 +878,7 @@ function make_video_thumbnail($videoPath, $videoDirectoryPath, $largesize="144x1
 
    $stringToExecuteRegular = INCLUDE_PATH . FFMPEG_PATH . " -i " . escapeshellarg($videoPath) . " -ss " . escapeshellarg(intval($timecode)) . " -f image2 -vframes 1 -s " . escapeshellarg($largesize) . " " . escapeshellarg($videoDirectoryPath) . "/thumb.jpg 2>&1";
    //$_SESSION['feedback'][] = $stringToExecuteRegular;
-   shell_exec($stringToExecuteRegular);
+   shell_exec($stringToExecuteRegular); 
    
    // create a small sized thumbnail 
 

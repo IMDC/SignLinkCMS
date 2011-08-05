@@ -4,6 +4,13 @@ require(INCLUDE_PATH.'vitals.inc.php');
 admin_authenticate();
 
 require(INCLUDE_PATH.'admin_header.inc.php'); ?>
+<!-- css added to enable fancybox imagezoom on admin side -->
+<style>
+   .quickViewLink {
+      left: -65px;
+      top: -30px;
+   }
+</style>
 
 <h2>Pages</h2>
 
@@ -33,6 +40,8 @@ if ($row = mysqli_fetch_assoc($result)) {
 	do {
 
       $title = get_title('page', $row['page_id'], "small");
+      // necessary to replace the image path of the fancybox zoom image returned from the get_title call above
+      $title = preg_replace('/img class="quickView" src="images/', 'img class="quickView" src="../images', $title);
       // necessary to change path to flowplayer swf file as admin files are in different location
       $title = preg_replace('/flash\/flowplayer/', '../flash/flowplayer', $title);
       // replace the id of the title as flowplayer doesn't like id's with "../" in them
