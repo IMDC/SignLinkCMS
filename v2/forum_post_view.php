@@ -109,50 +109,32 @@ $msg = get_message($post_id);  //returns array of poster, date, html-encoded mes
 		$result = mysqli_query($db, $sql);
 		if (@mysqli_num_rows($result)) { ?>
         <div class="reply-table-container">
-<!--            <table class="manage" />
-			<tr>
-				<th colspan="4">Replies</th>
-			</tr>-->
-            <h3> Replies </h3>
-			<?php 
-				while ($row = mysqli_fetch_assoc($result)) {
-				//echo '<tr class="reply_tr" onmouseover="this.style.background=\'#7AD0DA\';this.style.cursor=\'pointer\'" '
-					  			//. 'onmouseout="this.style.background=\'none\'" '
-//				echo '<tr class="reply_tr" onclick="location.href=\'forum_post_view.php?f=' . $row['forum_id'] . '&p=' . $row['post_id'] . '&parent=' . $_GET['p'] . '\'">';
-                echo '<div class="reply-row" onclick="location.href=\'forum_post_view.php?f=' . $row['forum_id'] . '&p=' . $row['post_id'] . '&parent=' . $_GET['p'] . '\'">';
 
-					?>
-<!--					<td class="forum_reply_mail"> -->
+            <h3> Replies - last reply <?php echo date('M j Y, h:ia', strtotime($row['last_comment'])); ?></h3>
+			<?php 
+         while ($row = mysqli_fetch_assoc($result)) {
+            echo '<div class="reply-row">';  ?>
+
             <div class="reply-mail">
-                    <?php //check for new messages
+              <?php //check for new messages
 						$sql = "SELECT * FROM forums_read WHERE post_id=".$row['post_id']." AND member_id=".intval($_SESSION['member_id']);
 						$result2 = mysqli_query($db, $sql);
 						$read = @mysqli_num_rows($result2);
 						
-						if ($_SESSION['valid_user'] && !$read) { 
-							//echo '<img src="images/email_red.png" alt="new message" title="new message" height="16" width="16" /> ';					
+						if ($_SESSION['valid_user'] && !$read) { 			
 							echo '<img src="images/forum_unread.png" alt="new message" title="new message" height="32" width="32" style="margin-top:50px;" /> ';					
-						} else {
-							//echo '<img src="images/email.png" alt="no new messages" title="no new messages" height="16" width="16" /> ';
+						}
+                  else {
 							echo '<img src="images/forum_read.png" alt="no new messages" title="no new messages" height="32" width="32" style="margin-top:50px;" /> ';
-						} ?>
+						} 
+               ?>
             </div>
-<!--                    </td>-->
-					<!--
-          <td style="text-align:center;width:80px;font-size:0.8em;vertical-align:top">
-						<?php echo date('M j Y, h:ia', strtotime($row['last_comment'])); ?>
-					</td>
-          -->
-                  <?php print_reply_link($row['post_id']); ?>
-<!--				</tr>-->
-               </div>
+               <?php print_reply_link($row['post_id']); ?>
+            </div>
 			<?php
 			}
-//			echo '</table></div>';
             echo '</div>';
-		} /*else {
-			echo "<p>No replies yet.</p>";
-		}*/
+		}
 	}
 	?>
 </div>

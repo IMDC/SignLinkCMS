@@ -203,6 +203,12 @@ function print_reply_link($id) {
     echo '<div style="text-align:center;">'.$row['login'].'</div>';
     echo '<div style="">'.get_avatar($row['member_id']).'</div>';
     echo '<div style="text-align:center;font-size:0.8em;">' . date('M j Y, h:ia', strtotime($row['last_comment'])) . '</div>';
+    if ($_SESSION['login'] == $row['login']) {
+      echo "<div class='post-reply-tools'>";
+           echo "<li style='display:inline;padding:8px;'><a href='forum_post_edit.php?f=".$row['forum_id']."&p=".$row['post_id']."&parent=".$row['parent_id']."'><img src='images/comment_edit.png' alt='Edit' title='Edit' /></a></li>";
+         echo "<li style='display:inline;padding:8xp;'><a href='forum_post_delete.php?f=".$row['forum_id']."&p=".$row['post_id']."&parent=".$row['parent_id']."&m=".$_SESSION['member_id']."'><img src='images/comment_delete.png' alt='Delete' title='Delete' /></a></li>";
+      echo "</div>";
+    }	
     echo '</div>';
 //    echo '</td>';
     echo '</div>';
