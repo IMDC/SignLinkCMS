@@ -148,7 +148,7 @@ function removeUnsafeAttributesAndGivenTags($input, $validTags = '') {
 function print_reply_link($id) {	
 	global $db, $filetypes_video, $filetypes_image;
 
-	$sql = "SELECT forum_id, parent_id, member_id, last_comment, login, date, msg, msg_alt FROM forums_posts WHERE post_id=".$id;
+	$sql = "SELECT forum_id, parent_id, member_id, last_comment, login, date, msg, msg_alt, post_id FROM forums_posts WHERE post_id=".$id;
 	$result = mysqli_query($db, $sql);
 	if ($result) {
 		if (!$row = mysqli_fetch_assoc($result)) {
