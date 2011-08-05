@@ -2,6 +2,8 @@
 define('INCLUDE_PATH', 'include/');
 require(INCLUDE_PATH.'vitals.inc.php');
 
+//require_once 'include/htmlpurifier-4.3.0/library/HTMLPurifier.auto.php';
+
 if (isset($_REQUEST['p'])) {
 	$parent_id = intval($_REQUEST['p']);
 }
@@ -83,18 +85,18 @@ else if ($_POST['f'] || $_GET['processed']) {
 		switch ($_POST['subject']) {
 			case 'image':
 				$subject = '';
-//				$subject_alt = $addslashes(htmlspecialchars($_POST['isub-alt']));
                 $subject_alt = mysqli_real_escape_string($db, htmlspecialchars($_POST['isub-alt']));
 				break;
 			case 'video':
 				$subject = '';
-//				$subject_alt = $addslashes(htmlspecialchars($_POST['vsub-alt']));
                 $subject_alt = mysqli_real_escape_string($db, htmlspecialchars($_POST['vsub-alt']));
 				break;
 			case 'text':
-//				$subject = $addslashes(htmlspecialchars($_POST['sub-text']));
-				$subject = mysqli_real_escape_string($db, htmlspecialchars($_POST['sub-text']));
-                $subject_alt = '';
+            $subject = mysqli_real_escape_string($db, htmlspecialchars($_POST['sub-text']));
+            //$purifier = new HTMLPurifier();
+            //$subject = $purifier->purify(mysqli_real_escape_string($db, $_POST['sub-text']));
+            
+            $subject_alt = '';
 				break;
 		}
 
@@ -105,12 +107,12 @@ else if ($_POST['f'] || $_GET['processed']) {
 				break;
 			case 'video':
 				$message = '';
-//				$message_alt = $addslashes(htmlspecialchars($_POST['vmsg-alt']));
                 $message_alt = mysqli_real_escape_string($db, htmlspecialchars($_POST['vmsg-alt']));
 				break;
 			case 'text':
-//				$message = $addslashes(htmlspecialchars($_POST['msg-text']));
-                $message = mysqli_real_escape_string($db, htmlspecialchars($_POST['msg-text']));
+            $message = mysqli_real_escape_string($db, htmlspecialchars($_POST['msg-text']));
+            //$purifier = new HTMLPurifier();
+            //$message = $purifier->purify(mysqli_real_escape_string($db, $_POST['sub-text']));
 				$message_alt = '';
 				break;
 		}
