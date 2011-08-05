@@ -8,9 +8,10 @@ div.sidebyside {
     text-align: center;
     vertical-align: middle;
     
-    /* Fix for IE */
+    /* Fix for IE, enables inline styling for the forum_posts_manage table */
     zoom:1;
     *display: inline;
+    /* end fix */
 }
 
 div.id-col      { width: 5% }
