@@ -4,7 +4,8 @@ require(INCLUDE_PATH.'vitals.inc.php');
 
 if (isset($_REQUEST['p'])) {
 	$parent_id = intval($_REQUEST['p']);
-} else {
+}
+else {
 	$parent_id = 0;
 }
 
@@ -18,9 +19,10 @@ if (isset($_POST['cancel'])) {
 	}
 	exit;
 
-} else if ($_POST['f'] || $_GET['processed']) {
+}
+else if ($_POST['f'] || $_GET['processed']) {
 
-	//check if there are any upload errors
+	/******** check if there are any UPLOAD errors   ******/
 	if(empty($_POST)) {
 		$_SESSION['errors'][] = "General error. Your URL is incorrect or you are trying to post a file that is too large for this installation.";
 		require(INCLUDE_PATH.'header.inc.php');
@@ -31,29 +33,32 @@ if (isset($_POST['cancel'])) {
 
 	if (!isset($_SESSION['errors'])) {	
 	
-		//now error check subject
+		/****** now error check the SUBJECT *********/
 		if (empty($_POST['subject']) || (empty($_FILES['isub-file']['tmp_name']) && empty($_FILES['vsub-file']['tmp_name']) && empty($_POST['sub-text'])) ) {
 			$_SESSION['errors'][] = 'Subject empty.';
 			
-		} else if ($_POST['subject'] == "image") {
+		} 
+      else if ($_POST['subject'] == "image") {
 			$ext = explode('.', $_FILES['isub-file']['name']);
 			$ext = strtolower($ext[1]);
 			if (!in_array($ext, $filetypes_image)) {
 				$_SESSION['errors'][] = 'You have chosen to use an image file for your subject - invalid file format.'. $ext;
 			}
 			
-		} else if ($_POST['subject'] == "video") {
+		} 
+      else if ($_POST['subject'] == "video") {
 			$ext = explode('.', $_FILES['vsub-file']['name']);
 			$ext = strtolower($ext[1]);
 			if (!in_array($ext, $filetypes_video)) {
 				$_SESSION['errors'][] = 'You have chosen a video file for your subject - invalid file format.';
 			}
 			
-		} else if ( ($_POST['subject'] == "text") && empty($_POST['sub-text']) ) {
-			$_SESSION['errors'][] = 'You have chosen text for your subject - message cannot be empty.';
+		}
+      else if ( ($_POST['subject'] == "text") && empty($_POST['sub-text']) ) {
+			$_SESSION['errors'][] = 'You have chosen text for your subject, but the message cannot be empty.';
 		}	
 		
-		//error check message 
+		/****** now error check the MESSAGE *********/
 		$ext = strtolower(end(explode('.',$_FILES['sl2msg-file']['name'])));
 
 		if (empty($_POST['message']) || ( (empty($_FILES['sl1msg-file']['tmp_name']) && empty($_FILES['sl2msg-file']['tmp_name'])) && empty($_FILES['vmsg-file']['tmp_name']) && empty($_POST['msg-text'])) ) {
