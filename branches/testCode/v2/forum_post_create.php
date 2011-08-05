@@ -197,9 +197,9 @@ if ($parent_id) {
 $(document).ready(function() {
    $("textarea.tinymce").tinymce({
       script_url: 'jscripts/tiny_mce/tiny_mce.js',
-      theme : "advanced",
-      theme_advanced_buttons1 : "bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,|,formatselect,fontselect,fontsizeselect",
-      theme_advanced_buttons2 : "cut,copy,paste,pastetext,pasteword,|,image,cleanup,help,code|,forecolor,backcolor"
+      theme : "simple",
+      theme_advanced_buttons1 : "bold,italic,underline,strikethrough",
+      theme_advanced_buttons2 : "cut,copy,paste,|,image,help,|,forecolor"
    });
 });
 </script>
@@ -224,26 +224,22 @@ $(document).ready(function() {
 			<?php if (!empty($title)) { echo $title.'<br /><br />'; } ?>
 
 			<div class="choice">
-				<label><input type="radio" name="subject" value="image" <?php if($_POST['subject'] == "image") { echo 'checked="checked"'; }?> /> Image</label>
+				<label for="imagesubject"><input type="radio" name="subject" value="image" id="imagesubject" <?php if($_POST['subject'] == "image") { echo 'checked="checked"'; }?> /> Image <img src="images/image-generic-48.png" alt="" class="inlineVertMid" /></label>
 
 				<div class="choice-info" id="subject-image">
-					<dl class="col-list">
-						<dt>File</dt> <dd><input type="file" id="isub-file" name="isub-file" /></dd>
-						<dt>Alt Text<dt> <dd><input type="text" id="isub-alt" name="isub-alt" size="80" value="<?php echo $_POST['isub-alt']; ?>" /></dd>
-					</dl>
+               <label for="isub-file">File </label><input type="file" id="isub-file" name="isub-file" /><br /><br />
+               <label for="isub-alt">Alternative Text (if images are disabled) </label><input type="text" id="isub-alt" name="isub-alt" size="80" value="<?php echo $_POST['isub-alt']; ?>" />
 				</div><br />
 
-				<label><input type="radio" name="subject" value="video" <?php if($_POST['subject'] == "video") { echo 'checked="checked"'; }?> /> Video</label>
+				<label for="videosubject"><input type="radio" name="subject" value="video" id="videosubject" <?php if($_POST['subject'] == "video") { echo 'checked="checked"'; }?> /> Video <img src="images/film-48.png" alt="" class="inlineVertMid" /></label>
 				<div class="choice-info" id="subject-video">
-					<dl class="col-list">
-						<dt>File</dt> <dd><input type="file" id="vsub-file" name="vsub-file" /></dd>
-						<dt>Alt Text<dt> <dd><input type="text" id="vsub-alt" name="vsub-alt" size="80" value="<?php echo $_POST['vsub-alt']; ?>" /></dd>
-					</dl>
+               <label for="vsub-file">File </label><input type="file" id="vsub-file" name="vsub-file" /><br /><br />
+               <label for="vsub-alt">Alternative Text </label><input type="text" id="vsub-alt" name="vsub-alt" size="80" value="<?php echo $_POST['vsub-alt']; ?>" />
 				</div><br />
 
-				<label><input type="radio" name="subject" value="text" <?php if($_POST['subject'] == "text") { echo 'checked="checked"'; }?> /> Text</label>
+				<label for="textsubject"><input type="radio" name="subject" value="text" id="textsubject" <?php if($_POST['subject'] == "text") { echo 'checked="checked"'; }?> /> Text <img src="images/keyboard-icon-48.png" alt="" class="inlineVertMid" /></label>
 				<div class="choice-info" id="subject-text">
-					<input type="text" id="sub-text" name="sub-text" size="85" value="<?php echo $_POST['sub-text']; ?>" />
+               <label for="sub-text">Enter the subject: </label><input type="text" id="sub-text" name="sub-text" size="85" value="<?php echo $_POST['sub-text']; ?>" />
 				</div>
 			</div>
 	</div>
@@ -256,25 +252,21 @@ $(document).ready(function() {
 		<p>Choose what kind of message you are posting (signed web page, video (.mp4), or plain text) then provide the appropriate details.</p>
 
 		<div class="choice">
-			<input type="radio" value="signlink" name="message" <?php if($_POST['message'] == "signlink") { echo 'checked="checked"'; }?> /><label> Signed Web Page</label>
+         <label for="signlinkmessage"><input type="radio" value="signlink" name="message" id="signlinkmessage" <?php if($_POST['message'] == "signlink") { echo 'checked="checked"'; }?> />Signed Web Page <img src="images/slslogo-48.png" alt="" class="inlineVertMid" /></label>
 			<div class="choice-info" id="message-sl">
-				<dl class="col-list">
-            	<dt>Video (.mp4) File<dt> <dd><input type="file" id="sl2msg-file" name="sl2msg-file" /></dd>
-					<dt>Flash (.swf) File</dt> <dd><input type="file" id="sl1msg-file" name="sl1msg-file" /></dd>
-				</dl>
+            <label for="sl2msg-file">Video (.mp4) File </label><input type="file" id="sl2msg-file" name="sl2msg-file" /><br /><br />
+            <label for="sl1msg-file">Flash (.swf) File </label><input type="file" id="sl1msg-file" name="sl1msg-file" />
 			</div><br />
 
-			<label><input type="radio" name="message" value="video" <?php if($_POST['message'] == "video") { echo 'checked="checked"'; }?> /> Video</label>
+			<label for="videomessage"><input type="radio" value="video" name="message" id="videomessage" <?php if($_POST['message'] == "video") { echo 'checked="checked"'; }?> />Video <img src="images/film-48.png" alt="" class="inlineVertMid" /></label>
 			<div class="choice-info" id="message-video">
-				<dl class="col-list">
-					<dt>File</dt> <dd><input type="file" id="vmsg-file" name="vmsg-file" /></dd>
-					<dt>Alt Text<dt> <dd><input type="text" id="vmsg-alt" name="vmsg-alt" value="<?php echo $_POST['vmsg-alt']; ?>" /></dd>
-				</dl>
+            <label for="vmsg-file">File </label><input type="file" id="vmsg-file" name="vmsg-file" /><br /><br />
+            <label for="vmsg-alt">Alternative Text</label><input type="text" id="vmsg-alt" name="vmsg-alt" value="<?php echo $_POST['vmsg-alt']; ?>" />
 			</div><br />
 
-			<label><input type="radio" name="message" value="text" <?php if($_POST['message'] == "text") { echo 'checked="checked"'; }?> /> Text</label>
+			<label for="textmessage"><input type="radio" value="text" name="message" id="textmessage" <?php if($_POST['message'] == "text") { echo 'checked="checked"'; }?> />Text <img src="images/keyboard-icon-48.png" alt="" class="inlineVertMid" /></label>
 			<div class="choice-info" id="message-text">
-				<textarea class="tinymce" id="msg-text" id="msg-text" name="msg-text" rows="25" cols="90" style="height:20em;"><?php echo $_POST['msg-text']; ?> </textarea>
+            <textarea class="tinymce" id="msg-text" id="msg-text" name="msg-text" rows="25" cols="90" style="height:20em;width:100%;"><?php echo $_POST['msg-text']; ?> </textarea>
 			</div>
 		</div>
 	</div>
