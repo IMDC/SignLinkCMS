@@ -28,12 +28,20 @@ else if ($_GET['processed']) {
       // Formulate Query
       // This is the best way to perform a SQL query
       // For more examples, see mysqli_real_escape_string()
-      $sql = sprintf("DELETE FROM forums_posts WHERE forum_id='%s' AND post_id='%s' AND parent_id='%s' AND member_id='%s'",
+//      $sql = sprintf("DELETE FROM forums_posts WHERE forum_id='%s' AND post_id='%s' AND parent_id='%s' AND member_id='%s'",
+//          
+//          mysqli_real_escape_string($db, $forum_id),
+//          mysqli_real_escape_string($db, $post_id),
+//          mysqli_real_escape_string($db, $parent),
+//          mysqli_real_escape_string($db, $member));
+//      //echo $sql;
+         $sql = sprintf("UPDATE forums_posts set subject='%s', msg='%s', locked=1 WHERE forum_id='%s' AND post_id='%s' AND parent_id='%s' AND member_id='%s'",
+          mysqli_real_escape_string($db, "<span class='reply-deleted'><img src='images/post-deleted.png' alt='' />This post has been removed by the user</span>"),
+          mysqli_real_escape_string($db, "<span class='reply-deleted'><img src='images/post-deleted.png' alt='' />This post has been removed by the user</span>"),
           mysqli_real_escape_string($db, $forum_id),
           mysqli_real_escape_string($db, $post_id),
           mysqli_real_escape_string($db, $parent),
           mysqli_real_escape_string($db, $member));
-
       //echo $sql;
    }
 
@@ -75,9 +83,11 @@ if ($_SESSION['login'] != $msg[0]) {
 require(INCLUDE_PATH.'header.inc.php');
 
 echo '<h3>Really delete Forum Post?</h3>';
+echo '<div class="forum-post-playback">';
 
 $the_post = get_message($post_id);
 echo $the_post[2];
+echo '</div>';
 
 ?>
 
@@ -87,8 +97,8 @@ echo $the_post[2];
 			<input type="hidden" name="parent" value="<?php echo $parent; ?>" />
          <input type="hidden" name="m" value="<?php echo $member; ?>" />
 
-         <div class="row" style="text-align:right;">
-            <input type="submit" class="submitBtn" name="submit" value="Delete Post" />
+         <div class="submitrow">
+            <input type="submit" class="submitBtn" name="submit" value="Delete" />
             <input type="submit" class="cancelBtn" name="cancel" value="Cancel" /> 
          </div>
       </form>
