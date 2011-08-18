@@ -669,10 +669,19 @@ function delete_avatar($id) {
 	}*/	
 }
 
-// using member id, locates avatar file inside uploads/members/ directory and returns path
-function get_avatar($id) {
+
+/**
+ * Using member id, locates avatar file inside uploads/members/ directory and returns path
+ * @global type $db reference to the database connection
+ * @param type $id the member_id of the user
+ * @param type $loginname the name to display in the alternative text of the avatar image
+ * @return type 
+ * 
+ */
+function get_avatar($id, $loginname="") {
 	global $db;
-	
+	$id = intval($id);
+   
 	$level = '';
 	$depth = substr_count(INCLUDE_PATH, '/');
 	for ($i=1; $i<$depth; $i++) {
@@ -692,8 +701,19 @@ function get_avatar($id) {
 		}
 	}
 
+   if (isset($_SESSION['login'])) {
+      $alttext = $_SESSION['login'];
+   }
+   else if (!empty($loginname)) {
+      $alttext = $loginname;
+   }
+   else {
+      $alttext = "user";
+   }
+   $alttext .= "'s avatar";
+   
 	if ($av_file) {
-		echo '<img id="avatar" src="uploads/members/'.$id.'/'.$av_file.'" alt="'.$_SESSION['login'].'\'s avatar" />';
+		echo '<img id="avatar" src="uploads/members/'.$id.'/'.$av_file.'" alt="'.$alttext . '" />';
 	} else {
 		echo '<img id="avatar" src="images/no_avatar.jpg" alt="No avatar" />';
 	}
@@ -740,13 +760,44 @@ function delete_files($location, $id, $type="message") {
 	$dir_files = @scandir($path);		
 	if(!empty($dir_files)) {
 		foreach ($dir_files as $dir_file) {		
-			if ( (substr($dir_file,0,5) == substr($type,0,5)) || (substr($dir_file,-3,3) =="flv")) {
+			if ( (substr($dir_file,0,5) == substr($type,0,5)) || (substr($dir_file,0,5) == "thumb") || (substr($dir_file,-3,3) =="flv")) {
 				unlink($path.$dir_file); 
 			}
 		}
 	}	
 	return;
 }
+
+
+/*
+* location: directory in /uploads - forums, members, pages, or posts
+* id
+*/
+
+function delete_folder($location, $id) {
+        global $db;
+        
+        $level = '';
+	$depth = substr_count(INCLUDE_PATH, '/');
+	for ($i=1; $i<$depth; $i++) {
+		$level .= "../";
+	}
+	
+	$path = $level.UPLOAD_DIR.$location.'/'.$id.'/';
+        
+        if (file_exists($path)) {
+            //delete files
+            $dir_files = @scandir($path);		
+            foreach ($dir_files as $dir_file) {
+                if(!is_dir($dir_file))
+                    unlink($path.$dir_file); 
+            }
+            //delete directory
+            rmdir($path);
+	} 
+        return;
+}
+
 
 /* get members */
 

@@ -56,7 +56,7 @@ else if ($_GET['processed']) {
           //die($message);
    }
    else {
-      delete_files('posts', $post_id);
+      delete_folder('posts', $post_id);
       $_SESSION['feedback'][] = 'Post deleted.';
       header('Location: forum_post_view.php?f='.$forum_id.'&p='.$parent);
    }

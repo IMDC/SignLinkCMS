@@ -471,6 +471,14 @@ div.post .title {
     width: 99%;
 }
 
+#post-main {
+    border:1px solid #ccc;
+    border-top: none;
+    width: 99%;
+    background-color: #f8f8f8;
+    margin-bottom: 5px;
+}
+
 #post-info {
     margin:10px;
     padding:5px;
