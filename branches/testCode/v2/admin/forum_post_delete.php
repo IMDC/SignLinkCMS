@@ -10,14 +10,16 @@ if ($post_id)
 {
 	//check if it has children
 	$sql = "SELECT post_id FROM forums_posts WHERE parent_id=".$post_id." AND forum_id=".$forum_id;
-	$result = mysqli_query($db, $sql);
-	$row = mysqli_fetch_assoc($result);
-        
+         
         // if it's a parent, delete children
-	if (!empty($row)) 
+	if ($result = mysqli_query($db, $sql)) 
         {
                 $sql = "DELETE FROM forums_posts WHERE parent_id=".$post_id." AND forum_id=".$forum_id;
-                $result = mysqli_query($db, $sql); 
+                mysqli_query($db, $sql); 
+                
+                while($row = mysqli_fetch_assoc($result)){
+                    delete_folder('posts', $row['post_id']);
+                }
 	}
         //if it's a child, edit num_comments for parent.
         else
@@ -41,24 +43,7 @@ if ($post_id)
         $result = mysqli_query($db, $sql);			
 
         //delete post files
-        $level = '';
-        $depth = substr_count(INCLUDE_PATH, '/');
-        for ($i=1; $i<$depth; $i++) {
-                $level .= "../";
-        }		
-
-        $post_path = $level.UPLOAD_DIR.'posts/'.$post_id.'/';
-        if (file_exists($post_path)) {
-                //delete files
-                $dir_files = @scandir($post_path);			
-                foreach ($dir_files as $dir_file) {
-                        @unlink($post_path.$dir_file);
-                }
-
-                //delete directory
-                @rmdir($post_path);
-        }		
-
+        delete_folder('posts', $post_id);
 
         $_SESSION['feedback'][] = 'Forum post deleted.';
 	
