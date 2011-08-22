@@ -16,7 +16,7 @@ if ($post_id && $delete)
 	if ($result = mysqli_query($db, $sql)) 
         {
                 $sql = "DELETE FROM forums_posts WHERE parent_id=".$post_id." AND forum_id=".$forum_id;
-                mysqli_query($db, $sql); 
+                mysqli_query($db, $sql);
                 
                 while($row = mysqli_fetch_assoc($result)){
                     delete_folder('posts', $row['post_id']);

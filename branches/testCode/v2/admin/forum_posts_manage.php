@@ -28,7 +28,6 @@ echo '</div>';
 //get forum posts
 $sql = "SELECT * FROM forums_posts WHERE forum_id=".$forum_id." AND parent_id='0' ORDER BY date DESC";
 $result = mysqli_query($db, $sql);
-$r = 1;
 
 if (mysqli_num_rows($result)) 
 { ?>
@@ -68,16 +67,27 @@ if (mysqli_num_rows($result))
                     $msg = get_message($replies['post_id']);  //returns array of poster, date, html-encoded message
             ?>
         
-        <div id="post">
+            <?php if($replies['post_id'] == $row['post_id']){ ?>
+                <div id="post-main">
+            <?php } else { ?>
+                <div id="post">
+            <?php } ?>
+            
             <div id="post-info">
                 <div style="padding-bottom:5px;"><?php echo $msg[0]; ?></div>
                 <?php echo '<small>' . $msg[1] . '</small>';?>
                 <div style="padding:10px;">
+                    
                     <p><?php 
                     echo '<a href="forum_post_edit.php?f='.$forum_id.'&p='.$replies['post_id'].'&thread=0">Edit Reply</a><br />';
                     echo '<a href="forum_post_delete.php?f='.$forum_id.'&p='.$replies['post_id'].'&del=0" onclick="return confirm(\'Are you sure you want to remove the contents of this reply?\')">Remove Reply</a><br />';
-                    echo '<a href="forum_post_delete.php?f='.$forum_id.'&p='.$replies['post_id'].'&del=1" onclick="return confirm(\'Are you sure you want to delete this reply?\')">Delete Reply</a></p>';
+                    
+                    if($replies['post_id'] != $row['post_id']){
+                        echo '<a href="forum_post_delete.php?f='.$forum_id.'&p='.$replies['post_id'].'&del=1" onclick="return confirm(\'Are you sure you want to delete this reply?\')">Delete Reply</a>';
+                    }
+                    
                     ?></p>
+                    
                 </div>
             </div>
 

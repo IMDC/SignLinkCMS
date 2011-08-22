@@ -36,8 +36,8 @@ else if ($_GET['processed']) {
 //          mysqli_real_escape_string($db, $member));
 //      //echo $sql;
          $sql = sprintf("UPDATE forums_posts set subject='%s', msg='%s', locked=1 WHERE forum_id='%s' AND post_id='%s' AND parent_id='%s' AND member_id='%s'",
-          mysqli_real_escape_string($db, "<span class='reply-deleted'><img src='images/post-deleted.png' alt='' />This post has been removed by the user</span>"),
-          mysqli_real_escape_string($db, "<span class='reply-deleted'><img src='images/post-deleted.png' alt='' />This post has been removed by the user</span>"),
+          mysqli_real_escape_string($db, '<span class="reply-deleted"><img src="images/post-deleted.png" alt="" />Post removed</span>'),
+          mysqli_real_escape_string($db, '<span class="reply-deleted"><img src="images/post-deleted.png" alt="" />This post has been removed by the user</span>'),
           mysqli_real_escape_string($db, $forum_id),
           mysqli_real_escape_string($db, $post_id),
           mysqli_real_escape_string($db, $parent),
