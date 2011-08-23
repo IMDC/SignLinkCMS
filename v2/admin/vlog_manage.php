@@ -28,6 +28,7 @@ if (mysqli_num_rows($result)) { ?>
 	while ($row = mysqli_fetch_assoc($result)) {
 
 		$title = get_title('vlog', $row['vlog_id'],'small');
+      $title = adminMediaPathFix($title);
 
 		//print vlog row info
 		echo '<tr class="row'.$r.'">';

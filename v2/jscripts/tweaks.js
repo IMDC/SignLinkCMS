@@ -54,9 +54,11 @@ $(document).ready(function() {
   });
 
   // this toggles highlighting for forum replies
+  /*
   $("tr.reply_tr").bind("mouseenter mouseleave", function(event){
     $(this).toggleClass("reply_tr_highlight");
   });
+  */
 
   // this javascript
   $("#testbutton").click(

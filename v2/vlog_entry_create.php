@@ -251,8 +251,8 @@ echo '<h3>New Vlog Entry</h3>';
 
 	</div>
 
-	<div class="row" style="text-align:right;padding-top:10px;">
-		<input type="button" onclick="<?php if($parent_id) { echo "validateOnSubmit('reply')"; } else { echo "validateOnSubmit('')"; } ?>" name="submit_form" value="Submit"> | <input type="submit" name="cancel" value="Cancel" /> 
+	<div class="submitrow" style="text-align:right;padding-top:10px;">
+		<input type="submit" name="cancel" class="cancelBtn" value="Cancel" />&nbsp;&nbsp;<input type="button" class="submitBtn" onclick="<?php if($parent_id) { echo "validateOnSubmit('reply')"; } else { echo "validateOnSubmit('')"; } ?>" name="submit_form" value="Submit"> 
 	</div>
 </form>
 
