@@ -119,13 +119,20 @@ function get_title($location, $id, $size='reg') {
                   when you click on the thumbnail .jpg that is initially displayed.
                   loads 'thumb.jpg' in same folder on page load instead of the whole video file
                */
+               
                // check size of video file to use the appropriate thumbnail
                if ($size == 'small') {
-                  if (file_exists($title_path . "thumbsmall_play.jpg")) {
+                  if (file_exists($title_path . "titlethumbsmall_play.jpg") ) {
+                     $thumbjpg = $title_path . "titlethumbsmall_play.jpg";
+                  }
+                  else if ( file_exists($title_path . "thumbsmall_play.jpg")) {
                      $thumbjpg = $title_path . "thumbsmall_play.jpg";
                   }
-                  else if ( file_exists($title_path . "thumb_small_play.jpg") ) {
-                     $thumbjpg = $title_path . "thumb_small_play.jpg"; 
+                  else if ( file_exists($title_path . "titlethumb_small_play.jpg") ) {
+                     $thumbjpg = $title_path . "titlethumb_small_play.jpg"; 
+                  }
+                  else if ( file_exists($title_path . "thumb_small_play.jpg")) {
+                     $thumbjpg = $title_path . "thumb_small_play.jpg";
                   }
                   else if ( file_exists($title_path . "thumbsmall.jpg") ) {
                      $thumbjpg = $title_path . "thumbsmall.jpg"; 
@@ -138,8 +145,14 @@ function get_title($location, $id, $size='reg') {
                   }
                }
                else {
-                  if (file_exists($title_path . "thumb_play.jpg")) {
+                  if (file_exists($title_path . "titlethumb_play.jpg")) {
+                     $thumbjpg = $title_path . "titlethumb_play.jpg";
+                  }
+                  else if (file_exists($title_path . "thumb_play.jpg")) {
                      $thumbjpg = $title_path . "thumb_play.jpg";
+                  }
+                  else if ( file_exists($title_path . "titlethumb.jpg") ) {
+                     $thumbjpg = $title_path . "titlethumb.jpg";
                   }
                   else if ( file_exists($title_path . "thumb.jpg") ) {
                      $thumbjpg = $title_path . "thumb.jpg";
@@ -419,7 +432,27 @@ function save_video($location, $type, $file, $id, $vidaspect="4:3", $vidsize="32
 	
       // use ffmpeg to make 2 differently sized jpg thumbnails from the uploaded video
       // $_SESSION['feedback'][] = "vid thumbnail call with params: " . $newfile . ", " . dirname($newfile);
-      make_video_thumbnail($newfile, dirname($newfile));
+      switch ($type) {
+         case 'title':
+            // create thumbnails with prefix of 'title'
+            make_video_thumbnails($newfile, dirname($newfile), "title");
+            // overlay the play button png image on the thumbnails
+            overlay_play_btn(dirname($newfile));
+            break;
+         
+         case 'message':
+            // create thumbnails with prefix of 'message'
+            make_video_thumbnails($newfile, dirname($newfile), "message");
+            // overlay the play button png image on the thumbnails
+            overlay_play_btn(dirname($newfile));
+            break;
+         
+         default: 
+            make_video_thumbnails($newfile, dirname($newfile));
+            overlay_play_btn(dirname($newfile));
+            break;
+      }
+      //make_video_thumbnails($newfile, dirname($newfile));
       
       /** 
        * TODO: we could replace this overlay_play_btn call with some 'background-image' css on the
@@ -442,20 +475,38 @@ function save_video($location, $type, $file, $id, $vidaspect="4:3", $vidsize="32
        * worked out with more work on the code for the play button style
        *  but for now we default by calling overlay_play_btn
        */
-      overlay_play_btn(dirname($newfile));
+     //overlay_play_btn(dirname($newfile));
 
+      // TODO: sanity checks to see if thumbnails etc were created successfully
+      
       /* assuming everything went okay, we can delete the old (.avi ?) file that we don't need now */
       if(file_exists($newfile)) {
          unlink($newfile);
       }
    }
    else { // file IS a mp4 file, no conversion necessary
-      
       // creates the 'thumb.jpg' thumbnail from the first second of the video uploaded
-      make_video_thumbnail($newfile, dirname($newfile));
+      switch ($type) {
+         case 'title':
+            // create thumbnails with prefix of 'title'
+            make_video_thumbnails($newfile, dirname($newfile), "title");
+            overlay_play_btn_jpg(dirname($newfile) . "titlethumb.jpg");;
+            break;
+         case 'message':
+            // create thumbnails with prefix of 'message'
+            make_video_thumbnails($newfile, dirname($newfile), "message");
+            overlay_play_btn_jpg($newfile);
+            break;
+         default:
+            make_video_thumbnails($newfile, dirname($newfile));
+            overlay_play_btn(dirname($newfile));
+            break;
+      }
+      
+      //make_video_thumbnails($newfile, dirname($newfile));
       
       // adds the transparent png play button to the thumbnail
-      overlay_play_btn(dirname($newfile));
+      //overlay_play_btn(dirname($newfile));
 	}
 
 
@@ -739,6 +790,25 @@ function update_member_last_login($id) {
    return $result;
 }
 
+/**
+ * Increases the value of the users 'post_count' column in the members db table
+ * by one.
+ *
+ * @global type $db the mysqli database connection
+ * @param int $member_id the member_id of the user to get +1 to post_count
+ * @param int $increase_by the number of posts to add, default is one
+ */
+function updateMemberPostCount($member_id, $increase_by=1) {
+   global $db;
+   $member_id = intval($member_id);
+   $increase_by = intval($increase_by);
+   $sql = "UPDATE members SET post_count=post_count+".$increase_by." WHERE member_id=".$member_id;
+   if (!$result = mysqli_query($db, $sql)) {
+      trigger_error('User post count not updated, member id:' . $member_id, E_USER_WARNING);
+      $_SESSION['feedback'][] = 'Warning, post count not updated, please contact your administrator';
+   }
+}
+
 
 /*
 * location: directory in /uploads - forums, members, pages, or posts
@@ -826,6 +896,80 @@ function print_members_dropdown() {
 	} else {
 		echo "No members.";
 	}
+}
+
+/**
+ * Duplicate of overlay_play_btn method that will accept a single .jpg file reference as a string
+ *
+ * @param string $jpgFile the full path to the jpg thumbnail file that will have a play button image overlayed on to it
+ */
+function overlay_play_btn_jpg($jpgFileDirectory) {
+
+	//make sure destination image full path includes the slash at the end
+	$pathLength = strlen($jpgFileDirectory);
+	if ($pathLength == 0) {
+		$_SESSION['errors'][] = 'Error with filename passed to overlay_play_btn method while creating play button overlay';
+      trigger_error("Error with filename passed to overlay_play_btn method while creating play button overlay. Filename: " . $jpgFileDirectory, E_USER_WARNING);
+	}
+	
+	if ( strtolower(end(explode('.', $jpgFile))) != 'jpg' ) {
+      $_SESSION['errors'][] = 'Error with filename passed to overlay_play_btn method while creating play button overlay';
+      trigger_error("Error with filename passed to overlay_play_btn method while creating play button overlay. Filename: " . $jpgFileDirectory, E_USER_WARNING);
+	}
+	
+   
+	// use the image file reference
+	$image = imagecreatefromjpeg($jpgfile);
+	
+	if ( !$image ) {
+		$_SESSION['errors'][] = 'Generated video thumbnail (regular size) image not found, please ' . printAdminMailToLink("notify", "error") . ' your administrator';
+      trigger_error("User video thumbnail image not found while creating play button overlay. File path: " . $fullDestImagePath . "thumb.jpg", E_USER_WARNING);
+	}
+
+	// to change the play button overlay image, change this value (PLAYOVERLAY_IMAGE) in the config.inc.php file
+   if (!defined(IMAGE_FOLDER)) {
+      $level = '';
+      $depth = substr_count(INCLUDE_PATH, '/');
+      for ($i=1; $i<$depth; $i++) {
+         $level .= "../";
+      }
+
+      $path = $level.'images/';
+      $pathToDefImage = $path . PLAYOVERLAY_IMAGE;
+   }
+   else {
+      $pathToDefImage = IMAGE_FOLDER . PLAYOVERLAY_IMAGE;
+   }
+   
+   $watermark = imagecreatefrompng($pathToDefImage);
+   //$_SESSION['feedback'][] = "Path printed from overlay_play_btn: " . $pathToDefImage;
+	
+	if ( !$watermark ) {
+		$_SESSION['errors'][] = '<span style="color:#ff0000;size:1.4em;">Default play button overlay image not found, please notify your administrator</span>';
+	}
+	
+	imagealphablending($image, true);
+	imagealphablending($imagesmall, true);
+	imagealphablending($watermark, true);
+	
+	// render play button .png file on top of thumb.jpg file
+	imagecopy($image,      $watermark, imagesx($image)/2-22,      imagesy($image)/2-22,      0, 0, imagesx($watermark), imagesy($watermark));
+	imagecopy($imagesmall, $watermark, imagesx($imagesmall)/2-22, imagesy($imagesmall)/2-22, 0, 0, imagesx($watermark), imagesy($watermark)); 
+
+	
+	// create new thumbnail with play button overlayed on top in the same folder
+	if ( !imagejpeg($image, $fullDestImagePath . 'thumb_play.jpg') ) {
+		$_SESSION['errors'][] = 'Error creating new thumbnail, check dir permissions';
+      //print "\n**ERROR** - Error creating new thumbnail jpeg file, possibly check directory permissions";
+	}
+	if ( !imagejpeg($imagesmall, $fullDestImagePath . 'thumb_small_play.jpg') ) {
+      $_SESSION['errors'][] = 'Error creating new thumbnail, check dir permissions';
+		//print "\n**ERROR** - Error creating new thumbnail jpeg file, possibly check directory permissions";
+	}
+	
+	imagedestroy($image);
+	imagedestroy($imagesmall);
+	imagedestroy($watermark);
 }
 
 /**
@@ -917,23 +1061,22 @@ function overlay_play_btn($fullDestImagePath) {
  *
  * @param string $videoPath  the direct and complete path to a video file
  * @param string $videoDirectoryPath  the directory where you want the thumbnails created
+ * @param string $thumbpreix  the file name prefix you want before 'thumb.jpg' and 'thumbsmall.jpg', used to differentiate between title and message thumbnails
  * @param string $largesize  the size of the large thumbnail desired, specified as "WxH" ex) "144x112", defaults to 144x112
  * @param string $smallsize  the size of the small thumbnail desired, specified as "WxH" ex) "96x74", defaults to 96x74
  * @param int $timecode  the time in seconds that the thumbnail image should be taken from the video, default value is 1 (second)
  */
-function make_video_thumbnail($videoPath, $videoDirectoryPath, $largesize="144x112", $smallsize="96x74", $timecode=1) {
+function make_video_thumbnails($videoPath, $videoDirectoryPath, $thumbprefix="", $largesize="144x112", $smallsize="96x74", $timecode=1) {
 
    /* TODO: perform a check to ensure the movie duration is longer or the same length as the timecode value supplied so no errors occur from ffmpeg */
    
    // create a regular sized thumbnail
-
-   $stringToExecuteRegular = INCLUDE_PATH . FFMPEG_PATH . " -i " . escapeshellarg($videoPath) . " -ss " . escapeshellarg(intval($timecode)) . " -f image2 -vframes 1 -s " . escapeshellarg($largesize) . " " . escapeshellarg($videoDirectoryPath) . "/thumb.jpg 2>&1";
+   $stringToExecuteRegular = INCLUDE_PATH . FFMPEG_PATH . " -i " . escapeshellarg($videoPath) . " -ss " . escapeshellarg(intval($timecode)) . " -f image2 -vframes 1 -s " . escapeshellarg($largesize) . " " . escapeshellarg($videoDirectoryPath) . "/" . $thumbprefix . "thumb.jpg 2>&1";
    //$_SESSION['feedback'][] = $stringToExecuteRegular;
-   shell_exec($stringToExecuteRegular); 
+   shell_exec($stringToExecuteRegular);
    
-   // create a small sized thumbnail 
-
-   $stringToExecuteSmall = INCLUDE_PATH . FFMPEG_PATH . " -i " . escapeshellarg($videoPath) . " -ss " . escapeshellarg(intval($timecode)) . " -f image2 -vframes 1 -s " . escapeshellarg($smallsize) . " " . escapeshellarg($videoDirectoryPath) . "/thumbsmall.jpg 2>&1";
+   // create a small sized thumbnail
+   $stringToExecuteSmall = INCLUDE_PATH . FFMPEG_PATH . " -i " . escapeshellarg($videoPath) . " -ss " . escapeshellarg(intval($timecode)) . " -f image2 -vframes 1 -s " . escapeshellarg($smallsize) . " " . escapeshellarg($videoDirectoryPath) . "/" . $thumbprefix . "thumbsmall.jpg 2>&1";
    //$_SESSION['feedback'][] = $stringToExecuteSmall;
    shell_exec($stringToExecuteSmall);
    
@@ -1202,6 +1345,44 @@ function printAdminMailToLink($linktext, $cssclass) {
    }
 }
 
-
-
+/**
+ * Fixes paths and script references to media (including images & videos) that
+ * are incorrectly referenced from the ADMIN section of the site. Uses regular
+ * expressions and replaces ids referencing "../uploads/" with "uploads/",
+ * flowplayer path reference from "flash/flowplayer" to "../flash/flowplayer", 
+ * "images/" with "../images/". NOTE: this does not change the href attribute
+ * of the anchor element containing the absolute path to movies in the 
+ * "../uploads/" directory, only the ID of the anchor element - flowplayer does
+ * not like id's that start with "../" 
+ * @param string $input  the html input, usually the output of a call to get_title
+ * or get_message from functions.inc.php or forums.inc.php
+ * @return string the same html but with paths and id references changed
+ */
+function adminMediaPathFix($input) {
+   
+   $adminfixpatterns = array();
+      $adminfixpatterns[0] = '/id="..\/uploads\/posts/';
+      $adminfixpatterns[1] = '/id="..\/uploads\/pages/';
+      $adminfixpatterns[2] = '/id="..\/uploads\/vlogs/';
+      $adminfixpatterns[3] = '/flowplayer\("..\/uploads\/posts/';
+      $adminfixpatterns[4] = '/flowplayer\("..\/uploads\/pages/';
+      $adminfixpatterns[5] = '/flowplayer\("..\/uploads\/vlogs/';
+      $adminfixpatterns[6] = '/"flash\/flowplayer/';
+      $adminfixpatterns[7] = '/images\/post-deleted/';
+      $adminfixpatterns[8] = '/img class="quickView" src="images/';
+   $adminfixreplacements = array();
+      $adminfixreplacements[0] = 'id="uploads/posts';
+      $adminfixreplacements[1] = 'id="uploads/pages';
+      $adminfixreplacements[2] = 'id="uploads/vlogs';
+      $adminfixreplacements[3] = 'flowplayer("uploads/posts';
+      $adminfixreplacements[4] = 'flowplayer("uploads/pages';
+      $adminfixreplacements[5] = 'flowplayer("uploads/vlogs';
+      $adminfixreplacements[6] = '"../flash/flowplayer';
+      $adminfixreplacements[7] = '../images/post-deleted';
+      $adminfixreplacements[8] = 'img class="quickView" src="../images';
+            
+      return preg_replace($adminfixpatterns, $adminfixreplacements, $input);
+}
+   
+   
 ?>

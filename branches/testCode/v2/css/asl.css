@@ -77,8 +77,8 @@ img {
 }*/
 
 h1, h3 {
-	color: #2D5E9B;
-  background: #F0F8FF;
+   color: #2D5E9B;
+   background: #F0F8FF;
 }
 
 h2 {
@@ -114,9 +114,10 @@ h2 {
 }
 
 #submenu {
-	vertical-align:bottom;
-	float:left;
-  clear:both;
+   vertical-align:bottom;
+   float:left;
+   clear:both;
+   margin-top: 41px;
 }
 
 #menu ul, #submenu ul {
@@ -124,7 +125,7 @@ h2 {
 	clear:both;
 	list-style:none;
 	padding-left:0px;
-  height: 30px;
+   height: 30px;
 }
 
 #menu li {
@@ -230,9 +231,9 @@ background-color:#cbdbef;
 	text-align: center;
 
 	clear: both;
-	width:100%;
+	width: 800px;
 	position: absolute;
-	bottom: 0 !important;
+/*	bottom: 0 !important;*/
 	height:1.8em;
 }
 
@@ -319,7 +320,7 @@ div.cat {
 
 div.cat img {
 	padding:2px;
-	border: 1px solid #d7d7d7;
+/*	border: 1px solid #d7d7d7;*/
 	margin-bottom:-6px;
 }
 
@@ -338,6 +339,11 @@ div.cat .title {
 /*    -webkit-border-radius: 9px;
     -moz-border-radius: 0 0 9px 9px;
     border-radius: 0 0 9px 9px;*/
+}
+
+div.title-timestamp {
+   clear: both;
+   font-size: 90%;
 }
 
 div.page {
@@ -462,6 +468,12 @@ div.post .title {
     text-align: center;
     vertical-align: top;
     background: #dedede;
+}
+
+span.reply-num {
+   display: block;
+   padding-top: 50px;
+   vertical-align: middle;
 }
 
 /* post page */
@@ -763,16 +775,18 @@ div.reply-table-container {
 }
 
 div.reply-row {
+   display: inline-block;
    width: 100%;
+   min-height: 200px;
    height: auto;
    clear: both;
-   background: #dedede;
+   background: #efefef;
    border-bottom: 2px solid #989898;
    padding-bottom: 1px;
 }
 
 div.reply-row:hover {
-   background: yellow;
+   background: #fefefe;
 }
 
 div.reply-mail {
@@ -782,7 +796,7 @@ div.reply-mail {
    height: auto;
    min-height: 150px;
    vertical-align: top;
-   padding: 30px 3px 3px;
+   padding: 30px 10px;
    text-align: center;
 }
 
@@ -814,6 +828,46 @@ div.post-reply-content {
    min-height: 190px;
    padding: 2px 3px 2px 8px;
    border-left: 1px dotted #aaa;
+}
+
+span.reply-deleted {
+   color: #ff0000;
+   font-weight: 600;
+   font-style: italic;
+   display: block;
+   margin-top: 25px;
+   padding-bottom: 3px;
+   border-bottom: 1px solid #ff0000;
+}
+
+span.reply-deleted img {
+   vertical-align: bottom;
+   padding: 5px;
+}
+
+/** in the forum_post_delete page */
+div.forum-post-playback {
+   border: 1px solid #ffcdcd;
+   padding: 25px;
+   margin: 15px;
+}
+
+div.forum-post-title {
+/*   float: left;*/
+   margin-top: 15px;
+   display: block;
+   vertical-align: middle;
+   height: 100px;
+   min-height: 75px;
+   width: 600px;
+   padding: 20px 50px;
+   background: #efefef;
+}
+
+div.forum-post-breadcrumb-arrow {
+   float: left;
+   height: 75px;
+   
 }
 
 td.post-reply-content {

@@ -110,6 +110,7 @@ function get_message($id) {
 
 				} 
             else if (in_array($ext, $filetypes_image)) {
+               // file is an image
 					$msg[2] = '<img src="'.$msg_path.$msg_file.'" alt="'.$row[1].'" title="'.$row[1].'" style="vertical-align:middle;" />';
                $msg[4] = 2;
 				} 
@@ -132,9 +133,10 @@ function get_message($id) {
          }
 		}
 		return $msg;
-	} else {
+	}
+   else {
 		echo 'No message.';
-		return;
+      return;
 	}
 
 }
@@ -145,10 +147,22 @@ function removeUnsafeAttributesAndGivenTags($input, $validTags = '') {
        return preg_replace($regex, '<${1}>',strip_tags($input, $validTags));
 } 
 
+/**  Prints a complete forum post entry in div style. Prints the user avatar section,
+ *  comment editing/deleting tools if user is logged in and owns the post, post reply
+ *  link
+ *
+ * @global type $db
+ * @global type $filetypes_video
+ * @global type $filetypes_image
+ * @param int $id  the member_id of the user
+ * @return type 
+ */
 function print_reply_link($id) {	
 	global $db, $filetypes_video, $filetypes_image;
 
-	$sql = "SELECT forum_id, parent_id, member_id, last_comment, login, date, msg, msg_alt, post_id FROM forums_posts WHERE post_id=".$id;
+   $id = intval($id);
+   
+	$sql = "SELECT forum_id, parent_id, member_id, last_comment, login, date, msg, msg_alt, post_id, locked FROM forums_posts WHERE post_id=".$id;
 	$result = mysqli_query($db, $sql);
 	if ($result) {
 		if (!$row = mysqli_fetch_assoc($result)) {
@@ -162,7 +176,7 @@ function print_reply_link($id) {
 			//$link = substr($row['msg'],0,30).'...';
 			//$link = '<textarea class="tinymce">' . $row['msg'] . '</textarea>';
          //$link = html_specialchars_decode($row['msg']);
-         $link = html_entity_decode(nl2br($row['msg']));
+         $post_content = html_entity_decode(nl2br($row['msg']));
          
 		} 
       else {
@@ -184,38 +198,37 @@ function print_reply_link($id) {
 						break;
 					}
 				}
-				$ext = end(explode('.',$msg_file));
+				$ext = strtolower(end(explode('.',$msg_file)));
 				if (in_array($ext, $filetypes_video)) {
 					//$link = '<img src="images/film.png" alt="movie content" style="border:0px;" />';
                $ret_vid = get_message($id);
-               $link = $ret_vid[2];
-				} else if ($ext=="swf") {
+               $post_content = $ret_vid[2];
+				}
+            else if ($ext=="swf") {
 					//$link = '<img src="images/television.png" alt="signed web page content" style="border:0px;" />';
                $ret_vid = get_message($id);
-               $link = $ret_vid[2];
+               $post_content = $ret_vid[2];
 				}
 			}
 		}
 		//echo '<td style="text-align:center;">'.$row['login'].'</td>';
-//    echo '<td style="background:#dedede;overflow:auto;vertical-align:top;padding-top:30px;">';
-    echo '<div class="reply-avatar-container">';
-    echo '<div style="height:90%;text-align:center;">';
-    echo '<div style="text-align:center;">'.$row['login'].'</div>';
-    echo '<div style="">'.get_avatar($row['member_id']).'</div>';
-    echo '<div style="text-align:center;font-size:0.8em;">' . date('M j Y, h:ia', strtotime($row['last_comment'])) . '</div>';
-    if ($_SESSION['login'] == $row['login']) {
-      echo "<div class='post-reply-tools'>";
-           echo "<li style='display:inline;padding:8px;'><a href='forum_post_edit.php?f=".$row['forum_id']."&p=".$row['post_id']."&parent=".$row['parent_id']."'><img src='images/comment_edit.png' alt='Edit' title='Edit' /></a></li>";
-         echo "<li style='display:inline;padding:8xp;'><a href='forum_post_delete.php?f=".$row['forum_id']."&p=".$row['post_id']."&parent=".$row['parent_id']."&m=".$_SESSION['member_id']."'><img src='images/comment_delete.png' alt='Delete' title='Delete' /></a></li>";
-      echo "</div>";
-    }	
-    echo '</div>';
-//    echo '</td>';
-    echo '</div>';
-		//echo '<td><a href="forum_post_view.php?f='.$row['forum_id'].'&p='.$id.'&parent='.$_GET['p'].'">'.$link.'</a></td>';
-//		echo '<td class="post-reply-content">'.$link.'</td>';
-        echo '<div class="post-reply-content">'.$link.'</div>';
-	}
+      //echo '<td style="background:#dedede;overflow:auto;vertical-align:top;padding-top:30px;">';
+      echo '<div class="reply-avatar-container">';
+      echo '<div style="height:90%;text-align:center;">';
+      echo '<div style="text-align:center;">'.$row['login'].'</div>';
+      echo '<div style="">'.get_avatar($row['member_id'], $row['login']).'</div>';
+      echo '<div style="text-align:center;font-size:0.8em;">' . date('M j Y, h:ia', strtotime($row['last_comment'])) . '</div>';
+      if ($_SESSION['login'] == $row['login'] && $row['locked'] != 1) {
+         echo "<div class='post-reply-tools'>";
+         echo    "<li style='display:inline;padding:8px;'><a href='forum_post_edit.php?f=" . $row['forum_id']."&p=".$row['post_id']."&parent=".$row['parent_id']."'><img src='images/comment_edit.png' alt='Edit' title='Edit' /></a></li>";
+         echo    "<li style='display:inline;padding:8xp;'><a href='forum_post_delete.php?f=".$row['forum_id']."&p=".$row['post_id']."&parent=".$row['parent_id']."&m=".$_SESSION['member_id']."'><img src='images/comment_delete.png' alt='Delete' title='Delete' /></a></li>";
+         echo "</div>";
+      }	
+      echo '</div>';
+      echo '</div>';
+      // echo post content
+      echo '<div class="post-reply-content">'.$post_content.'</div>';
+   }
 }
 
 
