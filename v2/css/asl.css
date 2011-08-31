@@ -835,7 +835,7 @@ span.reply-deleted {
    font-weight: 600;
    font-style: italic;
    display: block;
-   margin-top: 25px;
+/*   margin-top: 25px;*/
    padding-bottom: 3px;
    border-bottom: 1px solid #ff0000;
 }
