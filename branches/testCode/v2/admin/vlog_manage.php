@@ -15,7 +15,9 @@ require(INCLUDE_PATH.'admin_header.inc.php'); ?>
 $sql = "SELECT * FROM vlogs WHERE 1";
 $result = mysqli_query($db, $sql);
 $r = 1;
-if (mysqli_num_rows($result)) { ?>
+
+if (mysqli_num_rows($result)) 
+{ ?>
 	<table class="manage">
 	<tr>
 		<th>Member</th>
@@ -24,23 +26,29 @@ if (mysqli_num_rows($result)) { ?>
 		<th>Last Entry</th>
 		<th style="text-align:center;">Manage</th>
 	</tr>
+    
 	<?php
-	while ($row = mysqli_fetch_assoc($result)) {
+	while ($row = mysqli_fetch_assoc($result)) 
+    {
 
-		$title = get_title('vlog', $row['vlog_id'],'small');
-      $title = adminMediaPathFix($title);
+        $title = get_title('vlog', $row['vlog_id'],'small');
+        $title = adminMediaPathFix($title);
 
+        $member_result = mysqli_query($db, "SELECT login FROM members WHERE member_id=".$row['member_id']);
+        $member = mysqli_fetch_assoc($member_result);
+        
 		//print vlog row info
 		echo '<tr class="row'.$r.'">';
-		echo '<td>'.$row['member_id'].'</td>';
+		echo '<td>'.$member['login'].'</td>';
 		echo '<td>'.$title.'</td>'; 
 		echo '<td style="text-align:center;">'.$row['num_entries'].'</td>';
 		echo '<td style="text-align:center;">'.$row['last_entry'].'</td>';		
 		echo '<td style="text-align:center;">';
-		//<a href="vlog_posts_manage.php?v='.$row['vlog_id'].'">Posts</a>';
-		//echo ' | <a href="vlog_edit.php?v='.$row['vlog_id'].'">Edit</a>';
-		echo '<a href="vlog_delete.php?v='.$row['vlog_id'].'" onclick="return confirm(\'Are you sure you want to delete this vlog?\')">Delete</a></td>';
+		echo '<a href="vlog_entry_manage.php?v='.$row['vlog_id'].'">View</a>';
+		echo ' | <a href="vlog_edit.php?v='.$row['vlog_id'].'">Edit</a>';
+		echo ' | <a href="vlog_delete.php?v='.$row['vlog_id'].'" onclick="return confirm(\'Are you sure you want to delete this vlog?\')">Delete</a></td>';
 		echo '</tr>';
+        
 		if ($r == 1) {
 			$r = 2;
 		} else {
