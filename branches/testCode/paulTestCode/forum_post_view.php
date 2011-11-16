@@ -72,22 +72,22 @@ $msg = get_message($post_id);  //returns array of poster, date, html-encoded mes
 	</div>
 
 	<div id="post-msg">
-		<div style="text-align:right">
-		<ul>
+<!--		<div style="text-align:right">-->
+<!--		<ul>-->
          <?php
-            if ($_SESSION['login'] == $msg[0]) {
-               echo "<li style='display:inline;padding:8px;'><a href='forum_post_edit.php?f=$forum_id&p=$post_id&parent=$parent_id'><img src='images/comment_edit.png' alt='Edit' title='Edit' /></a></li>";
-               echo "<li style='display:inline;padding:8xp;'><a href='forum_post_delete.php?f=$forum_id&p=$post_id&parent=$parent_id&m=$_SESSION[member_id]'><img src='images/comment_delete.png' alt='Delete' title='Delete' /></a></li>";
-            }
+//            if ($_SESSION['login'] == $msg[0]) {
+//               echo "<li style='display:inline;padding:8px;'><a href='forum_post_edit.php?f=$forum_id&p=$post_id&parent=$parent_id'><img src='images/comment_edit.png' alt='Edit' title='Edit' /></a></li>";
+//               echo "<li style='display:inline;padding:8xp;'><a href='forum_post_delete.php?f=$forum_id&p=$post_id&parent=$parent_id&m=$_SESSION[member_id]'><img src='images/comment_delete.png' alt='Delete' title='Delete' /></a></li>";
+//            }
             
-            if (!$parent_id) { 
-//               echo "<li style='display:inline;padding:8px;'><a href='forum_post_create.php?f=$forum_id&p=$post_id'><img src='images/comment_rev.png' alt='Reply' title='Reply to this post!' /></a></li>";
-                 echo "<li style='display:inline;padding:8px;'><a href='forum_post_create.php?f=$forum_id&p=$post_id'><img src='images/slscms-reply-icon-idea-small.png' alt='Reply' title='Reply to this post!' /></a></li>";
-            } 
+//            if (!$parent_id) { 
+////               echo "<li style='display:inline;padding:8px;'><a href='forum_post_create.php?f=$forum_id&p=$post_id'><img src='images/comment_rev.png' alt='Reply' title='Reply to this post!' /></a></li>";
+//                 echo "<li style='display:inline;padding:8px;'><a href='forum_post_create.php?f=$forum_id&p=$post_id'><img src='images/reply_add_new.png' alt='Reply' title='Reply to this post!' /></a></li>";
+//            } 
             
          ?>
-		</ul>
-		</div>
+<!--		</ul>-->
+<!--		</div>-->
 		<div id="post-msg-text">
       <?php //echo '<small>' . $msg[1] . '</small><br />';   
 
@@ -102,6 +102,16 @@ $msg = get_message($post_id);  //returns array of poster, date, html-encoded mes
          }
 		?>
 		</div>
+      <div class="post-msg-tools">
+         <?php
+         if ($_SESSION['login'] == $msg[0]) {
+            echo "<ul class='post-msg-tools-list'>";
+               echo "<li><a href='forum_post_edit.php?f=$forum_id&p=$post_id&parent=$parent_id'><img src='images/comment_edit.png' alt='Edit' title='Edit' /></a></li>";
+               echo "<li><a href='forum_post_delete.php?f=$forum_id&p=$post_id&parent=$parent_id&m=$_SESSION[member_id]'><img src='images/comment_delete.png' alt='Delete' title='Delete' /></a></li>";
+            echo "</ul>";
+         }
+         ?>
+      </div>
 		<br style="clear:both" />
 
 	</div>
@@ -116,7 +126,9 @@ $msg = get_message($post_id);  //returns array of poster, date, html-encoded mes
    /************************************ Replies *****************************/
 
 	if (!$parent_id) { 
-	
+      echo "<div class='reply-icon-wrap'>";
+         echo "<a href='forum_post_create.php?f=$forum_id&p=$post_id'><img src='images/reply_add_new.png' alt='Reply' title='Reply to this post!' /></a></li>";
+      echo "</div>";
 		$sql = "SELECT * FROM forums_posts WHERE forum_id=".$forum_id." AND parent_id=".$post_id." ORDER BY last_comment ASC";
 		$result = mysqli_query($db, $sql);
       if (@mysqli_num_rows($result)) {
@@ -125,7 +137,9 @@ $msg = get_message($post_id);  //returns array of poster, date, html-encoded mes
          mysqli_data_seek($result, mysqli_num_rows($result)-1);
          $row = mysqli_fetch_assoc($result);
          //print "<h3> Replies </h3>";
-         print "<h3> Replies - last reply: " . date('M j Y, h:ia', strtotime($row['last_comment'])) . "</h3>&nbsp;&nbsp;<a href='#bottom'>Jump to most recent</a>";
+         echo '<div class="reply-header-wrap">';
+            print "<h3> Replies - last reply: " . date('M j Y, h:ia', strtotime($row['last_comment'])) . "</h3>&nbsp;&nbsp;<a href='#bottom'>Jump to most recent</a>";
+         echo '</div>';
          // reset mysqli data pointer to first reply
          mysqli_data_seek($result, 0);
          $row = mysqli_fetch_assoc($result);
@@ -133,29 +147,18 @@ $msg = get_message($post_id);  //returns array of poster, date, html-encoded mes
          //while ($row = mysqli_fetch_assoc($result)) {
          do {
             echo '<div class="reply-row">';
-            echo "<div class='reply-mail'>";
-//            //check for new messages
-//            //$sql = "SELECT * FROM forums_read WHERE post_id=".$row['post_id']." AND member_id=".intval($_SESSION['member_id']);
-//            $sql = "SELECT * FROM forums_read WHERE post_id=".$resultset['post_id']." AND member_id=".intval($_SESSION['member_id']);
-//            $result2 = mysqli_query($db,$sql);
-//            $read = @mysqli_num_rows($result2);
-//
-//            if ($_SESSION['valid_user'] && !$read) {
-//               echo '<img src="images/forum_unread.png" alt="new message" title="new message" height="32" width="32" style="margin-top:50px;" /> ';					
-//            }
-//            else {
-//               echo '<img src="images/forum_read.png" alt="no new messages" title="no new messages" height="32" width="32" style="margin-top:50px;" /> ';
-//            }
-//               
-//            echo "</div>";
-            if ($numReplies == $postcounter) {
-               $lastreplylink = '<a name="bottom" style="visibility:hidden;"></a>';
-            }
-            $replynum = sprintf("<span class='reply-num' id='reply-%s'>%s</span>%s", $postcounter, $postcounter, $lastreplylink);
-            echo $replynum;
-            echo "</div>";
-            //print_reply_link($row['post_id']);
-            print_reply_link($row['post_id']);
+               echo '<div class="avatar-wrap">';
+                  echo "<div class='reply-mail'>";
+
+                     if ($numReplies == $postcounter) {
+                        $lastreplylink = '<a name="bottom" style="visibility:hidden;"></a>';
+                     }
+                     $replynum = sprintf("<span class='reply-num' id='reply-%s'>%s</span>%s", $postcounter, $postcounter, $lastreplylink);
+                     echo $replynum;
+                  echo "</div>";
+//               echo "</div>";
+               //print_reply_link($row['post_id']);
+               print_reply_link($row['post_id']);
             echo "</div>";
             $postcounter++;
 			

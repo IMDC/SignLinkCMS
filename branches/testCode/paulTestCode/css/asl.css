@@ -453,6 +453,37 @@ div.post .title {
     margin-bottom:5px;
 }
 
+div.avatar-wrap {
+   float:left;
+/*   width: 200px;
+   height: auto;
+   min-height: 150px;*/
+}
+
+div.post-msg-tools {
+   height: auto;
+   min-height: 25px;
+   margin-top: 15px;
+   margin-right: 45px;
+   vertical-align: middle;
+   background: #fefefe;
+   border: 1px dashed #ddd;
+}
+
+ul.post-msg-tools-list {
+	list-style:none;
+	display:inline;
+}
+
+ul.post-msg-tools-list li {
+   display: inline;
+   padding: 4px;
+}
+
+ul.post-msg-tools-list li img {
+   vertical-align: middle;
+}
+
 /*  forum replies  */
 
 .reply_tr {
@@ -480,10 +511,19 @@ span.reply-num {
    vertical-align: middle;
 }
 
+div.reply-icon-wrap {
+   float: right;
+   margin-right: 35px;
+   background: #2989D8;
+   padding: 10px;
+}
+
 /* post page */
 #post {
-    border:1px solid #ccc;
-    width: 99%;
+    border: 1px solid #ccc;
+    width: 98%;
+    margin-left: auto;
+    margin-right:auto;
 }
 
 #post-main {
@@ -511,13 +551,6 @@ span.reply-num {
 #post-msg {
 	padding:5px 5px 100px 5px;
 	margin-left:145px;
-}
-
-#post-msg ul {
-	list-style:none;
-	display:inline; 
-	float:right; 
-	margin-top:0px;
 }
 
 #post-msg-text {
@@ -840,7 +873,8 @@ div.reply-row {
    clear: both;
    background: #efefef;
    border-bottom: 2px solid #989898;
-   padding-bottom: 1px;
+   padding-bottom: 25px;
+   padding-top: 35px;
 }
 
 div.reply-row:hover {
@@ -872,20 +906,29 @@ div.reply-avatar-container {
 /*   border-right: 1px dotted #aaa;*/
 }
 
-div.post-reply-content {
+div.post-reply-content-wrap {
    float: left;
+
+}
+
+div.post-reply-content {
    margin-left: 3px;
    margin-right: 3px;
    width: 500px;
    min-width: 500px;
    max-width: 600px;
-/*   width: 98%;*/
    overflow: auto;
    display: block;
    height: auto;
    min-height: 190px;
    padding: 2px 3px 2px 8px;
    border-left: 1px dotted #aaa;
+}
+
+div.post-reply-tools {
+   margin-left: 5px;
+   margin-right: 45px;
+   border-top: 1px dashed #ddd;
 }
 
 span.reply-deleted {
