@@ -5,11 +5,15 @@ define('VIDEO_MSG_HEIGHT', '260');
 define('VIDEO_MSG_WIDTH', '320');
 
 
-/* Experimenting with $msg[4] indicating type of post
-* 1 = text, 2 = image, 3 = video, 4 = signlink
+/* 
+ * Returns the message content of a forum post
+ * Experimenting with $msg[4] indicating type of post
+ * 1 = text, 2 = image, 3 = video, 4 = signlink
+ * 
 */
 function get_message($id) {			
 	global $db, $filetypes_video, $filetypes_image;
+   $id = intval($id);
 	
    /*
     * $msg array consists of 
@@ -249,20 +253,23 @@ function print_reply_link($id) {
 		//echo '<td style="text-align:center;">'.$row['login'].'</td>';
       //echo '<td style="background:#dedede;overflow:auto;vertical-align:top;padding-top:30px;">';
       echo '<div class="reply-avatar-container">';
-      echo '<div style="height:90%;text-align:center;">';
-      echo '<div style="text-align:center;">'.$row['login'].'</div>';
-      echo '<div style="">'.get_avatar($row['member_id'], $row['login']).'</div>';
-      echo '<div style="text-align:center;font-size:0.8em;">' . date('M j Y, h:ia', strtotime($row['last_comment'])) . '</div>';
-      if ($_SESSION['login'] == $row['login'] && $row['locked'] != 1) {
-         echo "<div class='post-reply-tools'>";
-         echo    "<li style='display:inline;padding:8px;'><a href='forum_post_edit.php?f=" . $row['forum_id']."&p=".$row['post_id']."&parent=".$row['parent_id']."'><img src='images/comment_edit.png' alt='Edit' title='Edit' /></a></li>";
-         echo    "<li style='display:inline;padding:8xp;'><a href='forum_post_delete.php?f=".$row['forum_id']."&p=".$row['post_id']."&parent=".$row['parent_id']."&m=".$_SESSION['member_id']."'><img src='images/comment_delete.png' alt='Delete' title='Delete' /></a></li>";
-         echo "</div>";
-      }	
+         echo '<div style="height:90%;text-align:center;">';
+            echo '<div style="text-align:center;">'.$row['login'].'</div>';
+            echo '<div style="">'.get_avatar($row['member_id'], $row['login']).'</div>';
+            echo '<div style="text-align:center;font-size:0.8em;">' . date('M j Y, h:ia', strtotime($row['last_comment'])) . '</div>';
+         echo '</div>';
       echo '</div>';
       echo '</div>';
       // echo post content
-      echo '<div class="post-reply-content">'.$post_content.'</div>';
+      echo '<div class="post-reply-content-wrap">';
+         echo '<div class="post-reply-content">'.$post_content.'</div>';
+         if ($_SESSION['login'] == $row['login'] && $row['locked'] != 1) {
+            echo "<div class='post-reply-tools'>";
+            echo    "<li style='display:inline;padding:8px;'><a href='forum_post_edit.php?f=" . $row['forum_id']."&p=".$row['post_id']."&parent=".$row['parent_id']."'><img src='images/comment_edit.png' alt='Edit' title='Edit' /></a></li>";
+            echo    "<li style='display:inline;padding:8xp;'><a href='forum_post_delete.php?f=".$row['forum_id']."&p=".$row['post_id']."&parent=".$row['parent_id']."&m=".$_SESSION['member_id']."'><img src='images/comment_delete.png' alt='Delete' title='Delete' /></a></li>";
+            echo "</div>";
+         }
+      echo '</div>';
    }
 }
 
