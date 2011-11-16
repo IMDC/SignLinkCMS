@@ -1,0 +1,30 @@
+/* 
+    Document   : adminform
+    Created on : Oct 18, 2011, 2:14:31 PM
+    Author     : clt
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/* 
+   TODO customize this sample style
+   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
+*/
+
+root { 
+   display: block;
+}
+
+#admin-login-form {
+   width: 85%;
+   min-width: 450px;
+}
+
+#admin-login-form ol {
+   list-style: none;
+}
+
+#admin-login-form ol li {
+   margin-bottom: 15px;
+}
+
