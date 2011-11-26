@@ -57,18 +57,25 @@ $msg = get_message($post_id);  //returns array of poster, date, html-encoded mes
    <?php 
       if ($parent_id) {
 //         echo get_title('post', $parent_id,'small'); 
-         echo get_title('post', $parent_id); 
+         echo get_title('post', $parent_id, 'reg'); 
       }
       else {
 //         echo get_title('post', $post_id, 'small'); 
-         echo get_title('post', $post_id); 
+         echo get_title('post', $post_id, 'reg'); 
       }
    ?>
-</div>		
+   </div>
+<div class="forum-post-info-wrap">
 	<div id="post-info">
-		<div style="padding-bottom:5px;"><?php echo $msg[0]; ?></div>
+		<div style="padding-bottom:5px;">
+         
+         <?php 
+//            echo $msg[0];
+            echo '<a href="searchmember.php?name='.$msg[0].'&id='.$msg[3].'" />'.$msg[0];
+          ?>
+      </div>
 		<div><?php get_avatar($msg[3]); ?></div>
-    <?php echo '<small>' . $msg[1] . '</small>';?>
+    <?php echo '<small>Last Activity:<br />' . $msg[1] . '</small>';?>
 	</div>
 
 	<div id="post-msg">
@@ -115,6 +122,7 @@ $msg = get_message($post_id);  //returns array of poster, date, html-encoded mes
 		<br style="clear:both" />
 
 	</div>
+</div> <!--  end of forum-post-info-wrap  -->
 </div>
 	<br style="clear:both" />
    <!--  ************************************* Replies ********************************* -->

@@ -8,7 +8,10 @@ var conf = {
     defaults: {
 
         autoPlay: false,
-        autoBuffering: true
+        autoBuffering: true,
+        onBegin: function() { 
+            this.getControls().fadeIn(4000); 
+        }
     },
 
     noplay: { 

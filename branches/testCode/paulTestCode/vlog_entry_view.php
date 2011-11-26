@@ -41,10 +41,10 @@ if (!$row = @mysqli_fetch_assoc($result)) {
 <!--<div id="post-title">-->
 <!--   VLOG OWNER AVATAR AND INFO GOES HERE -->
 <?php
-   $avatar_path = get_avatar(get_vlog_owner($vlog_id));
+   $avatar_code = get_avatar(get_vlog_owner($vlog_id));
    $owner_div = "<div class='vlog-owner-div'>
                     <div class='vlog-avatar-wrap'>
-                       $avatar_path
+                       $avatar_code
                     </div>
                  </div>";
    echo $owner_div;

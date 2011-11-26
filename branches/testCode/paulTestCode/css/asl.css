@@ -556,6 +556,7 @@ div.reply-icon-wrap {
 #post-msg-text {
 	width:98%;
    height: 98%;
+   min-height: 200px;
 }
 
 /*****    VLOG SECTION   **********/
@@ -926,8 +927,7 @@ div.post-reply-content {
 }
 
 div.post-reply-tools {
-   margin-left: 5px;
-   margin-right: 45px;
+   margin: 25px 45px 0px 5px;
    border-top: 1px dashed #ddd;
 }
 
@@ -960,9 +960,14 @@ div.forum-post-title {
    vertical-align: middle;
    height: 150px;
    min-height: 150px;
-   width: 600px;
+   min-width: 200px;
+   max-width: 400px;
    padding: 20px 50px;
    background: #efefef;
+}
+
+div.forum-post-info-wrap {
+   border-top: 2px solid #ccc;
 }
 
 div.forum-post-breadcrumb-arrow {

@@ -135,13 +135,17 @@ function get_message($id) {
 						<a  
 							 href="'.$msg_path.$msg_file.'"
 							 class="flash_player_holder" 
-							 style="width:'.VIDEO_MSG_WIDTH.'px;height:'.VIDEO_MSG_HEIGHT.'px;"  
+							 style="width:'.VIDEO_MSG_WIDTH.'px;height:'.VIDEO_MSG_HEIGHT.'px;"
 							 id="'.$msg_path.$noextfile.'">
 							 <img src="'.$thumbjpg.'" height="'.VIDEO_MSG_HEIGHT.'px" width="'.VIDEO_MSG_WIDTH.'px" alt="'.$msg_file.'" />
 						</a> 
 						<script type="text/javascript">
 							flowplayer("'.$msg_path.$noextfile.'", "flash/flowplayer-3.2.7.swf", {
-								clip: conf.yesplay,
+								clip: {
+                           url: "'.$msg_path.$msg_file.'",
+                           autoPlay: true,
+                           autoBuffering: true
+                        },
                     plugins: {
                        controls: conf.big
                     }
@@ -254,9 +258,9 @@ function print_reply_link($id) {
       //echo '<td style="background:#dedede;overflow:auto;vertical-align:top;padding-top:30px;">';
       echo '<div class="reply-avatar-container">';
          echo '<div style="height:90%;text-align:center;">';
-            echo '<div style="text-align:center;">'.$row['login'].'</div>';
+            echo '<div style="text-align:center;"><a href="searchmember.php?name='.$row['login'].'&id='.$row['member_id'].'" />'.$row['login'].'</div>';
             echo '<div style="">'.get_avatar($row['member_id'], $row['login']).'</div>';
-            echo '<div style="text-align:center;font-size:0.8em;">' . date('M j Y, h:ia', strtotime($row['last_comment'])) . '</div>';
+            echo '<div style="text-align:center;font-size:0.8em;">Last activity:<br />' . date('M j Y, h:ia', strtotime($row['last_comment'])) . '</div>';
          echo '</div>';
       echo '</div>';
       echo '</div>';
