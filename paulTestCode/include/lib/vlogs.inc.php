@@ -41,18 +41,17 @@ function get_vlog_message($msg, $msg_alt, $type, $id) {
 		//the msg is a file
 		
 		//get files
-		$dir_files = @scandir($msg_path);
+		$dir_files = scandir($msg_path);
 
 		if(!empty($dir_files)) { 
 
-			foreach ($dir_files as $dir_file) {
+			foreach ($dir_files as $dir_file) { 
 				if (substr($dir_file,0, 7) == "message") {
 					$msg_file = $dir_file;
 					break;
 				}
 			}
 
-         $msg_path = dirname($msg_file);
          $noextfile = substr($msg_file, 0, 7);
          
 			$ext = strtolower(end(explode('.',$msg_file)));
@@ -84,7 +83,6 @@ function get_vlog_message($msg, $msg_alt, $type, $id) {
             }
             
             // assemble flowplayer code
-//            $formatted_msg = '';
             $formatted_msg = '  
 						<a  
 							 href="'.$msg_path.$msg_file.'"
