@@ -4,7 +4,14 @@ require(INCLUDE_PATH.'vitals.inc.php');
 admin_authenticate();
 
 require(INCLUDE_PATH.'admin_header.inc.php'); ?>
-
+<style>
+   .quickViewLink {
+    left: -65px;
+    top: -30px;
+}
+   
+</style>
+ 
 <h2>Vlogs</h2>
 <ul id="page-menu">
 	<li><a href="vlog_create.php">New Vlog</a></li> 

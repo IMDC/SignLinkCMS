@@ -132,33 +132,32 @@ function get_message($id) {
 
                $noextfile = substr($msg_file, 0, 7);
                $msg[2] = '  
-						<a  
-							 href="'.$msg_path.$msg_file.'"
-							 class="flash_player_holder" 
-							 style="width:'.VIDEO_MSG_WIDTH.'px;height:'.VIDEO_MSG_HEIGHT.'px;"
-							 id="'.$msg_path.$noextfile.'">
-							 <img src="'.$thumbjpg.'" height="'.VIDEO_MSG_HEIGHT.'px" width="'.VIDEO_MSG_WIDTH.'px" alt="'.$msg_file.'" />
+                  <a
+                     href="'.$msg_path.$msg_file.'"
+                     class="flash_player_holder" 
+                     style="width:'.VIDEO_MSG_WIDTH.'px;height:'.VIDEO_MSG_HEIGHT.'px;"
+                     id="'.$msg_path.$noextfile.'">
+                     <img src="'.$thumbjpg.'" height="'.VIDEO_MSG_HEIGHT.'px" width="'.VIDEO_MSG_WIDTH.'px" alt="'.$msg_file.'" />
 						</a> 
 						<script type="text/javascript">
-							flowplayer("'.$msg_path.$noextfile.'", "flash/flowplayer-3.2.7.swf", {
-								clip: {
+                     flowplayer("'.$msg_path.$noextfile.'", "flash/flowplayer-3.2.7.swf", {
+                        clip: {
                            url: "'.$msg_path.$msg_file.'",
                            autoPlay: true,
                            autoBuffering: true
                         },
-                    plugins: {
-                       controls: conf.big
-                    }
-							});
+                        plugins: {
+                           controls: conf.big
+                        }
+                     });
 						</script>';
-
 				} 
             else if (in_array($ext, $filetypes_image)) {
                // file is an image
 					$msg[2] = '<img src="'.$msg_path.$msg_file.'" alt="'.$row[1].'" title="'.$row[1].'" style="vertical-align:middle;" />';
                $msg[4] = 2;
 				} 
-            else { //signlink
+            else { // signlink object, use object code
 					$msg[2] = '<object width="565" height="455"
 						classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000"
 						codebase="http://fpdownload.macromedia.com/pub/
@@ -191,17 +190,19 @@ function removeUnsafeAttributesAndGivenTags($input, $validTags = '') {
        return preg_replace($regex, '<${1}>',strip_tags($input, $validTags));
 } 
 
-/**  Prints a complete forum post entry in div style. Prints the user avatar section,
- *  comment editing/deleting tools if user is logged in and owns the post, post reply
- *  link
+/**  Prints a complete forum post reply entry row in div style. 
+ * Queries the forums_posts table and prints the user 
+ * avatar section, comment editing/deleting tools if user is logged in and
+ * owns the post, post reply link
  *
  * @global type $db
  * @global type $filetypes_video
  * @global type $filetypes_image
- * @param int $id  the member_id of the user
+ * @param int $id the post id
+ * @param int $reply_number the reply number, 1 is first reply, etc
  * @return type 
  */
-function print_reply_link($id) {	
+function print_reply_row($id, $reply_number) {	
 	global $db, $filetypes_video, $filetypes_image;
 
    $id = intval($id);
@@ -256,10 +257,27 @@ function print_reply_link($id) {
 		}
 		//echo '<td style="text-align:center;">'.$row['login'].'</td>';
       //echo '<td style="background:#dedede;overflow:auto;vertical-align:top;padding-top:30px;">';
+      echo '<div class="reply-row">';
+      if ($_SESSION['login'] == $row['login'] && $row['locked'] != 1) {
+         echo "<div class='post-reply-tools'>";
+         echo     "<ul class='post-reply-tools-list'>";
+         echo        "<li><a href='forum_post_edit.php?f=" . $row['forum_id']."&p=".$row['post_id']."&parent=".$row['parent_id']."'><img src='images/comment_edit.png' alt='Edit' title='Edit' /></a></li>";
+         echo        "<li><a href='forum_post_delete.php?f=".$row['forum_id']."&p=".$row['post_id']."&parent=".$row['parent_id']."&m=".$_SESSION['member_id']."'><img src='images/comment_delete.png' alt='Delete' title='Delete' /></a></li>";
+         echo     "</ul>";
+         echo "</div>";
+      }
+      echo '<div class="avatar-wrap">';
+      echo "<div class='reply-num'>";
+         echo $reply_number;
+      echo '</div>';
       echo '<div class="reply-avatar-container">';
          echo '<div style="height:90%;text-align:center;">';
-            echo '<div style="text-align:center;"><a href="searchmember.php?name='.$row['login'].'&id='.$row['member_id'].'" />'.$row['login'].'</div>';
-            echo '<div style="">'.get_avatar($row['member_id'], $row['login']).'</div>';
+            echo '<div style="text-align:center;"><a href="searchmember.php?name='.$row['login'].'&id='.$row['member_id'].'">'.$row['login'].'</a></div>';
+            echo '<div style="">';
+               echo '<a href="searchmember.php?name='.$row['login'].'&id='.$row['member_id'].'">';
+                  echo get_avatar($row['member_id'], $row['login']);
+               echo '</a>';
+            echo '</div>';
             echo '<div style="text-align:center;font-size:0.8em;">Last activity:<br />' . date('M j Y, h:ia', strtotime($row['last_comment'])) . '</div>';
          echo '</div>';
       echo '</div>';
@@ -267,16 +285,18 @@ function print_reply_link($id) {
       // echo post content
       echo '<div class="post-reply-content-wrap">';
          echo '<div class="post-reply-content">'.$post_content.'</div>';
-         if ($_SESSION['login'] == $row['login'] && $row['locked'] != 1) {
-            echo "<div class='post-reply-tools'>";
-            echo    "<li style='display:inline;padding:8px;'><a href='forum_post_edit.php?f=" . $row['forum_id']."&p=".$row['post_id']."&parent=".$row['parent_id']."'><img src='images/comment_edit.png' alt='Edit' title='Edit' /></a></li>";
-            echo    "<li style='display:inline;padding:8xp;'><a href='forum_post_delete.php?f=".$row['forum_id']."&p=".$row['post_id']."&parent=".$row['parent_id']."&m=".$_SESSION['member_id']."'><img src='images/comment_delete.png' alt='Delete' title='Delete' /></a></li>";
-            echo "</div>";
-         }
+      echo '</div>';
       echo '</div>';
    }
 }
 
+
+function print_forum_reply_icon($link_destination) {
+//   echo "<div class='reply-icon-wrap shadow'>";
+      //echo "<a style='text-decoration:none;color:#fff;font-size:0.7em;margin:0 auto;width:100%;text-align:center;' href='$link_destination'><img src='images/reply-add-paul4.png' alt='Reply' title='Reply to this post!' /><br />New Reply</a>";
+      echo "<a style='text-decoration:none;color:#333;font-size:0.8em;padding-top:5px;width:100%;text-align:center;' href='$link_destination'><img class='shadow' src='images/reply-add-paul4.png' alt='Reply' title='Reply to this post!' /><br />New Reply</a>";
+//   echo "</div>";
+}
 
 function populate_post($row, $title) {
 	//subject
