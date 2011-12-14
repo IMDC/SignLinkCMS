@@ -807,8 +807,9 @@ function get_avatar($id, $loginname="") {
    
 	if ($av_file) {
 		echo '<img id="avatar" src="uploads/members/'.$id.'/'.$av_file.'" alt="'.$alttext . '" />';
-	} else {
-		echo '<img id="avatar" src="images/no_avatar.jpg" alt="No avatar" />';
+	}
+   else {
+		echo '<img id="avatar" src="images/no_avatar.jpg" alt="User has not selected an avatar" />';
 	}
 
 	return;
