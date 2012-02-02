@@ -83,6 +83,9 @@ if (isset($_POST['cancel'])) {
 
 			$sql = "UPDATE vlogs_entries SET num_comments=num_comments+1";
 			$result = mysqli_query($db, $sql);
+         
+         /** TODO: update member post count for each comment created  **/
+         updateMemberPostCount($_SESSION[member_id], 1);
 
 			//redirect	
 			$_SESSION['feedback'][] = 'Comment posted successfully.';
@@ -131,6 +134,7 @@ require(INCLUDE_PATH.'header.inc.php');
 				<dl class="col-list">
 					<dt>File</dt> <dd><input type="file" id="vmsg-file" name="vmsg-file" /></dd>
 					<dt>Alt Text<dt> <dd><input type="text" id="vmsg-alt" name="vmsg-alt" value="<?php echo $_POST['vmsg-alt']; ?>" /></dd>
+               <br /><span class="helper-text">Maximum file size: <?php echo get_maximum_file_upload_size_overall_mb(); ?> Mb</span>
 				</dl>
 			</div><br />
 

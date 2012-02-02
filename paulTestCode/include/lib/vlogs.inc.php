@@ -259,7 +259,7 @@ function print_vlog_reply_row($id, $reply_number) {
 //         echo        "<li><a href='forum_post_edit.php?f=" . $row['forum_id']."&p=".$row['post_id']."&parent=".$row['parent_id']."'><img src='images/comment_edit.png' alt='Edit' title='Edit' /></a></li>";
          echo        "<li><a href='vlog_entry_edit.php?v=" . $row['vlog_id'] . "&e=" . $row['entry_id'] . "'><img src='images/comment_edit.png' alt='Edit' title='Edit' /></a></li>";
 //         echo        "<li><a href='forum_post_delete.php?f=".$row['forum_id']."&p=".$row['post_id']."&parent=".$row['parent_id']."&m=".$_SESSION['member_id']."'><img src='images/comment_delete.png' alt='Delete' title='Delete' /></a></li>";
-         echo      "<li><a href='vlog_entry_delete.php?v=" . $row['vlog_id'] . "&e=" . $rpw['entry_id'] . "' onClick='javascript: return confirmDelete()'><img src='images/delete.png' alt='Delete' title='Delete' /></a></li>";
+         echo      "<li><a href='vlog_entry_delete.php?v=" . $row['vlog_id'] . "&e=" . $row['entry_id'] . "' onClick='javascript: return confirmDelete()'><img src='images/delete.png' alt='Delete' title='Delete' /></a></li>";
          echo     "</ul>";
          echo "</div>";
       }

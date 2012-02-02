@@ -153,18 +153,33 @@ $msg = get_message($post_id);  //returns array of poster, date, html-encoded mes
          $row = mysqli_fetch_assoc($result);
          
          /********* BEGIN reply table tools  ***********/
-         echo '<div class="reply-table-header-wrap">';
-            print "<span class='reply-table-header-text'> Replies - last reply: " . date('M j Y, h:ia', strtotime($row['last_comment'])) . "</span>";
-            print "<ul class='reply-table-header-menu'>";
-               echo "<li>";
-                  echo "<a href='forum_post_create.php?f=$forum_id&p=$post_id'><img class='shadow' src='images/reply-add-paul4.png' alt='Reply' title='Reply to this post!' /><br />New Reply</a>";
-               echo "</li>";
-               echo "<li>";
-                  echo "<a href='#bottom'><img class='shadow' src='images/arrow_down_48.png' /><br />Newest</a>";
-               echo"</li>";
-         echo '</div>';
+//         echo '<div class="reply-table-header-wrap">';
+//            echo "<span class='reply-table-header-text'> Replies - last reply: " . date('M j Y, h:ia', strtotime($row['last_comment'])) . "</span>";
+//            echo "<ul class='reply-table-header-menu'>";
+//               echo "<li>";
+//                  echo "<a href='forum_post_create.php?f=$forum_id&p=$post_id'><img class='shadow' src='images/reply-add-paul4.png' alt='Reply' title='Reply to this post!' /><br />New Reply</a>";
+//               echo "</li>";
+//               echo "<li>";
+//                  echo "<a href='#bottom'><img class='shadow' src='images/arrow_down_48.png' /><br />Newest</a>";
+//               echo"</li>";
+//            echo "</ul>";
+//         echo '</div>';
          /********* END reply table tools  ***********/
-         
+         $thtml = array();
+         array_push($thtml, '<div class="reply-table-header-wrap">');
+           array_push($thtml, "<span class='reply-table-header-text'> Replies - last reply: " . date('M j Y, h:ia', strtotime($row['last_comment'])) . "</span>");
+            array_push($thtml, "<ul class='reply-table-header-menu'>");
+               array_push($thtml, "<li>");
+                  array_push($thtml, "<a href='forum_post_create.php?f=$forum_id&p=$post_id'><img class='shadow' src='images/reply-add-paul4.png' alt='Reply' title='Reply to this post!' /><br />New Reply</a>");
+               array_push($thtml, "</li>");
+               array_push($thtml, "<li>");
+                  array_push($thtml, "<a href='#bottom'><img class='shadow' src='images/arrow_down_48.png' /><br />Newest</a>");
+               array_push($thtml, "</li>");
+            array_push($thtml, "</ul>");
+         array_push($thtml, '</div>');
+         foreach ($thtml as $value) {
+            echo $value;
+         }
          // reset mysqli data pointer to first reply
          mysqli_data_seek($result, 0);
          $row = mysqli_fetch_assoc($result);
@@ -173,6 +188,9 @@ $msg = get_message($post_id);  //returns array of poster, date, html-encoded mes
          do {
             if ($numReplies == $postcounter) {
                $lastreplylink = '<a name="bottom" style="visibility:hidden;"></a>';
+            }
+            else {
+               $lastreplylink = '';
             }
             $replynum = sprintf("<span class='reply-num' id='reply-%s'>%s</span>%s", $postcounter, $postcounter, $lastreplylink);
             print_reply_row($row['post_id'], $replynum);
@@ -191,7 +209,24 @@ $msg = get_message($post_id);  //returns array of poster, date, html-encoded mes
             $postcounter++;
 			
 			} while ($row = mysqli_fetch_assoc($result));
-         echo '</div><p class="centeralign"><a href="#replytop"><img src="images/arrow_up_48.png" /><br />First Reply</a>';
+//         echo '</div>';
+//            echo '<p class="centeralign">';
+//               echo '<a href="#replytop"><img src="images/arrow_up_48.png" /><br />First Reply</a>';
+         $thtml = array();
+         array_push($thtml, '<div style="margin-top:30px;" class="reply-table-header-wrap">');
+           array_push($thtml, "<span class='reply-table-header-text'> Replies - last reply: " . date('M j Y, h:ia', strtotime($row['last_comment'])) . "</span>");
+            array_push($thtml, "<ul class='reply-table-header-menu'>");
+               array_push($thtml, "<li>");
+                  array_push($thtml, "<a href='forum_post_create.php?f=$forum_id&p=$post_id'><img class='shadow' src='images/reply-add-paul4.png' alt='Reply' title='Reply to this post!' /><br />New Reply</a>");
+               array_push($thtml, "</li>");
+               array_push($thtml, "<li>");
+                  array_push($thtml, "<a href='#replytop'><img class='shadow' src='images/arrow_up_48.png' /><br />First Reply</a>");
+               array_push($thtml, "</li>");
+            array_push($thtml, "</ul>");
+         array_push($thtml, '</div>');
+         foreach ($thtml as $value) {
+            echo $value;
+         }
 		}
 	}
 	?>

@@ -58,7 +58,7 @@ $msg = get_vlog_message_by_id($entry_id);
 </div>  <!-- end of submenu div -->
 <div style="clear:both" /></div>
 	
-<!--<div clas="vlog-post-title centeralign" style="float:left; vertical-align:middle; height:75px;">-->
+<!--<div class="vlog-post-title centeralign" style="float:left; vertical-align:middle; height:75px;">-->
 <!--   VLOG OWNER AVATAR AND INFO GOES HERE -->
 
 <div id="post">
@@ -183,6 +183,9 @@ $msg = get_vlog_message_by_id($entry_id);
       do {
          if ($numReplies == $postcounter) {
             $lastreplylink = '<a name="bottom" style="visibility:hidden;"></a>';
+         }
+         else {
+            $lastreplylink = '';
          }
          $replynum = sprintf("<span class='reply-num' id='reply-%s'>%s</span>%s", $postcounter, $postcounter, $lastreplylink);
          

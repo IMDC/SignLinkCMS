@@ -1,4 +1,8 @@
-/* styles for signlink project */
+/*********************** styles for signlink project ************************/
+
+
+/**************************** HTML ELEMENTS ********************************/
+
 
 body, html {
     padding:0px;
@@ -32,20 +36,6 @@ body {
    box-shadow: 2px 0px 4px 2px rgba(0,0,0,0.2);
 }
 
-#topbackground {
-    position: absolute;
-    top: 0px;
-    right: 0px;
-    height: 220px;
-    width: 100%;
-    background-image: url("../images/bg_gradtop4.png");
-    background-repeat: repeat;
-    -webkit-border-radius: 15px 15px 0px 0px;
-    -moz-border-radius: 15px 15px 0px 0px;
-    border-radius: 15px 15px 0px 0px;
-    z-index: -1;
-}
-
 table {
     font-size: small;
 }
@@ -53,28 +43,6 @@ table {
 img {
     border:0px;
 }
-
-#container {
-   clear:both;
-   background-color: white;
-   border: 2px solid #777;
-   -webkit-border-radius: 15px;
-   -moz-border-radius: 15px;
-   border-radius: 15px;
-   /*padding-left:10px;*/
-
-   min-height: 100%;
-   position: relative;
-   height: auto !important;
-   height:100%;
-   z-index: 2;
-}
-
-/*#header {
-	color:black;
-	margin: 0px;
-	padding-left:10px;
-}*/
 
 h1, h3 {
    color: #2D5E9B;
@@ -106,12 +74,99 @@ h2 {
    vertical-align: middle;
 }
 
+input.button {
+/*	border:1px solid black;
+	background-color: #66FF99;*/
+	padding-left:10px;
+	padding-right:10px;
+}
+
+input.button:hover {
+/*	background-color: #00FF99;
+	background: #00FF99;*/
+}
+
+input {
+   background: #ffffff; /* Old browsers */
+   background: -moz-linear-gradient(top, #e2e2e2 0%, #ffffff 48%, #ffffff 100%); /* FF3.6+ */
+   background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#e2e2e2), color-stop(48%,#ffffff), color-stop(100%,#ffffff)); /* Chrome,Safari4+ */
+   background: -webkit-linear-gradient(top, #e2e2e2 0%,#ffffff 48%,#ffffff 100%); /* Chrome10+,Safari5.1+ */
+   background: -o-linear-gradient(top, #e2e2e2 0%,#ffffff 48%,#ffffff 100%); /* Opera11.10+ */
+   background: -ms-linear-gradient(top, #e2e2e2 0%,#ffffff 48%,#ffffff 100%); /* IE10+ */
+   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e2e2e2', endColorstr='#ffffff',GradientType=0 ); /* IE6-9 */
+   background: linear-gradient(top, #e2e2e2 0%,#ffffff 48%,#ffffff 100%); /* W3C */
+   border: 1px solid #cbcbcb;
+}
+
+/************************** END OF HTML ELEMENTS *****************************/
+
+
+#topbackground {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    height: 220px;
+    width: 100%;
+    background-image: url("../images/bg_gradtop4.png");
+    background-repeat: repeat;
+    -webkit-border-radius: 15px 15px 0px 0px;
+    -moz-border-radius: 15px 15px 0px 0px;
+    border-radius: 15px 15px 0px 0px;
+    z-index: -1;
+}
+
+#container {
+   clear:both;
+   background-color: white;
+   border: 2px solid #777;
+   -webkit-border-radius: 15px;
+   -moz-border-radius: 15px;
+   border-radius: 15px;
+   /*padding-left:10px;*/
+
+   min-height: 100%;
+   position: relative;
+   height: auto !important;
+   height:100%;
+   z-index: 2;
+}
+
+/*#header {
+	color:black;
+	margin: 0px;
+	padding-left:10px;
+}*/
+
+
+/******************************* Style utility classes *********************/
+
 .shadow {
    -webkit-box-shadow: 4px 4px 6px rgba(0,0,0,0.46);
    -moz-box-shadow: 4px 4px 6px rgba(0,0,0,0.46);
    box-shadow: 4px 4px 6px rgba(0,0,0,0.46);
 }
 
+.centeralign {
+   margin-left: auto;
+   margin-right: auto;
+   text-align: center;
+}
+
+.inlineVertMid {
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.helper-text {
+   font-size: 0.75em;
+   color: #999;
+}
+
+/************************** END OF Style utility classes *********************/
+
+
+
+/************************************ MENU ***********************************/
 #menu {
 	margin-top:25px;
 }
@@ -156,20 +211,16 @@ h2 {
 
 #submenu li img {
 	padding:8px;
-	margin-bottom:-5px;
+/*	margin-bottom:-5px;*/
 	border:1px solid #efefef;
    width: 32px;
 }
 
+/******************************** END OF MENU *******************************/
+
 .post-icon-list li {
    display:inline;
    padding:8px
-}
-
-.buttonimage {
-	padding:8px;	
-	border:1px solid #ccc;
-	background-color: #efefef;
 }
 
 #menu li img:hover, #submenu li img:hover, .buttonimage:hover {
@@ -226,8 +277,6 @@ background-color:#cbdbef;
 	padding-bottom:2.8em;
 	padding-left: 0.3em;
 	padding-right: 0.3em;
-
-
 }
 
 #content textarea {
@@ -235,19 +284,9 @@ background-color:#cbdbef;
 	height:5em;
 }
 
-#footer {
-	font-size:smaller;
-	color:black;
-	text-align: center;
 
-	clear: both;
-	width: 800px;
-	position: absolute;
-/*	bottom: 0 !important;*/
-	height:1.8em;
-}
 
-/* register page */
+/**************************** register page ******************************/
 
 #name {
 	/*background-color: #FFFFA0;*/
@@ -258,7 +297,7 @@ background-color:#cbdbef;
 }
 
 
-/* links */
+/********************************* links ********************************/
 
 a:link, a:visited {
 	text-decoration: none;
@@ -279,9 +318,13 @@ a:hover {
 	color: blue;
 }
 
-/* forums */
+/**************************** END of links ****************************/
 
-/* category page */
+
+
+/********************************** forums ************************************/
+
+/**************************** category page ****************************/
 table#cats {
 	width:98%;
 	margin-left:auto;
@@ -429,7 +472,30 @@ a.goto:hover {
    box-shadow: 4px 4px 6px rgba(0,0,0,0.2);
 }
 
-/* forum posts page */
+/*************************** END of category page ***************************/
+
+
+
+/**************************** forum posts page ****************************/
+
+#post-title {
+	vertical-align:middle;
+	background-color:#efefef; 
+	padding:5px; 
+   margin-right: 5px;
+	height: 125px;
+   min-height: 125px;
+	border:1px solid #ccc; 
+	margin-top:5px;
+	margin-bottom:5px;
+}
+
+#post-title h3 {
+	display:inline;
+	float:left;
+	margin:0px;	
+	font-size: medium;
+}
 
 div.post {
     float:left;
@@ -490,7 +556,11 @@ ul.post-msg-tools-list li img {
 /*   vertical-align: middle;*/
 }
 
-/*  forum replies  */
+/*************************** END of forum posts page ************************/
+
+
+
+/****************************  forum replies  ****************************/
 
 .reply_tr {
     border-bottom:1px solid #bbb;
@@ -518,12 +588,19 @@ span.reply-num {
    color: #aaa;
 }
 
-/* post page */
+/**************************** END of forum replies  **************************/
+
+
+
+/********************************** post page *******************************/
+
+
 #post {
    border: 1px solid #ccc;
    width: 98%;
-   margin-left: auto;
-   margin-right:auto;
+/*   margin-left: auto;
+   margin-right:auto;*/
+   margin: 10px auto 5px;
    background: #feffff; /* Old browsers */
    background: -moz-radial-gradient(center, ellipse cover, #feffff 0%, #feffff 55%, #ededed 100%); /* FF3.6+ */
    background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,#feffff), color-stop(55%,#feffff), color-stop(100%,#ededed)); /* Chrome,Safari4+ */
@@ -568,7 +645,11 @@ span.reply-num {
    min-height: 200px;
 }
 
-/*****    VLOG SECTION   **********/
+/*********************************** END OF POST PAGE ************************/
+
+
+
+/****************************    VLOG SECTION   ******************************/
 
 .vlog-title-top-wrap {
    background: rgb(206,223,244); /* Old browsers */
@@ -580,7 +661,8 @@ span.reply-num {
    background: linear-gradient(top, rgba(206,223,244,1) 0%,rgba(255,255,255,1) 41%,rgba(255,255,255,1) 83%,rgba(125,144,168,1) 100%); /* W3C */
    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cedff4', endColorstr='#7d90a8',GradientType=0 ); /* IE6-9 */
    
-   margin: 0 50px;
+   padding-bottom: 10px;
+   margin: -5px 50px 10px;
 }
 
 .vlog-title-wrap {
@@ -613,12 +695,11 @@ span.reply-num {
    padding-bottom: 20px;
 }
 
-
-/***** END OF VLOG SECTION ********/
-
+/************************* END OF VLOG SECTION *******************************/
 
 
-/* "breadcrumbs" */
+
+/**************************** "breadcrumbs" ****************************/
 
 h3.bread, h4.bread, h5.bread {
 	display:inline;
@@ -646,9 +727,12 @@ ul#menu-right li {
 	margin-left:5px;
 }
 
+/**************************** END of "breadcrumbs" ***************************/
 
 
-/* forms */
+/*********************************** forms **********************************/
+
+
 div.input-form {
 	width: 98%; 
 	margin-left:auto; 
@@ -696,7 +780,9 @@ div.submitrow {
 }
 
 
-/**** Preferences Form ****/
+/***************************** Preferences Form *****************************/
+
+
 dl.admin input {
    background: #ffffff; /* Old browsers */
    background: -moz-linear-gradient(top, #e2e2e2 0%, #ffffff 48%, #ffffff 100%); /* FF3.6+ */
@@ -833,7 +919,8 @@ dl.admin input {
   margin-left: auto;
   margin-right: auto;
 }
-/**** End of Preferences Form ****/
+/************************* End of Preferences Form ************************/
+
 
 ul.links-list {
 	margin:0px;
@@ -883,9 +970,10 @@ div.choice-info {
 	margin-left:20px;
 }
 
-/* manage pages */
+/******************************** manage pages ********************************/
 
-/* Forum reply styling */
+/*************************** Forum reply styling ***************************/
+
 div.reply-table-container {
    width: 100%;
    overflow: hidden;
@@ -950,6 +1038,7 @@ ul.reply-table-header-menu li {
 ul.reply-table-header-menu li img {
    border: 1px solid #888;
    margin-bottom: 5px;
+   padding: 2px;
 }
 
 ul.reply-table-header-menu li a {
@@ -1050,7 +1139,9 @@ span.reply-deleted img {
    padding: 5px;
 }
 
-/** in the forum section */
+
+/**************************** in the forum section ***************************/
+
 div.forum-post-top-wrap {
    background: rgb(224,235,248); /* Old browsers */
    background: -moz-linear-gradient(top, rgba(224,235,248,1) 0%, rgba(255,255,255,1) 41%, rgba(255,255,255,1) 83%, rgba(171,184,199,1) 100%); /* FF3.6+ */
@@ -1125,7 +1216,6 @@ td.post-reply-content {
    overflow: auto;
 }
 
-
 table.manage {
 	width: 100%;
 	padding-top:20px;
@@ -1159,7 +1249,11 @@ legend, .form-title {
 }
 
 
-/* msgs */
+/**************************** END OF FORUM SECTION ***************************/
+
+
+
+/************************************* MSGS **********************************/
 
 div.error {
 	width:60%;
@@ -1175,6 +1269,8 @@ div.feedback {
 	border: 1px solid #4CA640;
 	padding:10px;
 	margin-top:10px;
+   min-height: 50px;
+   margin-bottom: 15px;
 }
 
 div.notice {
@@ -1204,51 +1300,105 @@ dl.admin dd {
    margin-bottom: 10px;
 }
 
-
-/*buttons */
-input.button {
-/*	border:1px solid black;
-	background-color: #66FF99;*/
-	padding-left:10px;
-	padding-right:10px;
+span.status-error {
+   color: #ff0000;
+   font-weight: bold;
+   font-style: italic;
+   padding: 0 5px;
 }
 
-input.button:hover {
-/*	background-color: #00FF99;
-	background: #00FF99;*/
+span.status-success {
+   color: #00dd00;
+   font-weight: bold;
+   padding: 0 5px;
 }
 
-input {
-   background: #ffffff; /* Old browsers */
-   background: -moz-linear-gradient(top, #e2e2e2 0%, #ffffff 48%, #ffffff 100%); /* FF3.6+ */
-   background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#e2e2e2), color-stop(48%,#ffffff), color-stop(100%,#ffffff)); /* Chrome,Safari4+ */
-   background: -webkit-linear-gradient(top, #e2e2e2 0%,#ffffff 48%,#ffffff 100%); /* Chrome10+,Safari5.1+ */
-   background: -o-linear-gradient(top, #e2e2e2 0%,#ffffff 48%,#ffffff 100%); /* Opera11.10+ */
-   background: -ms-linear-gradient(top, #e2e2e2 0%,#ffffff 48%,#ffffff 100%); /* IE10+ */
-   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e2e2e2', endColorstr='#ffffff',GradientType=0 ); /* IE6-9 */
-   background: linear-gradient(top, #e2e2e2 0%,#ffffff 48%,#ffffff 100%); /* W3C */
-   border: 1px solid #cbcbcb;
-}
+/********************************** END OF MSGS *****************************/
 
 
-#post-title {
-	vertical-align:middle;
-	background-color:#efefef; 
-	padding:5px; 
-   margin-right: 5px;
-	height: 125px;
-   min-height: 125px;
-	border:1px solid #ccc; 
-	margin-top:5px;
-	margin-bottom:5px;
+/*********************************  BUTTONS *********************************/
+
+.buttonimage {
+	padding:8px;	
+	border:1px solid #ccc;
+	background-color: #efefef;
 }
 
-#post-title h3 {
-	display:inline;
-	float:left;
-	margin:0px;	
-	font-size: medium;
+.submitBtn {
+	border: 1px solid gray;
+   padding: 5px;
+   background: #BFFFBF url('../images/yescheck.png') 5px 6px no-repeat;
+   border: 1px solid gray;
+   color: #444444;
+   font-size: 1.25em;
+   font-weight: bold;
+   width: 100px;
+   min-width: 100px;
+   padding-left: 20px;
 }
+
+.submitBtn:hover {
+   background: #85de6a url('../images/yescheck.png') 5px 6px no-repeat;
+	border: 1px solid #009900;
+	font-weight: bold;
+/*	color: #FFFFFF;*/
+   color: #fff;
+}
+
+.cancelBtn {
+	background: #FF7979 url('../images/cancelx.png') 5px 6px no-repeat;
+	color: #000000;
+	font-weight: bold;
+   font-size: 1.25em;
+	border: 1px solid gray;
+   padding: 5px;
+   min-width: 100px;
+   width: 100px;
+   padding-left: 20px;
+}
+
+.cancelBtn:hover {
+	background: #FF4F4F url('../images/cancelx.png') 5px 6px no-repeat;
+	border: 1px solid #FF0000;
+	font-weight: bold;
+	color: #fff;
+}
+
+.submitIconBtn {
+	background-color: #BFFFBF;
+	border: 1px solid gray;
+	color: #444;
+	font-weight: bold;
+   font-size: 1.25em;
+
+}
+
+.submitIconBtn:hover {
+	background-color: #33FF66;
+	border: 1px solid #009900;
+	font-weight: bold;
+	color: #fff;
+}
+
+.cancelIconBtn {
+	background-color: #FFC1C1;
+	border: 1px solid gray;
+	color: #444;
+	font-weight: bold;
+   font-size: 1.25em;
+}
+
+.cancelIconBtn:hover {
+	background-color: #FF4F4F;
+	border: 1px solid #FF0000;
+	font-weight: bold;
+	color: #fff;
+}
+
+/*****************************  END OF BUTTONS ***************************/
+
+
+
 
 .col {
 	float:left;
@@ -1257,6 +1407,9 @@ input {
 	text-align:center;
 	padding:5px;
 }
+
+
+/********************************** LOGIN ********************************/
 
 #login-area {
    /*background-color:#efefef;*/
@@ -1374,119 +1527,6 @@ input {
   background: #A6C6E8;
 }
 
-.inlineVertMid {
-	display: inline-block;
-	vertical-align: middle;
-}
-
-
-.text_title {
-	font-size: 95%;
-	font-family: Arial, Helvetica, sans-serif;
-	text-align: center;
-	/*height: 95%;*/
-	width: 95%;
-	padding-left: 4px;
-	padding-right: 4px;
-	padding-top: 10px;
-    height: 103px;
-}
-
-.highlight {
-/*	background: #87aac9;*/
-   background: #7D90A8;
-   color: #CCFFFF;
-   font-weight: bold;
-}
-
-/********** FLOWPLAYER *************/
-
-/* placeholder class for flowplayer */
-.flash_player_holder {
-   display: block;
-	 margin-top: 2px;
-   margin-left: auto;
-   margin-right: auto;
-}
-
-a.flash_player_holder:hover {
-   /*border: 1px solid #87BBDA;*/
-}
-
-/********** END FLOWPLAYER *************/
-
-
-.submitBtn {
-	border: 1px solid gray;
-   padding: 5px;
-   background: #BFFFBF url('../images/yescheck.png') 5px 6px no-repeat;
-   border: 1px solid gray;
-   color: #444444;
-   font-size: 1.25em;
-   font-weight: bold;
-   width: 100px;
-   min-width: 100px;
-   padding-left: 20px;
-}
-
-.submitBtn:hover {
-   background: #85de6a url('../images/yescheck.png') 5px 6px no-repeat;
-	border: 1px solid #009900;
-	font-weight: bold;
-/*	color: #FFFFFF;*/
-   color: #fff;
-}
-
-.cancelBtn {
-	background: #FF7979 url('../images/cancelx.png') 5px 6px no-repeat;
-	color: #000000;
-	font-weight: bold;
-   font-size: 1.25em;
-	border: 1px solid gray;
-   padding: 5px;
-   min-width: 100px;
-   width: 100px;
-   padding-left: 20px;
-}
-
-.cancelBtn:hover {
-	background: #FF4F4F url('../images/cancelx.png') 5px 6px no-repeat;
-	border: 1px solid #FF0000;
-	font-weight: bold;
-	color: #fff;
-}
-
-.submitIconBtn {
-	background-color: #BFFFBF;
-	border: 1px solid gray;
-	color: #444;
-	font-weight: bold;
-   font-size: 1.25em;
-
-}
-
-.submitIconBtn:hover {
-	background-color: #33FF66;
-	border: 1px solid #009900;
-	font-weight: bold;
-	color: #fff;
-}
-
-.cancelIconBtn {
-	background-color: #FFC1C1;
-	border: 1px solid gray;
-	color: #444;
-	font-weight: bold;
-   font-size: 1.25em;
-}
-
-.cancelIconBtn:hover {
-	background-color: #FF4F4F;
-	border: 1px solid #FF0000;
-	font-weight: bold;
-	color: #fff;
-}
-
 #submitLogin {
    font-size: 1.5em;
    margin-top: 5px;
@@ -1508,10 +1548,6 @@ a.flash_player_holder:hover {
    vertical-align: middle;
 }
 
-
-
-
-
 #submitLogin:hover, .submitLoginHover {
    /*background: #00ff00;*/
    background: #cff7d2; /* Old browsers */
@@ -1527,6 +1563,46 @@ a.flash_player_holder:hover {
 .expand {
   z-index:-1;
 }
+
+/******************************* END OF LOGIN ********************************/
+
+.text_title {
+	font-size: 95%;
+	font-family: Arial, Helvetica, sans-serif;
+	text-align: center;
+	/*height: 95%;*/
+	width: 95%;
+	padding-left: 4px;
+	padding-right: 4px;
+	padding-top: 10px;
+    height: 103px;
+}
+
+.highlight {
+/*	background: #87aac9;*/
+   background: #7D90A8;
+   color: #CCFFFF;
+   font-weight: bold;
+}
+
+/******************************** FLOWPLAYER *********************************/
+
+/* placeholder class for flowplayer */
+.flash_player_holder {
+   display: block;
+	 margin-top: 2px;
+   margin-left: auto;
+   margin-right: auto;
+}
+
+a.flash_player_holder:hover {
+   /*border: 1px solid #87BBDA;*/
+}
+
+/**************************** END FLOWPLAYER ********************************/
+
+
+/***************************** IMAGE ZOOM ***********************************/
 
 .quickViewLink {
    position: relative;
@@ -1560,27 +1636,26 @@ a.flash_player_holder:hover {
   overflow: hidden;
 }
 
+/**************************** END OF IMAGE ZOOM *****************************/
+
+
+/***************************** FOOTER ***************************************/
+#footer {
+	font-size:smaller;
+	color:black;
+	text-align: center;
+
+	clear: both;
+	width: 800px;
+	position: absolute;
+/*	bottom: 0 !important;*/
+	height:1.8em;
+}
+
 p.timezone-footer {
    margin-left: auto;
    margin-right: auto;
    color: #444;
 }
 
-.centeralign {
-   margin-left: auto;
-   margin-right: auto;
-   text-align: center;
-}
-
-span.status-error {
-   color: #ff0000;
-   font-weight: bold;
-   font-style: italic;
-   padding: 0 5px;
-}
-
-span.status-success {
-   color: #00dd00;
-   font-weight: bold;
-   padding: 0 5px;
-}
+/******************************* END OF FOOTER *******************************/

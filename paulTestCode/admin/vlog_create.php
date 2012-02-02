@@ -128,6 +128,7 @@ require(INCLUDE_PATH.'admin_header.inc.php'); ?>
 					<dl class="col-list">
 						<dt>File</dt> <dd><input type="file" id="vsub-file" name="vsub-file" /></dd>
 						<dt>Alt Text<dt> <dd><input type="text" id="vsub-alt" name="vsub-alt" size="80" value="<?php echo $_POST['vsub-alt']; ?>" /></dd>
+                  <br /><span class="helper-text">Maximum file size: <?php echo get_maximum_file_upload_size_overall_mb(); ?> Mb</span>
 					</dl>
 				</div><br />
 
