@@ -116,6 +116,8 @@ if (isset($_POST['cancel'])) {
 			$sql = "UPDATE vlogs SET last_entry='$now', num_entries=num_entries+1 WHERE vlog_id='$vlog_id'";
 			$result = mysqli_query($db, $sql);
 
+         // update member post count
+         updateMemberPostCount($_SESSION['member_id'],1);
 
 			//save files			
 			switch ($_POST['subject']) {
@@ -209,6 +211,7 @@ echo '<h3>New Vlog Entry</h3>';
 					<dl class="col-list">
 						<dt>File</dt> <dd><input type="file" id="vsub-file" name="vsub-file" /></dd>
 						<dt>Alt Text<dt> <dd><input type="text" id="vsub-alt" name="vsub-alt" size="80" value="<?php echo $_POST['vsub-alt']; ?>" /></dd>
+                  <br /><span class="helper-text">Maximum file size: <?php echo get_maximum_file_upload_size_overall_mb(); ?> Mb</span>
 					</dl>
 				</div><br />
 
@@ -232,6 +235,7 @@ echo '<h3>New Vlog Entry</h3>';
 				<dl class="col-list">
 					<dt>SWF File</dt> <dd><input type="file" id="sl1msg-file" name="sl1msg-file" /></dd>
 					<dt>MP4 File<dt> <dd><input type="file" id="sl2msg-file" name="sl2msg-file" /></dd>
+               <br /><span class="helper-text">Maximum file size: <?php echo get_maximum_file_upload_size_overall_mb(); ?> Mb</span>
 				</dl>
 			</div><br />
 
@@ -240,6 +244,7 @@ echo '<h3>New Vlog Entry</h3>';
 				<dl class="col-list">
 					<dt>File</dt> <dd><input type="file" id="vmsg-file" name="vmsg-file" /></dd>
 					<dt>Alt Text<dt> <dd><input type="text" id="vmsg-alt" name="vmsg-alt" value="<?php echo $_POST['vmsg-alt']; ?>" /></dd>
+               <br /><span class="helper-text">Maximum file size: <?php echo get_maximum_file_upload_size_overall_mb(); ?> Mb</span>
 				</dl>
 			</div><br />
 

@@ -204,7 +204,7 @@ require(INCLUDE_PATH.'admin_header.inc.php'); ?>
 		<dd>
          <div style="width:400px;">
             <div style="padding-top:40px;display:inline;float:left;width:200px;">
-               <span style="font-size:1.4em;"><?php echo intval(floor($settings['max_upload_size']/1024/1024)) . 'Mb'; ?>/<?php echo get_maximum_file_upload_size() . 'Mb max*'; ?></span>
+               <span style="font-size:1.4em;"><?php echo intval(floor($settings['max_upload_size']/1024/1024)) . 'Mb'; ?>/<?php echo get_maximum_php_installation_file_upload_size_mb() . 'Mb max*'; ?></span>
             </div>
             <span style="margin-left:15px;">Other sizes:</span>
             <select style="width:100px;" class="prefselect" name="max_upload_size" size="6" multiple="no" onChange="menu_change(this)" >

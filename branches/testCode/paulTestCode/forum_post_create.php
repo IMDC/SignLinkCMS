@@ -260,6 +260,7 @@ $(document).ready(function() {
 				<div class="choice-info" id="subject-video">
                <label for="vsub-file">File </label><input type="file" id="vsub-file" name="vsub-file" /><br /><br />
                <label for="vsub-alt">Alternative Text </label><input type="text" id="vsub-alt" name="vsub-alt" size="80" value="<?php echo $_POST['vsub-alt']; ?>" />
+               <p><span class="helper-text">Maximum file size: <?php echo get_maximum_file_upload_size_overall_mb(); ?> Mb</span></p>
 				</div><br />
 
 				<label for="textsubject"><input type="radio" name="subject" value="text" id="textsubject" <?php if($_POST['subject'] == "text") { echo 'checked="checked"'; } ?> /> Text <img src="images/keyboard-icon-48.png" alt="" class="inlineVertMid" /></label>
@@ -280,13 +281,15 @@ $(document).ready(function() {
          <label for="signlinkmessage"><input type="radio" value="signlink" name="message" id="signlinkmessage" <?php if($_POST['message'] == "signlink") { echo 'checked="checked"'; } ?> />Signed Web Page <img src="images/slslogo-48.png" alt="" class="inlineVertMid" /></label>
 			<div class="choice-info" id="message-sl">
             <label for="sl2msg-file">Video (.mp4) File </label><input type="file" id="sl2msg-file" name="sl2msg-file" /><br /><br />
-            <label for="sl1msg-file">Flash (.swf) File </label><input type="file" id="sl1msg-file" name="sl1msg-file" />
+            <label for="sl1msg-file">Flash (.swf) File </label><input type="file" id="sl1msg-file" name="sl1msg-file" /><br /><br />
+            <span class="helper-text">Maximum file size: <?php echo get_maximum_file_upload_size_overall_mb(); ?> Mb</span>
 			</div><br />
 
 			<label for="videomessage"><input type="radio" value="video" name="message" id="videomessage" <?php if($_POST['message'] == "video") { echo 'checked="checked"'; } ?> />Video <img src="images/film-48.png" alt="" class="inlineVertMid" /></label>
 			<div class="choice-info" id="message-video">
             <label for="vmsg-file">File </label><input type="file" id="vmsg-file" name="vmsg-file" /><br /><br />
             <label for="vmsg-alt">Alternative Text</label><input type="text" id="vmsg-alt" name="vmsg-alt" value="<?php echo $_POST['vmsg-alt']; ?>" />
+            <p><span class="helper-text">Maximum file size: <?php echo get_maximum_file_upload_size_overall_mb(); ?> Mb</span></p>
 			</div><br />
 
 			<label for="textmessage"><input type="radio" value="text" name="message" id="textmessage" <?php if($_POST['message'] == "text") { echo 'checked="checked"'; } ?> />Text <img src="images/keyboard-icon-48.png" alt="" class="inlineVertMid" /></label>

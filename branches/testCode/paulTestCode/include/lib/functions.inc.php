@@ -248,7 +248,7 @@ function get_title($location, $id, $size='reg') {
          }
       }
       /* This div displays the time and date of the post at the bottom of each title */
-      $title = $title . '<div class="cont-date">' . date("H:s M j Y", $row[2]) . '</div>';
+      $title = $title . '<div class="cont-date">' . date("H:s M j Y", intval($row[2])) . '</div>';
    }
    @mysqli_free_result($result);
 	return $title;
@@ -1496,9 +1496,9 @@ function adminMediaPathFix($input) {
  * A method to quickly determine a PHP installation's maximum filesize variable.
  * Checks 3 values and returns the smallest
  *
- * @return int the maximum upload value determined by php.ini
+ * @return int the maximum upload value determined by php.ini in megabytes
  */
-function get_maximum_file_upload_size() {
+function get_maximum_php_installation_file_upload_size_mb() {
    $max_upload = (int)(ini_get('upload_max_filesize'));
    $max_post = (int)(ini_get('post_max_size'));
    $memory_limit = (int)(ini_get('memory_limit'));
@@ -1506,6 +1506,48 @@ function get_maximum_file_upload_size() {
    
    return intval($upload_mb);
 }
+
+
+/**
+ * Returns the value of the max_upload_size field in the settings database table
+ * This setting is set and controlled by the site administrator and can be changed in the
+ * admin settings interface.  This value is not a hard-limit, as a file upload size
+ * can also be limited by the PHP installation value. Use 
+ * 'get_maximum_php_installation_file_upload_size' to determine the hard limit 
+ * as set by the PHP installation.
+ * @global type $db 
+ * @return int the maximum upload size in bytes, or 0 if there was an error
+ */
+function get_maximum_admin_setting_file_upload_size_mb() {
+   global $db;
    
+   $sql = "SELECT value as bits FROM settings where name='max_upload_size' LIMIT 1";
+   $result = mysqli_query($db, $sql);
+   
+   $row = mysqli_fetch_assoc($result);
+   if (!empty($row)) {
+      return intval(floor($row['bits']/1024/1024));
+   }
+   else {
+      return -1;
+   }
+   
+}
+
+/**
+ * Convenience function to determine the maximum size of file upload
+ * the site will allow. Does this by comparing the max size of the PHP
+ * installation's limit as set in PHP.ini and the setting controlled by the
+ * site admin and stored in the settings table. Logically returns the min of
+ * these two values as they are co-dependent. 
+ * 
+ * @return int the maximum file upload size in bytes
+ */
+function get_maximum_file_upload_size_overall_mb() {
+   $max_install_size = get_maximum_php_installation_file_upload_size_mb();
+   $max_admin_size = get_maximum_admin_setting_file_upload_size_mb();
+   
+   return min($max_install_size, $max_admin_size);
+}
    
 ?>
