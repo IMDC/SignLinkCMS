@@ -1,0 +1,175 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>SignlinkCMS: Installation and Administration Manual</title>
+<link rel="stylesheet" type="text/css" href="adminmanual.css" />
+</head>
+
+<body>
+<a name="top"></a>
+<div id="layout">
+   <a href="adminmanual.html"><img src="Images/Admin/adminmanualtitle.png" border="0" alt="SignlinkCMS: Installation and Administration Manual" /></a>
+</div>
+<div id="navigation">
+   <ul class="nobullets">
+      <li><a href="http://www.signlinkstudio.com/" target="_blank">http://www.signlinkstudio.com/</a></li>
+      <li><a href="http://www.signlinkstudio.com/Canadian_Deaf_Academics_SignlinkCMS/admin" target="_blank">http://www.signlinkstudio.com/Canadian_Deaf_Academics_SignlinkCMS/admin</a></li>
+   </ul>
+   <ul class="nobullets">
+      <li><h4><i>Version 1.0 - Please note this file is currently undergoing revisions as of May 25th, 2009<br />Signed Web Page Content will be available shortly</i></h4></li>
+   </ul>
+   <img src="Images/Admin/adminmanualcon.png" alt="Contents" />
+   <ol>
+      <li><a href="#intro">Introduction</a></li>
+      <li class="lispace"><a href="#install">Installing SignlinkCMS</a>
+      <ul class="nobullets">
+         <li class="lispace">2.1 <a href="#server">Server Requirements</a></li>
+         <li>2.2 <a href="#ins">Installation</a></li>
+      </ul>
+	  </li>
+      <li class="lispace"><a href="#admin">Administering Signlink CMS</a>
+      <ul class="nobullets">
+         <li class="lispace">3.1 <a href="#logging">Logging in and out</a></li>
+         <li>3.2 <a href="#members">Members</a></li>
+         <li>3.3 <a href="#pages">Pages</a></li>
+         <li>3.4 <a href="#forums">Forums</a></li>
+         <li>3.5 <a href="#vlogs">Vlogs</a></li>
+         <li>3.6 <a href="#settings">Settings</a></li>
+         <!--<br />3.7 <a href="#help">Help</a>-->
+      </ul>
+      </li>
+      <li class="lispace"><a href="#ack">Acknowledgements</a></li>
+   </ol>
+<img src="Images/linebreak.png" alt="Line break" border="0" />
+</div>
+<div id="contents">
+<a name="intro"><img src="Images/Admin/adminmanualintro.png" alt="Introduction" border="0"/></a>
+<p>
+SignlinkCMS is an on-line content management system developed specifically for users of sign languages (e.g., American Sign Language - ASL, Langue des signes québécoise -LSQ, British Sign Language - BSL).
+</p>
+<p>SignlinkCMS supports sign language-based web pages that are produced by Signlink Studio v2.0 (a free authoring tool that is available from <a href="http://www.signlinkstudio.com/" target="_blank">www.signlinkstudio.com</a>), videos, images and text.
+</p>
+<p>In SignlinkCMS, icons and other visual cues are used to convey information to the website members instead of using text. This creates an immersive sign language based experience for website members.
+</p>
+<p>SignlinkCMS features the ability to create and manage pages, forums and vlogs (short for video blogging).
+</p>
+<a href="#top"><img src="Images/top.png" align="right" border="0" alt="Back to top" /></a><br />
+<br /><br /><br /><img src="Images/linebreak.png" alt="Line break" border="0" />
+<br />
+<br /><a name="install"><img src="Images/Admin/adminmanualinstall.png" alt="Installing SignlinkCMS" /></a>
+<br /><h2>2.1. <a name="server"></a>Server Requirements</h2>
+<ul>
+		  <li>MySQL 5.0+</li>
+		  <li>PHP 5 with GD library</li>
+		  <li>An email server</li>
+</ul>
+<h2>2.2. <a name="ins"></a>Installation</h2>
+<ol>
+<li>Download “signlinkcms.zip” from the website (<a href="http://www.signlinkstudio.com" target="_blank">www.signlinkstudio.com</a>).</li>
+<li class="lispace">Unzip this file into a web-accessible directory on the server.</li>
+<li class="lispace">Create a MySQL database for the site and make a note of your database name to enter into the config file in <i>Step 4.</i> Run the script “/install/signlink_schema.sql” on the database to set up the necessary tables.</li>
+<li class="lispace">Create the configuration file by copying “/install/config_template.php” to “/include/config.inc.php”. Open config.inc.php in an editor and fill in the values for your server's MySQL connection details and the database name (from <i>Step 3</i>).</li>
+<li class="lispace">Log into the admin area of your site (add “/admin” to your site url to get to the login page). Admin login: <i>admin</i>. Admin password: <i>admin</i>. <b>CHANGE THE ADMIN PASSWORD</b> immediately by accessing the settings menu item. 
+You should also set the administrator email address and maximum upload file size on this page.</li>
+<li class="lispace">Set permissions for the “/uploads” directory, and its sub-directories, to be 777 (readable, writeable, and executable by all).</li>
+<li class="lispace">Test that the email server is working with your installation by registering a test member on your site and using the “password reminder” (found on the site home page).</li>
+</ol>
+<a href="#top"><img src="Images/top.png" align="right" border="0" alt="Back to top" /></a><br />
+<br />
+<br /><br /><img src="Images/linebreak.png" alt="Line break" border="0" />
+<br />
+<br /><a name="admin"><img src="Images/Admin/adminmanualadmin.png" alt="Administering SignlinkCMS" /></a>
+<br /><h2><a name="logging"></a>3.1. Logging in and out</h2>
+The login page for administering SignlinkCMS can be found by adding “/admin” to your installation URL. For instance if your CMS is installed at “<a href="http://www.signlinkstudio.com" target="_blank">www.signlinkstudio.com</a>”, you can log into the administration area by navigating to “<a href="http://www.signlinkstudio.com/Canadian_Deaf_Academics_SignlinkCMS/admin" target="_blank">www.signlinkstudio.com/Canadian_Deaf_Academics_SignlinkCMS/admin</a>”.  
+<p>
+The login name and password for the administration area is set during installation. Once logged in you will see a menu as shown in <b>Figure 1</b>. You can log out by clicking the logout icon on the far right.
+</p>
+<br />
+<h3>Figure 1: SignlinkCMS administration area</h3>
+<a href="Images/Screenshots/Admin/Fig1.png" target="_blank"><img src="Images/Screenshots/Admin/Fig1.png" width="550" height="85" class="imgBordered" alt="Figure 1: SignlinkCMS administration area" /></a>
+<br />
+<a href="#top"><img src="Images/top.png" align="right" border="0" alt="Back to top" /></a><br />
+<br /><h2><a name="members"></a>3.2. Members</h2>
+The “members” section allows you to edit the account information of all of the members. You can only change a member’s password or email address. Passwords must be greater than eight characters and use a combination of letters and numbers. Login names and email addresses must be unique.
+<p>
+You can also delete members. Note that deleting a member does not prevent that member from registering for a new login id and does not remove the member’s existing messages.
+</p>
+<a href="#top"><img src="Images/top.png" align="right" border="0" alt="Back to top" /></a><br />
+<br /><h2><a name="pages"></a>3.3. Pages</h2>
+“Pages” (<b>Figure 2</b>) is the space that the web site administrator can use to create web pages for the site members to view. For instance, you may wish to create a page to welcome members to your site or to explain your site policy for creating vlogs.
+<p>
+Click “new page” to create a new page. Creating a new page is very similar to creating a forum topic or replying to a message, as described in the user documentation. First, choose whether your page is to be a top level page (parent) or a sub-page (choose the parent page). Then choose a title format (image, video or text) and content format (signlink object, video or text) to submit. Click “submit” when you are done.
+</p>
+<p>Below “new page”, you will see a list of the pages on your site. Each page listing shows the page id, title, the id of its parent page (a parent of 0 indicates a top-level page), the date and time the page was created, and links to “view”, “edit” and “delete” the page. 
+</p>
+<br />
+<h3>Figure 2: Administering pages</h3>
+<a href="Images/Screenshots/Admin/Fig2.png" target="_blank"><img src="Images/Screenshots/Admin/Fig2.png" width="542" height="334" class="imgBordered" alt="Figure 2: Administering pages" /></a>
+<br /><br />
+<h3>Figure 2a: Creating new pages</h3>
+<a href="Images/Screenshots/Admin/Fig2a.png" target="_blank"><img src="Images/Screenshots/Admin/Fig2a.png" width="547" height="430" class="imgBordered" alt="Figure 2a: Creating new pages" /></a>
+<br />
+<a href="#top"><img src="Images/top.png" align="right" border="0" alt="Back to top" /></a><br />
+<br /><h2><a name="forums"></a>3.4. Forums</h2>
+In “forums” you can create, edit and delete forums on your website, as well as view, edit and delete posts in each forum (<b>Figure 3</b>).
+<p>
+To create a forum, click “new forum”. Specify a forum title (image, video or text) and click submit to create the forum.
+</p>
+<p>Below the “new forum” link, you will see a list of the forums on your site. Each forum listing shows the forum title, the number of topics in the forum, the number of posts in the forum, the date and time of the last post and links to “posts”, “edit” and “delete”.
+</p>
+<p>“Posts” allows you find and delete posts. Note that you must delete all replies to a post before you can delete the original post.
+</p>
+<br /><h3>Figure 3: Administering forums</h3>
+<a href="Images/Screenshots/Admin/Fig3.png" target="_blank"><img src="Images/Screenshots/Admin/Fig3.png" width="542" height="283" class="imgBordered" alt="Figure 3: Administering forums" /></a>
+<br />
+<a href="#top"><img src="Images/top.png" align="right" border="0" alt="Back to top" /></a><br />
+<br /><h2><a name="vlogs"></a>3.5. Vlogs</h2>
+In “vlogs” you can create and delete vlogs (<b>Figure 4</b>). You must create a vlog for a website member before that member can start “vlogging”. You cannot delete individual vlog entries or comments, but the “vlog owner” can edit and delete their own entries and comments made by others.
+<br /><h3>Figure 4: Administering vlogs</h3>
+<a href="Images/Screenshots/Admin/Fig4.png" target="_blank"><img src="Images/Screenshots/Admin/Fig4.png" width="539" height="333" class="imgBordered" alt="Figure 4: Administering vlogs" /></a>
+<br />
+<a href="#top"><img src="Images/top.png" align="right" border="0" alt="Back to top" /></a><br />
+<br /><h2><a name="settings"></a>3.6. Settings</h2>
+The settings page allows you to change your contact email address, the log in password, the site name and the maximum file size for uploads (<b>Figure 5</b>). To change one or more of these elements, change the setting on the page and then press submit. Press cancel if you start to make a change and then change your mind.
+<p>
+<b>Email address</b>: You must submit a valid email address of the form “emailaddress@place.com” for this change to be accepted.
+</p>
+<p><b>Administrator password</b>: Passwords must be greater than eight characters and use a combination of letters and numbers to be valid.
+</p>
+<p><b>Site name</b>: A text name for the site. This will appear on the title bar of the browser.
+</p>
+<p><b>Maximum file size for uploads</b>: It is important that you and/or your systems administrator consider what limit to place on file upload sizes. Video and signed web pages often have large space requirements. If you make this setting too small, your members will not be able to create messages that say everything they want to say. However, without limitations, your members will have no incentive to compress their videos appropriately and server may become quickly overloaded. Also, very large files will take a long time for your site members to download and will impact on the usability of your site. The recommended maximum file size for SignlinkCMS is 5Mb, which allows for a signed web page with approximately one minute of video at typical compression rates.
+</p>
+<br /><h3>Figure 5: Administration settings</h3>
+<a href="/Images/Screenshots/Admin/Fig5.png" target="_blank"><img src="Images/Screenshots/Admin/Fig5.png" width="526" height="307" class="imgBordered" alt="Figure 5: Administering settings" /></a>
+<br />
+<a href="#top"><img src="Images/top.png" align="right" border="0" alt="Back to top" /></a><br />
+<!--<br /><h2><a name="help"></a>3.7. Help</h2>
+<a href="#top"><img src="Images/top.png" align="right" border="0"></a>-->
+<br /><br /><br /><img src="Images/linebreak.png" alt="Line break" border="0" />
+<br />
+<br /><a name="ack"><img src="Images/Admin/adminmanualack.png" alt="Acknowledgements" /></a>
+<br />
+<br />The lead programmer for the SignlinkCMS was:
+<ul>
+<li>Heidi Hazelton</li>
+</ul>
+The other Signlink Project Team members are:
+<ul>
+<li>Deb Fels</li>
+<li>Martin Gerdzhev</li>
+<li>James Hardman</li>
+<li>Ellen Hibbard</li>
+<li>Jan Richards</li>
+<li>Laurel Williams</li>
+</ul>
+The development of the SignlinkCMS has been generously supported by the Canadian Content Online Program of Canadian Heritage (<a href="http://www.pch.gc.ca">www.pch.gc.ca</a>).
+<a href="#top"><img src="Images/top.png" align="right" border="0" alt="Back to top" /></a><br />
+<br /><br /><br /><img src="Images/linebreak.png" alt="Line break" border="0" />
+<br />
+<br />
+<br />
+</div>
+</body>
+</html>
