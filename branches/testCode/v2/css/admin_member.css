@@ -1,0 +1,19 @@
+
+.registeredmembers{
+   height:10px;
+   margin-bottom:15px;
+
+}
+
+.registeredmembers span{
+    float:left;
+}
+
+.registeredmembers a{
+   float:right;
+ 
+}
+
+#searchcriteria form{
+    margin-bottom:10px;
+}

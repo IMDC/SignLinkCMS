@@ -6,13 +6,15 @@
   <title><?php echo SITE_NAME; ?></title>
   <link rel="stylesheet" href="css/asl.css" type="text/css" media="screen" />
   <link rel="stylesheet" href="jscripts/fancybox/jquery.fancybox-1.3.1.css" type="text/css" media="screen" />
-
+    <link rel="stylesheet" href="css/autocomplete/jquery-ui-1.8.5.custom.css" type="text/css" media="screen" />
+    
   <!--[if IE]>
     <link href="css/iehacks.css" rel="stylesheet" />
   <![endif]-->
 
   <!--<script type="text/javascript" src="jscripts/jquery/js/jquery-1.3.2.min.js"></script>-->
   <script type="text/javascript" src="jscripts/jquery-1.4.4.min.js"></script> 
+  <script type="text/javascript" src="jscripts/jquery/js/jquery-ui-1.8.5.custom.min.js"></script> 
   <script type="text/javascript" src="jscripts/fancybox/jquery.fancybox-1.3.1.pack.js"></script>
   <script type="text/javascrtip" src="jscripts/fancybox/jquery.easing-1.3.pack.js"></script>
   <script type="text/javascript" src="jscripts/flowplayer-3.2.6.min.js"></script>
@@ -20,6 +22,18 @@
   <script type="text/javascript" src="jscripts/tweaks.js"></script>
   <!--<script type="text/javascript" src="http://cdn.jquerytools.org/1.1.2/jquery.tools.min.js"></script>-->
 
+
+   <script type="text/javascript">
+		$(document).ready(function()
+		{
+		
+    		$('#auto').autocomplete(
+    		{
+        		source: 'include/autocomplete/search.php',
+        		minLength: 1
+    		});
+		});
+   </script>
 </head>
 <body>
 		
