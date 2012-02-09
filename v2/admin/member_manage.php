@@ -6,6 +6,9 @@ admin_authenticate();
 
 require(INCLUDE_PATH.'admin_header.inc.php');
 
+$memberSearch = $_GET["name"]; 
+$memberID = $_GET["id"];
+$memberEMail = $_GET["mail"];
 
 //if (isset($_POST['submit'])) {
 if ($_POST) {
@@ -91,6 +94,8 @@ if ($_POST) {
 }
 ?>
 
+<link rel="stylesheet" type="text/css" href="../css/admin_member.css" />
+
 <script type="text/javascript">
    $(function() {
          <?php if (!isset($_SESSION['errors'])) {
@@ -101,7 +106,15 @@ if ($_POST) {
          $("#memberclick").click(function() {
            $("#memberpane").toggle(); 
          });
+		 
+		$(".registeredmembers a").click(function() {
+             $("#searchcriteria").toggle(); 
+        });
    });
+   
+   $(document).ready(function(){
+      $("#searchcriteria").hide(); 
+    });
 </script>
 
 <H2>members</h2>
@@ -128,13 +141,65 @@ if ($_POST) {
       <!-- | <button type="button" id="testbutton" name="testbtn" value="Monkeys" class="submitIconBtn"> Submit <img src="../images/yescheck.png" alt="" class="inlineVertMid" /></button></div> -->
    </form>
 </div>
-<h3><a href="#">Registered Members</a></h3>
+<!--<h3><a href="#">Registered Members</a></h3>-->
 <div>
-<p>The following members have registered:</p>
+
+<!-- new joe-->
+
+<div class="registeredmembers">
+	<span>The following members have registered:</span>
+	<a href="#">Search</a>
+</div>
+
+<div id="searchBar">
+    <div id="searchcriteria">
+		<span>Search: </span> 
+		<form action="#" >
+			 ID:<input type="text" name="id" />
+			 Login:<input type="text" name="name" id="auto" />
+			 Email:<input type="text" name="mail" id ="auto-email"/>
+			 Verified Members:<input type="checkbox" name="regmem" value="Yes" /> 
+			 <input TYPE="image" SRC="../images/search_button_green_32.png" BORDER="0" ALT="Submit Form" placeholder="search" style="position:relative;top:10px">
+		</form>
+	</div>
+</div>
+
+<!--   -->
 
 <?php
 //get members
-$sql = "SELECT * FROM members WHERE login!='admin'";
+
+$sqlMI = "";
+$sqlME = "";
+$sqlMS = "";
+$sqlreg = "";
+
+if(!empty($memberID))
+{
+   $sqlMI = " AND member_id='$memberID'";
+}
+if (!empty($memberEMail)) 
+{
+   $sqlME = " AND email='$memberEMail'";
+}
+if( !empty($memberSearch))
+{
+    $sqlMS = " AND login='$memberSearch'";
+}
+
+if(isset($_GET['regmem']) &&
+   $_GET['regmem'] == 'Yes')
+{
+   $sqlreg = " AND status = '1'";
+}
+
+
+	$sql = "SELECT * FROM members WHERE login!='admin'" . $sqlMS . $sqlME . $sqlMI . $sqlreg;
+
+   
+  
+
+   
 $result = mysqli_query($db, $sql);
 $r = 1;
 if (mysqli_num_rows($result)) { ?>
@@ -151,7 +216,7 @@ if (mysqli_num_rows($result)) { ?>
 		//print forum row info
 		echo '<tr class="row'.$r.'">';
 		echo '<td>'.$row['member_id'].'</td>'; 
-		echo '<td>'.$row['login'].'</td>';
+		echo '<td><a href="member_view?name=' . $row['login'] . '&id=' . $row['member_id'] . '">' . $row['login'] . '</a></td>';
 		echo '<td>'.$row['name'].'</td>';
 		echo '<td>'.$row['email'].'</td>';		
 		echo '<td style="text-align:center;"><a href="member_edit.php?m='.$row['member_id'].'">Edit</a>';
