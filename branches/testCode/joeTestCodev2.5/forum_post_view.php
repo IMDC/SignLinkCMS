@@ -30,9 +30,10 @@ $msg = get_message($post_id);  //returns array of poster, date, html-encoded mes
 <!--<script type="text/javascript" src="jscripts/tiny_mce/jquery.tinymce.js"></script>-->
 <div class="forum-post-top-wrap">
    <div id="forum-title">
-      <h3>
-         <div style="float:left;height:75px;"><?php echo get_title('forum', $forum_id, 'small'); ?></div>
-      </h3>
+<!--      <h3>-->
+<!--         <div style="float:left;height:75px;"><?php echo get_title('forum', $forum_id, 'small'); ?></div>-->
+         <div style="float:left;"><?php echo get_title('forum', $forum_id, 'big'); ?></div>
+<!--      </h3>-->
    <!--	<h3><div style="float:left;height:75px;"><?php //echo get_title('forum', $forum_id, 'small'); ?></div>-->
    <!--	<div style="float:left;height:75px;">&nbsp; > &nbsp;<?php //if ($parent_id) { echo "Re: &nbsp;"; } ?></div></h3>-->
       <div class="forum-post-breadcrumb-arrow">&nbsp; > &nbsp;<?php if ($parent_id) { echo "Re: &nbsp;"; } ?></div>

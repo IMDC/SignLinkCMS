@@ -279,10 +279,15 @@ function print_vlog_reply_row($id, $reply_number) {
          echo '</div>';
       echo '</div>';
       echo '</div>';
+      // print post date and time
+      echo '<div class="post-reply-date">';
+         echo timeAgo($row['date']) . " " . $row['date'];
+      echo '</div>';
       // echo post content
       echo '<div class="post-reply-content-wrap">';
          echo '<div class="post-reply-content">'.$post_content.'</div>';
       echo '</div>';
+
       echo '</div>';
    }
 }

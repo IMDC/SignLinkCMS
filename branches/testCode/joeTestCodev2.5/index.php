@@ -35,14 +35,15 @@ if (mysqli_num_rows($result)) {
 		$title = get_title('page', $row['page_id']);
 ?>
 	<div class="cat">
-		<div class="title" onclick="location.href='page_view.php?c=<?php echo $row['page_id']; ?>';" style="cursor:pointer;text-align:center;">
-			<div style="height:150px;">
+		<div class="title-upper" onclick="location.href='page_view.php?c=<?php echo $row['page_id']; ?>';">
+			<div class="title-inner">
 				<?php echo $title; ?>
 			</div>
-
-			<a href="page_view.php?c=<?php echo $row['page_id']; ?>" class="goto">
-        <img src="images/hand.png" style="width:20px;margin-top:2px;border:0px;padding:0px;" alt="click to view" />
-			</a>
+         <div class="title-goto-wrap">
+            <a href="page_view.php?c=<?php echo $row['page_id']; ?>" class="goto">
+               <img src="images/hand.png" class="hand_icon" alt="click to view" />
+            </a>
+         </div>
 		</div>
 	</div>
 <?php
@@ -61,14 +62,15 @@ if (mysqli_num_rows($result)) {
 		$title = get_title('forum', $row['forum_id']);
 		?>
 		<div class="cat">
-			<div class="title" onclick="location.href='forum_posts.php?f=<?php echo $row['forum_id']; ?>';" style="cursor:pointer">
-				<div style="height:150px;">
+			<div class="title-upper" onclick="location.href='forum_posts.php?f=<?php echo $row['forum_id']; ?>';">
+				<div class="title-inner">
 					<?php echo $title; ?>
 				</div>
-							
-				<a href="forum_posts.php?f=<?php echo $row['forum_id']; ?>" class="goto">
-					<img src="images/hand.png" style="width:20px;margin-top:2px;border:0px;padding:0px;" alt="click to view" />
-				</a>
+            <div class="title-goto-wrap">		
+               <a href="forum_posts.php?f=<?php echo $row['forum_id']; ?>" class="goto">
+                  <img src="images/hand.png" class="hand_icon" alt="click to view" />
+               </a>
+            </div>
 			</div>		
 		</div>
 		
@@ -88,14 +90,15 @@ if (@mysqli_num_rows($result)) {
 	$title = get_title('vlog', $row['vlog_id']);
 ?>
 		<div class="cat">
-						<div class="title" onclick="location.href='vlog_entries.php?v=<?php echo $row['vlog_id']; ?>';" style="cursor:pointer">
-				<div style="height:150px;">
-					<?php echo $title; ?>
-				</div>
-							
-				<a href="vlog_entries.php?v=<?php echo $row['vlog_id']; ?>" class="goto">
-					<img src="images/hand.png" style="width:20px;margin-top:2px;border:0px;padding:0px;" alt="click to view" />
-				</a>
+         <div class="title-upper" onclick="location.href='vlog_entries.php?v=<?php echo $row['vlog_id']; ?>';">
+            <div class="title-inner">
+               <?php echo $title; ?>
+            </div>
+            <div class="title-goto-wrap">
+               <a href="vlog_entries.php?v=<?php echo $row['vlog_id']; ?>" class="goto">
+               <img src="images/hand.png" class="hand_icon" alt="click to view" />
+               </a>
+            </div>
 			</div>
 		</div>
 		

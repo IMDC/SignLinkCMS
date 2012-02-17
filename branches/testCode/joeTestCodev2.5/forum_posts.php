@@ -77,46 +77,40 @@ if (mysqli_num_rows($result)) {
 		$views = intval($views['views']);
 ?>
 		<div class="cat">
-			
-			<!-- div style="padding-right:2px;font-size:smaller;">
-				<div style="float:left;">
-					<?php echo date('g:ia, M j, y', strtotime($row['date'])); ?>
-				</div>
-				<div style="float:right;">
-					<img src="images/user_female.png" style="margin-bottom:-5px;" /><?php echo $row['login']; ?>	
-				</div>
-			</div -->
-
-			<div class="title" onclick="location.href='forum_post_view.php?f=<?php echo $row['forum_id']; ?>&p=<?php echo $row['post_id']; ?>'" style="cursor:pointer">
-				<div style="height:150px">
+			<div class="title-upper" onclick="location.href='forum_post_view.php?f=<?php echo $row['forum_id']; ?>&p=<?php echo $row['post_id']; ?>'">
+				<div class="title-inner" style="background-image:url('images/hand.png');background-repeat:no-repeat;background-position:bottom center;background-position-x:75px;background-position-y:125px;">
 					<?php echo $title; ?>
-				</div>							
+            </div>
 
-				<a href="forum_post_view.php?f=<?php echo $row['forum_id']; ?>&p=<?php echo $row['post_id']; ?>" class="goto">
-					<img src="images/hand.png" style="border:0px;padding:0px;" alt="click to view" />
-				</a>
+            <div class="title-goto-wrap">
+<!--               <a href="forum_post_view.php?f=<?php echo $row['forum_id']; ?>&p=<?php echo $row['post_id']; ?>" class="goto">
+                  <img src="images/hand.png" style="border:0px;padding:0px;" alt="click to view" />
+               </a>-->
+            </div>
 			</div>
 
-			<div>
-				<div style="text-align:left;padding-right:2px; font-size:smaller;">
-					<div style="float:left;">
+			<div class="cat-info-wrap">
+				<div class="cat-info-text">
+<!--					<div style="float:left;">-->
 						<?php //check for new messages - #comments vs number of read child posts in forum_read. if equal, no unread
 						
-						$sql = "SELECT * FROM forums_read WHERE (post_id=".$row['post_id']." OR parent_id=".$row['post_id'].") AND member_id=".intval($_SESSION['member_id']);
-						$result2 = mysqli_query($db, $sql);
-						$read = @mysqli_num_rows($result2);
-												
-						if ($_SESSION['valid_user'] && $row['num_comments']+1>$read) { 
-							echo '<img src="images/email_red.png" alt="new messages" title="new messages" height="16" width="16" /> ';					
-						} else {
-							echo '<img src="images/email.png" alt="no new messages" title="no new messages" height="16" width="16" /> ';
-						} ?>
-					</div>
-					<div style="float:right;">
+//						$sql = "SELECT * FROM forums_read WHERE (post_id=".$row['post_id']." OR parent_id=".$row['post_id'].") AND member_id=".intval($_SESSION['member_id']);
+//						$result2 = mysqli_query($db, $sql);
+//						$read = @mysqli_num_rows($result2);
+//												
+//						if ($_SESSION['valid_user'] && $row['num_comments']+1>$read) { 
+//							echo '<img src="images/email_red.png" alt="new messages" title="new messages" height="16" width="16" /> ';					
+//						} else {
+//							echo '<img src="images/email.png" alt="no new messages" title="no new messages" height="16" width="16" /> ';
+//						} ?>
+<!--					</div>-->
+					<div class="cat-info-icons">
 						<img src="images/comments.png" style="margin-bottom:-5px;" alt="number of replies:" title="number of replies" /> <?php echo $row['num_comments']; ?>
 						<img src="images/magnifier.png" style="margin-bottom:-5px;" alt="number of views:" title="number of views" /><?php echo $views; ?>
 					</div>
-					<div class="title-timestamp">Last: <?php echo date('M j y, h:ia', strtotime($row['last_comment']))?></div>
+					<div class="title-timestamp">
+                  Last: <?php echo date('M j y, h:ia', strtotime($row['last_comment']))?>
+               </div>
 				</div>
 			</div>
 		</div>
