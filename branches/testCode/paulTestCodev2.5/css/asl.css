@@ -360,44 +360,80 @@ div.cat {
    display:inline-block;
    text-align:center;
    vertical-align:middle;
-   /*background-color: #efefef;*/
-/*   background: #e2e2e2;*/
-   background: #85b6f7;
+   background: #fff;
    width: 160px;
-/*   padding:1px;*/
    margin:6px;
    border:1px solid #cccccc;
-   font-weight: bold;
+/*   font-weight: bold;*/
    color: #5375A1;
+/*   cursor: pointer;*/
    /*text-shadow:0 1px 1px gray !important;*/
 }
 
-div.cat img {
-	padding:2px;
-/*	border: 1px solid #d7d7d7;*/
+/*div.cat img {
+	padding: 2px;
+	border: 1px solid #d7d7d7;
 	margin-bottom:-6px;
+}*/
+
+div.title-upper, div.title-inner {
+   height: 150px;
 }
 
-div.cat .title {
+div.title-upper {
 	background: #fdfdff;
-	height:170px; 
+   /* changing to 150px height as test */
 	clear:both; 
 	padding:1px;
-    text-align: center;
-    margin-left: auto;
-    margin-right: auto;
-	/*border:1px solid #ccc;*/
-	margin-bottom:5px;
-/*	background-image: url("../images/catgrad.png");
-	background-repeat: repeat-y;*/
-/*    -webkit-border-radius: 9px;
-    -moz-border-radius: 0 0 9px 9px;
-    border-radius: 0 0 9px 9px;*/
+   text-align: center;
+   margin-left: auto;
+   margin-right: auto;
+}
+
+div.title-inner {
+   background-image: url('images/hand.png');
+   background-repeat: repeat;
+}
+
+div.title-goto-wrap {
+   position: relative;
+   top: -25px;
+/*   height: 30px;*/
+   width: 100%;
+   margin: 0 auto;
+   background-image: url('images/hand.png');
+   background-repeat: repeat;
 }
 
 div.title-timestamp {
    clear: both;
-   font-size: 90%;
+}
+
+.cat-info-wrap {
+   height: 30px;
+   height: auto;
+   background: #85b6f7;
+}
+
+/* text such as timestamp on bottom of cat objects */
+.cat-info-text {
+   text-align: left;
+   padding-right: 2px;
+   padding-left: 5px;
+   font-size: 0.7em;
+}
+
+.cat-info-icons {
+    float:right;
+}
+
+.cat-info-icons img {
+   margin-bottom: -5px;
+}
+
+.cat-forum-lower {
+    float:left;
+    padding-left: 5px;
 }
 
 div.page {
@@ -440,22 +476,22 @@ div.cont-date {
    background-color:#7299C9;
    background-color:#00CC00;
    width:145px; */
-   display: none;
+/*   display: none;*/
    text-align: center;
    width: 75%;
    height: 19px;
    margin-left: auto;
    margin-right: auto;
-   background: #00aa33;
+/*   background: #00aa33;*/
    opacity: 1.0;
-   margin-top: -10px;
+/*   margin-top: -10px;*/
    -webkit-border-radius: 15px;
    -moz-border-radius: 15px;
    border-radius: 15px;
 }
 
 a.goto:hover {
-   background-color:#00FF00;
+/*   background-color:#00FF00;*/
    /*background-color:#0001FC;*/
 }
 
@@ -463,9 +499,12 @@ a.goto:hover {
    width: 20px;
    border: none;
    padding: 0px;
+   padding-left:10px;
+   padding-right:10px;
    margin-top: 2px;
    -moz-border-radius: 35px;
-   background: #A64040;
+/*   background: #A64040;*/
+   background: #4CA640;
    border-radius: 35px;
    -webkit-box-shadow: 4px 4px 6px rgba(0,0,0,0.2);
    -moz-box-shadow: 4px 4px 6px rgba(0,0,0,0.2);
@@ -1104,6 +1143,13 @@ div.post-reply-content {
    border-left: 1px dotted #aaa;
 }
 
+div.post-reply-date {
+   float: right;
+   font-size: 0.75em;
+   color: #ababab;
+   margin-right:20px;
+}
+
 div.post-reply-tools {
 /*   margin: 25px 45px 0px 5px;*/
 /*   border-top: 1px dashed #ddd;*/
@@ -1206,6 +1252,11 @@ div.forum-post-avatar-textlink {
 
 div.forum-post-avatar-image-wrap {
    
+}
+
+span.forum-lower-info {
+   font-size: smaller;
+   margin-left: 5px;
 }
 
 td.post-reply-content {
@@ -1575,7 +1626,7 @@ span.status-success {
 	padding-left: 4px;
 	padding-right: 4px;
 	padding-top: 10px;
-    height: 103px;
+   height: 103px;
 }
 
 .highlight {
@@ -1583,6 +1634,14 @@ span.status-success {
    background: #7D90A8;
    color: #CCFFFF;
    font-weight: bold;
+   cursor: pointer;
+}
+
+.outerShadow {
+/*   border: 1px solid green !important;*/
+   box-shadow: rgba(0, 0, 100, 0.8) 0px 0px 8px !important;  
+   -moz-box-shadow: rgba(0, 0, 100, 0.8) 0px 0px 8px;  
+   -webkit-box-shadow: rgba(0,0, 100, 0.8) 0px 0px 8px;
 }
 
 /******************************** FLOWPLAYER *********************************/
