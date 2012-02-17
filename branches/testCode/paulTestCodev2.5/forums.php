@@ -18,17 +18,18 @@ if (@mysqli_num_rows($result)) {
 		?>
 
 		<div class="cat">
-			<div class="title" onclick="location.href='forum_posts.php?f=<?php echo $row['forum_id']; ?>'" style="cursor:pointer">
-				<div style="height:150px;">
+			<div class="title-upper" onclick="location.href='forum_posts.php?f=<?php echo $row['forum_id']; ?>'">
+				<div class="title-inner">
 					<?php echo $title; ?>
 				</div>
-							
-				<a href="forum_posts.php?f=<?php echo $row['forum_id']; ?>"  class="goto">
-					<img src="images/hand.png" style="border:0px;padding:0px;" alt="click to view" />
-				</a>
+            <div class="title-goto-wrap">
+               <a href="forum_posts.php?f=<?php echo $row['forum_id']; ?>"  class="goto">
+                  <img src="images/hand.png" style="border:0px;padding:0px;" alt="click to view" />
+               </a>
+            </div>
 			</div>
 			
-			<div style="float:left;">
+			<div class="cat-forum-lower">
 			<?php
 				//get post info
 				$sql = "SELECT post_id FROM forums_posts WHERE forum_id=".$row['forum_id'];
@@ -50,7 +51,7 @@ if (@mysqli_num_rows($result)) {
 					echo '<img src="images/email.png" alt="no new messages" title="no new messages" height="16" width="16" style="border:none;" /> ';
 				}
 
-				echo "<span style='font-size: smaller;'> $posts posts in $topics topics</span>";
+				echo "<span class='forum-lower-info'> $posts posts in $topics topics</span>";
 			echo '</div>';
 
 		echo '</div>';

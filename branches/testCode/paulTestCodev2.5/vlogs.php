@@ -18,26 +18,29 @@ if (@mysqli_num_rows($result)) {
 		?>
 
 		<div class="cat">
-			<div class="title" onclick="location.href='vlog_entries.php?v=<?php echo $row['vlog_id']; ?>'" style="cursor:pointer">
-               <div style="height:150px;">
+			<div class="title-upper" onclick="location.href='vlog_entries.php?v=<?php echo $row['vlog_id']; ?>'">
+               <div class="title-inner">
                   <?php echo $title; ?>
                </div>
+            <div class="title-goto-wrap">
                <a href="vlog_entries.php?v=<?php echo $row['vlog_id']; ?>" class="goto">
                   <img src="images/hand.png" style="width:20px;margin-top:2px;border:0px;padding:0px;" alt="click to view" />
                </a>
+            </div>
 			</div>
-			
-			<div style="float:left;">
-				<span style='font-size: smaller;'><img src="images/user.png" style="border:none;" /> <?php echo get_login($row['member_id']); ?></span>				
-			</div>
-			<span style='float:right; font-size: smaller;'> 
-				<?php echo $row['num_entries']; 
-				if ($row['num_entries']==1) { 
-					echo ' entry';
-				} else { 
-					echo ' entries';
-				} ?>
-			</span>
+         <div class="cat-info-wrap">
+            <div style="float:left;">
+               <span style='font-size: smaller;'><img src="images/user.png" style="border:none;" /> <?php echo get_login($row['member_id']); ?></span>				
+            </div>
+            <span style='float:right; font-size: smaller;'> 
+               <?php echo $row['num_entries']; 
+               if ($row['num_entries']==1) { 
+                  echo ' entry';
+               } else { 
+                  echo ' entries';
+               } ?>
+            </span>
+         </div>
 		</div>
 <?php
 	} ?>

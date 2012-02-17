@@ -146,7 +146,7 @@ $msg = get_vlog_message_by_id($entry_id);
    
    /************************************ VLOG Replies start here *****************************/
    
-	$sql = "SELECT * FROM vlogs_comments WHERE vlog_id=".$vlog_id." AND entry_id=".$entry_id." ORDER BY date DESC";
+	$sql = "SELECT * FROM vlogs_comments WHERE vlog_id=".$vlog_id." AND entry_id=".$entry_id." ORDER BY date ASC";
 	$result = mysqli_query($db, $sql);
    
    // useful for repeating the vlog reply link later on
@@ -161,7 +161,7 @@ $msg = get_vlog_message_by_id($entry_id);
       
       /********* BEGIN reply table tools  ***********/
       echo '<div class="reply-table-header-wrap">';
-         print "<span class='reply-table-header-text'> Replies - last reply: " . date('M j Y, h:ia', strtotime($row['last_comment'])) . "</span>";
+         print "<span class='reply-table-header-text'> Replies - last reply: " . date('M j Y, h:ia', strtotime($row['date'])) . "</span>";
          print "<ul class='reply-table-header-menu'>";
             echo "<li>";
 //               echo "<a href='forum_post_create.php?f=$forum_id&p=$post_id'><img class='shadow' src='images/reply-add-paul4.png' alt='Reply' title='Reply to this post!' /><br />New Reply</a>";

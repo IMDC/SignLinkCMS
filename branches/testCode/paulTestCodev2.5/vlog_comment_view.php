@@ -9,7 +9,7 @@ $comment_id = intval($_REQUEST['c']);
 $entry_id = intval($_REQUEST['e']);
 $vlog_id = intval($_REQUEST['v']);
 
-$sql = "SELECT * FROM vlogs_comments WHERE vlog_id=".$vlog_id." AND entry_id=".$entry_id." AND comment_id=".$comment_id." ORDER BY date DESC";
+$sql = "SELECT * FROM vlogs_comments WHERE vlog_id=".$vlog_id." AND entry_id=".$entry_id." AND comment_id=".$comment_id." ORDER BY date ASC";
 $result = mysqli_query($db, $sql);
 ?>
 
