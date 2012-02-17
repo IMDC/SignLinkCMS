@@ -79,8 +79,8 @@ if (@mysqli_num_rows($result)) {
 		$title = get_title('entry', $row['entry_id']); 
 ?>
 		<div class="cat">
-			<div class="title" onclick="location.href='vlog_entry_view.php?v=<?php echo $row['vlog_id']; ?>&e=<?php echo $row['entry_id']; ?>'" style="cursor:pointer">
-				<div style="height:150px">
+			<div class="title-upper" onclick="location.href='vlog_entry_view.php?v=<?php echo $row['vlog_id']; ?>&e=<?php echo $row['entry_id']; ?>'">
+				<div class="title-inner">
 					<?php echo $title; ?>
 				</div>							
 
@@ -89,12 +89,12 @@ if (@mysqli_num_rows($result)) {
 				</a>
 			</div>
 
-			<div>
-				<div style="text-align:left;padding-right:2px; font-size:smaller;">
-					<div style="float:right;">
-						<img src="images/comments.png" style="margin-bottom:-5px;" alt="number of comments" title="number of comments" /> <?php echo $row['num_comments']; ?>
+			<div class="cat-info-wrap">
+				<div class="cat-info-text">
+               <?php echo trim(date('M j y, h:ia', strtotime($row['date']))); ?>
+					<div class="cat-info-icons">
+						<img src="images/comments.png" alt="number of comments" title="number of comments" /> <?php echo $row['num_comments']; ?>
 					</div>
-					<?php echo date('M j y, h:ia', strtotime($row['date'])); ?>
 				</div>
 			</div>
 		</div>
@@ -102,7 +102,7 @@ if (@mysqli_num_rows($result)) {
 	} ?>
 		<br style="clear:both" />
 		<div id="paging">
-			
+			  <!-- WRITE PRESENTATION CODE FOR PAGING HERE -->
 		</div>
 	</div>
 <?php

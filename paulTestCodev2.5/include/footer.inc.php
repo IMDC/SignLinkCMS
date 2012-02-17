@@ -5,7 +5,7 @@
 		&nbsp;
         <?php 
             date_default_timezone_set('America/Toronto');
-            echo '<p class="timezone-footer">All times in ' . date("T") . '. Server time is ' . date(DATE_RFC822) . '</p>'; 
+            echo '<p class="timezone-footer">All times in ' . date("T") . '. Server time is <img src="images/clock.png" class="inlineVertMid" /> ' . date(DATE_RFC822) . '</p>'; 
         ?>
 	</div>
 </div>
