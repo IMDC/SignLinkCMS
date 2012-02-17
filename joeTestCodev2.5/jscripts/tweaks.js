@@ -1,15 +1,28 @@
 $(document).ready(function() {
 	// this enables highlighting on mouse over of posts (image, video or text)
-	$("div.title").hover(
+	$("div.title, div.title-upper").hover(
          function () { $(this).addClass("highlight"); },
          function () { $(this).removeClass("highlight"); }
     );
-    $("div.title").children().each(function() {
+    $("div.title, div.title-upper").children().each(function() {
 		  $(this).hover(
               function () { $(this).addClass("highlight"); },
               function () { $(this).removeClass("highlight"); }
           );
 	});
+   $("div.title-goto-wrap").hover(
+      function() { $(this).addClass("highlight");
+                   $(this).parent().children().first().addClass("highlight"); 
+                 },
+      function() { $(this).removeClass("highlight");
+                   $(this).parent().children().first().removeClass("highlight"); 
+                 }
+   );
+      
+   $("div.cat").hover(
+         function() { $(this).addClass("outerShadow"); },
+         function() { $(this).removeClass("outerShadow");}
+   );
    
    // On focus of any text input field, the background is highlighted
    $("input[type=text]").focus(function() {
